@@ -46,7 +46,11 @@ MonoBehaviour:
     y: 0
     width: 1536
     height: 781
+<<<<<<< HEAD
   m_MinSize: {x: 875, y: 300}
+=======
+  m_MinSize: {x: 875, y: 492}
+>>>>>>> 29c4a13409006cf6c4156cc16e8d540350760d21
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
   m_TopViewHeight: 30
@@ -100,10 +104,17 @@ MonoBehaviour:
     y: 30
     width: 1536
     height: 731
+<<<<<<< HEAD
   m_MinSize: {x: 911, y: 442}
   m_MaxSize: {x: 22006, y: 10021}
   vertical: 0
   controlID: 83
+=======
+  m_MinSize: {x: 936, y: 442}
+  m_MaxSize: {x: 22006, y: 10021}
+  vertical: 0
+  controlID: 14
+>>>>>>> 29c4a13409006cf6c4156cc16e8d540350760d21
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -149,7 +160,11 @@ MonoBehaviour:
   m_MinSize: {x: 201, y: 442}
   m_MaxSize: {x: 4001, y: 8042}
   vertical: 1
+<<<<<<< HEAD
   controlID: 40
+=======
+  controlID: 62
+>>>>>>> 29c4a13409006cf6c4156cc16e8d540350760d21
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -221,9 +236,15 @@ MonoBehaviour:
     y: 0
     width: 402
     height: 731
+<<<<<<< HEAD
   m_MinSize: {x: 276, y: 71}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 14}
+=======
+  m_MinSize: {x: 301, y: 171}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 12}
+>>>>>>> 29c4a13409006cf6c4156cc16e8d540350760d21
   m_Panes:
   - {fileID: 14}
   - {fileID: 12}
@@ -436,21 +457,35 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
+<<<<<<< HEAD
     - Assets/nanaumiForWork/Scene_Nanaumi
+=======
+    - Assets/Magarisawa
+>>>>>>> 29c4a13409006cf6c4156cc16e8d540350760d21
     m_Globs: []
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
+<<<<<<< HEAD
   - Assets/nanaumiForWork/Scene_Nanaumi
+=======
+  - Assets/Magarisawa
+>>>>>>> 29c4a13409006cf6c4156cc16e8d540350760d21
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\s20207012\Desktop\GFF_SourceTree_Local
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: d8390000
     m_LastClickedID: 14808
     m_ExpandedIDs: 0000000094390000d439000000ca9a3b
+=======
+    m_SelectedIDs: be390000
+    m_LastClickedID: 14782
+    m_ExpandedIDs: 000000009439000000ca9a3b
+>>>>>>> 29c4a13409006cf6c4156cc16e8d540350760d21
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
