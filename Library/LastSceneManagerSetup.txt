@@ -1,13 +1,5 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Juri/Effect.unity
-=======
-<<<<<<< HEAD
-- path: Assets/yamada/TestScene.unity
-=======
-- path: Assets/nanaumiForWork/Scene_Nanaumi/Test.unity
->>>>>>> 25ef79eecc3aeed2dcf87b931d1f9929bd77b0f5
->>>>>>> a764fbf25488043f8d2151835909a4b03693381f
+- path: Assets/Takeda/TestScene.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
