@@ -1,5 +1,9 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/yamada/TestScene.unity
+=======
+- path: Assets/nanaumiForWork/Scene_Nanaumi/Test.unity
+>>>>>>> 25ef79eecc3aeed2dcf87b931d1f9929bd77b0f5
   isLoaded: 1
   isActive: 1
   isSubScene: 0
