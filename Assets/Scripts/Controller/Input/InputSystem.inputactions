@@ -2,13 +2,37 @@
     "name": "InputSystem",
     "maps": [
         {
-            "name": "New action map",
+            "name": "Player",
             "id": "d1547179-8b27-4f8b-b224-00300e35607e",
             "actions": [
                 {
-                    "name": "New action",
-                    "type": "Button",
+                    "name": "Move",
+                    "type": "Value",
                     "id": "23a689c8-86be-47a0-8750-f0454cef4bcc",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Jump",
+                    "type": "Value",
+                    "id": "670e1759-8898-4520-8f84-720f4852b77e",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "SwordAttack",
+                    "type": "Button",
+                    "id": "e3c0ef49-53e3-4fe3-a285-47ae15a4b0de",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "HammerAttack",
+                    "type": "Button",
+                    "id": "892d516a-265b-46a5-b5f9-124e6b48bd72",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -16,13 +40,68 @@
             ],
             "bindings": [
                 {
-                    "name": "",
-                    "id": "033a2ced-1f2d-41c0-8626-4a332303df1c",
-                    "path": "",
+                    "name": "1D Axis",
+                    "id": "3a6a8cae-3745-4795-b025-661f75cc9a99",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "306d5f86-d4e4-4a77-b26e-0a767acbaf9d",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "834a3df2-26be-4339-8fe6-31655910b396",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "c37dea96-79b4-4fc6-8e0a-41e77999c42d",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "caa51d9b-b9cd-42a1-9a42-86e2bb1019e9",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwordAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2d15d78-a8c9-49f7-8092-51b28b50ca5a",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HammerAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

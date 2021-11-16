@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class CharacterAnimationController : MonoBehaviour
 {
-   
+    private void Update()
+    {
+        
+    }
 }
