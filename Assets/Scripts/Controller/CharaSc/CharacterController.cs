@@ -8,7 +8,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     [SerializeField]
-    CharaParameter charaData;
+    protected CharaParameter charaData;
     [SerializeField]
     Weapons[] weapon;
     [SerializeField]
@@ -58,6 +58,22 @@ public class CharacterController : MonoBehaviour
 
     //==========================================================
 
+    /// <summary>
+    /// CharaStatus(Charaの状態)
+    /// </summary>
+    public enum CharacterStatus
+    {
+        Idle,
+        Move,
+        Jump,
+        Down,
+        swordAttack,
+        hammerAttack,
+        Death,
+    }
+
+    //==========================================================
+
 
     /// <summary>
     /// 処理を呼び出す
@@ -66,14 +82,20 @@ public class CharacterController : MonoBehaviour
     {
         input = InputMethod();
 
-        // 移動
-        Move();
-        
+        if (input._x > _ZERO)
+        {
+            // 移動
+            Move();
+        }
+
         // CharacterAnimation
         //CharaViewControll();
-        
-        // ジャンプ処理
-        Jump();
+
+        if (input._isJump)
+        {
+            // ジャンプ処理
+            Jump();
+        }
 
         // _isAttackがtrueの時攻撃
         if (input._isAttack)
@@ -100,21 +122,8 @@ public class CharacterController : MonoBehaviour
         */
     }
 
+    //=================================================================================
 
-
-    /// <summary>
-    /// CharaStatus(Charaの状態)
-    /// </summary>
-    public enum CharacterStatus
-    {
-        Idle,
-        Move,
-        Jump,
-        Down,
-        swordAttack,
-        hammerAttack,
-        Death,
-    }
 
     /// <summary>
     /// 子クラスからの入力を受ける
@@ -135,7 +144,7 @@ public class CharacterController : MonoBehaviour
         // 攻撃状態じゃなければ
         if (!input._isAttack)
         {
-            CharacterMove.x = input._x * 10;
+            CharacterMove.x = input._x * 1000;
         }
         else
         {
@@ -143,14 +152,25 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+
+    //==================================================================================
+
+
     /// <summary>
     /// 基本的な攻撃挙動のみ記述しておき、子クラスで書き換える
     /// </summary>
     public virtual void Attack()
     {
-
+        input._isAttack = false;
     }
 
+
+    //===================================================================================
+
+
+    /// <summary>
+    /// 着地判定、velocityのy軸に値を入れる
+    /// </summary>
     private void Jump()
     {
         /*
@@ -178,6 +198,7 @@ public class CharacterController : MonoBehaviour
         }
 
         Debug.DrawRay(transform.position, Vector3.down * _GROUNDDISTANCE, Color.red);
+
         // LayerMaskがGroundだったら着地
         if (rb.velocity.y <= 0 && Physics.Raycast(transform.position, Vector3.down, _GROUNDDISTANCE, LayerMask.GetMask("Ground")))
         {
@@ -191,11 +212,17 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+
+    //=====================================================================
+
+
     public virtual void Death()
     {
 
     }
 
+
+    //=====================================================================
 
 
     /// <summary>
@@ -206,6 +233,10 @@ public class CharacterController : MonoBehaviour
     {
 
     }
+
+
+    //=====================================================================
+
 
     /// <summary>
     /// 自機の状態からViewクラスを管理
