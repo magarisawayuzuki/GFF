@@ -163,6 +163,7 @@ MonoBehaviour:
     _x: 0
     _isAttack: 0
     _isJump: 0
+  charapower: {fileID: 0}
 --- !u!54 &22521632
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -556,13 +557,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2799c60cf0f12bb42a1f44b12d75379b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charaData: {fileID: 0}
+  charaData: {fileID: 11400000, guid: c7981eae82046cd4c80ba5e94add7f8f, type: 2}
   weapon: []
   animData: {fileID: 0}
   input:
     _x: 0
     _isAttack: 0
     _isJump: 0
+  charapower: {fileID: 0}
 --- !u!1 &1753782466
 GameObject:
   m_ObjectHideFlags: 0

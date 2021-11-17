@@ -34,8 +34,10 @@ public class CharacterController : MonoBehaviour
     private int _anim = 0;
     private int[] _maxAnimationCount = { 4, 8, 5, 13, 0 };
 
-    
+
     /// float
+    // 攻撃力
+    protected float _attackPower = 0;
     // Jumpの高さ
     private float _y = 5;
     private float time;

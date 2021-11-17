@@ -55,6 +55,7 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Takeda\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyController.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharacterAnimationController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryAchievementController.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Assets\Scripts\View\CharaDirector\CharaAnimation\DefaultAnimation.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
     <Compile Include="Assets\Scripts\Model\AnimationSpriteData.cs" />
+    <Compile Include="Assets\Takeda\CharaController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\SceneController.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyNormal.cs" />
@@ -77,10 +79,9 @@
     <Compile Include="Assets\Scripts\View\StageDirector\StageEffectController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\EventController.cs" />
     <Compile Include="Assets\Scripts\View\StageDirector\StageAudioController.cs" />
-    <Compile Include="Assets\Takeda\PlayerController.cs" />
-    <Compile Include="Assets\Takeda\CharaController.cs" />
   </ItemGroup>
   <ItemGroup>
+     <None Include="Assets\ParticleShadersVol1\Shaders\EM_Particles_Unlit.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.2f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -648,6 +649,9 @@
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
     </Reference>
@@ -675,16 +679,11 @@
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{9C402C3F-BF3C-8E2B-CDFB-9C6369A35A4A}</Project>
-      <Name>UnityEngine.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{BC4733B9-8E78-9D2E-86D7-5CC221B89731}</Project>
-      <Name>UnityEditor.UI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

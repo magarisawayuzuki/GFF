@@ -9,6 +9,9 @@ public class PlayerController : CharacterController
 {
     private InputSystem IC;
 
+    [SerializeField]
+    CharaParameter charapower;
+
     // 現在武器
     private int _weaponNumber = 0;
 
@@ -25,6 +28,7 @@ public class PlayerController : CharacterController
     //ユーザーの入力を追記または上書き
     public override PlayerInput InputMethod()
     {
+        _ = base.InputMethod();
         // 入力値を _xに入れる
         input._x = IC.Player.Move.ReadValue<float>();
         if (IC.Player.Jump.triggered)
@@ -47,6 +51,7 @@ public class PlayerController : CharacterController
     //攻撃の追記とかあれば
     public override void Attack()
     {
+
         base.Attack();
     }
 
