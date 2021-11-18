@@ -444,6 +444,7 @@ GameObject:
   - component: {fileID: 1674408180}
   - component: {fileID: 1674408179}
   - component: {fileID: 1674408183}
+  - component: {fileID: 1674408184}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -565,6 +566,34 @@ MonoBehaviour:
     _isAttack: 0
     _isJump: 0
   charapower: {fileID: 0}
+--- !u!114 &1674408184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674408178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c171a543acf95914a829452784387fb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charaData: {fileID: 0}
+  weapon: []
+  animData: {fileID: 0}
+  input:
+    _x: 0
+    _isAttack: 0
+    _isJump: 0
+  nomalScale:
+  - 0
+  - 0
+  plantScale:
+  - 0
+  - 0
+  rockScale:
+  - 0
+  - 0
 --- !u!1 &1753782466
 GameObject:
   m_ObjectHideFlags: 0
