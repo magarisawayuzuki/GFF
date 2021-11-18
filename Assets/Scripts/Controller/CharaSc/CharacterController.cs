@@ -25,7 +25,7 @@ public class CharacterController : MonoBehaviour
 
 
     /// Vector3
-    private Vector3 CharacterMove = new Vector3();
+    protected Vector3 CharacterMove = new Vector3();
 
     /// int
     // 記憶の個数
@@ -82,20 +82,14 @@ public class CharacterController : MonoBehaviour
     {
         input = InputMethod();
 
-        if (input._x > _ZERO)
-        {
-            // 移動
-            Move();
-        }
+        // 移動
+        Move();
 
         // CharacterAnimation
         //CharaViewControll();
 
-        if (input._isJump)
-        {
-            // ジャンプ処理
-            Jump();
-        }
+        // ジャンプ処理
+        Jump();
 
         // _isAttackがtrueの時攻撃
         if (input._isAttack)
@@ -131,7 +125,6 @@ public class CharacterController : MonoBehaviour
     /// <returns></returns>
     public virtual PlayerInput InputMethod()
     {
-
         return null;
     }
 
@@ -144,7 +137,7 @@ public class CharacterController : MonoBehaviour
         // 攻撃状態じゃなければ
         if (!input._isAttack)
         {
-            CharacterMove.x = input._x * 1000;
+            CharacterMove.x = input._x * 10;
         }
         else
         {
@@ -161,7 +154,7 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     public virtual void Attack()
     {
-        input._isAttack = false;
+
     }
 
 
@@ -185,19 +178,18 @@ public class CharacterController : MonoBehaviour
         if (input._isJump && _isGround && !input._isAttack)
         {
             CharacterMove.y = _y;
-            //CharacterMove.y = animationCurve.Evaluate(Time.time) * _y;
         }
-        else if (!input._isAttack)
+        else if (input._isAttack)
+        {
+            Debug.Log("adafgga");
+            CharacterMove.y = _ZERO;
+        }
+        else
         {
             CharacterMove.y = rb.velocity.y;
         }
         // 攻撃中は上下移動しない
-        else
-        {
-            CharacterMove.y = _ZERO;
-        }
-
-        Debug.DrawRay(transform.position, Vector3.down * _GROUNDDISTANCE, Color.red);
+        
 
         // LayerMaskがGroundだったら着地
         if (rb.velocity.y <= 0 && Physics.Raycast(transform.position, Vector3.down, _GROUNDDISTANCE, LayerMask.GetMask("Ground")))

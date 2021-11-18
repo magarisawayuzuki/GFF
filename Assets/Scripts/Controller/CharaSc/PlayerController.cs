@@ -9,9 +9,6 @@ public class PlayerController : CharacterController
 {
     private InputSystem IC;
 
-    [SerializeField]
-    CharaParameter charapower;
-
     // 現在武器
     private int _weaponNumber = 0;
 
@@ -64,8 +61,10 @@ public class PlayerController : CharacterController
             _hammerTime = 0;
         }
 
+        /*
         charaStatus = CharacterStatus.hammerAttack;
         input._isAttack = true;
+        */
 
         return input;
     }
@@ -73,6 +72,16 @@ public class PlayerController : CharacterController
 
     //=========================================================
 
+    /*
+    //移動
+    public override void Move()
+    {
+        Debug.Log("aaaaaa");
+        base.Move();
+    }
+    */
+
+    //==========================================================
 
     //攻撃の追記とかあれば
     public override void Attack()
