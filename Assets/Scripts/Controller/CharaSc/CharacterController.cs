@@ -221,9 +221,14 @@ public class CharacterController : MonoBehaviour
     /// 自機のライフ計算を行う
     /// </summary>
     /// <param name="power"></param>
-    public void CharaLifeCalculation(int power)
-    {
+    public virtual void CharaLifeCalculation(int damage, int knockBack,int weapon)
+    { 
+        charaData.life -= damage;
 
+        if (charaData.life <= 0)
+        {
+            Death();
+        }
     }
 
 

@@ -338,11 +338,20 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+<<<<<<< HEAD
   - component: {fileID: 1091886259}
   - component: {fileID: 1091886258}
   - component: {fileID: 1091886255}
   - component: {fileID: 1091886257}
   - component: {fileID: 1091886256}
+=======
+  - component: {fileID: 1674408182}
+  - component: {fileID: 1674408181}
+  - component: {fileID: 1674408180}
+  - component: {fileID: 1674408179}
+  - component: {fileID: 1674408183}
+  - component: {fileID: 1674408184}
+>>>>>>> yuzuki/work
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -463,7 +472,59 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &1720981568
+=======
+--- !u!114 &1674408183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674408178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2799c60cf0f12bb42a1f44b12d75379b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charaData: {fileID: 11400000, guid: c7981eae82046cd4c80ba5e94add7f8f, type: 2}
+  weapon: []
+  animData: {fileID: 0}
+  input:
+    _x: 0
+    _isAttack: 0
+    _isJump: 0
+  charapower: {fileID: 0}
+--- !u!114 &1674408184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674408178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c171a543acf95914a829452784387fb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charaData: {fileID: 0}
+  weapon: []
+  animData: {fileID: 0}
+  input:
+    _x: 0
+    _isAttack: 0
+    _isJump: 0
+  nomalScale:
+  - 0
+  - 0
+  plantScale:
+  - 0
+  - 0
+  rockScale:
+  - 0
+  - 0
+--- !u!1 &1753782466
+>>>>>>> yuzuki/work
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
