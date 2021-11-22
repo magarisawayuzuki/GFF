@@ -66,10 +66,12 @@ public class CharacterController : MonoBehaviour
         Idle,
         Move,
         Jump,
-        Down,
+        Fall,
         swordAttack,
         hammerAttack,
         Death,
+        Damage,
+
     }
 
     //==========================================================

@@ -9,6 +9,11 @@ public class PlayerController : CharacterController
 {
     private InputSystem IC;
 
+    private Vector3 boxcast = new Vector3(1,1,1);
+
+    /// <summary>
+    /// int
+    /// </summary>
     // 現在武器
     private int _weaponNumber = 0;
 
@@ -19,17 +24,35 @@ public class PlayerController : CharacterController
     private float _hammerTime = 0;
     private float _memoryGauge = 0;
 
-    private const float _MAXPOWERTIME = 3;
-    private const float _MIDDLEPOWERTIME = 1.5f;
+    /// <summary>
+    /// bool
+    /// </summary>
+    private bool _isHard = false;
+    private bool _isNormal = false;
+    private bool _isSoft = false;
+
+    /// <summary>
+    /// const
+    /// </summary>
     // 記憶ゲージ減らす量
     // 〇
-    private const int _GOODMEMORYDOWN = 5;
+    private const int _GOODMEMORYPLUS = 5;
     // △
-    private const int _NORMALMEMORYDOWN = 1;
+    private const int _NORMALMEMORYPLUS = 1;
     // ×
-    private const int _BADMEMORYDOWN = 1;
-    //時間減少
+    private const int _BADMEMORYPLUS = 1;
+
+    // 時間で減少
     private const float _TIMEMEMORYDOWN = 0.5f;
+
+    // 攻撃の押してる時間
+    // 強攻撃2段階目
+    private const float _MAXPOWERTIME = 3;
+    // 強攻撃1段階目
+    private const float _MIDDLEPOWERTIME = 1.5f;
+
+    // 攻撃の距離
+    private const float _ATTACKDISTANCE = 1.5f;
 
 
     private void Awake()
@@ -90,6 +113,10 @@ public class PlayerController : CharacterController
     //攻撃の追記とかあれば
     public override void Attack()
     {
+        _isHard = Physics.BoxCast(transform.position, Vector3.one, Vector3.right, Quaternion.identity, _ATTACKDISTANCE, LayerMask.GetMask("HardEnemy"));
+        _isNormal = Physics.BoxCast(transform.position, Vector3.one, Vector3.right, Quaternion.identity, _ATTACKDISTANCE, LayerMask.GetMask("NormalEnemy"));
+        _isSoft = Physics.BoxCast(transform.position, Vector3.one, Vector3.right, Quaternion.identity, _ATTACKDISTANCE, LayerMask.GetMask("SoftEnemy"));
+        
         // 攻撃力を入力
         if (charaStatus == CharacterStatus.swordAttack)
         {
@@ -164,7 +191,39 @@ public class PlayerController : CharacterController
     //記憶ゲージの管理
     protected void MomoryGauge()
     {
+        timer -= Time.deltaTime;
+        if (charaStatus == CharacterStatus.swordAttack)
+        {
+            if (_isSoft)
+            {
+                _memoryGauge += _GOODMEMORYPLUS;
+            }
+            else if(_isNormal)
+            {
+                _memoryGauge += _NORMALMEMORYPLUS;
 
+            }
+            else if (_isHard)
+            {
+                _memoryGauge += _BADMEMORYPLUS;
+
+            }
+        }
+        else
+        {
+            if (_isHard)
+            {
+                _memoryGauge += _GOODMEMORYPLUS;
+            }
+            else if (_isNormal)
+            {
+                _memoryGauge += _NORMALMEMORYPLUS;
+            }
+            else if (_isSoft)
+            {
+                _memoryGauge += _BADMEMORYPLUS;
+            }
+        }
     }
 
 
