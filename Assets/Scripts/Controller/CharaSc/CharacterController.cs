@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,7 +41,6 @@ public class CharacterController : MonoBehaviour
     protected float _attackPower = 0;
     // Jumpの高さ
     private float _y = 5;
-    private float time;
     // Rayの長さ
     private float[] _animationTime = { 0, 0, 0, 0, 0 };
 
@@ -54,7 +54,7 @@ public class CharacterController : MonoBehaviour
     /// const
     /// </summary>
     protected const int _ZERO = 0;
-    private const float _GROUNDDISTANCE = 3f;
+    private const float _GROUNDDISTANCE = 1.5f;
 
     //==========================================================
 
@@ -189,7 +189,6 @@ public class CharacterController : MonoBehaviour
             CharacterMove.y = rb.velocity.y;
         }
         // 攻撃中は上下移動しない
-        
 
         // LayerMaskがGroundだったら着地
         if (rb.velocity.y <= 0 && Physics.Raycast(transform.position, Vector3.down, _GROUNDDISTANCE, LayerMask.GetMask("Ground")))
@@ -221,9 +220,9 @@ public class CharacterController : MonoBehaviour
     /// 自機のライフ計算を行う
     /// </summary>
     /// <param name="power"></param>
-    public virtual void CharaLifeCalculation(int damage, int knockBack,int weapon)
-    { 
-        charaData.life -= damage;
+    public virtual void CharaLifeCalculation(float damage, int knockBack, int weapon)
+    {
+        charaData.life -= (int)Mathf.Floor(damage);
 
         if (charaData.life <= 0)
         {
