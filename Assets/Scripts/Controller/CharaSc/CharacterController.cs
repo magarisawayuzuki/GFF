@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -202,9 +203,9 @@ public class CharacterController : MonoBehaviour
     /// 自機のライフ計算を行う
     /// </summary>
     /// <param name="power"></param>
-    public virtual void CharaLifeCalculation(int damage, int knockBack,int weapon)
+    public virtual void CharaLifeCalculation(float damage, int knockBack,int weapon)
     { 
-        charaData.life -= damage;
+        charaData.life -= (int)Math.Floor(damage);
 
         if (charaData.life <= 0)
         {
