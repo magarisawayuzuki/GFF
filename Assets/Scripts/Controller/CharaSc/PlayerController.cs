@@ -47,7 +47,7 @@ public class PlayerController : CharacterController
     {
         _ = base.InputMethod();
 
-        // 入力値を _xに入れる
+        // 入力値を_xに入れる
         input._x = IC.Player.Move.ReadValue<float>();
 
         if (IC.Player.Jump.triggered)

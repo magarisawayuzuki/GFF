@@ -121,6 +121,9 @@ public class EnemySpel : MonoBehaviour
         anime = 2;
     }
 
+    /// <summary>
+    /// プレイヤーに向かって球を発射
+    /// </summary>
     private void shot()
     {       
             currentTime += Time.deltaTime;       
