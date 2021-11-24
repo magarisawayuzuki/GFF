@@ -29,9 +29,6 @@ public class CharacterController : MonoBehaviour
     protected Vector3 CharacterMove = new Vector3();
 
     /// int
-    // 記憶の個数
-    protected int _weaponMemoryCount = 0;
-    protected int _memoryCount = 0;
     private int _anim = 0;
     private int[] _maxAnimationCount = { 4, 8, 5, 13, 0 };
 
@@ -54,7 +51,7 @@ public class CharacterController : MonoBehaviour
     /// const
     /// </summary>
     protected const int _ZERO = 0;
-    private const float _GROUNDDISTANCE = 1.5f;
+    protected const int _ONE = 1;
 
     //==========================================================
 
@@ -80,7 +77,7 @@ public class CharacterController : MonoBehaviour
     /// <summary>
     /// 処理を呼び出す
     /// </summary>
-    private void Update()
+    protected virtual void Update()
     {
         input = InputMethod();
 
@@ -183,17 +180,14 @@ public class CharacterController : MonoBehaviour
         }
         else if (input._isAttack)
         {
-            Debug.Log("adafgga");
             CharacterMove.y = _ZERO;
         }
         else
         {
             CharacterMove.y = rb.velocity.y;
         }
-        // 攻撃中は上下移動しない
-
         // LayerMaskがGroundだったら着地
-        if (rb.velocity.y <= 0 && Physics.Raycast(transform.position, Vector3.down, _GROUNDDISTANCE, LayerMask.GetMask("Ground")))
+        if (rb.velocity.y <= 0 && Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
         {
             _isGround = true;
             input._isJump = false;

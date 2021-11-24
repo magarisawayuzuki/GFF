@@ -20,9 +20,18 @@ public class PlayerController : CharacterController
     /// <summary>
     /// float
     /// </summary>
+    // 武器の記憶の個数
+    protected int _weaponMemoryCount = 0;
+    // 記憶の個数
+    protected int _memoryCount = 0;
+    // 剣攻撃時間
     private float _swordTime = 0;
+    // 槌攻撃経過時間
     private float _hammerTime = 0;
-    private float _memoryGauge = 0;
+    // 記憶ゲージ
+    private float _memoryGauge = 50;
+    // 記憶ゲージ減少時間
+    private float _memoryDownTimer = 1;
 
     /// <summary>
     /// bool
@@ -34,16 +43,18 @@ public class PlayerController : CharacterController
     /// <summary>
     /// const
     /// </summary>
-    // 記憶ゲージ減らす量
+    // 記憶ゲージ
+    // 最大値
+    private const int _MAXMEMORYCAUGE = 100;
     // 〇
     private const int _GOODMEMORYPLUS = 5;
     // △
     private const int _NORMALMEMORYPLUS = 1;
     // ×
     private const int _BADMEMORYPLUS = 1;
-
     // 時間で減少
     private const float _TIMEMEMORYDOWN = 0.5f;
+
 
     // 攻撃の押してる時間
     // 強攻撃2段階目
@@ -55,12 +66,25 @@ public class PlayerController : CharacterController
     private const float _ATTACKDISTANCE = 1.5f;
 
 
+    //=====================================================
+
+
     private void Awake()
     {
         IC = new InputSystem();
         rb = GetComponent<Rigidbody>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
+    //=====================================================
+
+
+    protected override void Update()
+    {
+        base.Update();
+        MomoryGauge();
+    }
+
 
     //=====================================================
 
@@ -191,45 +215,67 @@ public class PlayerController : CharacterController
     //記憶ゲージの管理
     protected void MomoryGauge()
     {
-        timer -= Time.deltaTime;
-        if (charaStatus == CharacterStatus.swordAttack)
+        if (_memoryDownTimer >= _ZERO)
         {
-            if (_isSoft)
-            {
-                _memoryGauge += _GOODMEMORYPLUS;
-            }
-            else if(_isNormal)
-            {
-                _memoryGauge += _NORMALMEMORYPLUS;
+            _memoryDownTimer -= Time.deltaTime;
+        }
+        else
+        {
+            _memoryGauge -= _TIMEMEMORYDOWN;
+            _memoryDownTimer = _ONE;
+            Debug.Log(_memoryDownTimer);
+        }
 
-            }
-            else if (_isHard)
+        if (_memoryGauge > _MAXMEMORYCAUGE)
+        {
+            if (charaStatus == CharacterStatus.swordAttack)
             {
-                _memoryGauge += _BADMEMORYPLUS;
+                if (_isSoft)
+                {
+                    _memoryGauge += _GOODMEMORYPLUS;
+                }
+                else if (_isNormal)
+                {
+                    _memoryGauge += _NORMALMEMORYPLUS;
 
+                }
+                else if (_isHard)
+                {
+                    _memoryGauge += _BADMEMORYPLUS;
+                }
+            }
+            else if (charaStatus == CharacterStatus.swordAttack)
+            {
+                if (_isHard)
+                {
+                    _memoryGauge += _GOODMEMORYPLUS;
+                }
+                else if (_isNormal)
+                {
+                    _memoryGauge += _NORMALMEMORYPLUS;
+                }
+                else if (_isSoft)
+                {
+                    _memoryGauge += _BADMEMORYPLUS;
+                }
+            }
+            else
+            {
+                return;
             }
         }
         else
         {
-            if (_isHard)
-            {
-                _memoryGauge += _GOODMEMORYPLUS;
-            }
-            else if (_isNormal)
-            {
-                _memoryGauge += _NORMALMEMORYPLUS;
-            }
-            else if (_isSoft)
-            {
-                _memoryGauge += _BADMEMORYPLUS;
-            }
+            return;
         }
     }
 
 
     //==========================================================
 
-
+    /// <summary>
+    /// 武器切り替え
+    /// </summary>
     protected void Change()
     {
         if (_weaponMemoryCount > _weaponNumber)
