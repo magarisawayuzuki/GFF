@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyNormal : UnityEngine.MonoBehaviour
+public class EnemyNormal1 : UnityEngine.MonoBehaviour
 {
     private Rigidbody2D rb;
     SpriteRenderer EnemySprite;　//  エネミー

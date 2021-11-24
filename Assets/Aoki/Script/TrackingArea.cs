@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class TrackingArea : UnityEngine.MonoBehaviour
 {
-    EnemyNormal enemy;
+    EnemyNormal1 enemy;
    
     private void Start()
     {
         GameObject en = GameObject.FindGameObjectWithTag("Enemy");
-        enemy = en.GetComponent<EnemyNormal>();
+        enemy = en.GetComponent<EnemyNormal1>();
     }
     
     private void OnTriggerEnter2D(Collider2D collision)

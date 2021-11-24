@@ -25,6 +25,9 @@ public class Maping : UnityEngine.MonoBehaviour
     public GameObject wallBlock;
 
 
+    /// <summary>
+    /// 開始時ステージ生成
+    /// </summary>
     void Start()
     {
 

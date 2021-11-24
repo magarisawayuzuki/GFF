@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 遠距離攻撃のAI
+/// 通常の敵
 /// </summary>
 public class EnemyNormal : EnemyController
 {
