@@ -72,7 +72,6 @@ public class PlayerController : CharacterController
     private void Awake()
     {
         IC = new InputSystem();
-        rb = GetComponent<Rigidbody>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -223,7 +222,6 @@ public class PlayerController : CharacterController
         {
             _memoryGauge -= _TIMEMEMORYDOWN;
             _memoryDownTimer = _ONE;
-            Debug.Log(_memoryDownTimer);
         }
 
         if (_memoryGauge > _MAXMEMORYCAUGE)

@@ -14,13 +14,14 @@ public class CharacterController : MonoBehaviour
     Weapons[] weapon;
     [SerializeField]
     AnimationSpriteData animData;
+    [SerializeField]
+    AnimationCurve jumpCurve;
 
 
 
 
     [SerializeField]
     protected PlayerInput input;
-    protected Rigidbody rb = null;
     protected SpriteRenderer spriteRenderer = null;
     protected CharacterStatus charaStatus;
 
@@ -34,10 +35,11 @@ public class CharacterController : MonoBehaviour
 
 
     /// float
+    protected float _jumpTimer = 0;
     // 攻撃力
     protected float _attackPower = 0;
     // Jumpの高さ
-    private float _y = 5;
+    private float _y = 4;
     // Rayの長さ
     private float[] _animationTime = { 0, 0, 0, 0, 0 };
 
@@ -68,7 +70,6 @@ public class CharacterController : MonoBehaviour
         hammerAttack,
         Death,
         Damage,
-
     }
 
     //==========================================================
@@ -97,23 +98,9 @@ public class CharacterController : MonoBehaviour
         }
 
         // velocityへ入れる
-        rb.velocity = CharacterMove;
-
-        /*
-        if (input._isJump)
-        {
-            time += Time.deltaTime;
-            Debug.Log(time);
-        }
-
-        
-        if (time > animationCurve.length)
-        {
-            rb.useGravity = true;
-            time = 0;
-        }
-        */
+        transform.position += CharacterMove;
     }
+
 
     //=================================================================================
 
@@ -127,6 +114,8 @@ public class CharacterController : MonoBehaviour
         return null;
     }
 
+    //=================================================================================
+
 
     /// <summary>
     /// プレイヤーの挙動で記述しておき、特殊な敵は子クラスで書き換える
@@ -136,10 +125,12 @@ public class CharacterController : MonoBehaviour
         // 攻撃状態じゃなければ
         if (!input._isAttack)
         {
-            CharacterMove.x = input._x * 10;
+            charaStatus = CharacterStatus.Move;
+            CharacterMove.x = input._x * 10 * Time.deltaTime;
         }
         else
         {
+            charaStatus = CharacterStatus.Idle;
             CharacterMove.x = _ZERO;
         }
     }
@@ -165,37 +156,44 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        /*
-        // Jump処理、攻撃処理の時は重力を外す
-        if (input._isAttack || input._isJump)
-        {
-            rb.useGravity = false;
-        }
-        */
-
-        // 地面にいたらJumpする地面にいなかったらしない
-        if (input._isJump && _isGround && !input._isAttack)
-        {
-            CharacterMove.y = _y;
-        }
-        else if (input._isAttack)
-        {
-            CharacterMove.y = _ZERO;
-        }
-        else
-        {
-            CharacterMove.y = rb.velocity.y;
-        }
         // LayerMaskがGroundだったら着地
-        if (rb.velocity.y <= 0 && Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
+        if (Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
         {
             _isGround = true;
-            input._isJump = false;
-            _animationTime[2] = _ZERO;
         }
         else
         {
             _isGround = false;
+        }
+
+        Debug.Log(_jumpTimer);
+        Debug.Log(CharacterMove.y);
+
+        if (input._isJump && _jumpTimer < jumpCurve.length)
+        {
+            _jumpTimer += Time.deltaTime;
+        }
+        else
+        {
+            input._isJump = false;
+            _jumpTimer = _ZERO;
+        }
+
+        // 地面にいたらJumpする地面にいなかったらしない
+        if (input._isJump && _isGround && !input._isAttack)
+        {
+            charaStatus = CharacterStatus.Jump;
+            //transform.Translate(Vector3.up * jumpCurve.Evaluate(_jumpTimer) * _y);
+            CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * Time.deltaTime;
+        }
+        else if(!input._isJump && !_isGround)
+        {
+            charaStatus = CharacterStatus.Fall;
+            CharacterMove.y = -_y *  Time.deltaTime;
+        }
+        else if(!input._isJump && _isGround || input._isAttack)
+        {
+            CharacterMove.y = _ZERO;
         }
     }
 
@@ -205,7 +203,7 @@ public class CharacterController : MonoBehaviour
 
     public virtual void Death()
     {
-
+        charaStatus = CharacterStatus.Death;
     }
 
 
@@ -218,6 +216,8 @@ public class CharacterController : MonoBehaviour
     /// <param name="power"></param>
     public virtual void CharaLifeCalculation(float damage, int knockBack, int weapon)
     {
+        charaStatus = CharacterStatus.Damage;
+
         charaData.life -= (int)Mathf.Floor(damage);
 
         if (charaData.life <= 0)
