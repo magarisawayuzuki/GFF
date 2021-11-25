@@ -86,6 +86,7 @@
     <Compile Include="Assets\Aoki\Script\TrackingArea.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\EventController.cs" />
     <Compile Include="Assets\Scripts\View\StageDirector\StageAudioController.cs" />
+    <Compile Include="Assets\Magarisawa\Test.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\ParticleShadersVol1\Shaders\EM_Particles_Unlit.shader" />
