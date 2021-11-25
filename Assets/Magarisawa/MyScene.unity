@@ -156,6 +156,8 @@ MonoBehaviour:
   colors:
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0, g: 0, b: 0, a: 1}
+  EnableExportTextFile: 0
+  EnableExportConsole: 0
 --- !u!4 &684817735
 Transform:
   m_ObjectHideFlags: 0
