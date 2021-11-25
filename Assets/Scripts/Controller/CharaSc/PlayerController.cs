@@ -9,13 +9,13 @@ public class PlayerController : CharacterController
 {
     private InputSystem IC;
 
-    private Vector3 boxcast = new Vector3(1,1,1);
 
     /// <summary>
     /// int
     /// </summary>
     // 現在武器
     private int _weaponNumber = 0;
+
 
     /// <summary>
     /// float
@@ -33,12 +33,14 @@ public class PlayerController : CharacterController
     // 記憶ゲージ減少時間
     private float _memoryDownTimer = 1;
 
+
     /// <summary>
     /// bool
     /// </summary>
     private bool _isHard = false;
     private bool _isNormal = false;
     private bool _isSoft = false;
+
 
     /// <summary>
     /// const
@@ -55,8 +57,7 @@ public class PlayerController : CharacterController
     // 時間で減少
     private const float _TIMEMEMORYDOWN = 0.5f;
 
-
-    // 攻撃の押してる時間
+    // 攻撃の押してる時間のMax値
     // 強攻撃2段階目
     private const float _MAXPOWERTIME = 3;
     // 強攻撃1段階目
@@ -105,7 +106,6 @@ public class PlayerController : CharacterController
         if (IC.Player.SwordAttack.ReadValue<float>() == 1)
         {
             charaStatus = CharacterStatus.swordAttack;
-            _swordTime += Time.deltaTime;
         }
         else
         {
@@ -114,17 +114,33 @@ public class PlayerController : CharacterController
 
         if (IC.Player.HammerAttack.ReadValue<float>() == 1)
         {
-            charaStatus = CharacterStatus.hammerAttack;
-            _swordTime += Time.deltaTime;
+
         }
         else
         {
             _hammerTime = 0;
         }
 
+        if (IC.Player.SwordAttack.phase == UnityEngine.InputSystem.InputActionPhase.Performed)
+        {
+            _swordTime += Time.deltaTime;
+            charaStatus = CharacterStatus.swordAttack;
+
+            if (!input._isAttack)
+            {
+                input._isAttack = true;
+            }
+        }
+        else
+        {
+
+        }
+
         if (IC.Player.HammerAttack.triggered)
         {
             input._isAttack = true;
+            _swordTime += Time.deltaTime;
+            charaStatus = CharacterStatus.hammerAttack;
         }
 
         return input;
@@ -271,6 +287,7 @@ public class PlayerController : CharacterController
 
     //==========================================================
 
+
     /// <summary>
     /// 武器切り替え
     /// </summary>
@@ -285,6 +302,7 @@ public class PlayerController : CharacterController
             _weaponNumber = _ZERO;
         }
     }
+
 
     //==================InputSystem========================
 

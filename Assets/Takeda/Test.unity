@@ -154,15 +154,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2799c60cf0f12bb42a1f44b12d75379b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charaData: {fileID: 0}
-  weapon: []
-  animData: {fileID: 0}
+  charaData: {fileID: 11400000, guid: c7981eae82046cd4c80ba5e94add7f8f, type: 2}
   jumpCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
+      time: -0.00559887
+      value: 0.7467052
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -170,8 +168,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.2
-      value: 0
+      time: 0.5
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -181,10 +179,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  input:
-    _x: 0
-    _isAttack: 0
-    _isJump: 0
 --- !u!23 &76138675
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -242,7 +236,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76138672}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.97, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

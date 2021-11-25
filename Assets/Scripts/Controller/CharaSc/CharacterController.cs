@@ -9,53 +9,64 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     [SerializeField]
-    protected CharaParameter charaData;
+    protected CharaParameter charaData = null;
+    /*
     [SerializeField]
-    Weapons[] weapon;
+    Weapons[] weapon = null;
+    
     [SerializeField]
-    AnimationSpriteData animData;
+    AnimationSpriteData animData = null;
+    */
     [SerializeField]
-    AnimationCurve jumpCurve;
+    AnimationCurve jumpCurve = null;
 
 
-
-
-    [SerializeField]
-    protected PlayerInput input;
+    protected PlayerInput input = null;
     protected SpriteRenderer spriteRenderer = null;
-    protected CharacterStatus charaStatus;
+    // Charaのstatsを入れる
+    protected CharacterStatus charaStatus = default;
 
 
     /// Vector3
+    // キャラの移動
     protected Vector3 CharacterMove = new Vector3();
 
+
     /// int
+    /*
     private int _anim = 0;
     private int[] _maxAnimationCount = { 4, 8, 5, 13, 0 };
+    */
 
-
-    /// float
+    /// flooat
+    // ジャンプしている時間
     protected float _jumpTimer = 0;
+    // 落下している時間
+    private float _fallTimer = 1;
     // 攻撃力
     protected float _attackPower = 0;
-    // Jumpの高さ
+    // 落下速度
+    private float _fallSpeed = 9;
+    // ジャンプの高さ
     private float _y = 4;
     // Rayの長さ
     private float[] _animationTime = { 0, 0, 0, 0, 0 };
 
 
     /// bool
+    // 着地判定
     protected bool _isGround = false;
+    // 記憶を持っているか
     protected bool _hasMemory = false;
 
-
-    /// <summary>
+    
     /// const
-    /// </summary>
     protected const int _ZERO = 0;
     protected const int _ONE = 1;
 
+
     //==========================================================
+
 
     /// <summary>
     /// CharaStatus(Charaの状態)
@@ -71,6 +82,7 @@ public class CharacterController : MonoBehaviour
         Death,
         Damage,
     }
+
 
     //==========================================================
 
@@ -98,7 +110,7 @@ public class CharacterController : MonoBehaviour
         }
 
         // velocityへ入れる
-        transform.position += CharacterMove;
+        transform.position += CharacterMove * Time.deltaTime;
     }
 
 
@@ -111,6 +123,14 @@ public class CharacterController : MonoBehaviour
     /// <returns></returns>
     public virtual PlayerInput InputMethod()
     {
+        if (input._x != 0 && !input._isJump && input._isAttack)
+        {
+            charaStatus = CharacterStatus.Move;
+        }
+        else if(!input._isJump && !input._isAttack)
+        {
+            charaStatus = CharacterStatus.Idle;
+        }
         return null;
     }
 
@@ -125,8 +145,7 @@ public class CharacterController : MonoBehaviour
         // 攻撃状態じゃなければ
         if (!input._isAttack)
         {
-            charaStatus = CharacterStatus.Move;
-            CharacterMove.x = input._x * 10 * Time.deltaTime;
+            CharacterMove.x = input._x * 10;
         }
         else
         {
@@ -166,30 +185,39 @@ public class CharacterController : MonoBehaviour
             _isGround = false;
         }
 
-        Debug.Log(_jumpTimer);
-        Debug.Log(CharacterMove.y);
-
-        if (input._isJump && _jumpTimer < jumpCurve.length)
+        // ジャンプしてる時間を加算
+        if (input._isJump && _jumpTimer < 0.5f)
         {
             _jumpTimer += Time.deltaTime;
         }
         else
         {
-            input._isJump = false;
             _jumpTimer = _ZERO;
+            input._isJump = false;
         }
+
+        // 落下してる時間を加算
+        if (!_isGround)
+        {
+            _fallTimer += Time.deltaTime;
+        }
+        else
+        {
+            _fallTimer = _ONE;
+        }
+
 
         // 地面にいたらJumpする地面にいなかったらしない
         if (input._isJump && _isGround && !input._isAttack)
         {
             charaStatus = CharacterStatus.Jump;
-            //transform.Translate(Vector3.up * jumpCurve.Evaluate(_jumpTimer) * _y);
-            CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * Time.deltaTime;
+            CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * _y;
+            Debug.Log("aaafaa");
         }
         else if(!input._isJump && !_isGround)
         {
             charaStatus = CharacterStatus.Fall;
-            CharacterMove.y = -_y *  Time.deltaTime;
+            CharacterMove.y = -_fallSpeed * _fallTimer;
         }
         else if(!input._isJump && _isGround || input._isAttack)
         {
