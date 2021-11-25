@@ -41,11 +41,10 @@ public class PlayerController : CharacterController
     private bool _isNormal = false;
     private bool _isSoft = false;
 
-
     /// <summary>
     /// const
     /// </summary>
-    // 記憶ゲージ
+    [Header("記憶ゲージ")]
     // 最大値
     private const int _MAXMEMORYCAUGE = 100;
     // 〇

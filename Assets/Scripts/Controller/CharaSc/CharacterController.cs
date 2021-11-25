@@ -9,7 +9,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     [SerializeField]
-    protected CharaParameter charaData = null;
+    protected CharaParameter charaData = default;
     /*
     [SerializeField]
     Weapons[] weapon = null;
@@ -18,11 +18,11 @@ public class CharacterController : MonoBehaviour
     AnimationSpriteData animData = null;
     */
     [SerializeField]
-    AnimationCurve jumpCurve = null;
+    AnimationCurve jumpCurve = default;
 
 
-    protected PlayerInput input = null;
-    protected SpriteRenderer spriteRenderer = null;
+    protected PlayerInput input = default;
+    protected SpriteRenderer spriteRenderer = default;
     // Charaのstatsを入れる
     protected CharacterStatus charaStatus = default;
 
