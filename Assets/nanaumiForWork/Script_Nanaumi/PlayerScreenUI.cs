@@ -1,60 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerScreenUI : Chara
 {
     private int nowGaugeParcent;
+    [SerializeField, Tooltip("playerのタグを入れてください")] private string playerTag;
 
     protected override void Awake()
     {
         base.Awake();
         nowGaugeParcent = 0;
+        _chara = GameObject.FindGameObjectWithTag(playerTag).GetComponent<CharaParameter>();
+        _beforeLife = _chara.life;
     }
 
     private void Update()
     {
+        // 親メソッド
+        ChangeLife(_chara.life);
+
+        // 子メソッド
         InputManager();
         //ChangeMemoryGaugeUI();
         //ChangeWeaponUI();
-        //ToPauseUI();
         //ChangeMemoryAchivementUI();
         //ChangePlayerLife();
     }
 
     protected override void InputManager()
     {
-        base.InputManager();
-
-        // 決定
-        if (_isInput[0])
+        if (_isPause)
         {
-            _isInput[0] = false;
+            base.InputManager();
         }
-
-        // 上
-        if (_isInput[1])
+        else
         {
-            _isInput[1] = false;
-        }
-
-        // 下
-        if (_isInput[2])
-        {
-            _isInput[2] = false;
-        }
-
-        // 右
-        if (_isInput[3])
-        {
-            _isInput[3] = false;
-        }
-
-        // 左
-        if (_isInput[4])
-        {
-            _isInput[4] = false;
+            if (_inputs.UI.Pause.triggered)
+            {
+                _isPause = true;
+            }
         }
     }
 
@@ -66,11 +51,6 @@ public class PlayerScreenUI : Chara
     private void ChangeWeaponUI()
     {
 
-    }
-
-    private void ToPauseUI()
-    {
-        ChangeSceneCall();
     }
 
     private void ChangeMemoryAchivementUI()

@@ -5,16 +5,19 @@ using UnityEngine.UI;
 
 public class Chara : InGame
 {
-    protected Slider slider;
+    protected Slider _slider;
+    protected CharaParameter _chara;
+    protected int _beforeLife;
 
     protected override void Awake()
     {
         base.Awake();
-        slider = this.GetComponentInChildren<Slider>();
+        _slider = this.GetComponentInChildren<Slider>();
     }
 
     protected void ChangeLife(int nowLife)
     {
-
+        // beforelifeからnowlifeの差分をlerpで動かす
+        _slider.value = nowLife / _chara.life;
     }
 }

@@ -41,6 +41,14 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""30049d82-870a-4575-bfb8-b3ae7c8836bf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -120,6 +128,17 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""action"": ""Select_Vertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12e6eed7-d99b-4e9d-ae5e-ad2451768319"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -131,6 +150,7 @@ public class @InputController : IInputActionCollection, IDisposable
         m_UI_Decide = m_UI.FindAction("Decide", throwIfNotFound: true);
         m_UI_Select_Horizontal = m_UI.FindAction("Select_Horizontal", throwIfNotFound: true);
         m_UI_Select_Vertical = m_UI.FindAction("Select_Vertical", throwIfNotFound: true);
+        m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -183,6 +203,7 @@ public class @InputController : IInputActionCollection, IDisposable
     private readonly InputAction m_UI_Decide;
     private readonly InputAction m_UI_Select_Horizontal;
     private readonly InputAction m_UI_Select_Vertical;
+    private readonly InputAction m_UI_Pause;
     public struct UIActions
     {
         private @InputController m_Wrapper;
@@ -190,6 +211,7 @@ public class @InputController : IInputActionCollection, IDisposable
         public InputAction @Decide => m_Wrapper.m_UI_Decide;
         public InputAction @Select_Horizontal => m_Wrapper.m_UI_Select_Horizontal;
         public InputAction @Select_Vertical => m_Wrapper.m_UI_Select_Vertical;
+        public InputAction @Pause => m_Wrapper.m_UI_Pause;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -208,6 +230,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Select_Vertical.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect_Vertical;
                 @Select_Vertical.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect_Vertical;
                 @Select_Vertical.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect_Vertical;
+                @Pause.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -221,6 +246,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Select_Vertical.started += instance.OnSelect_Vertical;
                 @Select_Vertical.performed += instance.OnSelect_Vertical;
                 @Select_Vertical.canceled += instance.OnSelect_Vertical;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -230,5 +258,6 @@ public class @InputController : IInputActionCollection, IDisposable
         void OnDecide(InputAction.CallbackContext context);
         void OnSelect_Horizontal(InputAction.CallbackContext context);
         void OnSelect_Vertical(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
