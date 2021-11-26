@@ -9,35 +9,81 @@ public class PlayerController : CharacterController
 {
     private InputSystem IC;
 
+
+    /// <summary>
+    /// int
+    /// </summary>
     // 現在武器
     private int _weaponNumber = 0;
+
 
     /// <summary>
     /// float
     /// </summary>
+    // 武器の記憶の個数
+    protected int _weaponMemoryCount = 0;
+    // 記憶の個数
+    protected int _memoryCount = 0;
+    // 剣攻撃時間
     private float _swordTime = 0;
+    // 槌攻撃経過時間
     private float _hammerTime = 0;
-    private float _memoryGauge = 0;
+    // 記憶ゲージ
+    private float _memoryGauge = 50;
+    // 記憶ゲージ減少時間
+    private float _memoryDownTimer = 1;
 
-    private const float _MAXPOWERTIME = 3;
-    private const float _MIDDLEPOWERTIME = 1.5f;
-    // 記憶ゲージ減らす量
+
+    /// <summary>
+    /// bool
+    /// </summary>
+    private bool _isHard = false;
+    private bool _isNormal = false;
+    private bool _isSoft = false;
+
+    /// <summary>
+    /// const
+    /// </summary>
+    [Header("記憶ゲージ")]
+    // 最大値
+    private const int _MAXMEMORYCAUGE = 100;
     // 〇
-    private const int _GOODMEMORYDOWN = 5;
+    private const int _GOODMEMORYPLUS = 5;
     // △
-    private const int _NORMALMEMORYDOWN = 1;
+    private const int _NORMALMEMORYPLUS = 1;
     // ×
-    private const int _BADMEMORYDOWN = 1;
-    //時間減少
+    private const int _BADMEMORYPLUS = 1;
+    // 時間で減少
     private const float _TIMEMEMORYDOWN = 0.5f;
+
+    // 攻撃の押してる時間のMax値
+    // 強攻撃2段階目
+    private const float _MAXPOWERTIME = 3;
+    // 強攻撃1段階目
+    private const float _MIDDLEPOWERTIME = 1.5f;
+
+    // 攻撃の距離
+    private const float _ATTACKDISTANCE = 1.5f;
+
+
+    //=====================================================
 
 
     private void Awake()
     {
         IC = new InputSystem();
-        rb = GetComponent<Rigidbody>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
+    //=====================================================
+
+
+    protected override void Update()
+    {
+        base.Update();
+        MomoryGauge();
+    }
+
 
     //=====================================================
 
@@ -59,7 +105,6 @@ public class PlayerController : CharacterController
         if (IC.Player.SwordAttack.ReadValue<float>() == 1)
         {
             charaStatus = CharacterStatus.swordAttack;
-            _swordTime += Time.deltaTime;
         }
         else
         {
@@ -68,17 +113,33 @@ public class PlayerController : CharacterController
 
         if (IC.Player.HammerAttack.ReadValue<float>() == 1)
         {
-            charaStatus = CharacterStatus.hammerAttack;
-            _swordTime += Time.deltaTime;
+
         }
         else
         {
             _hammerTime = 0;
         }
 
+        if (IC.Player.SwordAttack.phase == UnityEngine.InputSystem.InputActionPhase.Performed)
+        {
+            _swordTime += Time.deltaTime;
+            charaStatus = CharacterStatus.swordAttack;
+
+            if (!input._isAttack)
+            {
+                input._isAttack = true;
+            }
+        }
+        else
+        {
+
+        }
+
         if (IC.Player.HammerAttack.triggered)
         {
             input._isAttack = true;
+            _swordTime += Time.deltaTime;
+            charaStatus = CharacterStatus.hammerAttack;
         }
 
         return input;
@@ -90,6 +151,10 @@ public class PlayerController : CharacterController
     //攻撃の追記とかあれば
     public override void Attack()
     {
+        _isHard = Physics.BoxCast(transform.position, Vector3.one, Vector3.right, Quaternion.identity, _ATTACKDISTANCE, LayerMask.GetMask("HardEnemy"));
+        _isNormal = Physics.BoxCast(transform.position, Vector3.one, Vector3.right, Quaternion.identity, _ATTACKDISTANCE, LayerMask.GetMask("NormalEnemy"));
+        _isSoft = Physics.BoxCast(transform.position, Vector3.one, Vector3.right, Quaternion.identity, _ATTACKDISTANCE, LayerMask.GetMask("SoftEnemy"));
+        
         // 攻撃力を入力
         if (charaStatus == CharacterStatus.swordAttack)
         {
@@ -164,13 +229,67 @@ public class PlayerController : CharacterController
     //記憶ゲージの管理
     protected void MomoryGauge()
     {
+        if (_memoryDownTimer >= _ZERO)
+        {
+            _memoryDownTimer -= Time.deltaTime;
+        }
+        else
+        {
+            _memoryGauge -= _TIMEMEMORYDOWN;
+            _memoryDownTimer = _ONE;
+        }
 
+        if (_memoryGauge > _MAXMEMORYCAUGE)
+        {
+            if (charaStatus == CharacterStatus.swordAttack)
+            {
+                if (_isSoft)
+                {
+                    _memoryGauge += _GOODMEMORYPLUS;
+                }
+                else if (_isNormal)
+                {
+                    _memoryGauge += _NORMALMEMORYPLUS;
+
+                }
+                else if (_isHard)
+                {
+                    _memoryGauge += _BADMEMORYPLUS;
+                }
+            }
+            else if (charaStatus == CharacterStatus.swordAttack)
+            {
+                if (_isHard)
+                {
+                    _memoryGauge += _GOODMEMORYPLUS;
+                }
+                else if (_isNormal)
+                {
+                    _memoryGauge += _NORMALMEMORYPLUS;
+                }
+                else if (_isSoft)
+                {
+                    _memoryGauge += _BADMEMORYPLUS;
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+        else
+        {
+            return;
+        }
     }
 
 
     //==========================================================
 
 
+    /// <summary>
+    /// 武器切り替え
+    /// </summary>
     protected void Change()
     {
         if (_weaponMemoryCount > _weaponNumber)
@@ -182,6 +301,7 @@ public class PlayerController : CharacterController
             _weaponNumber = _ZERO;
         }
     }
+
 
     //==================InputSystem========================
 

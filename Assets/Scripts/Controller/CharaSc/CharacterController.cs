@@ -9,54 +9,64 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     [SerializeField]
-    protected CharaParameter charaData;
+    protected CharaParameter charaData = default;
+    /*
     [SerializeField]
-    Weapons[] weapon;
+    Weapons[] weapon = null;
+    
     [SerializeField]
-    AnimationSpriteData animData;
-
-
-
-
+    AnimationSpriteData animData = null;
+    */
     [SerializeField]
-    protected PlayerInput input;
-    protected Rigidbody rb = null;
-    protected SpriteRenderer spriteRenderer = null;
-    protected CharacterStatus charaStatus;
+    AnimationCurve jumpCurve = default;
+
+
+    protected PlayerInput input = default;
+    protected SpriteRenderer spriteRenderer = default;
+    // Charaのstatsを入れる
+    protected CharacterStatus charaStatus = default;
 
 
     /// Vector3
+    // キャラの移動
     protected Vector3 CharacterMove = new Vector3();
 
+
     /// int
-    // 記憶の個数
-    protected int _weaponMemoryCount = 0;
-    protected int _memoryCount = 0;
+    /*
     private int _anim = 0;
     private int[] _maxAnimationCount = { 4, 8, 5, 13, 0 };
+    */
 
-
-    /// float
+    /// flooat
+    // ジャンプしている時間
+    protected float _jumpTimer = 0;
+    // 落下している時間
+    private float _fallTimer = 1;
     // 攻撃力
     protected float _attackPower = 0;
-    // Jumpの高さ
-    private float _y = 5;
+    // 落下速度
+    private float _fallSpeed = 9;
+    // ジャンプの高さ
+    private float _y = 4;
     // Rayの長さ
     private float[] _animationTime = { 0, 0, 0, 0, 0 };
 
 
     /// bool
+    // 着地判定
     protected bool _isGround = false;
+    // 記憶を持っているか
     protected bool _hasMemory = false;
 
-
-    /// <summary>
+    
     /// const
-    /// </summary>
     protected const int _ZERO = 0;
-    private const float _GROUNDDISTANCE = 1.5f;
+    protected const int _ONE = 1;
+
 
     //==========================================================
+
 
     /// <summary>
     /// CharaStatus(Charaの状態)
@@ -66,11 +76,13 @@ public class CharacterController : MonoBehaviour
         Idle,
         Move,
         Jump,
-        Down,
+        Fall,
         swordAttack,
         hammerAttack,
         Death,
+        Damage,
     }
+
 
     //==========================================================
 
@@ -78,7 +90,7 @@ public class CharacterController : MonoBehaviour
     /// <summary>
     /// 処理を呼び出す
     /// </summary>
-    private void Update()
+    protected virtual void Update()
     {
         input = InputMethod();
 
@@ -98,23 +110,9 @@ public class CharacterController : MonoBehaviour
         }
 
         // velocityへ入れる
-        rb.velocity = CharacterMove;
-
-        /*
-        if (input._isJump)
-        {
-            time += Time.deltaTime;
-            Debug.Log(time);
-        }
-
-        
-        if (time > animationCurve.length)
-        {
-            rb.useGravity = true;
-            time = 0;
-        }
-        */
+        transform.position += CharacterMove * Time.deltaTime;
     }
+
 
     //=================================================================================
 
@@ -125,8 +123,18 @@ public class CharacterController : MonoBehaviour
     /// <returns></returns>
     public virtual PlayerInput InputMethod()
     {
+        if (input._x != 0 && !input._isJump && input._isAttack)
+        {
+            charaStatus = CharacterStatus.Move;
+        }
+        else if(!input._isJump && !input._isAttack)
+        {
+            charaStatus = CharacterStatus.Idle;
+        }
         return null;
     }
+
+    //=================================================================================
 
 
     /// <summary>
@@ -141,6 +149,7 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
+            charaStatus = CharacterStatus.Idle;
             CharacterMove.x = _ZERO;
         }
     }
@@ -166,40 +175,53 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        /*
-        // Jump処理、攻撃処理の時は重力を外す
-        if (input._isAttack || input._isJump)
-        {
-            rb.useGravity = false;
-        }
-        */
-
-        // 地面にいたらJumpする地面にいなかったらしない
-        if (input._isJump && _isGround && !input._isAttack)
-        {
-            CharacterMove.y = _y;
-        }
-        else if (input._isAttack)
-        {
-            Debug.Log("adafgga");
-            CharacterMove.y = _ZERO;
-        }
-        else
-        {
-            CharacterMove.y = rb.velocity.y;
-        }
-        // 攻撃中は上下移動しない
-
         // LayerMaskがGroundだったら着地
-        if (rb.velocity.y <= 0 && Physics.Raycast(transform.position, Vector3.down, _GROUNDDISTANCE, LayerMask.GetMask("Ground")))
+        if (Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
         {
             _isGround = true;
-            input._isJump = false;
-            _animationTime[2] = _ZERO;
         }
         else
         {
             _isGround = false;
+        }
+
+        // ジャンプしてる時間を加算
+        if (input._isJump && _jumpTimer < 0.5f)
+        {
+            _jumpTimer += Time.deltaTime;
+        }
+        else
+        {
+            _jumpTimer = _ZERO;
+            input._isJump = false;
+        }
+
+        // 落下してる時間を加算
+        if (!_isGround)
+        {
+            _fallTimer += Time.deltaTime;
+        }
+        else
+        {
+            _fallTimer = _ONE;
+        }
+
+
+        // 地面にいたらJumpする地面にいなかったらしない
+        if (input._isJump && _isGround && !input._isAttack)
+        {
+            charaStatus = CharacterStatus.Jump;
+            CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * _y;
+            Debug.Log("aaafaa");
+        }
+        else if(!input._isJump && !_isGround)
+        {
+            charaStatus = CharacterStatus.Fall;
+            CharacterMove.y = -_fallSpeed * _fallTimer;
+        }
+        else if(!input._isJump && _isGround || input._isAttack)
+        {
+            CharacterMove.y = _ZERO;
         }
     }
 
@@ -209,7 +231,7 @@ public class CharacterController : MonoBehaviour
 
     public virtual void Death()
     {
-
+        charaStatus = CharacterStatus.Death;
     }
 
 
@@ -222,6 +244,8 @@ public class CharacterController : MonoBehaviour
     /// <param name="power"></param>
     public virtual void CharaLifeCalculation(float damage, int knockBack, int weapon)
     {
+        charaStatus = CharacterStatus.Damage;
+
         charaData.life -= (int)Mathf.Floor(damage);
 
         if (charaData.life <= 0)
