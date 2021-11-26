@@ -20,7 +20,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     AnimationCurve jumpCurve = default;
 
-
+    [SerializeField]
     protected PlayerInput input = default;
     protected SpriteRenderer spriteRenderer = default;
     // Charaのstatsを入れる
