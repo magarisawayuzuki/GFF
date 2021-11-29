@@ -118,6 +118,11 @@ public class UIController : MonoBehaviour
         //}
     }
 
+    protected void SelectorResize()
+    {
+
+    }
+
     protected void ChangeSceneCall(int sceneNumber)
     {
         UISceneManager loadScene = new UISceneManager();
@@ -128,6 +133,8 @@ public class UIController : MonoBehaviour
         //int sceneNumber = SceneDictionary[sceneName];
 
         loadScene.LoadScene(sceneNumber);
+
+        loadScene.asyncLoad[sceneNumber].allowSceneActivation = true;
     }
 
     private void OnEnable()
@@ -154,7 +161,9 @@ public class nextDone
     public int up;
     public int down;
 
+    // 遷移先シーン名
     public string nextScene;
 
+    // 遷移するフラグ
     public bool isTransition;
 }
