@@ -64,7 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\Takeda\Player.cs" />
     <Compile Include="Assets\Aoki\Script\EnemyNormal1.cs" />
-    <Compile Include="Assets\CameraMoveTest.cs" />
+    <Compile Include="Assets\Magarisawa\CameraMoveTest.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyController.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharacterAnimationController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryAchievementController.cs" />
