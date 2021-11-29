@@ -11,16 +11,13 @@ public class PlayerController : CharacterController
 
     private Vector3 Scale;
 
-    /// <summary>
-    /// int
+    #region int
     /// </summary>
     // 現在武器
     private int _weaponNumber = 0;
+    #endregion
 
-
-    /// <summary>
-    /// float
-    /// </summary>
+    #region float
     // 武器の記憶の個数
     protected int _weaponMemoryCount = 0;
     // 記憶の個数
@@ -33,11 +30,9 @@ public class PlayerController : CharacterController
     private float _memoryGauge = 50;
     // 記憶ゲージ減少時間
     private float _memoryDownTimer = 1;
-    [SerializeField]
+    #endregion
 
-    /// <summary>
-    /// bool
-    /// </summary>
+    #region bool
     private bool _isHard = false;
     private bool _isNormal = false;
     private bool _isSoft = false;
@@ -47,10 +42,9 @@ public class PlayerController : CharacterController
 
     private bool _canright = false;
     private bool _canLeft = false;
+    #endregion
 
-    /// <summary>
-    /// const
-    /// </summary>
+    #region const
     // 最大値
     private const int _MAXMEMORYCAUGE = 100;
     [SerializeField, Header("記憶ゲージ加算")]
@@ -78,6 +72,7 @@ public class PlayerController : CharacterController
     private const float _ATTACKDISTANCE = 1.5f;
     // Objectの横幅の半径
     private const float _BESIDE = 0.5f;
+    #endregion
 
     //=====================================================
 
@@ -96,25 +91,6 @@ public class PlayerController : CharacterController
     {
         base.Update();
         MomoryGauge();
-    }
-
-
-    //=====================================================
-
-
-    public override void Move()
-    {
-        _canright = Physics.BoxCast(transform.position, Scale, Vector3.right, Quaternion.identity, _BESIDE, LayerMask.GetMask("Ground"));
-        _canLeft = Physics.BoxCast(transform.position, Scale, Vector3.left, Quaternion.identity, _BESIDE, LayerMask.GetMask("Ground"));
-        if (!_canLeft && !_canLeft)
-        {
-            _canMove = true;
-        }
-        else
-        {
-            _canMove = false;
-        }
-        base.Move();
     }
 
 
@@ -199,20 +175,24 @@ public class PlayerController : CharacterController
         _isSoft = Physics.BoxCast(transform.position, Vector3.one, Vector3.right, Quaternion.identity, _ATTACKDISTANCE, LayerMask.GetMask("SoftEnemy"));
         #endregion
 
+        #region 攻撃力代入
         // 攻撃力を入力
         if (charaStatus == CharacterStatus.swordAttack)
         {
             if (_swordTime < _MIDDLEPOWERTIME)
             {
                 _attackPower = charaData.basicPower * 3;
+                Debug.Log("中攻撃");
             }
             else if (_swordTime < _NORMALPOWERTIME)
             {
                 _attackPower = charaData.basicPower * 2;
+                Debug.Log("攻撃");
             }
             else
             {
                 _attackPower = charaData.basicPower;
+                Debug.Log("強攻撃");
             }
         }
         else
@@ -221,18 +201,23 @@ public class PlayerController : CharacterController
             if (_hammerTime < _MIDDLEPOWERTIME)
             {
                 _attackPower = charaData.basicPower * 4.5f;
+                Debug.Log("中攻撃");
             }
             // 槌強攻撃1段階目
             else if (_hammerTime < _NORMALPOWERTIME)
             {
                 _attackPower = charaData.basicPower * 3;
+                Debug.Log("攻撃");
             }
             // 槌弱攻撃
             else
             {
                 _attackPower = charaData.basicPower * 1.5f;
+                Debug.Log("強攻撃");
             }
         }
+        #endregion
+
         base.Attack();
     }
 
@@ -274,7 +259,7 @@ public class PlayerController : CharacterController
     //記憶ゲージの管理
     protected void MomoryGauge()
     {
-        if (_memoryDownTimer >= _ZERO)
+        if (_memoryDownTimer > _ZERO)
         {
             _memoryDownTimer -= Time.deltaTime;
         }

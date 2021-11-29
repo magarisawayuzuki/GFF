@@ -58,7 +58,6 @@ public class CharacterController : MonoBehaviour
     protected bool _isGround = false;
     // 記憶を持っているか
     protected bool _hasMemory = false;
-    protected bool _canMove = false;
 
     
     /// const
@@ -112,6 +111,8 @@ public class CharacterController : MonoBehaviour
 
         // transform.positionに加算
         transform.position += CharacterMove * Time.deltaTime;
+
+        Debug.Log(charaStatus);
     }
 
 
@@ -144,7 +145,7 @@ public class CharacterController : MonoBehaviour
     public virtual void Move()
     {
         // 攻撃状態じゃなければ
-        if (_canMove)
+        if (!input._isAttack)
         {
             CharacterMove.x = input._x * 10;
         }
@@ -164,7 +165,7 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     public virtual void Attack()
     {
-
+        Debug.Log("ああああああああ");
     }
 
 
