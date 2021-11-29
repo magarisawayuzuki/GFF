@@ -11,8 +11,8 @@ public class PlayerScreenUI : Chara
     {
         base.Awake();
         nowGaugeParcent = 0;
-        _chara = GameObject.FindGameObjectWithTag(playerTag).GetComponent<CharaParameter>();
-        _beforeLife = _chara.life;
+        //_chara = GameObject.FindGameObjectWithTag(playerTag).GetComponent<CharaParameter>();
+        //_beforeLife = _chara.life;
     }
 
     private void Update()
