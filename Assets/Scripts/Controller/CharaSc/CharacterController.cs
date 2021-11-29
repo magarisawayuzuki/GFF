@@ -12,16 +12,16 @@ public class CharacterController : MonoBehaviour
     protected CharaParameter charaData = default;
     /*
     [SerializeField]
-    Weapons[] weapon = null;
+    Weapons[] weapon = default;
     
     [SerializeField]
-    AnimationSpriteData animData = null;
+    AnimationSpriteData animData = default;
     */
     [SerializeField]
     AnimationCurve jumpCurve = default;
 
 
-    protected PlayerInput input = default;
+    protected PlayerInput input = new PlayerInput();
     protected SpriteRenderer spriteRenderer = default;
     // Charaのstatsを入れる
     protected CharacterStatus charaStatus = default;
@@ -58,6 +58,7 @@ public class CharacterController : MonoBehaviour
     protected bool _isGround = false;
     // 記憶を持っているか
     protected bool _hasMemory = false;
+    protected bool _canMove = false;
 
     
     /// const
@@ -98,7 +99,7 @@ public class CharacterController : MonoBehaviour
         Move();
 
         // CharacterAnimation
-        //CharaViewControll();
+        //CharaViewController();
 
         // ジャンプ処理
         Jump();
@@ -109,7 +110,7 @@ public class CharacterController : MonoBehaviour
             Attack();
         }
 
-        // velocityへ入れる
+        // transform.positionに加算
         transform.position += CharacterMove * Time.deltaTime;
     }
 
@@ -143,7 +144,7 @@ public class CharacterController : MonoBehaviour
     public virtual void Move()
     {
         // 攻撃状態じゃなければ
-        if (!input._isAttack)
+        if (_canMove)
         {
             CharacterMove.x = input._x * 10;
         }
@@ -175,6 +176,7 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     private void Jump()
     {
+        #region 着地判定
         // LayerMaskがGroundだったら着地
         if (Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
         {
@@ -184,7 +186,9 @@ public class CharacterController : MonoBehaviour
         {
             _isGround = false;
         }
+        #endregion
 
+        #region ジャンプ時間加算
         // ジャンプしてる時間を加算
         if (input._isJump && _jumpTimer < 0.5f)
         {
@@ -195,7 +199,9 @@ public class CharacterController : MonoBehaviour
             _jumpTimer = _ZERO;
             input._isJump = false;
         }
+        #endregion
 
+        #region 落下時間加算
         // 落下してる時間を加算
         if (!_isGround)
         {
@@ -205,14 +211,13 @@ public class CharacterController : MonoBehaviour
         {
             _fallTimer = _ONE;
         }
-
+        #endregion
 
         // 地面にいたらJumpする地面にいなかったらしない
         if (input._isJump && _isGround && !input._isAttack)
         {
             charaStatus = CharacterStatus.Jump;
             CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * _y;
-            Debug.Log("aaafaa");
         }
         else if(!input._isJump && !_isGround)
         {
