@@ -16,6 +16,7 @@ public class TrackingArea : UnityEngine.MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
+            //初期位置かつ追跡中？
             if (enemy.Return == true && enemy.anime == 2)
             {
                 for (int i = 0; i < enemy.Spritetime.GetLength(0); i++)
@@ -27,6 +28,7 @@ public class TrackingArea : UnityEngine.MonoBehaviour
                 enemy.anime = 2;
             }
 
+            //初期位置じゃないかつ何もしていない？
             if(enemy.Return == false && enemy.anime == 3)
             {
                 for (int i = 0; i < enemy.Spritetime.GetLength(0); i++)

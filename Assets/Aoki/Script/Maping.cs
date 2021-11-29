@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// map情報の格納
+/// </summary>
 public class Maping : UnityEngine.MonoBehaviour
 {
     //0空気　1床　2壁　3ジャンプエリア 4行けないエリア　8エネミー

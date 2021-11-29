@@ -49,6 +49,14 @@ public class @InputSystem : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Test"",
+                    ""type"": ""Button"",
+                    ""id"": ""b10c0ef4-266c-4c22-8a9f-91e7fce694b6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""SlowTap(duration=1)""
                 }
             ],
             ""bindings"": [
@@ -117,6 +125,17 @@ public class @InputSystem : IInputActionCollection, IDisposable
                     ""action"": ""HammerAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e1fbe9f-2f5b-4e46-8a15-22b1971d2085"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Test"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -129,6 +148,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SwordAttack = m_Player.FindAction("SwordAttack", throwIfNotFound: true);
         m_Player_HammerAttack = m_Player.FindAction("HammerAttack", throwIfNotFound: true);
+        m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -182,6 +202,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SwordAttack;
     private readonly InputAction m_Player_HammerAttack;
+    private readonly InputAction m_Player_Test;
     public struct PlayerActions
     {
         private @InputSystem m_Wrapper;
@@ -190,6 +211,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @SwordAttack => m_Wrapper.m_Player_SwordAttack;
         public InputAction @HammerAttack => m_Wrapper.m_Player_HammerAttack;
+        public InputAction @Test => m_Wrapper.m_Player_Test;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -211,6 +233,9 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 @HammerAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHammerAttack;
                 @HammerAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHammerAttack;
                 @HammerAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHammerAttack;
+                @Test.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
+                @Test.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
+                @Test.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -227,6 +252,9 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 @HammerAttack.started += instance.OnHammerAttack;
                 @HammerAttack.performed += instance.OnHammerAttack;
                 @HammerAttack.canceled += instance.OnHammerAttack;
+                @Test.started += instance.OnTest;
+                @Test.performed += instance.OnTest;
+                @Test.canceled += instance.OnTest;
             }
         }
     }
@@ -237,5 +265,6 @@ public class @InputSystem : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSwordAttack(InputAction.CallbackContext context);
         void OnHammerAttack(InputAction.CallbackContext context);
+        void OnTest(InputAction.CallbackContext context);
     }
 }

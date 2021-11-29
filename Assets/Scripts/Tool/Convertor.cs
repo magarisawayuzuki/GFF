@@ -1,15 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using System.Threading.Tasks;
 
 public class Convertor : MonoBehaviour
 {
+    [Header("変換元画像")]
     [SerializeField] private Texture2D texture;
-    [SerializeField] private List<Color> colors;
 
+    [Header("識別色")]
+    [SerializeField] private List<Color> colors;
     [SerializeField] private List<List<int>> result;
+
+    [Header("出力形式")]
+    [SerializeField] private bool EnableExportTextFile = true;
+    [SerializeField] private bool EnableExportConsole = false;
+
+
 
     [ContextMenu("出力開始")]
     public async void GetPixel()
@@ -18,13 +25,14 @@ public class Convertor : MonoBehaviour
         int[,] mapInfo = new int[texture.height, texture.width];
 
         Debug.Log("変換開始");
+
+        //今回の要素数を出力する
         string debug = "要素数(" + texture.height + "|" + texture.width + ")" + "\n";
         result = new List<List<int>>();
 
         for (int i = 0; i < texture.height; i++)
         {
             //行頭
-            //
             debug += "{ ";
 
             List<int> temp = new List<int>();
@@ -47,12 +55,14 @@ public class Convertor : MonoBehaviour
                     //indexをi列,l行に格納
                     mapInfo[i, l] = index;
                 }
+
+                //画像の色が設定されたカラーに当てはまらなかった
                 else
                 {
                     debug += "-1";
 
                     mapInfo[i, l] = -1;
-                    Debug.Log("ColorError");
+                    Debug.LogWarning("ColorError");
                 }
             }
             result.Add(temp);
@@ -61,16 +71,26 @@ public class Convertor : MonoBehaviour
             debug += "} \n";
             await Task.Delay(1);
         }
-        //for (int i = 0; i < 5; i++)
-        //{
-        //    for (int l = 0; l < 5; l++)
-        //    {
-        //        Debug.Log(mapInfo[i,l]);
-        //    }
-        //    print("a");
-        //}
-        Debug.Log(debug);
 
+        //コンソールに出力する
+        if (EnableExportConsole)
+        {
+            Debug.Log(debug);
+        }
+
+        //テキストに出力する
+        if (EnableExportTextFile)
+        {
+            ExportText(debug);
+        }
+
+        Debug.Log("変換終了");
+    }
+
+
+
+    private void ExportText(string debug)
+    {
         StreamWriter sw = new StreamWriter("../MapData.txt", false);
         sw.WriteLine(debug);
         sw.Flush();
