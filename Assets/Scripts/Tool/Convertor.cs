@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using System.Threading.Tasks;
@@ -8,12 +7,16 @@ public class Convertor : MonoBehaviour
 {
     [Header("変換元画像")]
     [SerializeField] private Texture2D texture;
+
     [Header("識別色")]
     [SerializeField] private List<Color> colors;
     [SerializeField] private List<List<int>> result;
+
     [Header("出力形式")]
     [SerializeField] private bool EnableExportTextFile = true;
     [SerializeField] private bool EnableExportConsole = false;
+
+
 
     [ContextMenu("出力開始")]
     public async void GetPixel()
