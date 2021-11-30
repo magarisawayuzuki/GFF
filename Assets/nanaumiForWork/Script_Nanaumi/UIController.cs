@@ -18,7 +18,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private float selectorMagnitude;
 
     protected bool _isPause = false;
-    private int _nowSelectNumber = 1;
+    protected int _nowSelectNumber = 1;
     protected bool _isInput = false;
 
     protected virtual void Awake()
@@ -58,63 +58,64 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            
+            SelectorResize();
         }
     }
 
+    private const int ONE = 1;
     private void InputSelector()
     {
         // 決定
         if (_inputs.UI.Decide.triggered)
         {
             // シーン遷移する選択肢のとき
-            if (_select[_nowSelectNumber].nextdoit.isTransition)
+            if (_select[_nowSelectNumber - ONE].nextdoit.isTransition)
             {
-                ChangeSceneCall(SceneDictionary[_select[_nowSelectNumber].nextdoit.nextScene] - 1);
-                _isInput = false;
+                ChangeSceneCall(SceneDictionary[_select[_nowSelectNumber - ONE].nextdoit.nextScene] - 1);
+                _isInput = true;
             }
 
             // シーン遷移しない選択肢のとき
             else
             {
-                _isPause = false;
+                _isPause = true;
             }
         }
 
         // 上
         if (_inputs.UI.Select_Vertical.ReadValue<float>() > 0)
         {
-            if (_select[_nowSelectNumber].nextdoit.up != 0)
+            if (_select[_nowSelectNumber - ONE].nextdoit.up != 0)
             {
-                _nowSelectNumber = _select[_nowSelectNumber].nextdoit.up;
-                _isInput = false;
+                _nowSelectNumber = _select[_nowSelectNumber - ONE].nextdoit.up;
+                _isInput = true;
             }
         }
         // 下
         else if (_inputs.UI.Select_Vertical.ReadValue<float>() < 0)
         {
-            if (_select[_nowSelectNumber].nextdoit.down != 0)
+            if (_select[_nowSelectNumber - ONE].nextdoit.down != 0)
             {
-                _nowSelectNumber = _select[_nowSelectNumber].nextdoit.down;
-                _isInput = false;
+                _nowSelectNumber = _select[_nowSelectNumber - ONE].nextdoit.down;
+                _isInput = true;
             }
         }
         // 右
         else if (_inputs.UI.Select_Horizontal.ReadValue<float>() > 0)
         {
-            if (_select[_nowSelectNumber].nextdoit.right != 0)
+            if (_select[_nowSelectNumber - ONE].nextdoit.right != 0)
             {
-                _nowSelectNumber = _select[_nowSelectNumber].nextdoit.right;
-                _isInput = false;
+                _nowSelectNumber = _select[_nowSelectNumber - ONE].nextdoit.right;
+                _isInput = true;
             }
         }
         // 左
         else if (_inputs.UI.Select_Horizontal.ReadValue<float>() < 0)
         {
-            if (_select[_nowSelectNumber].nextdoit.left != 0)
+            if (_select[_nowSelectNumber - ONE].nextdoit.left != 0)
             {
-                _nowSelectNumber = _select[_nowSelectNumber].nextdoit.left;
-                _isInput = false;
+                _nowSelectNumber = _select[_nowSelectNumber - ONE].nextdoit.left;
+                _isInput = true;
             }
         }
         //else
@@ -125,12 +126,20 @@ public class UIController : MonoBehaviour
         //}
     }
 
+    private float _selectorResizeProgressTime = 0;
     protected void SelectorResize()
     {
-        _selector.transform.position = Vector2.Lerp(_selector.transform.localPosition, selectPoint[_nowSelectNumber - 1].transform.localPosition, Time.deltaTime * selectorMagnitude);
-
-        if(_selector.transform.localPosition == selectPoint[_nowSelectNumber - 1].transform.localPosition)
+        if (_selectorResizeProgressTime < 1)
         {
+            _selectorResizeProgressTime += Time.deltaTime * selectorMagnitude;
+            _selector.transform.localPosition = Vector2.Lerp(_selector.transform.localPosition, selectPoint[_nowSelectNumber - 1].transform.localPosition, _selectorResizeProgressTime);
+
+            Debug.Log("selectPoint : " + _selectorResizeProgressTime);
+        }
+        
+        if(_selectorResizeProgressTime >= 1)
+        {
+            _selectorResizeProgressTime = 0;
             _isInput = false;
         }
     }
@@ -146,6 +155,7 @@ public class UIController : MonoBehaviour
 
         loadScene.LoadScene(sceneNumber);
 
+        Debug.Log("LoadingOK");
         loadScene.asyncLoad[sceneNumber].allowSceneActivation = true;
     }
 

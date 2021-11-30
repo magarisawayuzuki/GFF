@@ -24,6 +24,13 @@ public class UISceneManager : MonoBehaviour
         // ロードが完了していても，シーンのアクティブ化は許可しない
         asyncLoad[sceneNum].allowSceneActivation = false;
 
+        yield return StartCoroutine(Loading(sceneNum));
+
+        Debug.Log("LoadingOK");
+    }
+
+    private IEnumerator Loading(int sceneNum)
+    {
         // ロードが完了するまで待つ
         yield return asyncLoad[sceneNum];
     }

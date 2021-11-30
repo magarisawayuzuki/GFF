@@ -9,6 +9,7 @@ public class PlayerScreenUI : Chara
     [SerializeField, Tooltip("playerのタグを入れてください")] private string playerTag;
 
     [SerializeField] private Text pauseText;
+    [SerializeField] private Text nowselectText;
 
     protected override void Awake()
     {
@@ -29,6 +30,8 @@ public class PlayerScreenUI : Chara
         //ChangeWeaponUI();
         //ChangeMemoryAchivementUI();
         //ChangePlayerLife();
+
+        nowselectText.text = "NowSelect : " + _nowSelectNumber.ToString();
     }
 
     protected override void InputManager()
@@ -41,10 +44,11 @@ public class PlayerScreenUI : Chara
         else
         {
             pauseText.text = "unPause";
-            if (_inputs.UI.Pause.triggered)
-            {
-                _isPause = true;
-            }
+        }
+
+        if (_inputs.UI.Pause.triggered)
+        {
+            _isPause = !_isPause;
         }
     }
 
