@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScreenUI : Chara
 {
     private int nowGaugeParcent;
     [SerializeField, Tooltip("playerのタグを入れてください")] private string playerTag;
+
+    [SerializeField] private Text pauseText;
 
     protected override void Awake()
     {
@@ -18,7 +21,7 @@ public class PlayerScreenUI : Chara
     private void Update()
     {
         // 親メソッド
-        ChangeLife(_chara.life);
+        //ChangeLife(_chara.life);
 
         // 子メソッド
         InputManager();
@@ -32,10 +35,12 @@ public class PlayerScreenUI : Chara
     {
         if (_isPause)
         {
+            pauseText.text = "Pause";
             base.InputManager();
         }
         else
         {
+            pauseText.text = "unPause";
             if (_inputs.UI.Pause.triggered)
             {
                 _isPause = true;
