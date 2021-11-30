@@ -29,41 +29,42 @@ public class CharacterController : MonoBehaviour
 
     /// Vector3
     // キャラの移動
-    protected Vector3 CharacterMove = new Vector3();
+    protected Vector3 CharacterMove = default;
 
 
-    /// int
+    #region int
     /*
     private int _anim = 0;
     private int[] _maxAnimationCount = { 4, 8, 5, 13, 0 };
     */
+    #endregion
 
-    /// flooat
+    #region flooat
     // ジャンプしている時間
-    protected float _jumpTimer = 0;
+    protected float _jumpTimer = default;
     // 落下している時間
-    private float _fallTimer = 1;
+    private float _fallTimer = default;
     // 攻撃力
-    protected float _attackPower = 0;
+    protected float _attackPower = default;
     // 落下速度
-    private float _fallSpeed = 9;
+    private float _fallSpeed = 8;
     // ジャンプの高さ
     private float _y = 4;
     // Rayの長さ
-    private float[] _animationTime = { 0, 0, 0, 0, 0 };
+    private float[] _animationTime = { default, default, default, default, default};
+    #endregion
 
-
-    /// bool
+    #region bool
     // 着地判定
-    protected bool _isGround = false;
+    protected bool _isGround = default;
     // 記憶を持っているか
-    protected bool _hasMemory = false;
+    protected bool _hasMemory = default;
+    #endregion
 
-    
-    /// const
+    #region const
     protected const int _ZERO = 0;
     protected const int _ONE = 1;
-
+    #endregion
 
     //==========================================================
 
@@ -112,7 +113,6 @@ public class CharacterController : MonoBehaviour
         // transform.positionに加算
         transform.position += CharacterMove * Time.deltaTime;
 
-        Debug.Log(charaStatus);
     }
 
 
@@ -125,14 +125,6 @@ public class CharacterController : MonoBehaviour
     /// <returns></returns>
     public virtual PlayerInput InputMethod()
     {
-        if (input._x != 0 && !input._isJump && input._isAttack)
-        {
-            charaStatus = CharacterStatus.Move;
-        }
-        else if(!input._isJump && !input._isAttack)
-        {
-            charaStatus = CharacterStatus.Idle;
-        }
         return null;
     }
 
@@ -151,8 +143,16 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            charaStatus = CharacterStatus.Idle;
             CharacterMove.x = _ZERO;
+        }
+
+        if (input._x != 0 && !input._isJump && !input._isAttack)
+        {
+            charaStatus = CharacterStatus.Move;
+        }
+        else if(!input._isJump && !input._isAttack)
+        {
+            charaStatus = CharacterStatus.Idle;
         }
     }
 
@@ -165,7 +165,7 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     public virtual void Attack()
     {
-        Debug.Log("ああああああああ");
+
     }
 
 
@@ -182,6 +182,10 @@ public class CharacterController : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
         {
             _isGround = true;
+            if (charaStatus == CharacterStatus.Jump)
+            {
+                input._isJump = false;
+            }
         }
         else
         {
@@ -191,20 +195,23 @@ public class CharacterController : MonoBehaviour
 
         #region ジャンプ時間加算
         // ジャンプしてる時間を加算
-        if (input._isJump && _jumpTimer < 0.5f)
+        if (input._isJump && !input._isAttack)
         {
             _jumpTimer += Time.deltaTime;
+        }
+        else if(!input._isAttack)
+        {
+            return;
         }
         else
         {
             _jumpTimer = _ZERO;
-            input._isJump = false;
         }
         #endregion
 
         #region 落下時間加算
         // 落下してる時間を加算
-        if (!_isGround)
+        if (!_isGround && !input._isJump)
         {
             _fallTimer += Time.deltaTime;
         }
@@ -214,18 +221,25 @@ public class CharacterController : MonoBehaviour
         }
         #endregion
 
-        // 地面にいたらJumpする地面にいなかったらしない
-        if (input._isJump && _isGround && !input._isAttack)
+        // 地面にいたらJump
+        if (input._isJump &&_isGround && !input._isAttack)
         {
             charaStatus = CharacterStatus.Jump;
-            CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * _y;
         }
-        else if(!input._isJump && !_isGround)
+
+        if (charaStatus == CharacterStatus.Jump)
+        {
+            CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * _y;
+            Debug.Log("afaf");
+        }
+        // 落下
+        else if (!input._isJump && !_isGround)
         {
             charaStatus = CharacterStatus.Fall;
-            CharacterMove.y = -_fallSpeed * _fallTimer;
+            CharacterMove.y = Mathf.Lerp(0.1f, -_fallSpeed, _fallTimer);
         }
-        else if(!input._isJump && _isGround || input._isAttack)
+        // 攻撃時の移動を制限
+        else if (_isGround || input._isAttack)
         {
             CharacterMove.y = _ZERO;
         }

@@ -9,8 +9,6 @@ public class PlayerController : CharacterController
 {
     private InputSystem IC;
 
-    private Vector3 Scale;
-
     #region int
     /// </summary>
     // 現在武器
@@ -74,6 +72,12 @@ public class PlayerController : CharacterController
     private const float _BESIDE = 0.5f;
     #endregion
 
+    #region デバック用
+
+    private float _AttackTime = default;
+    #endregion
+
+
     //=====================================================
 
 
@@ -81,7 +85,6 @@ public class PlayerController : CharacterController
     {
         IC = new InputSystem();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        Scale = transform.localScale;
     }
 
     //=====================================================
@@ -91,6 +94,25 @@ public class PlayerController : CharacterController
     {
         base.Update();
         MomoryGauge();
+        Debug.Log(IC.Player.SwordAttack.phase);
+        //Debug.Log(input._isAttack);
+
+        // デバッグ用
+        if (input._isAttack)
+        {
+            _AttackTime += Time.deltaTime;
+        }
+        else
+        {
+            _AttackTime = _ZERO;
+        }
+
+        if (_AttackTime > 3)
+        {
+            _swordTime = _ZERO;
+            _hammerTime = _ZERO;
+            input._isAttack = false;
+        }
     }
 
 
@@ -112,7 +134,7 @@ public class PlayerController : CharacterController
 
         // 左クリックで剣攻撃
         #region 剣攻撃入力時間加算
-        if (IC.Player.SwordAttack.phase == UnityEngine.InputSystem.InputActionPhase.Performed)
+        if (IC.Player.SwordAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started)
         {
             _swordTime += Time.deltaTime;
 
@@ -125,21 +147,17 @@ public class PlayerController : CharacterController
         {
             if (_isInputSwordAttack)
             {
-                input._isAttack = true;
                 charaStatus = CharacterStatus.swordAttack;
-            }
-            else
-            {
-                _swordTime = _ZERO;
+                input._isAttack = true;
             }
         }
         #endregion
 
         // 右クリックで槌攻撃
         #region 槌攻撃入力時間加算
-        if (IC.Player.HammerAttack.phase == UnityEngine.InputSystem.InputActionPhase.Performed)
+        if (IC.Player.HammerAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started)
         {
-            _swordTime += Time.deltaTime;
+            _hammerTime += Time.deltaTime;
 
             if (!_isInputHammerAttack)
             {
@@ -153,10 +171,6 @@ public class PlayerController : CharacterController
                 input._isAttack = true;
                 charaStatus = CharacterStatus.hammerAttack;
             }
-            else
-            {
-                _hammerTime = _ZERO;
-            }
         }
         #endregion
 
@@ -165,6 +179,7 @@ public class PlayerController : CharacterController
 
 
     //==========================================================
+
 
     //攻撃の追記とかあれば
     public override void Attack()
@@ -179,41 +194,47 @@ public class PlayerController : CharacterController
         // 攻撃力を入力
         if (charaStatus == CharacterStatus.swordAttack)
         {
-            if (_swordTime < _MIDDLEPOWERTIME)
+            if (_swordTime > _MIDDLEPOWERTIME)
             {
                 _attackPower = charaData.basicPower * 3;
-                Debug.Log("中攻撃");
+                Debug.Log("剣強攻撃");
+                _isInputSwordAttack = false;
             }
-            else if (_swordTime < _NORMALPOWERTIME)
+            else if (_swordTime > _NORMALPOWERTIME)
             {
                 _attackPower = charaData.basicPower * 2;
-                Debug.Log("攻撃");
+                Debug.Log("剣中攻撃");
+                _isInputSwordAttack = false;
             }
             else
             {
                 _attackPower = charaData.basicPower;
-                Debug.Log("強攻撃");
+                Debug.Log("剣弱攻撃");
+                _isInputSwordAttack = false;
             }
         }
-        else
+        else if(charaStatus == CharacterStatus.hammerAttack)
         {
             // 槌協攻撃2段階目
-            if (_hammerTime < _MIDDLEPOWERTIME)
+            if (_hammerTime > _MIDDLEPOWERTIME)
             {
                 _attackPower = charaData.basicPower * 4.5f;
-                Debug.Log("中攻撃");
+                Debug.Log("槌強攻撃");
+                _isInputHammerAttack = false;
             }
             // 槌強攻撃1段階目
-            else if (_hammerTime < _NORMALPOWERTIME)
+            else if (_hammerTime > _NORMALPOWERTIME)
             {
                 _attackPower = charaData.basicPower * 3;
-                Debug.Log("攻撃");
+                Debug.Log("槌中攻撃");
+                _isInputHammerAttack = false;
             }
             // 槌弱攻撃
             else
             {
                 _attackPower = charaData.basicPower * 1.5f;
-                Debug.Log("強攻撃");
+                Debug.Log("槌弱攻撃");
+                _isInputHammerAttack = false;
             }
         }
         #endregion
@@ -310,25 +331,6 @@ public class PlayerController : CharacterController
         else
         {
             return;
-        }
-    }
-
-
-    //==========================================================
-
-
-    /// <summary>
-    /// 武器切り替え
-    /// </summary>
-    protected void Change()
-    {
-        if (_weaponMemoryCount > _weaponNumber)
-        {
-            _weaponNumber++;
-        }
-        else
-        {
-            _weaponNumber = _ZERO;
         }
     }
 
