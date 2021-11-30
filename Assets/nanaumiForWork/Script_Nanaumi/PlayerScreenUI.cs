@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerScreenUI : Chara
@@ -11,12 +12,16 @@ public class PlayerScreenUI : Chara
     [SerializeField] private Text pauseText;
     [SerializeField] private Text nowselectText;
 
+    private PauseUI pauseUI;
+
     protected override void Awake()
     {
         base.Awake();
         nowGaugeParcent = 0;
         //_chara = GameObject.FindGameObjectWithTag(playerTag).GetComponent<CharaParameter>();
         //_beforeLife = _chara.life;
+
+        pauseUI = this.GetComponent<PauseUI>();
     }
 
     private void Update()
@@ -30,8 +35,6 @@ public class PlayerScreenUI : Chara
         //ChangeWeaponUI();
         //ChangeMemoryAchivementUI();
         //ChangePlayerLife();
-
-        nowselectText.text = "NowSelect : " + _nowSelectNumber.ToString();
     }
 
     protected override void InputManager()
@@ -39,6 +42,11 @@ public class PlayerScreenUI : Chara
         if (_isPause)
         {
             pauseText.text = "Pause";
+            if (!ContainsScene("Pause"))
+            {
+                SceneManager.LoadScene("Pause", LoadSceneMode.Additive);
+            }
+            this.enabled = false;
             base.InputManager();
         }
         else
@@ -50,6 +58,18 @@ public class PlayerScreenUI : Chara
         {
             _isPause = !_isPause;
         }
+    }
+
+    private bool ContainsScene(string sceneName)
+    {
+        for (int i = 0; i < SceneManager.sceneCount - 1; i++)
+        {
+            if (SceneManager.GetSceneAt(i).name == sceneName)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void ChangeMemoryGaugeUI()

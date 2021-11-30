@@ -6,13 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/nanaumiForWork/Scene_Nanaumi/InGame.unity
+    path: Assets/nanaumiForWork/Scene_Nanaumi/Pause.unity
     guid: b5f917144fd0e8b4d85b7500b315305c
   - enabled: 1
     path: Assets/nanaumiForWork/Scene_Nanaumi/Option.unity
     guid: 503cfeb2b93c4c74faf33b1211505e54
   - enabled: 1
-    path: Assets/nanaumiForWork/Scene_Nanaumi/Pause.unity
+    path: Assets/nanaumiForWork/Scene_Nanaumi/InGame.unity
     guid: 1509b82869de6a049b86975fa14a1be1
   - enabled: 1
     path: Assets/nanaumiForWork/Scene_Nanaumi/Title.unity

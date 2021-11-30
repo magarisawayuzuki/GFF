@@ -11,15 +11,20 @@ public class UIController : MonoBehaviour
     [SerializeField] SelectorMove[] _select;
 
     // selector自体のオブジェクト
-    [SerializeField] private GameObject _selector;
+    [SerializeField] private RectTransform _selector;
     // selectorの移動先オブジェクト
-    [SerializeField] private GameObject[] selectPoint;
+    [SerializeField] private RectTransform[] selectPoint;
     // selectorの移動速度
     [SerializeField] private float selectorMagnitude;
 
     protected bool _isPause = false;
     protected int _nowSelectNumber = 1;
-    protected bool _isInput = false;
+    /// <summary>
+    /// 0normal 1decide
+    /// </summary>
+    protected bool[] _isInput = { false, false };
+
+    private const int ONE = 1;
 
     protected virtual void Awake()
     {
@@ -27,11 +32,18 @@ public class UIController : MonoBehaviour
         _nowScene = SceneManager.GetActiveScene().name;
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         _isPause = false;
         _nowSelectNumber = 1;
-        _isInput = false;
+
+        for(int i = 0;i < _isInput.Length - 1; i++)
+        {
+            _isInput[i] = false;
+        }
+
+        _selector.anchoredPosition = selectPoint[_nowSelectNumber - 1].anchoredPosition;
+        _selector.sizeDelta = selectPoint[_nowSelectNumber - 1].sizeDelta;
     }
 
     protected Dictionary<string,int> SceneDictionary = new Dictionary<string, int>() 
@@ -52,17 +64,25 @@ public class UIController : MonoBehaviour
 
     protected virtual void InputManager()
     {
-        if (!_isInput)
+        if (!_isInput[0] && !_isInput[1])
         {
             InputSelector();
         }
-        else
+        else if(_isInput[0] && !_isInput[1])
         {
             SelectorResize();
         }
+        else if(!_isInput[0] && _isInput[1])
+        {
+            ChangeSceneCall(SceneDictionary[_select[_nowSelectNumber - ONE].nextdoit.nextScene] - 1);
+            _isInput[0] = true;
+        }
+        else
+        {
+            return;
+        }
     }
 
-    private const int ONE = 1;
     private void InputSelector()
     {
         // 決定
@@ -71,14 +91,20 @@ public class UIController : MonoBehaviour
             // シーン遷移する選択肢のとき
             if (_select[_nowSelectNumber - ONE].nextdoit.isTransition)
             {
-                ChangeSceneCall(SceneDictionary[_select[_nowSelectNumber - ONE].nextdoit.nextScene] - 1);
-                _isInput = true;
+                _isInput[1] = true;
             }
 
             // シーン遷移しない選択肢のとき
             else
             {
-                _isPause = true;
+                if (_select[_nowSelectNumber - ONE].nextdoit.nextScene == "Exit")
+                {
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+#else
+    Application.Quit();
+#endif
+                }
             }
         }
 
@@ -88,7 +114,7 @@ public class UIController : MonoBehaviour
             if (_select[_nowSelectNumber - ONE].nextdoit.up != 0)
             {
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].nextdoit.up;
-                _isInput = true;
+                _isInput[0] = true;
             }
         }
         // 下
@@ -97,7 +123,7 @@ public class UIController : MonoBehaviour
             if (_select[_nowSelectNumber - ONE].nextdoit.down != 0)
             {
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].nextdoit.down;
-                _isInput = true;
+                _isInput[0] = true;
             }
         }
         // 右
@@ -106,7 +132,7 @@ public class UIController : MonoBehaviour
             if (_select[_nowSelectNumber - ONE].nextdoit.right != 0)
             {
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].nextdoit.right;
-                _isInput = true;
+                _isInput[0] = true;
             }
         }
         // 左
@@ -115,7 +141,7 @@ public class UIController : MonoBehaviour
             if (_select[_nowSelectNumber - ONE].nextdoit.left != 0)
             {
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].nextdoit.left;
-                _isInput = true;
+                _isInput[0] = true;
             }
         }
         //else
@@ -132,7 +158,8 @@ public class UIController : MonoBehaviour
         if (_selectorResizeProgressTime < 1)
         {
             _selectorResizeProgressTime += Time.deltaTime * selectorMagnitude;
-            _selector.transform.localPosition = Vector2.Lerp(_selector.transform.localPosition, selectPoint[_nowSelectNumber - 1].transform.localPosition, _selectorResizeProgressTime);
+            _selector.anchoredPosition = Vector2.Lerp(_selector.anchoredPosition, selectPoint[_nowSelectNumber - 1].anchoredPosition, _selectorResizeProgressTime);
+            _selector.sizeDelta = Vector2.Lerp(_selector.sizeDelta, selectPoint[_nowSelectNumber - 1].sizeDelta, _selectorResizeProgressTime);
 
             Debug.Log("selectPoint : " + _selectorResizeProgressTime);
         }
@@ -140,23 +167,22 @@ public class UIController : MonoBehaviour
         if(_selectorResizeProgressTime >= 1)
         {
             _selectorResizeProgressTime = 0;
-            _isInput = false;
+            _isInput[0] = false;
         }
     }
 
     protected void ChangeSceneCall(int sceneNumber)
     {
-        UISceneManager loadScene = new UISceneManager();
+        UISceneManager loadScene = this.GetComponent<UISceneManager>();
 
         //// シーン名の取得
         //string sceneName = SceneManager.GetActiveScene().name;
         //// シーン名からシーンナンバー取得 ロードシーンの呼び出し時に使用
         //int sceneNumber = SceneDictionary[sceneName];
 
+        Debug.Log("Do Loading");
+        Debug.Log(loadScene);
         loadScene.LoadScene(sceneNumber);
-
-        Debug.Log("LoadingOK");
-        loadScene.asyncLoad[sceneNumber].allowSceneActivation = true;
     }
 
     private void OnEnable()

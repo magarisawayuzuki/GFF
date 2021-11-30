@@ -9,6 +9,13 @@ public class TitleUI : UIController
         base.Awake();
     }
 
+    protected override void Start()
+    {
+        base.Start();
+
+        _isPause = true;
+    }
+
     private void Update()
     {
         InputManager();
