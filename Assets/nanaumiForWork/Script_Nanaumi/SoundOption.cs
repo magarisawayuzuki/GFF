@@ -24,6 +24,9 @@ public class SoundOption : MonoBehaviour
     private void Awake()
     {
 		inputs = new InputController();
+		SetMaster(0);
+		SetBGM(0);
+		SetSE(0);
     }
 
     void Update()

@@ -10,13 +10,6 @@ public class UIController : MonoBehaviour
     private string _nowScene;
     [SerializeField] SelectorMove[] _select;
 
-    // selector自体のオブジェクト
-    [SerializeField] private GameObject _selector;
-    // selectorの移動先オブジェクト
-    [SerializeField] private GameObject[] selectPoint;
-    // selectorの移動速度
-    [SerializeField] private float selectorMagnitude;
-
     protected bool _isPause = false;
     private int _nowSelectNumber = 1;
     protected bool _isInput = false;
@@ -125,16 +118,6 @@ public class UIController : MonoBehaviour
         //}
     }
 
-    protected void SelectorResize()
-    {
-        _selector.transform.position = Vector2.Lerp(_selector.transform.localPosition, selectPoint[_nowSelectNumber - 1].transform.localPosition, Time.deltaTime * selectorMagnitude);
-
-        if(_selector.transform.localPosition == selectPoint[_nowSelectNumber - 1].transform.localPosition)
-        {
-            _isInput = false;
-        }
-    }
-
     protected void ChangeSceneCall(int sceneNumber)
     {
         UISceneManager loadScene = new UISceneManager();
@@ -145,8 +128,6 @@ public class UIController : MonoBehaviour
         //int sceneNumber = SceneDictionary[sceneName];
 
         loadScene.LoadScene(sceneNumber);
-
-        loadScene.asyncLoad[sceneNumber].allowSceneActivation = true;
     }
 
     private void OnEnable()
@@ -162,20 +143,18 @@ public class UIController : MonoBehaviour
 [System.Serializable]
 public class SelectorMove
 {
-    public NextDone nextdoit;
+    public nextDone nextdoit;
 }
 
 [System.Serializable]
-public class NextDone
+public class nextDone
 {
     public int left;
     public int right;
     public int up;
     public int down;
 
-    // 遷移先シーン名
     public string nextScene;
 
-    // 遷移するフラグ
     public bool isTransition;
 }
