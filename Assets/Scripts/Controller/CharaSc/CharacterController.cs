@@ -38,6 +38,9 @@ public class CharacterController : MonoBehaviour
     private int[] _maxAnimationCount = { 4, 8, 5, 13, 0 };
     */
     #endregion
+    protected int _damage = default;
+    protected int _knockback = default;
+    protected int _weapon = default;
 
     #region flooat
     // ジャンプしている時間
@@ -110,6 +113,8 @@ public class CharacterController : MonoBehaviour
             Attack();
         }
 
+        
+
         // transform.positionに加算
         transform.position += CharacterMove * Time.deltaTime;
 
@@ -173,24 +178,24 @@ public class CharacterController : MonoBehaviour
 
 
     /// <summary>
-    /// 着地判定、velocityのy軸に値を入れる
+    /// 着地判定、transformのy軸に値を入れる
     /// </summary>
     private void Jump()
     {
         #region 着地判定
         // LayerMaskがGroundだったら着地
-        if (Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
-        {
-            _isGround = true;
-            if (charaStatus == CharacterStatus.Jump)
-            {
-                input._isJump = false;
-            }
-        }
-        else
-        {
-            _isGround = false;
-        }
+        //if (Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
+        //{
+        //    _isGround = true;
+        //    if (charaStatus == CharacterStatus.Jump)
+        //    {
+        //        input._isJump = false;
+        //    }
+        //}
+        //else
+        //{
+        //    _isGround = false;
+        //}
         #endregion
 
         #region ジャンプ時間加算
@@ -230,7 +235,6 @@ public class CharacterController : MonoBehaviour
         if (charaStatus == CharacterStatus.Jump)
         {
             CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * _y;
-            Debug.Log("afaf");
         }
         // 落下
         else if (!input._isJump && !_isGround)

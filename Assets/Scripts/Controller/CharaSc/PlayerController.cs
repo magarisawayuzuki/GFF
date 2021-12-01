@@ -8,11 +8,10 @@ using UnityEngine;
 public class PlayerController : CharacterController
 {
     private InputSystem IC;
+    private RaycastHit attackHit = default;
 
     #region int
-    /// </summary>
-    // 現在武器
-    private int _weaponNumber = 0;
+
     #endregion
 
     #region float
@@ -28,6 +27,8 @@ public class PlayerController : CharacterController
     private float _memoryGauge = 50;
     // 記憶ゲージ減少時間
     private float _memoryDownTimer = 1;
+    // Objectの半径
+    private float _sidedistance = 0.5f;
     #endregion
 
     #region bool
@@ -38,9 +39,10 @@ public class PlayerController : CharacterController
     private bool _isInputSwordAttack = false;
     private bool _isInputHammerAttack = false;
 
-    private bool _canright = false;
-    private bool _canLeft = false;
+    private bool _canNotRight = false;
+    private bool _canNotLeft = false;
     #endregion
+    protected bool _isHit = default;
 
     #region const
     // 最大値
@@ -68,8 +70,6 @@ public class PlayerController : CharacterController
 
     // 攻撃の距離
     private const float _ATTACKDISTANCE = 1.5f;
-    // Objectの横幅の半径
-    private const float _BESIDE = 0.5f;
     #endregion
 
     #region デバック用
@@ -93,9 +93,16 @@ public class PlayerController : CharacterController
     protected override void Update()
     {
         base.Update();
+
+        if (_isHit)
+        {
+            CharaLifeCalculation(_damage, _knockback, _weapon);
+        }
+
         MomoryGauge();
-        Debug.Log(IC.Player.SwordAttack.phase);
-        //Debug.Log(input._isAttack);
+        Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right * 1, out attackHit);
+
+        Debug.Log("");
 
         // デバッグ用
         if (input._isAttack)
@@ -115,7 +122,6 @@ public class PlayerController : CharacterController
         }
     }
 
-
     //=====================================================
 
 
@@ -126,6 +132,18 @@ public class PlayerController : CharacterController
 
         // 入力値を _xに入れる
         input._x = IC.Player.Move.ReadValue<float>();
+
+        _canNotRight = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right, Quaternion.identity, _sidedistance, LayerMask.GetMask("Ground"));
+        _canNotLeft = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.left, Quaternion.identity, _sidedistance, LayerMask.GetMask("Ground"));
+
+        if (_canNotRight && input._x > 0)
+        {
+            input._x = 0;
+        }
+        if (_canNotLeft && input._x < 0)
+        {
+            input._x = 0;
+        }
 
         if (IC.Player.Jump.triggered)
         {
@@ -147,8 +165,8 @@ public class PlayerController : CharacterController
         {
             if (_isInputSwordAttack)
             {
-                charaStatus = CharacterStatus.swordAttack;
                 input._isAttack = true;
+                charaStatus = CharacterStatus.swordAttack;
             }
         }
         #endregion
@@ -185,9 +203,7 @@ public class PlayerController : CharacterController
     public override void Attack()
     {
         #region 敵の状態判定
-        _isHard = Physics.BoxCast(transform.position, Vector3.one, Vector3.right, Quaternion.identity, _ATTACKDISTANCE, LayerMask.GetMask("HardEnemy"));
-        _isNormal = Physics.BoxCast(transform.position, Vector3.one, Vector3.right, Quaternion.identity, _ATTACKDISTANCE, LayerMask.GetMask("NormalEnemy"));
-        _isSoft = Physics.BoxCast(transform.position, Vector3.one, Vector3.right, Quaternion.identity, _ATTACKDISTANCE, LayerMask.GetMask("SoftEnemy"));
+        _isHit = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right * 1, out attackHit);
         #endregion
 
         #region 攻撃力代入
@@ -239,6 +255,10 @@ public class PlayerController : CharacterController
         }
         #endregion
 
+        if (_isHit)
+        {
+            attackHit.collider.GetComponent(typeof(EnemyNormal));
+        }
         base.Attack();
     }
 
@@ -308,7 +328,7 @@ public class PlayerController : CharacterController
                     _memoryGauge += _BADMEMORYPLUS;
                 }
             }
-            else if (charaStatus == CharacterStatus.swordAttack)
+            else if (charaStatus == CharacterStatus.hammerAttack)
             {
                 if (_isHard)
                 {
