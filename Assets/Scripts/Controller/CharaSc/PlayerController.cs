@@ -10,6 +10,8 @@ public class PlayerController : CharacterController
     private InputSystem IC;
     private RaycastHit attackHit = default;
 
+    [SerializeField]public Vector3 Rotate = new Vector3(2,0,0);
+
     #region int
 
     #endregion
@@ -93,16 +95,23 @@ public class PlayerController : CharacterController
     protected override void Update()
     {
         base.Update();
+        MomoryGauge();
 
+        /*
         if (_isHit)
         {
             CharaLifeCalculation(_damage, _knockback, _weapon);
         }
+        */
 
-        MomoryGauge();
-        Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right * 1, out attackHit);
+        float phase = Time.time * 2 * Mathf.PI;
 
-        Debug.Log("");
+        Rotate.x = _ONE * -Mathf.Cos(phase);
+        Rotate.z = _ONE * -Mathf.Sin(phase);
+
+        Physics.BoxCast(transform.position, new Vector3(0, 1, 0), Rotate, out attackHit, Quaternion.identity, _ONE);
+
+        Debug.Log(attackHit.collider.GetComponent<EnemyNormal>());
 
         // デバッグ用
         if (input._isAttack)
@@ -257,7 +266,18 @@ public class PlayerController : CharacterController
 
         if (_isHit)
         {
-            attackHit.collider.GetComponent(typeof(EnemyNormal));
+            if (attackHit.collider.tag == "Normal")
+            {
+                attackHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_damage, _knockback, _weapon);
+            }
+            else if (attackHit.collider.tag == "Soft")
+            {
+                attackHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_damage, _knockback, _weapon);
+            }
+            else if (attackHit.collider.tag == "Hard")
+            {
+                attackHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_damage, _knockback, _weapon);
+            }
         }
         base.Attack();
     }
