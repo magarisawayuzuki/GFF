@@ -139,7 +139,6 @@ public class CreateStageEditor : MonoBehaviour
     /// <param name="mapInfo"></param>
     private void GenerateObject(int[,] mapInfo)
     {
-        print(mapInfo);
 
         //親オブジェクト生成
         GameObject parentObj = new GameObject("Stage");
@@ -153,16 +152,26 @@ public class CreateStageEditor : MonoBehaviour
         bool _isInstanced = false;
 
         //メイン縦方向
-        for (int i = 0; i < mapInfo.GetLength(0); i++)
+        for (int i = mapInfo.GetLength(0) - 1; i >= 0; i--)
         {
             //メイン横方向
             for (int j = 0; j < mapInfo.GetLength(1); j++)
             {
+                yConsecutiveLength = 0;
+                xConsecutiveLength = 0;
+
+                min_xConsecutiveLength = mapInfo.GetLength(1) - 1;
+
+                _isSpaceOneSide = false;
+                _isInstanced = false;
+
                 //今の位置にブロックがあるなら
                 if (mapInfo[i, j] == 1)
                 {
+                    //print("mapInfo[" +i+","+ j+"]" + "true");
+
                     //連続判定縦方向
-                    for (int k = 0; k < mapInfo.GetLength(0); k++)
+                    for (int k = i; k >= 0; k--)
                     {
                         //生成済みなら変数を初期化し終了
                         if (_isInstanced)
@@ -175,15 +184,13 @@ public class CreateStageEditor : MonoBehaviour
                         yConsecutiveLength++;
 
                         //下が空白もしくは要素の最後なら次の横の空白で生成する
-                        if (k == mapInfo.GetLength(0) - 1 ||　mapInfo[k+1, j] == 0)
+                        if (k == 0 ||　mapInfo[k-1, j] == 0)
                         {
                             _isSpaceOneSide = true;
-                            print("a");
-                            break;
                         }
 
                         //連続判定横方向
-                        for (int l = 0; l < mapInfo.GetLength(1); l++)
+                        for (int l = j; l < mapInfo.GetLength(1); l++)
                         {
                             //横ブロック数宇加算
                             xConsecutiveLength++;
@@ -191,65 +198,68 @@ public class CreateStageEditor : MonoBehaviour
                             //右が空白もしくは要素の最後なら
                             if (l == mapInfo.GetLength(1) - 1 || mapInfo[k,l+1] == 0)
                             {
+                                //最小値を保存しておく
+                                if (min_xConsecutiveLength > xConsecutiveLength)
+                                {
+                                    min_xConsecutiveLength = xConsecutiveLength;
+                                }
+
+
                                 //まだ下方向に続いている
                                 if (!_isSpaceOneSide)
                                 {
-                                    //最小値を保存しておく
-                                    if (min_xConsecutiveLength > xConsecutiveLength)
-                                    {
-                                        min_xConsecutiveLength = xConsecutiveLength;
-                                    }
-
                                     break;
                                 }
 
                                 //下と右の限界まで探索した
                                 else
                                 {
-                                    //最小値を保存しておく
-                                    if (min_xConsecutiveLength > xConsecutiveLength)
-                                    {
-                                        min_xConsecutiveLength = xConsecutiveLength;
-                                    }
-                                    print("gene");
+                                    //print("gene");
 
                                     //生成
                                     GameObject newGameObject = Instantiate(instanceObject, parentObj.transform);
 
-                                    //座標をX=(j + ((Scale - 1) /2 )),Y=(i - ((Scale - 1) /2 ))に変更
-                                    newGameObject.transform.position = new Vector3(j + ((min_xConsecutiveLength - 1) / 2), i - ((yConsecutiveLength - 1) / 2), 0);
                                     //サイズをブロックの連続数に変更
                                     newGameObject.transform.localScale = new Vector3(min_xConsecutiveLength, yConsecutiveLength, 1);
+
+                                    //print(yConsecutiveLength);
+                                    //print(i);
+                                    //print(i - ((yConsecutiveLength - 1) / 2));
+
+                                    //print(j);
+                                    //print(i);
+
+                                    //座標をX=(j + ((Scale - 1) /2 )),Y=(i - ((Scale - 1) /2 ))に変更
+                                    newGameObject.transform.position = new Vector3(j + ((min_xConsecutiveLength - 1) / 2), Mathf.Abs(i - mapInfo.GetLength(0)) - ((yConsecutiveLength - 1) / 2), 0);
 
                                     //生成終了フラグ
                                     _isInstanced = true;
                                     //今回x座標上で進んだ分探索を飛ばす
                                     j += min_xConsecutiveLength - 1;
 
-                                    yConsecutiveLength = 0;
-                                    xConsecutiveLength = 0;
-
-                                    min_xConsecutiveLength = mapInfo.GetLength(1) - 1;
-
-                                    _isSpaceOneSide = false;
-                                    _isInstanced = false;
+                                    
 
 
                                     //メイン探索位置から今回ブロックをまとめて生成する位置に探索済みの印をつける
-                                    for (int m = i; m < yConsecutiveLength; m++)
+                                    for (int m = 0; m < yConsecutiveLength - 1; m++)
                                     {
-                                        for (int n = j; n < min_xConsecutiveLength; n++)
+                                        for (int n = 0; n < min_xConsecutiveLength - 1; n++)
                                         {
                                             //探索済みの印
-                                            mapInfo[m,n] = -1;
+                                            mapInfo[i - m,j + n] = -1;
                                         }
                                     }
+                                    mapInfo[i, j] = -1;
 
                                     break;
                                 }
                             }
                         }
                     }
+                }
+                else
+                {
+                    //print("mapInfo[" + i + "," + j + "]" + "false");
                 }
             }
         }
