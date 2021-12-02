@@ -14,6 +14,8 @@ public class PauseUI_2 : UIController_2
 
     private void Start()
     {
+        _nowSelectNumber = 1;
+
         _selector.anchoredPosition = _selectPoint[_nowSelectNumber - 1].anchoredPosition;
         _selector.sizeDelta = _selectPoint[_nowSelectNumber - 1].sizeDelta;
     }
@@ -49,6 +51,5 @@ public class PauseUI_2 : UIController_2
         }
 
         _isInput[1] = false;
-        _nowSelectNumber = 1;
     }
 }

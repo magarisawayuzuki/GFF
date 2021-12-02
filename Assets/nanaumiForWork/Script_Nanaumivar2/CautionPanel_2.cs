@@ -10,7 +10,7 @@ public class CautionPanel_2 : UIController_2
     [SerializeField] private Text cautionText;
 
     [SerializeField] private string TitleSceneName;
-    [SerializeField] private string InGameSceneName;
+    [SerializeField] private string PauseSceneName;
 
     private void Start()
     {
@@ -44,7 +44,7 @@ public class CautionPanel_2 : UIController_2
 #endif
                 }
                 // Back to Title
-                else if (getSceneName == InGameSceneName)
+                else if (getSceneName == PauseSceneName)
                 {
                     sceneMan.LoadScene(TitleSceneName, true, getSceneName);
                 }
@@ -58,7 +58,7 @@ public class CautionPanel_2 : UIController_2
                     GetComponentInParent<TitleUI_2>().enabled = true;
                 }
                 // Back to Pause
-                else if (getSceneName == InGameSceneName)
+                else if (getSceneName == PauseSceneName)
                 {
                     GetComponentInParent<PauseUI_2>().enabled = true;
                 }
@@ -66,7 +66,6 @@ public class CautionPanel_2 : UIController_2
                 this.gameObject.SetActive(false);
                 this.enabled = false;
                 _isInput[1] = false;
-                _nowSelectNumber = 1;
                 break;
         }
     }
@@ -75,6 +74,7 @@ public class CautionPanel_2 : UIController_2
     {
         Debug.Log("Enable");
         base.OnEnable();
+        _nowSelectNumber = 1;
         _selector.anchoredPosition = _selectPoint[_nowSelectNumber - 1].anchoredPosition;
         _selector.sizeDelta = _selectPoint[_nowSelectNumber - 1].sizeDelta;
     }

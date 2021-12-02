@@ -7,7 +7,7 @@ using System.Linq;
 
 public class UIController_2 : MonoBehaviour
 {
-    private InputController _inputs;
+    protected InputController _inputs;
     protected UISceneManager_2 sceneMan;
 
     [SerializeField] SelectorMove_2[] _select;
@@ -95,8 +95,6 @@ public class UIController_2 : MonoBehaviour
             _selectorResizeProgressTime += Time.deltaTime * _selectorMagnitude;
             _selector.anchoredPosition = Vector2.Lerp(_selector.anchoredPosition, _selectPoint[_nowSelectNumber - 1].anchoredPosition, _selectorResizeProgressTime);
             _selector.sizeDelta = Vector2.Lerp(_selector.sizeDelta, _selectPoint[_nowSelectNumber - 1].sizeDelta, _selectorResizeProgressTime);
-            Debug.Log("selector : " + _selector.sizeDelta);
-            Debug.Log("selector2 : " + _selectPoint[_nowSelectNumber - 1].sizeDelta);
         }
 
         if (_selectorResizeProgressTime >= 1)

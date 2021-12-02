@@ -7,16 +7,16 @@ public class UISceneManager_2
 {
     private string DefaultSceneName;
 
-    public void LoadScene(string SceneName, bool IsUnloadScene, string DefaultSceneName)
+    public void LoadScene(string NextSceneName, bool IsUnloadScene, string ThisSceneName)
     {
         if (IsUnloadScene)
         {
             // イベントにイベントハンドラーを追加
             SceneManager.sceneLoaded += SceneLoaded;
-            this.DefaultSceneName = DefaultSceneName;
+            this.DefaultSceneName = ThisSceneName;
         }
 
-        SceneManager.LoadScene(SceneName, LoadSceneMode.Additive);
+        SceneManager.LoadScene(NextSceneName, LoadSceneMode.Additive);
     }
 
     // イベントハンドラー（イベント発生時に動かしたい処理）
@@ -35,6 +35,8 @@ public class UISceneManager_2
 
     public enum SceneState
     {
-
+        Title,
+        Pause,
+        InGame
     }
 }
