@@ -34,7 +34,6 @@ public class UIController_2 : MonoBehaviour
     {
         if (!_isInput[0] && !_isInput[1])
         {
-            Debug.Log(_inputs.UI.Select_Vertical.ReadValue<float>());
             InputSelector();
         }
         else if (_isInput[0] && !_isInput[1])
@@ -63,10 +62,8 @@ public class UIController_2 : MonoBehaviour
         // 下
         else if (_inputs.UI.Select_Vertical.ReadValue<float>() < 0)
         {
-            Debug.Log("AAAAAAA");
             if (_select[_nowSelectNumber - ONE].down != 0)
             {
-                Debug.Log("AAAAAAAAA");
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].down;
                 _isInput[0] = true;
             }
@@ -98,6 +95,8 @@ public class UIController_2 : MonoBehaviour
             _selectorResizeProgressTime += Time.deltaTime * _selectorMagnitude;
             _selector.anchoredPosition = Vector2.Lerp(_selector.anchoredPosition, _selectPoint[_nowSelectNumber - 1].anchoredPosition, _selectorResizeProgressTime);
             _selector.sizeDelta = Vector2.Lerp(_selector.sizeDelta, _selectPoint[_nowSelectNumber - 1].sizeDelta, _selectorResizeProgressTime);
+            Debug.Log("selector : " + _selector.sizeDelta);
+            Debug.Log("selector2 : " + _selectPoint[_nowSelectNumber - 1].sizeDelta);
         }
 
         if (_selectorResizeProgressTime >= 1)

@@ -19,7 +19,6 @@ public class TitleUI_2 : UIController_2
 
     private void Update()
     {
-        Debug.Log("A");
         InputManager();
 
         if (_isInput[1])
@@ -49,5 +48,6 @@ public class TitleUI_2 : UIController_2
         }
 
         _isInput[1] = false;
+        _nowSelectNumber = 1;
     }
 }

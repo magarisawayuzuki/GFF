@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/nanaumiForWork/Scene_Nanaumi/Title.unity
+- path: Assets/nanaumiForWork/Scene_Nanaumi/Pause.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
