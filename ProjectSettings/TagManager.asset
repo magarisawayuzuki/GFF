@@ -5,8 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - HorizontalArea
-  - VerticulArea
+  - Normal
   layers:
   - Default
   - TransparentFX
