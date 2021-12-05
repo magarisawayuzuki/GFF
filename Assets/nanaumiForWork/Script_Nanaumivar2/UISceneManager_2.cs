@@ -32,11 +32,4 @@ public class UISceneManager_2
     {
         SceneManager.UnloadSceneAsync(SceneName);
     }
-
-    public enum SceneState
-    {
-        Title,
-        Pause,
-        InGame
-    }
 }
