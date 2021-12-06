@@ -254,20 +254,47 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 60.899082
+      outSlope: 60.899082
       tangentMode: 0
-      weightedMode: 0
+      weightedMode: 2
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.1936384
     - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      time: 0.05028958
+      value: 1.3709509
+      inSlope: 14.431903
+      outSlope: 14.431903
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.4766923
+      outWeight: 0.40080926
+    - serializedVersion: 3
+      time: 0.09498653
+      value: 1.6897457
+      inSlope: 0.92081326
+      outSlope: 0.68870354
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0.34460086
+      outWeight: 0.36226404
+    - serializedVersion: 3
+      time: 0.13045701
+      value: 1.2436472
+      inSlope: -27.716213
+      outSlope: -27.716213
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33625847
+    - serializedVersion: 3
+      time: 0.17862694
+      value: -1.7683251
+      inSlope: -105.62523
+      outSlope: -105.62523
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1743881
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -276,6 +303,7 @@ MonoBehaviour:
     _x: 0
     _isAttack: 0
     _isJump: 0
+  _defaultJumpHeight: 10
 --- !u!65 &481349866
 BoxCollider:
   m_ObjectHideFlags: 0

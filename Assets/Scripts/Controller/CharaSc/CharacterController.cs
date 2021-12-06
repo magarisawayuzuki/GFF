@@ -48,6 +48,7 @@ public class CharacterController : MonoBehaviour
     // 落下速度
     private float _fallSpeed = 9;
     // ジャンプの高さ
+    [SerializeField]
     private float _defaultJumpHeight = 4;
     // Rayの長さ
     private float[] _animationTime = { 0, 0, 0, 0, 0 };
@@ -169,12 +170,28 @@ public class CharacterController : MonoBehaviour
 
     //===================================================================================
 
+    //マージしないといけないのでここに仮で記述してます。
+    private float acceleration = default;
 
     /// <summary>
-    /// 着地判定、velocityのy軸に値を入れる
+    /// ジャンプ関連の定義や状態の判定
     /// </summary>
     private void Jump()
     {
+        bool _nowJump = false;
+        //ジャンプ処理から返される加速値
+        float jumpAccelerationValue = default;
+        //落下処理から返される加速値
+        float fallAccelerationValue = default;
+
+
+        //攻撃中は停止
+        if (input._isAttack)
+        {
+            CharacterMove.y = _ZERO;
+            return;
+        }
+
         // LayerMaskがGroundだったら着地
         if (Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
         {
@@ -185,48 +202,123 @@ public class CharacterController : MonoBehaviour
             _isGround = false;
         }
 
-        // ジャンプしてる時間を加算
-        if (input._isJump && _jumpTimer < 0.5f)
+        //ジャンプ中ならジャンプ処理を呼び、以下の判定は行わない
+        if (_nowJump)
         {
-            _jumpTimer += Time.deltaTime;
-        }
-        //**0.5f以上ジャンプしてたら終了？
-        else
-        {
-            _jumpTimer = _ZERO;
-            input._isJump = false;
+            //加速値を計算する
+            AccelerationValueCalculation(jumpAccelerationValue);
+            return;
         }
 
-        // 落下してる時間を加算
-        if (!_isGround)
+        //着地状態
+        if (_isGround)
         {
-            _fallTimer += Time.deltaTime;
-        }
-        else
-        {
-            _fallTimer = _ONE;
-        }
-
-
-        // 地面にいたらJumpする地面にいなかったらしない
-        if (input._isJump && _isGround && !input._isAttack)
-        {
-            charaStatus = CharacterStatus.Jump;
-            CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * _defaultJumpHeight;
-            Debug.Log("aaafaa");
-        }
-        //**自由落下の状態
-        else if(!input._isJump && !_isGround)
-        {
-            charaStatus = CharacterStatus.Fall;
-            CharacterMove.y = -_fallSpeed * _fallTimer;
-        }
-        //地面にいてジャンプが押されていないもしくは攻撃中
-        else if(!input._isJump && _isGround || input._isAttack)
-        {
+            //動かさない
             CharacterMove.y = _ZERO;
+
+            //ジャンプ可能なタイミングでジャンプが押された
+            if (!input._isAttack && input._isJump)
+            {
+                //ジャンプ開始
+                _nowJump = true;
+            }
+        }
+        //非着地状態
+        else
+        {
+            //落下
+            CharaFallProcess(fallAccelerationValue);
+
         }
     }
+
+    /// <summary>
+    /// ジャンプ処理の加速値を計算し加速度に加算する
+    /// </summary>
+    /// <param name="returnValue"></param>
+    /// <returns></returns>
+    private void AccelerationValueCalculation(float jumpAccelerationValue)
+    {
+        
+
+        //加速度にジャンプの加速値を加算する
+        acceleration += jumpAccelerationValue;
+    }
+
+    /// <summary>
+    /// キャラの落下処理(擬似重力処理)の加速値を計算し加速度から減算する
+    /// </summary>
+    private void CharaFallProcess(float fallAccelerationValue)
+    {
+
+
+
+        //加速度にジャンプの加速値を加算する
+        acceleration += fallAccelerationValue;
+    }
+
+
+    /// <summary>
+    /// 着地判定、velocityのy軸に値を入れる
+    /// </summary>
+    //private void Jump()
+    //{
+    //    //print(_fallTimer);
+    //    print(jumpCurve.Evaluate(_jumpTimer));
+
+
+    //    // LayerMaskがGroundだったら着地
+    //    if (Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
+    //    {
+    //        _isGround = true;
+    //    }
+    //    else
+    //    {
+    //        _isGround = false;
+    //    }
+
+    //    // ジャンプしてる時間を加算
+    //    if (input._isJump && _jumpTimer < 0.5f)
+    //    {
+    //        _jumpTimer += Time.deltaTime;
+    //    }
+    //    //**0.5f以上ジャンプしてたら終了？
+    //    else
+    //    {
+    //        _jumpTimer = _ZERO;
+    //        input._isJump = false;
+    //    }
+
+    //    // 落下してる時間を加算
+    //    if (!_isGround && !input._isJump)
+    //    {
+    //        _fallTimer += Time.deltaTime;
+    //    }
+    //    else
+    //    {
+    //        _fallTimer = _ONE;
+    //    }
+
+
+    //    // 地面にいたらJumpする地面にいなかったらしない
+    //    if (input._isJump && _isGround && !input._isAttack)
+    //    {
+    //        charaStatus = CharacterStatus.Jump;
+    //        CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * _defaultJumpHeight;
+    //        Debug.Log("aaafaa");
+    //    }
+    //    //**自由落下の状態
+    //    else if(!input._isJump && !_isGround)
+    //    {
+    //        charaStatus = CharacterStatus.Fall;
+    //        CharacterMove.y = -_fallSpeed * _fallTimer;
+    //    }
+    //    //地面にいてジャンプが押されていないもしくは攻撃中
+    //    else if(!input._isJump && _isGround || input._isAttack)
+    //    {
+    //        CharacterMove.y = _ZERO;
+    //    }
+    //}
 
 
     //=====================================================================
