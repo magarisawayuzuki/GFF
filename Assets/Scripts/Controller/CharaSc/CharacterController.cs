@@ -113,8 +113,6 @@ public class CharacterController : MonoBehaviour
             Attack();
         }
 
-        
-
         // transform.positionに加算
         transform.position += CharacterMove * Time.deltaTime;
 
@@ -237,7 +235,7 @@ public class CharacterController : MonoBehaviour
             CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * _y;
         }
         // 落下
-        else if (!input._isJump && !_isGround)
+        else if (!input._isAttack && !input._isJump && !_isGround)
         {
             charaStatus = CharacterStatus.Fall;
             CharacterMove.y = Mathf.Lerp(0.1f, -_fallSpeed, _fallTimer);

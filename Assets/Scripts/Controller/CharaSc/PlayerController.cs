@@ -8,9 +8,11 @@ using UnityEngine;
 public class PlayerController : CharacterController
 {
     private InputSystem IC;
-    private RaycastHit attackHit = default;
-
-    [SerializeField]public Vector3 Rotate = new Vector3(2,0,0);
+    private RaycastHit _attackHit = default;
+    
+    private Vector3 Rotate = default;
+    private Vector3 _swordBoxScale = default;
+    private Vector3 _hammerBoxScale = default;
 
     #region int
 
@@ -97,22 +99,6 @@ public class PlayerController : CharacterController
         base.Update();
         MomoryGauge();
 
-        /*
-        if (_isHit)
-        {
-            CharaLifeCalculation(_damage, _knockback, _weapon);
-        }
-        */
-
-        float phase = Time.time * 2 * Mathf.PI;
-
-        Rotate.x = _ONE * -Mathf.Cos(phase);
-        Rotate.z = _ONE * -Mathf.Sin(phase);
-
-        Physics.BoxCast(transform.position, new Vector3(0, 1, 0), Rotate, out attackHit, Quaternion.identity, _ONE);
-
-        Debug.Log(attackHit.collider.GetComponent<EnemyNormal>());
-
         // デバッグ用
         if (input._isAttack)
         {
@@ -123,7 +109,7 @@ public class PlayerController : CharacterController
             _AttackTime = _ZERO;
         }
 
-        if (_AttackTime > 3)
+        if (_AttackTime > 2.5f)
         {
             _swordTime = _ZERO;
             _hammerTime = _ZERO;
@@ -142,8 +128,8 @@ public class PlayerController : CharacterController
         // 入力値を _xに入れる
         input._x = IC.Player.Move.ReadValue<float>();
 
-        _canNotRight = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right, Quaternion.identity, _sidedistance, LayerMask.GetMask("Ground"));
-        _canNotLeft = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.left, Quaternion.identity, _sidedistance, LayerMask.GetMask("Ground"));
+        _canNotRight = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right, Quaternion.identity, _sidedistance);
+        _canNotLeft = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.left, Quaternion.identity, _sidedistance);
 
         if (_canNotRight && input._x > 0)
         {
@@ -211,8 +197,18 @@ public class PlayerController : CharacterController
     //攻撃の追記とかあれば
     public override void Attack()
     {
+        Rotate.y = Mathf.Sin(Time.time);
+
         #region 敵の状態判定
-        _isHit = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right * 1, out attackHit);
+        Debug.DrawRay(transform.position, Vector3.right + Rotate * _ONE);
+        if (charaStatus == CharacterStatus.swordAttack)
+        {
+            _isHit = Physics.BoxCast(transform.position, _swordBoxScale, Vector3.right, out _attackHit);
+        }
+        else if(charaStatus == CharacterStatus.hammerAttack)
+        {
+            _isHit = Physics.BoxCast(transform.position, _hammerBoxScale, Vector3.right, out _attackHit);
+        }
         #endregion
 
         #region 攻撃力代入
@@ -238,7 +234,7 @@ public class PlayerController : CharacterController
                 _isInputSwordAttack = false;
             }
         }
-        else if(charaStatus == CharacterStatus.hammerAttack)
+        else if (charaStatus == CharacterStatus.hammerAttack)
         {
             // 槌協攻撃2段階目
             if (_hammerTime > _MIDDLEPOWERTIME)
@@ -264,20 +260,20 @@ public class PlayerController : CharacterController
         }
         #endregion
 
-        if (_isHit)
+        if (_attackHit.collider.tag == "Normal")
         {
-            if (attackHit.collider.tag == "Normal")
-            {
-                attackHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_damage, _knockback, _weapon);
-            }
-            else if (attackHit.collider.tag == "Soft")
-            {
-                attackHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_damage, _knockback, _weapon);
-            }
-            else if (attackHit.collider.tag == "Hard")
-            {
-                attackHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_damage, _knockback, _weapon);
-            }
+            Debug.Log("ふつう当たった");
+            _attackHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_damage, _knockback, _weapon);
+        }
+        else if (_attackHit.collider.tag == "Soft")
+        {
+            Debug.Log("やわらかい当たった");
+            _attackHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_damage, _knockback, _weapon);
+        }
+        else if (_attackHit.collider.tag == "Hard")
+        {
+            Debug.Log("硬い当たった");
+            _attackHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_damage, _knockback, _weapon);
         }
         base.Attack();
     }
