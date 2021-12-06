@@ -8,9 +8,6 @@ public class OptionUI_2 : UIController_2
 {
     private bool _isVolumeChange = false;
 
-    [SerializeField] private string TitleSceneName;
-    [SerializeField] private string PauseSceneName;
-
     [SerializeField] private Slider[] slider;
 
     [SerializeField] private int _volumeSliderMagnitude;
@@ -31,7 +28,7 @@ public class OptionUI_2 : UIController_2
         }
         else if (_isVolumeChange)
         {
-            TitleSelector();
+            VolumeChanger();
         }
 
         if (_isInput[1] || _inputs.UI.Decide.triggered)
@@ -41,27 +38,34 @@ public class OptionUI_2 : UIController_2
 
             if(_nowSelectNumber == 4)
             {
-                BackToScene(SceneManager.GetActiveScene().name);
+                BackToScene(SceneStateUI_2.sceneState);
                 _isVolumeChange = false;
             }
         }
     }
 
-    private void TitleSelector()
+    private void VolumeChanger()
     {
         slider[_nowSelectNumber - 1].value += _inputs.UI.Select_Horizontal.ReadValue<float>() / _volumeSliderMagnitude;
     }
 
-    private void BackToScene(string getSceneName)
+    private void BackToScene(SceneStateUI_2.SceneState sceneState)
     {
-        switch (getSceneName)
+        Debug.Log("sceneState" + sceneState);
+        switch (sceneState)
         {
-            case "Title":
-                sceneMan.LoadScene(TitleSceneName, true, getSceneName);
+            case SceneStateUI_2.SceneState.Title:
+                sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option));
                 break;
-            case "Pause":
-                sceneMan.LoadScene(PauseSceneName, true, getSceneName);
+            case SceneStateUI_2.SceneState.Pause:
+                sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option));
                 break;
         }
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        SceneStateUI_2.sceneState = SceneStateUI_2.SceneState.Title;
     }
 }

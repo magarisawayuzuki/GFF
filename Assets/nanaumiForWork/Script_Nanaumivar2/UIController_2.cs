@@ -32,6 +32,7 @@ public class UIController_2 : MonoBehaviour
 
     protected void InputManager()
     {
+        Debug.Log(SceneStateUI_2.sceneState);
         if (!_isInput[0] && !_isInput[1])
         {
             InputSelector();

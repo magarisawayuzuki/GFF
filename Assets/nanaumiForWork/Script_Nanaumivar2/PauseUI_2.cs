@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class PauseUI_2 : UIController_2
 {
-    [SerializeField] private string InGameSceneName;
-    [SerializeField] private string OptionSceneName;
-
     [SerializeField] private GameObject cautionPanel;
     [SerializeField] private CautionPanel_2 caucau;
 
@@ -36,7 +33,7 @@ public class PauseUI_2 : UIController_2
         {
             // Back to InGame
             case 1:
-                sceneMan.LoadScene(InGameSceneName, true, SceneManager.GetActiveScene().name);
+                sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
                 break;
             // Back to Title to CautionPanel
             case 2:
@@ -46,10 +43,16 @@ public class PauseUI_2 : UIController_2
                 break;
             // to Option
             case 3:
-                sceneMan.LoadScene(OptionSceneName, true, SceneManager.GetActiveScene().name);
+                sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
                 break;
         }
 
         _isInput[1] = false;
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        SceneStateUI_2.sceneState = SceneStateUI_2.SceneState.Pause;
     }
 }

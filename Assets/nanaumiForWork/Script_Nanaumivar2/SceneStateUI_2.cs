@@ -4,24 +4,30 @@ using UnityEngine;
 
 public static class SceneStateUI_2
 {
-        public static string Name(this SceneStateUI_2.SceneState musicType)
+    public static SceneState sceneState = SceneState.Title;
+
+    public static string SceneName(this SceneState sceneState)
+    {
+        switch (sceneState)
         {
-            switch (musicType)
-            {
-                case SceneState.Title:
-                    return "ぽっぷ";
-                case SceneState.Pause:
-                    return "じゃず";
-                case SceneState.InGame:
-                    return "ろっく";
-                default:
-                    return "";
-            }
+            case SceneState.Title:
+                return "Title";
+            case SceneState.Pause:
+                return "Pause";
+            case SceneState.InGame:
+                return "InGame";
+            case SceneState.Option:
+                return "Option";
+            default:
+                return "";
         }
+    }
+
     public enum SceneState
     {
         Title,
         Pause,
-        InGame
+        InGame,
+        Option
     }
 }
