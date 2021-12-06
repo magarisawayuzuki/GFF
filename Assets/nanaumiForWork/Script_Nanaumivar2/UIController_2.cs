@@ -27,12 +27,12 @@ public class UIController_2 : MonoBehaviour
     protected virtual void Awake()
     {
         _inputs = new InputController();
-        sceneMan = new UISceneManager_2();
+        //sceneMan = new UISceneManager_2();
+        sceneMan = gameObject.AddComponent<UISceneManager_2>();
     }
 
     protected void InputManager()
     {
-        Debug.Log(SceneStateUI_2.sceneState);
         if (!_isInput[0] && !_isInput[1])
         {
             InputSelector();

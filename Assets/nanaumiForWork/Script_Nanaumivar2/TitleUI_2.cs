@@ -35,11 +35,11 @@ public class TitleUI_2 : UIController_2
         {
             // to InGame
             case 1:
-                sceneMan.LoadScene(InGameSceneName, true, SceneManager.GetActiveScene().name);
+                sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title));
                 break;
             // to Option
             case 2:
-                sceneMan.LoadScene(OptionSceneName, true, SceneManager.GetActiveScene().name);
+                sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title));
                 break;
             // Exit Game to CautionPanel
             case 3:
@@ -50,5 +50,11 @@ public class TitleUI_2 : UIController_2
         }
 
         _isInput[1] = false;
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        SceneStateUI_2.sceneState = SceneStateUI_2.SceneState.Title;
     }
 }

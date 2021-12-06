@@ -2356,10 +2356,8 @@ MonoBehaviour:
   - {fileID: 1173284420}
   _selector: {fileID: 1285101005}
   _selectorMagnitude: 5
-  TitleSceneName: Title
-  PauseSceneName: Pause
   slider:
   - {fileID: 1913453167}
   - {fileID: 1327021119}
   - {fileID: 27090843}
-  _volumeSliderMagnitude: 0
+  _volumeSliderMagnitude: 1

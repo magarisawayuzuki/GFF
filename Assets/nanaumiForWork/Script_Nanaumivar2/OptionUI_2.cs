@@ -66,6 +66,5 @@ public class OptionUI_2 : UIController_2
     protected override void OnEnable()
     {
         base.OnEnable();
-        SceneStateUI_2.sceneState = SceneStateUI_2.SceneState.Title;
     }
 }
