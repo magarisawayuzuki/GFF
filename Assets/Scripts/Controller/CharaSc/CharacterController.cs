@@ -48,11 +48,11 @@ public class CharacterController : MonoBehaviour
     // 落下速度
     private float _fallSpeed = 9;
     // ジャンプの高さ
-    private float _y = 4;
+    private float _defaultJumpHeight = 4;
     // Rayの長さ
     private float[] _animationTime = { 0, 0, 0, 0, 0 };
 
-
+    
     /// bool
     // 着地判定
     protected bool _isGround = false;
@@ -190,6 +190,7 @@ public class CharacterController : MonoBehaviour
         {
             _jumpTimer += Time.deltaTime;
         }
+        //**0.5f以上ジャンプしてたら終了？
         else
         {
             _jumpTimer = _ZERO;
@@ -211,14 +212,16 @@ public class CharacterController : MonoBehaviour
         if (input._isJump && _isGround && !input._isAttack)
         {
             charaStatus = CharacterStatus.Jump;
-            CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * _y;
+            CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * _defaultJumpHeight;
             Debug.Log("aaafaa");
         }
+        //**自由落下の状態
         else if(!input._isJump && !_isGround)
         {
             charaStatus = CharacterStatus.Fall;
             CharacterMove.y = -_fallSpeed * _fallTimer;
         }
+        //地面にいてジャンプが押されていないもしくは攻撃中
         else if(!input._isJump && _isGround || input._isAttack)
         {
             CharacterMove.y = _ZERO;

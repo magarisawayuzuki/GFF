@@ -94,7 +94,7 @@ public class PlayerController : CharacterController
     {
         base.Update();
         MomoryGauge();
-        Debug.Log(IC.Player.SwordAttack.phase);
+        //Debug.Log(IC.Player.SwordAttack.phase);
         //Debug.Log(input._isAttack);
 
         // デバッグ用

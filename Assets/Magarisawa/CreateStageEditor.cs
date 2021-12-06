@@ -108,12 +108,12 @@ public class CreateStageEditor : MonoBehaviour
             //上下反転
             if (ReverseArrayHorizontal)
             {
-                GenerateObject(mapInfo.ReverseArray());
+                GenerateObject(mapInfo);
             }
             //そのまま
             else
             {
-                GenerateObject(mapInfo);
+                GenerateObject(mapInfo.ReverseArray());
             }
         }
         Debug.Log("生成終了");
@@ -157,13 +157,18 @@ public class CreateStageEditor : MonoBehaviour
             //メイン横方向
             for (int j = 0; j < mapInfo.GetLength(1); j++)
             {
-                yConsecutiveLength = 0;
-                xConsecutiveLength = 0;
+                print(j);
+                if (_isInstanced)
+                {
+                    yConsecutiveLength = 0;
+                    xConsecutiveLength = 0;
 
-                min_xConsecutiveLength = mapInfo.GetLength(1) - 1;
+                    min_xConsecutiveLength = mapInfo.GetLength(1)+1;
 
-                _isSpaceOneSide = false;
-                _isInstanced = false;
+                    _isSpaceOneSide = false;
+                    _isInstanced = false;
+                    print("reset");
+                }
 
                 //今の位置にブロックがあるなら
                 if (mapInfo[i, j] == 1)
@@ -222,34 +227,25 @@ public class CreateStageEditor : MonoBehaviour
                                     //サイズをブロックの連続数に変更
                                     newGameObject.transform.localScale = new Vector3(min_xConsecutiveLength, yConsecutiveLength, 1);
 
-                                    //print(yConsecutiveLength);
-                                    //print(i);
-                                    //print(i - ((yConsecutiveLength - 1) / 2));
-
-                                    //print(j);
-                                    //print(i);
-
                                     //座標をX=(j + ((Scale - 1) /2 )),Y=(i - ((Scale - 1) /2 ))に変更
                                     newGameObject.transform.position = new Vector3(j + ((min_xConsecutiveLength - 1) / 2), Mathf.Abs(i - mapInfo.GetLength(0)) - ((yConsecutiveLength - 1) / 2), 0);
 
-                                    //生成終了フラグ
-                                    _isInstanced = true;
+                                    print("i:" + i + ":" + yConsecutiveLength);
+                                    print("j:" + j + ":" + min_xConsecutiveLength);
+                                    //メイン探索位置から今回ブロックをまとめて生成する位置に探索済みの印をつける
+                                    //for (int m = yConsecutiveLength - 1; m >= 0; m--)
+                                    //{
+                                    //    for (int n = 0; n < min_xConsecutiveLength - 1; n++)
+                                    //    {
+                                    //        //探索済みの印
+                                    //        mapInfo[i - m, j + n] = -1;
+                                    //    }
+                                    //}
+
                                     //今回x座標上で進んだ分探索を飛ばす
                                     j += min_xConsecutiveLength - 1;
-
-                                    
-
-
-                                    //メイン探索位置から今回ブロックをまとめて生成する位置に探索済みの印をつける
-                                    for (int m = 0; m < yConsecutiveLength - 1; m++)
-                                    {
-                                        for (int n = 0; n < min_xConsecutiveLength - 1; n++)
-                                        {
-                                            //探索済みの印
-                                            mapInfo[i - m,j + n] = -1;
-                                        }
-                                    }
-                                    mapInfo[i, j] = -1;
+                                    //生成終了フラグ
+                                    _isInstanced = true;
 
                                     break;
                                 }
