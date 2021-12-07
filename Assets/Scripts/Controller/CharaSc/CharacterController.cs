@@ -56,6 +56,7 @@ public class CharacterController : MonoBehaviour
     
     /// bool
     // 着地判定
+    [SerializeField]
     protected bool _isGround = false;
     // 記憶を持っているか
     protected bool _hasMemory = false;
@@ -109,7 +110,7 @@ public class CharacterController : MonoBehaviour
         {
             Attack();
         }
-
+        CharacterMove.y = acceleration;
         // velocityへ入れる
         transform.position += CharacterMove * Time.deltaTime;
     }
@@ -171,18 +172,27 @@ public class CharacterController : MonoBehaviour
     //===================================================================================
 
     //マージしないといけないのでここに仮で記述してます。
+
     private float acceleration = default;
+    //ジャンプを開始するフラグ
+    private bool _startJump = false;
+    //ジャンプ中のフラグ
+    private bool _nowJump = false;
+    //ジャンプ処理から返される加速値
+    float jumpAccelerationValue = default;
+    //落下処理から返される加速値
+    float fallAccelerationValue = default;
+    //ジャンプ時間
+    float curveTimeCount = default;
+
+    [SerializeField]
+    private float jumpSpeedScale = 1;
 
     /// <summary>
     /// ジャンプ関連の定義や状態の判定
     /// </summary>
     private void Jump()
     {
-        bool _nowJump = false;
-        //ジャンプ処理から返される加速値
-        float jumpAccelerationValue = default;
-        //落下処理から返される加速値
-        float fallAccelerationValue = default;
 
 
         //攻撃中は停止
@@ -196,6 +206,14 @@ public class CharacterController : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
         {
             _isGround = true;
+            acceleration = _ZERO;
+
+            //ジャンプ中に着地なら強制終了
+            if (_nowJump)
+            {
+                _nowJump = false;
+                curveTimeCount = _ZERO;
+            }
         }
         else
         {
@@ -203,10 +221,10 @@ public class CharacterController : MonoBehaviour
         }
 
         //ジャンプ中ならジャンプ処理を呼び、以下の判定は行わない
-        if (_nowJump)
+        if (_startJump || _nowJump)
         {
             //加速値を計算する
-            AccelerationValueCalculation(jumpAccelerationValue);
+            AccelerationValueCalculation();
             return;
         }
 
@@ -220,7 +238,8 @@ public class CharacterController : MonoBehaviour
             if (!input._isAttack && input._isJump)
             {
                 //ジャンプ開始
-                _nowJump = true;
+                _startJump = true;
+                input._isJump = false;
             }
         }
         //非着地状態
@@ -237,9 +256,28 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     /// <param name="returnValue"></param>
     /// <returns></returns>
-    private void AccelerationValueCalculation(float jumpAccelerationValue)
+    private void AccelerationValueCalculation()
     {
-        
+        const int MAX_JUMP_TIME_COUNT = 3;
+        const float MINIMUM_JUMP_TIME_COUNT = 0.1f;
+
+        //規定時間よりも長くジャンプしていたら強制終了
+        if (curveTimeCount >= MAX_JUMP_TIME_COUNT)
+        {
+            _nowJump = false;
+            curveTimeCount = _ZERO;
+            return;
+        }
+        //最低ジャンプ継続時間(Rayによる誤判定を防ぐ)
+        else if (_startJump && curveTimeCount >= MINIMUM_JUMP_TIME_COUNT)
+        {
+            _startJump = false;
+            _nowJump = true;
+        }
+
+        //カーブの値を加算する
+        curveTimeCount += Time.deltaTime;
+        jumpAccelerationValue = jumpSpeedScale * jumpCurve.Evaluate(curveTimeCount);
 
         //加速度にジャンプの加速値を加算する
         acceleration += jumpAccelerationValue;
@@ -250,7 +288,7 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     private void CharaFallProcess(float fallAccelerationValue)
     {
-
+        fallAccelerationValue = -1;
 
 
         //加速度にジャンプの加速値を加算する
