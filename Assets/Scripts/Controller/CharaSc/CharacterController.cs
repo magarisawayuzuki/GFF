@@ -39,7 +39,7 @@ public class CharacterController : MonoBehaviour
     */
     #endregion
     protected int _damage = default;
-    protected int _knockback = default;
+    protected int _knockBack = default;
     protected int _weapon = default;
 
     #region flooat
@@ -62,6 +62,9 @@ public class CharacterController : MonoBehaviour
     protected bool _isGround = default;
     // 記憶を持っているか
     protected bool _hasMemory = default;
+
+    // 無双状態
+    protected bool _isInvincible = default;
     #endregion
 
     #region const
@@ -142,7 +145,14 @@ public class CharacterController : MonoBehaviour
         // 攻撃状態じゃなければ
         if (!input._isAttack)
         {
-            CharacterMove.x = input._x * 10;
+            if (!_isInvincible)
+            {
+                CharacterMove.x = input._x * 10;
+            }
+            else
+            {
+                CharacterMove.x = input._x * 10 * 1.5f;
+            }
         }
         else
         {
@@ -182,18 +192,18 @@ public class CharacterController : MonoBehaviour
     {
         #region 着地判定
         // LayerMaskがGroundだったら着地
-        //if (Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
-        //{
-        //    _isGround = true;
-        //    if (charaStatus == CharacterStatus.Jump)
-        //    {
-        //        input._isJump = false;
-        //    }
-        //}
-        //else
-        //{
-        //    _isGround = false;
-        //}
+        if (Physics.BoxCast(transform.position, new Vector3(2, 0, 0), Vector3.down, Quaternion.identity, _ONE, LayerMask.GetMask("Ground")))
+        {
+            _isGround = true;
+            if (charaStatus == CharacterStatus.Jump)
+            {
+                input._isJump = false;
+            }
+        }
+        else
+        {
+            _isGround = false;
+        }
         #endregion
 
         #region ジャンプ時間加算
