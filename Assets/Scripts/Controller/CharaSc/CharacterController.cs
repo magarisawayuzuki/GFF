@@ -273,7 +273,9 @@ public class CharacterController : MonoBehaviour
     /// <summary>
     /// 自機のライフ計算を行う
     /// </summary>
-    /// <param name="power"></param>
+    /// <param name="damage"></param>
+    /// <param name="knockBack"></param>
+    /// <param name="weapon"></param>
     public virtual void CharaLifeCalculation(float damage, int knockBack, int weapon)
     {
         charaStatus = CharacterStatus.Damage;

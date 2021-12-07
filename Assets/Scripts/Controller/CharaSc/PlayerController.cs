@@ -332,6 +332,7 @@ public class PlayerController : CharacterController
     //記憶ゲージの管理
     protected void MomoryGauge()
     {
+        // 時間での減少
         if (_memoryDownTimer > _ZERO)
         {
             _memoryDownTimer -= Time.deltaTime;
@@ -342,6 +343,7 @@ public class PlayerController : CharacterController
             _memoryDownTimer = _ONE;
         }
 
+        //敵の種類によって加算する数を変える
         if (_memoryGauge > _MAXMEMORYGAUGE)
         {
             if (charaStatus == CharacterStatus.swordAttack)
