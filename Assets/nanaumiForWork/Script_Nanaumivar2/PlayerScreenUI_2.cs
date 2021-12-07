@@ -6,6 +6,16 @@ using UnityEngine.UI;
 
 public class PlayerScreenUI_2
 {
+    private readonly InGameUI_2 _InGame = new InGameUI_2();
+    private readonly PlayerInputToPause_2 _ToPause = new PlayerInputToPause_2();
+    public Chara_2 Chara { get => _InGame; }
+    public UIController_2 UIcon { get => _ToPause; }
+
+    public PlayerScreenUI_2()
+    {
+        _InGame.plsc = this;
+        _ToPause.plsc = this;
+    }
 
     // ② SpoonやForkからSporkに変換するメソッド
     public static PlayerScreenUI_2 FromInGameUI_2(InGameUI_2 ingame)
@@ -25,6 +35,11 @@ public class PlayerScreenUI_2
         private int nowGaugeParcent;
         [SerializeField, Tooltip("playerのタグを入れてください")] private string playerTag;
 
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+        
         private void ChangeMemoryGaugeUI()
         {
 
@@ -86,12 +101,11 @@ public class PlayerScreenUI_2
         }
     }
 
-
-    private FromInGameUI_2 a = new InGameUI_2());
-
-    protected override void Awake()
+    private PlayerScreenUI_2 a;
+    private void Awake()
     {
-
+        a = new PlayerScreenUI_2();
+        a.Chara.();
     }
 
     private void Start()
