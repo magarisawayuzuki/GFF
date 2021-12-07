@@ -18,13 +18,14 @@ public class UISceneManager_2 : MonoBehaviour
         // アンロードする場合
         if (IsUnloadScene)
         {
-            // イベントにイベントハンドラーを追加
             this.DefaultSceneName = ThisSceneName;
+
+            // イベントにイベントハンドラーを追加
             SceneManager.sceneLoaded += SceneLoaded;
         }
 
         // シーンの追加ロード
-        SceneManager.LoadScene(NextSceneName, LoadSceneMode.Additive); 
+        SceneManager.LoadScene(NextSceneName, LoadSceneMode.Additive);
     }
 
     // イベントハンドラー（イベント発生時に動かしたいアンロードの処理）
@@ -40,5 +41,6 @@ public class UISceneManager_2 : MonoBehaviour
     public void UnLoadScene(string SceneName)
     {
         SceneManager.UnloadSceneAsync(SceneName,UnloadSceneOptions.None);
+        SceneManager.sceneLoaded -= SceneLoaded;
     }
 }

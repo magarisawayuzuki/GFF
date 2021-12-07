@@ -13,8 +13,8 @@ public class Chara_2 : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _chara = GameObject.FindGameObjectWithTag(this.gameObject.tag).GetComponent<CharaParameter>();
-        beforeLife = _chara.life;
+        //_chara = GameObject.FindGameObjectWithTag(this.gameObject.tag).GetComponent<CharaParameter>();
+        //beforeLife = _chara.life;
     }
 
     protected virtual void ChangeLife()

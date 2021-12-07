@@ -39,7 +39,6 @@ public class OptionUI_2 : UIController_2
             if(_nowSelectNumber == 4)
             {
                 BackToScene(SceneStateUI_2.sceneState);
-                _isVolumeChange = false;
             }
         }
     }
@@ -51,7 +50,7 @@ public class OptionUI_2 : UIController_2
 
     private void BackToScene(SceneStateUI_2.SceneState sceneState)
     {
-        Debug.Log("sceneState" + sceneState);
+        _isVolumeChange = false;
         switch (sceneState)
         {
             case SceneStateUI_2.SceneState.Title:
@@ -61,10 +60,5 @@ public class OptionUI_2 : UIController_2
                 sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option));
                 break;
         }
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
     }
 }
