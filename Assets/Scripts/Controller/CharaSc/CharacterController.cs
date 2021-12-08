@@ -37,8 +37,14 @@ public class CharacterController : MonoBehaviour
     private int _anim = 0;
     private int[] _maxAnimationCount = { 4, 8, 5, 13, 0 };
     */
+    protected int _weapon = 0;
+    protected int _knockBack = 0;
+    protected float _damage = 0;
+
 
     /// flooat
+    //
+    protected float _speedDownTimer = 0;
     // ジャンプしている時間
     protected float _jumpTimer = 0;
     // 落下している時間
@@ -58,8 +64,9 @@ public class CharacterController : MonoBehaviour
     protected bool _isGround = false;
     // 記憶を持っているか
     protected bool _hasMemory = false;
+    protected bool _isSpeedDown = false;
+    protected bool _isInvincible = false;
 
-    
     /// const
     protected const int _ZERO = 0;
     protected const int _ONE = 1;
@@ -286,6 +293,7 @@ public class CharacterController : MonoBehaviour
 public class PlayerInput
 {
     public float _x = 0;
+    public float _wasx = 0;
     public bool _isAttack = false;
     public bool _isJump = false;
 }

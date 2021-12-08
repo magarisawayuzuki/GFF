@@ -152,11 +152,13 @@ public class PlayerController : CharacterController
             input._isJump = true;
         }
 
+        /*
         if (IC.Player.invincible.triggered && _memoryGauge == _MAXMEMORYGAUGE)
         {
             Debug.Log("無双");
             _isInvincible = true;
         }
+        */
 
         // 左クリックで剣攻撃
         #region 剣攻撃入力時間加算
