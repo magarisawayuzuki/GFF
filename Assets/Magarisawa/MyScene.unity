@@ -1309,30 +1309,42 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.016818808
-      value: 1.513659
-      inSlope: -18.083612
-      outSlope: -18.083612
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      time: -0.00000001
+      value: 12
+      inSlope: -50.532146
+      outSlope: 1.186237
+      tangentMode: 1
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 1
     - serializedVersion: 3
-      time: 0.1018486
-      value: -0.023986816
-      inSlope: -18.083612
-      outSlope: -18.083612
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      time: 0.01
+      value: -0.13
+      inSlope: Infinity
+      outSlope: 0.24546644
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.27361795
+    - serializedVersion: 3
+      time: 0.8407053
+      value: -0.6
+      inSlope: -1.4992328
+      outSlope: -0.7044327
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0.16762668
+      outWeight: 0.3930056
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   input:
     _x: 0
+    _wasx: 0
     _isAttack: 0
     _isJump: 0
+  jumpSpeedScale: 1
+  _memoryGauge: 50
 --- !u!65 &1979345814
 BoxCollider:
   m_ObjectHideFlags: 0
