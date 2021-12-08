@@ -16,20 +16,21 @@ public class PlayerController : CharacterController
     #endregion
 
     #region int
+    // 武器の記憶の個数
+    protected int _weaponMemoryCount = 0;
+    public int _WeaponCount { get{ return _weaponMemoryCount; } }
+    // 記憶の個数
+    protected int _memoryCount = 0;
 
     #endregion
 
     #region float
-    // 武器の記憶の個数
-    protected int _weaponMemoryCount = 0;
-    // 記憶の個数
-    protected int _memoryCount = 0;
     // 剣攻撃時間
     private float _swordTime = 0;
     // 槌攻撃経過時間
     private float _hammerTime = 0;
     // 記憶ゲージ
-    private float _memoryGauge = 50;
+    [SerializeField] private float _memoryGauge = 50;
     // 記憶ゲージ減少時間
     private float _memoryDownTimer = 1;
     // Objectの半径
@@ -153,7 +154,8 @@ public class PlayerController : CharacterController
 
         if (IC.Player.invincible.triggered && _memoryGauge == _MAXMEMORYGAUGE)
         {
-            _isInvincible = false;
+            Debug.Log("無双");
+            _isInvincible = true;
         }
 
         // 左クリックで剣攻撃
@@ -199,6 +201,17 @@ public class PlayerController : CharacterController
             }
         }
         #endregion
+
+        if (input._x != input._wasx)
+        {
+            _isSpeedDown = true;
+            _speedDownTimer = 0;
+        }
+
+        if (input._x == _ZERO || _speedDownTimer > 1)
+        {
+            _isSpeedDown = false;
+        }
 
         return input;
     }

@@ -19,7 +19,8 @@ public class CharacterController : MonoBehaviour
     */
     [SerializeField]
     AnimationCurve jumpCurve = default;
-
+    [SerializeField]
+    AnimationCurve dashCurve = default;
 
     protected PlayerInput input = new PlayerInput();
     protected SpriteRenderer spriteRenderer = default;
@@ -42,7 +43,9 @@ public class CharacterController : MonoBehaviour
     protected int _knockBack = default;
     protected int _weapon = default;
 
-    #region flooat
+    #region float    
+    // 移動速度が下がっている時間
+    protected float _speedDownTimer = default;
     // ジャンプしている時間
     protected float _jumpTimer = default;
     // 落下している時間
@@ -65,6 +68,8 @@ public class CharacterController : MonoBehaviour
 
     // 無双状態
     protected bool _isInvincible = default;
+    protected bool _isSpeedDown = default;
+
     #endregion
 
     #region const
@@ -142,17 +147,19 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     public virtual void Move()
     {
+        /*
+        if (_isSpeedDown)
+        {
+            _speedDownTimer += Time.deltaTime;
+            //input._x = Mathf.Lerp(input._wasx, input._x, _speedDownTimer);
+            input._x = dashCurve.Evaluate(_speedDownTimer) * input._x;
+        }
+        */
+
         // 攻撃状態じゃなければ
         if (!input._isAttack)
         {
-            if (!_isInvincible)
-            {
-                CharacterMove.x = input._x * 10;
-            }
-            else
-            {
-                CharacterMove.x = input._x * 10 * 1.5f;
-            }
+            CharacterMove.x = input._x * 10;
         }
         else
         {
@@ -163,10 +170,12 @@ public class CharacterController : MonoBehaviour
         {
             charaStatus = CharacterStatus.Move;
         }
-        else if(!input._isJump && !input._isAttack)
+        else if (!input._isJump && !input._isAttack)
         {
             charaStatus = CharacterStatus.Idle;
         }
+
+        input._wasx = input._x;
     }
 
 
@@ -320,6 +329,7 @@ public class CharacterController : MonoBehaviour
 public class PlayerInput
 {
     public float _x = 0;
+    public float _wasx = 0;
     public bool _isAttack = false;
     public bool _isJump = false;
 }
