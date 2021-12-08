@@ -132,47 +132,47 @@ public class PlayerController : CharacterController
             input._isJump = true;
         }
 
-        // 左クリックで剣攻撃
-        #region 剣攻撃入力時間加算
-        if (IC.Player.SwordAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started)
-        {
-            _swordTime += Time.deltaTime;
+        //// 左クリックで剣攻撃
+        //#region 剣攻撃入力時間加算
+        //if (IC.Player.SwordAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started)
+        //{
+        //    _swordTime += Time.deltaTime;
 
-            if (!_isInputSwordAttack)
-            {
-                _isInputSwordAttack = true;
-            }
-        }
-        else
-        {
-            if (_isInputSwordAttack)
-            {
-                charaStatus = CharacterStatus.swordAttack;
-                input._isAttack = true;
-            }
-        }
-        #endregion
+        //    if (!_isInputSwordAttack)
+        //    {
+        //        _isInputSwordAttack = true;
+        //    }
+        //}
+        //else
+        //{
+        //    if (_isInputSwordAttack)
+        //    {
+        //        charaStatus = CharacterStatus.swordAttack;
+        //        input._isAttack = true;
+        //    }
+        //}
+        //#endregion
 
-        // 右クリックで槌攻撃
-        #region 槌攻撃入力時間加算
-        if (IC.Player.HammerAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started)
-        {
-            _hammerTime += Time.deltaTime;
+        //// 右クリックで槌攻撃
+        //#region 槌攻撃入力時間加算
+        //if (IC.Player.HammerAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started)
+        //{
+        //    _hammerTime += Time.deltaTime;
 
-            if (!_isInputHammerAttack)
-            {
-                _isInputHammerAttack = true;
-            }
-        }
-        else
-        {
-            if (_isInputHammerAttack)
-            {
-                input._isAttack = true;
-                charaStatus = CharacterStatus.hammerAttack;
-            }
-        }
-        #endregion
+        //    if (!_isInputHammerAttack)
+        //    {
+        //        _isInputHammerAttack = true;
+        //    }
+        //}
+        //else
+        //{
+        //    if (_isInputHammerAttack)
+        //    {
+        //        input._isAttack = true;
+        //        charaStatus = CharacterStatus.hammerAttack;
+        //    }
+        //}
+        //#endregion
 
         return input;
     }
