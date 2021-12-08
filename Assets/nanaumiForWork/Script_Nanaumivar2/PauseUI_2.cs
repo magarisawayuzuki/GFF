@@ -33,7 +33,7 @@ public class PauseUI_2 : UIController_2
         {
             // Back to InGame
             case 1:
-                sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
+                SceneManager.UnloadSceneAsync(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
                 break;
             // Back to Title to CautionPanel
             case 2:

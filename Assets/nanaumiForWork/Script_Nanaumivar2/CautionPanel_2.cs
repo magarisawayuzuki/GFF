@@ -19,7 +19,6 @@ public class CautionPanel_2 : UIController_2
 
     private void Update()
     {
-        Debug.Log("AAA");
         InputManager();
 
         if (_isInput[1])
@@ -35,7 +34,7 @@ public class CautionPanel_2 : UIController_2
             // Yes
             case 1:
                 // Exit Game
-                if (getSceneName == TitleSceneName)
+                if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title))
                 {
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;
@@ -44,9 +43,9 @@ public class CautionPanel_2 : UIController_2
 #endif
                 }
                 // Back to Title
-                else if (getSceneName == PauseSceneName)
+                else /*if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame))*/
                 {
-                    sceneMan.LoadScene(TitleSceneName, true, getSceneName);
+                    SceneManager.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title),LoadSceneMode.Single);
                 }
                 break;
 
@@ -58,7 +57,7 @@ public class CautionPanel_2 : UIController_2
                     GetComponentInParent<TitleUI_2>().enabled = true;
                 }
                 // Back to Pause
-                else if (getSceneName == PauseSceneName)
+                else /*if (getSceneName == PauseSceneName)*/
                 {
                     GetComponentInParent<PauseUI_2>().enabled = true;
                 }
@@ -72,7 +71,6 @@ public class CautionPanel_2 : UIController_2
 
     protected override void OnEnable()
     {
-        Debug.Log("Enable");
         base.OnEnable();
         _nowSelectNumber = 1;
         _selector.anchoredPosition = _selectPoint[_nowSelectNumber - 1].anchoredPosition;
