@@ -64,6 +64,17 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""a5df9795-20d3-4d68-be30-32038bb5c3b3"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""1D Axis"",
                     ""id"": ""59e62257-dd3d-4846-8069-2af8bbb89d64"",
                     ""path"": ""1DAxis"",

@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Linq;
+using System;
+
+[AttributeUsage(AttributeTargets.Method)]
+public class CalledFromSendMessageAttribute : Attribute { }
 
 public class UIController_2 : MonoBehaviour
 {
@@ -105,9 +108,19 @@ public class UIController_2 : MonoBehaviour
         }
     }
 
-    protected void ChangeSceneCall()
+    [CalledFromSendMessage]
+    public void MouseMove(string objName)
     {
-
+        Debug.Log(objName);
+        for (int i = 0; i < _select.Length; i++)
+        {
+            if (_selectPoint[i].name == objName)
+            {
+                _nowSelectNumber = i + 1;
+                _isInput[0] = true;
+                break;
+            }
+        }
     }
 
     protected virtual void OnEnable()
