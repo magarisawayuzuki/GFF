@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 179432627}
   - component: {fileID: 179432628}
   m_Layer: 5
-  m_Name: Image_3
+  m_Name: OptionImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -346,7 +346,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 179432623}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29dad87a4eee47d4491fc891cb1d17d6, type: 3}
+  m_Script: {fileID: 11500000, guid: bbfa0d3cb5747674faca198847783a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &278177053
@@ -445,9 +445,41 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 278177058}
-          m_TargetAssemblyTypeName: UnityEngine.Component, UnityEngine
-          m_MethodName: SendMessage
-          m_Mode: 5
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseChoose
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: OnMouseChoose
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 278177058}
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseExitHere
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: OnMouseChoose
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 278177058}
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseDecide
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -465,7 +497,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 278177053}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29dad87a4eee47d4491fc891cb1d17d6, type: 3}
+  m_Script: {fileID: 11500000, guid: bbfa0d3cb5747674faca198847783a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &322484943
@@ -640,7 +672,7 @@ GameObject:
   - component: {fileID: 558266952}
   - component: {fileID: 558266951}
   m_Layer: 5
-  m_Name: Image_1
+  m_Name: BackInGameImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -713,7 +745,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 558266947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29dad87a4eee47d4491fc891cb1d17d6, type: 3}
+  m_Script: {fileID: 11500000, guid: bbfa0d3cb5747674faca198847783a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &558266952
@@ -903,8 +935,6 @@ MonoBehaviour:
   _selectorMagnitude: 5
   cautionSetence: Caution!
   cautionText: {fileID: 1966456858}
-  TitleSceneName: Title
-  PauseSceneName: Pause
 --- !u!224 &788666556
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1136,7 +1166,7 @@ GameObject:
   - component: {fileID: 1020300960}
   - component: {fileID: 1020300959}
   m_Layer: 5
-  m_Name: Image
+  m_Name: SelectorImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1365,7 +1395,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1044480611}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29dad87a4eee47d4491fc891cb1d17d6, type: 3}
+  m_Script: {fileID: 11500000, guid: bbfa0d3cb5747674faca198847783a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1044480616
@@ -1386,9 +1416,41 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1044480615}
-          m_TargetAssemblyTypeName: UnityEngine.Component, UnityEngine
-          m_MethodName: SendMessage
-          m_Mode: 5
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseChoose
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: OnMouseChoose
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1044480615}
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseExitHere
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: OnMouseChoose
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1044480615}
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseDecide
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1683,7 +1745,7 @@ GameObject:
   - component: {fileID: 1778616568}
   - component: {fileID: 1778616569}
   m_Layer: 5
-  m_Name: Image_2
+  m_Name: ToTitleImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1817,7 +1879,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1778616564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29dad87a4eee47d4491fc891cb1d17d6, type: 3}
+  m_Script: {fileID: 11500000, guid: bbfa0d3cb5747674faca198847783a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1966456857

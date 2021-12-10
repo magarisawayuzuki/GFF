@@ -9,9 +9,6 @@ public class CautionPanel_2 : UIController_2
     [SerializeField] private string cautionSetence;
     [SerializeField] private Text cautionText;
 
-    [SerializeField] private string TitleSceneName;
-    [SerializeField] private string PauseSceneName;
-
     private void Start()
     {
         cautionText.text = cautionSetence;
@@ -52,7 +49,7 @@ public class CautionPanel_2 : UIController_2
             // No
             case 2:
                 // Back to Title
-                if (getSceneName == TitleSceneName)
+                if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title))
                 {
                     GetComponentInParent<TitleUI_2>().enabled = true;
                 }
@@ -74,6 +71,6 @@ public class CautionPanel_2 : UIController_2
         base.OnEnable();
         _nowSelectNumber = 1;
         _selector.anchoredPosition = _selectPoint[_nowSelectNumber - 1].anchoredPosition;
-        _selector.sizeDelta = _selectPoint[_nowSelectNumber - 1].sizeDelta;
+        _selector.sizeDelta = _selectPoint[_nowSelectNumber - 1].sizeDelta * _selectorSizeDeltaMagnitude;
     }
 }

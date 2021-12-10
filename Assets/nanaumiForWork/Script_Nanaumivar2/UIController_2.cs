@@ -20,6 +20,7 @@ public class UIController_2 : MonoBehaviour
     [SerializeField] protected RectTransform _selector;
     [SerializeField] private float _selectorMagnitude;
     private float _selectorResizeProgressTime = 0;
+    protected float _selectorSizeDeltaMagnitude = 1.1f;
 
     /// <summary>
     /// 0上下左右 1decide
@@ -98,7 +99,7 @@ public class UIController_2 : MonoBehaviour
         {
             _selectorResizeProgressTime += Time.deltaTime * _selectorMagnitude;
             _selector.anchoredPosition = Vector2.Lerp(_selector.anchoredPosition, _selectPoint[_nowSelectNumber - 1].anchoredPosition, _selectorResizeProgressTime);
-            _selector.sizeDelta = Vector2.Lerp(_selector.sizeDelta, _selectPoint[_nowSelectNumber - 1].sizeDelta, _selectorResizeProgressTime);
+            _selector.sizeDelta = Vector2.Lerp(_selector.sizeDelta, _selectPoint[_nowSelectNumber - 1].sizeDelta * _selectorSizeDeltaMagnitude, _selectorResizeProgressTime);
         }
 
         if (_selectorResizeProgressTime >= 1)

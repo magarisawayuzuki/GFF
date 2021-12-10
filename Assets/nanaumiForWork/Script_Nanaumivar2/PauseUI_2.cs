@@ -14,7 +14,7 @@ public class PauseUI_2 : UIController_2
         _nowSelectNumber = 1;
 
         _selector.anchoredPosition = _selectPoint[_nowSelectNumber - 1].anchoredPosition;
-        _selector.sizeDelta = _selectPoint[_nowSelectNumber - 1].sizeDelta;
+        _selector.sizeDelta = _selectPoint[_nowSelectNumber - 1].sizeDelta * _selectorSizeDeltaMagnitude;
     }
 
     private void Update()
