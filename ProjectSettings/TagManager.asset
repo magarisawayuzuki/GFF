@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Ground
   - Normal
+<<<<<<< HEAD
+=======
+  - Soft
+  - Hard
+>>>>>>> 8318957b602e45ee4a4f5e4dac9bcbb71b5976e8
   layers:
   - Default
   - TransparentFX

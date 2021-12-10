@@ -8,25 +8,29 @@ using UnityEngine;
 public class PlayerController : CharacterController
 {
     private InputSystem IC;
-    private RaycastHit attackHit = default;
+    private RaycastHit _attackHit = default;
 
-    [SerializeField]public Vector3 Rotate = new Vector3(2,0,0);
+    #region Vecter3
+    // 攻撃の範囲
+    private Vector3 _attackScale = default;
+    #endregion
 
     #region int
+    // 武器の記憶の個数
+    protected int _weaponMemoryCount = 0;
+    public int _WeaponCount { get{ return _weaponMemoryCount; } }
+    // 記憶の個数
+    protected int _memoryCount = 0;
 
     #endregion
 
     #region float
-    // 武器の記憶の個数
-    protected int _weaponMemoryCount = 0;
-    // 記憶の個数
-    protected int _memoryCount = 0;
     // 剣攻撃時間
     private float _swordTime = 0;
     // 槌攻撃経過時間
     private float _hammerTime = 0;
     // 記憶ゲージ
-    private float _memoryGauge = 50;
+    [SerializeField] private float _memoryGauge = 50;
     // 記憶ゲージ減少時間
     private float _memoryDownTimer = 1;
     // Objectの半径
@@ -34,21 +38,29 @@ public class PlayerController : CharacterController
     #endregion
 
     #region bool
-    private bool _isHard = false;
-    private bool _isNormal = false;
-    private bool _isSoft = false;
+    // 硬い敵か 
+    private bool _isHard = default;
+    // 普通の敵か
+    private bool _isNormal = default;
+    // やわらかい敵か
+    private bool _isSoft = default;
 
-    private bool _isInputSwordAttack = false;
-    private bool _isInputHammerAttack = false;
-
-    private bool _canNotRight = false;
-    private bool _canNotLeft = false;
-    #endregion
+    // 攻撃が当たったかどうか
     protected bool _isHit = default;
+    // 剣の攻撃入力判定
+    private bool _isInputSwordAttack = default;
+    // 槌の攻撃入力判定
+    private bool _isInputHammerAttack = default;
+
+    // 右に移動できるか
+    private bool _canNotRight = default;
+    // 左に移動できるか
+    private bool _canNotLeft = default;
+    #endregion
 
     #region const
     // 最大値
-    private const int _MAXMEMORYCAUGE = 100;
+    private const int _MAXMEMORYGAUGE = 100;
     [SerializeField, Header("記憶ゲージ加算")]
     // 〇
     private const int _GOODMEMORYPLUS = 5;
@@ -69,13 +81,10 @@ public class PlayerController : CharacterController
     [SerializeField]
     // 強攻撃1段階目
     private const float _NORMALPOWERTIME = 1.5f;
-
-    // 攻撃の距離
-    private const float _ATTACKDISTANCE = 1.5f;
     #endregion
 
     #region デバック用
-
+    //攻撃時間
     private float _AttackTime = default;
     #endregion
 
@@ -97,22 +106,6 @@ public class PlayerController : CharacterController
         base.Update();
         MomoryGauge();
 
-        /*
-        if (_isHit)
-        {
-            CharaLifeCalculation(_damage, _knockback, _weapon);
-        }
-        */
-
-        float phase = Time.time * 2 * Mathf.PI;
-
-        Rotate.x = _ONE * -Mathf.Cos(phase);
-        Rotate.z = _ONE * -Mathf.Sin(phase);
-
-        Physics.BoxCast(transform.position, new Vector3(0, 1, 0), Rotate, out attackHit, Quaternion.identity, _ONE);
-
-        Debug.Log(attackHit.collider.GetComponent<EnemyNormal>());
-
         // デバッグ用
         if (input._isAttack)
         {
@@ -123,7 +116,7 @@ public class PlayerController : CharacterController
             _AttackTime = _ZERO;
         }
 
-        if (_AttackTime > 3)
+        if (_AttackTime > _ONE)
         {
             _swordTime = _ZERO;
             _hammerTime = _ZERO;
@@ -142,8 +135,8 @@ public class PlayerController : CharacterController
         // 入力値を_xに入れる
         input._x = IC.Player.Move.ReadValue<float>();
 
-        _canNotRight = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right, Quaternion.identity, _sidedistance, LayerMask.GetMask("Ground"));
-        _canNotLeft = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.left, Quaternion.identity, _sidedistance, LayerMask.GetMask("Ground"));
+        _canNotRight = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right, Quaternion.identity, _sidedistance);
+        _canNotLeft = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.left, Quaternion.identity, _sidedistance);
 
         if (_canNotRight && input._x > 0)
         {
@@ -158,6 +151,14 @@ public class PlayerController : CharacterController
         {
             input._isJump = true;
         }
+
+        /*
+        if (IC.Player.invincible.triggered && _memoryGauge == _MAXMEMORYGAUGE)
+        {
+            Debug.Log("無双");
+            _isInvincible = true;
+        }
+        */
 
         // 左クリックで剣攻撃
         #region 剣攻撃入力時間加算
@@ -175,6 +176,7 @@ public class PlayerController : CharacterController
             if (_isInputSwordAttack)
             {
                 input._isAttack = true;
+                _weapon = 0;
                 charaStatus = CharacterStatus.swordAttack;
             }
         }
@@ -196,10 +198,22 @@ public class PlayerController : CharacterController
             if (_isInputHammerAttack)
             {
                 input._isAttack = true;
+                _weapon = 1;
                 charaStatus = CharacterStatus.hammerAttack;
             }
         }
         #endregion
+
+        if (input._x != input._wasx)
+        {
+            _isSpeedDown = true;
+            _speedDownTimer = 0;
+        }
+
+        if (input._x == _ZERO || _speedDownTimer > 1)
+        {
+            _isSpeedDown = false;
+        }
 
         return input;
     }
@@ -212,71 +226,84 @@ public class PlayerController : CharacterController
     public override void Attack()
     {
         #region 敵の状態判定
-        _isHit = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right * 1, out attackHit);
+        _isHit = Physics.BoxCast(transform.position, _attackScale, Vector3.right, out _attackHit, Quaternion.identity, _ONE);
         #endregion
 
         #region 攻撃力代入
         // 攻撃力を入力
-        if (charaStatus == CharacterStatus.swordAttack)
+        if (_isInvincible)
         {
-            if (_swordTime > _MIDDLEPOWERTIME)
-            {
-                _attackPower = charaData.basicPower * 3;
-                Debug.Log("剣強攻撃");
-                _isInputSwordAttack = false;
-            }
-            else if (_swordTime > _NORMALPOWERTIME)
-            {
-                _attackPower = charaData.basicPower * 2;
-                Debug.Log("剣中攻撃");
-                _isInputSwordAttack = false;
-            }
-            else
-            {
-                _attackPower = charaData.basicPower;
-                Debug.Log("剣弱攻撃");
-                _isInputSwordAttack = false;
-            }
+            _attackPower = charaData.basicPower * 6;
         }
-        else if(charaStatus == CharacterStatus.hammerAttack)
+        else
         {
-            // 槌協攻撃2段階目
-            if (_hammerTime > _MIDDLEPOWERTIME)
+            if (charaStatus == CharacterStatus.swordAttack)
             {
-                _attackPower = charaData.basicPower * 4.5f;
-                Debug.Log("槌強攻撃");
-                _isInputHammerAttack = false;
+                if (_swordTime > _MIDDLEPOWERTIME)
+                {
+                    _attackPower = charaData.basicPower * 3;
+                    Debug.Log("剣強攻撃");
+                    _isInputSwordAttack = false;
+                }
+                else if (_swordTime > _NORMALPOWERTIME)
+                {
+                    _attackPower = charaData.basicPower * 2;
+                    Debug.Log("剣中攻撃");
+                    _isInputSwordAttack = false;
+                }
+                else
+                {
+                    _attackPower = charaData.basicPower;
+                    Debug.Log("剣弱攻撃");
+                    _isInputSwordAttack = false;
+                }
             }
-            // 槌強攻撃1段階目
-            else if (_hammerTime > _NORMALPOWERTIME)
+            else if (charaStatus == CharacterStatus.hammerAttack)
             {
-                _attackPower = charaData.basicPower * 3;
-                Debug.Log("槌中攻撃");
-                _isInputHammerAttack = false;
-            }
-            // 槌弱攻撃
-            else
-            {
-                _attackPower = charaData.basicPower * 1.5f;
-                Debug.Log("槌弱攻撃");
-                _isInputHammerAttack = false;
+                // 槌協攻撃2段階目
+                if (_hammerTime > _MIDDLEPOWERTIME)
+                {
+                    _attackPower = charaData.basicPower * 4.5f;
+                    Debug.Log("槌強攻撃");
+                    _isInputHammerAttack = false;
+                }
+                // 槌強攻撃1段階目
+                else if (_hammerTime > _NORMALPOWERTIME)
+                {
+                    _attackPower = charaData.basicPower * 3;
+                    Debug.Log("槌中攻撃");
+                    _isInputHammerAttack = false;
+                }
+                // 槌弱攻撃
+                else
+                {
+                    _attackPower = charaData.basicPower * 1.5f;
+                    Debug.Log("槌弱攻撃");
+                    _isInputHammerAttack = false;
+                }
             }
         }
         #endregion
 
         if (_isHit)
         {
-            if (attackHit.collider.tag == "Normal")
+            if (_attackHit.collider.tag == "Normal")
             {
-                attackHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_damage, _knockback, _weapon);
+                Debug.Log("ふつう当たった");
+                _attackHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_damage, _knockBack, _weapon);
+                _isHit = false;
             }
-            else if (attackHit.collider.tag == "Soft")
+            else if (_attackHit.collider.tag == "Soft")
             {
-                attackHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_damage, _knockback, _weapon);
+                Debug.Log("やわらかい当たった");
+                _attackHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_damage, _knockBack, _weapon);
+                _isHit = false;
             }
-            else if (attackHit.collider.tag == "Hard")
+            else if (_attackHit.collider.tag == "Hard")
             {
-                attackHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_damage, _knockback, _weapon);
+                Debug.Log("硬い当たった");
+                _attackHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_damage, _knockBack, _weapon);
+                _isHit = false;
             }
         }
         base.Attack();
@@ -320,6 +347,7 @@ public class PlayerController : CharacterController
     //記憶ゲージの管理
     protected void MomoryGauge()
     {
+        // 時間での減少
         if (_memoryDownTimer > _ZERO)
         {
             _memoryDownTimer -= Time.deltaTime;
@@ -330,7 +358,8 @@ public class PlayerController : CharacterController
             _memoryDownTimer = _ONE;
         }
 
-        if (_memoryGauge > _MAXMEMORYCAUGE)
+        //敵の種類によって加算する数を変える
+        if (_memoryGauge > _MAXMEMORYGAUGE)
         {
             if (charaStatus == CharacterStatus.swordAttack)
             {
