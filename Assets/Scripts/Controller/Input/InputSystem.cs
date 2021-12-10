@@ -57,6 +57,14 @@ public class @InputSystem : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""SlowTap(duration=1)""
+                },
+                {
+                    ""name"": ""Invincible"",
+                    ""type"": ""Button"",
+                    ""id"": ""76a67bf2-ebe8-4978-a8ca-c4d05538b34b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""SlowTap(duration=1)""
                 }
             ],
             ""bindings"": [
@@ -136,6 +144,17 @@ public class @InputSystem : IInputActionCollection, IDisposable
                     ""action"": ""Test"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b722b73-ce8e-467c-ad13-514a19c1cf71"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Invincible"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -149,6 +168,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         m_Player_SwordAttack = m_Player.FindAction("SwordAttack", throwIfNotFound: true);
         m_Player_HammerAttack = m_Player.FindAction("HammerAttack", throwIfNotFound: true);
         m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
+        m_Player_Invincible = m_Player.FindAction("Invincible", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -203,6 +223,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_SwordAttack;
     private readonly InputAction m_Player_HammerAttack;
     private readonly InputAction m_Player_Test;
+    private readonly InputAction m_Player_Invincible;
     public struct PlayerActions
     {
         private @InputSystem m_Wrapper;
@@ -212,6 +233,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         public InputAction @SwordAttack => m_Wrapper.m_Player_SwordAttack;
         public InputAction @HammerAttack => m_Wrapper.m_Player_HammerAttack;
         public InputAction @Test => m_Wrapper.m_Player_Test;
+        public InputAction @Invincible => m_Wrapper.m_Player_Invincible;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -236,6 +258,9 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 @Test.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
                 @Test.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
                 @Test.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTest;
+                @Invincible.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvincible;
+                @Invincible.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvincible;
+                @Invincible.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvincible;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -255,6 +280,9 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 @Test.started += instance.OnTest;
                 @Test.performed += instance.OnTest;
                 @Test.canceled += instance.OnTest;
+                @Invincible.started += instance.OnInvincible;
+                @Invincible.performed += instance.OnInvincible;
+                @Invincible.canceled += instance.OnInvincible;
             }
         }
     }
@@ -266,5 +294,6 @@ public class @InputSystem : IInputActionCollection, IDisposable
         void OnSwordAttack(InputAction.CallbackContext context);
         void OnHammerAttack(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
+        void OnInvincible(InputAction.CallbackContext context);
     }
 }

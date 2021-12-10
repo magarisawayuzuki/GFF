@@ -44,6 +44,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "SlowTap(duration=1)"
+                },
+                {
+                    "name": "Invincible",
+                    "type": "Button",
+                    "id": "76a67bf2-ebe8-4978-a8ca-c4d05538b34b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "SlowTap(duration=1)"
                 }
             ],
             "bindings": [
@@ -121,6 +129,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Test",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b722b73-ce8e-467c-ad13-514a19c1cf71",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Invincible",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

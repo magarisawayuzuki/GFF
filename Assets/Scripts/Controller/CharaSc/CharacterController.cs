@@ -30,6 +30,8 @@ public class CharacterController : MonoBehaviour
     /// Vector3
     // キャラの移動
     protected Vector3 CharacterMove = new Vector3();
+    [SerializeField,Header("オブジェクトの大きさ")]
+    protected Vector3 ObjectScale = new Vector3(0.5f,0);
 
 
     /// int
@@ -37,21 +39,19 @@ public class CharacterController : MonoBehaviour
     private int _anim = 0;
     private int[] _maxAnimationCount = { 4, 8, 5, 13, 0 };
     */
-<<<<<<< HEAD
-=======
     protected int _weapon = 0;
     protected int _knockBack = 0;
     protected float _damage = 0;
 
->>>>>>> 8318957b602e45ee4a4f5e4dac9bcbb71b5976e8
 
     /// flooat
-    //
+    // 移動毒度低下時間
     protected float _speedDownTimer = 0;
     // 攻撃力
     protected float _attackPower = 0;
     // Rayの長さ
     private float[] _animationTime = { 0, 0, 0, 0, 0 };
+    protected float _groundDistance = -0.65f;
 
 
     /// bool
@@ -65,6 +65,9 @@ public class CharacterController : MonoBehaviour
     /// const
     protected const int _ZERO = 0;
     protected const int _ONE = 1;
+
+    private const int layerMix = 1 << 8 | 1 << 10;
+    private const int layerGround = 1 << 8;
 
     #region Jumpメソッド変数
     //加速度
@@ -171,7 +174,14 @@ public class CharacterController : MonoBehaviour
         // 攻撃状態じゃなければ
         if (!input._isAttack)
         {
-            CharacterMove.x = input._x * 10;
+            if (_isInvincible)
+            {
+                CharacterMove.x = input._x * 10 * 1.5f;
+            }
+            else
+            {
+                CharacterMove.x = input._x * 10;
+            }
         }
         else
         {
@@ -197,11 +207,7 @@ public class CharacterController : MonoBehaviour
 
 
     /// <summary>
-<<<<<<< HEAD
-    /// 着地判定、velocityのy軸に値を入れる
-=======
     /// ジャンプ関連の定義や状態の判定
->>>>>>> 8318957b602e45ee4a4f5e4dac9bcbb71b5976e8
     /// </summary>
     private void Jump()
     {
@@ -212,14 +218,19 @@ public class CharacterController : MonoBehaviour
             CharacterMove.y = _ZERO;
             return;
         }
-
-        // LayerMaskがGroundだったら着地
-<<<<<<< HEAD
-        if (Physics.Raycast(transform.position, Vector3.down, _ONE, LayerMask.GetMask("Ground")))
-=======
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, _ONE, LayerMask.GetMask("Ground")))
->>>>>>> 8318957b602e45ee4a4f5e4dac9bcbb71b5976e8
+        
+        //上昇中には出さない
+        // LayerMaskがGroundもしくはだったら着地ThroughGroundなら
+        if (acceleration <= 0 && Physics.BoxCast(transform.position, ObjectScale, Vector3.down, out RaycastHit hit, Quaternion.identity, _groundDistance, layerMix))
         {
+            //透過床の上でダウンが押された
+            if (input._isDown && hit.collider.gameObject.layer == 10)
+            {
+                //落下
+                CharaFallProcess();
+                return;
+            }
+
             _isGround = true;
             acceleration = _ZERO;
             fallTimeCount = _ZERO;
@@ -230,7 +241,7 @@ public class CharacterController : MonoBehaviour
             {
                 _nowJump = false;
                 jumpTimeCount = _ZERO;
-                acceleration = _ZERO;
+                input._isDown = false;
             }
         }
         else
@@ -244,21 +255,13 @@ public class CharacterController : MonoBehaviour
             }
         }
 
-<<<<<<< HEAD
-        // ジャンプしてる時間を加算
-        if (input._isJump && _jumpTimer < 0.5f)
-        {
-            _jumpTimer += Time.deltaTime;
-        }
-        else
-=======
 
         //ジャンプ中ならジャンプ処理を呼び、この命令以下の判定は行わない
         if (_startJump || _nowJump)
->>>>>>> 8318957b602e45ee4a4f5e4dac9bcbb71b5976e8
         {
+
             //ジャンプ中のみ天井に向けRayを出す
-            if (Physics.Raycast(transform.position, Vector3.up, TO_CEILING_RAY_LENGTH, LayerMask.GetMask("Ground")))
+            if (Physics.BoxCast(transform.position, ObjectScale, Vector3.up, Quaternion.identity, TO_CEILING_RAY_LENGTH, LayerMask.GetMask("Ground")))
             {
                 acceleration = _ZERO;
                 jumpTimeCount = _ZERO;
@@ -304,19 +307,8 @@ public class CharacterController : MonoBehaviour
         const int MAX_JUMP_TIME_COUNT = 3;
         const float MINIMUM_JUMP_TIME_COUNT = 0.1f;
 
-<<<<<<< HEAD
-        // 地面にいたらJumpする地面にいなかったらしない
-        if (input._isJump && _isGround && !input._isAttack)
-        {
-            charaStatus = CharacterStatus.Jump;
-            CharacterMove.y = jumpCurve.Evaluate(_jumpTimer) * _y;
-            Debug.Log("aaafaa");
-        }
-        else if(!input._isJump && !_isGround)
-=======
         //規定時間よりも長くジャンプしていたら強制終了
         if (jumpTimeCount >= MAX_JUMP_TIME_COUNT)
->>>>>>> 8318957b602e45ee4a4f5e4dac9bcbb71b5976e8
         {
             _nowJump = false;
             jumpTimeCount = _ZERO;
@@ -417,6 +409,7 @@ public class PlayerInput
     public float _wasx = 0;
     public bool _isAttack = false;
     public bool _isJump = false;
+    public bool _isDown = false;
 }
 
 [System.Serializable]
