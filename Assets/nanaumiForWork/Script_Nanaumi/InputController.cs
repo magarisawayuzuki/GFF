@@ -49,6 +49,14 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""MouseClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""66cb3fbe-1f4e-4c67-ab48-f6568b45d1ee"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -56,17 +64,6 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""a5367f81-23de-4888-8b69-b558d7639b0d"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Decide"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a5df9795-20d3-4d68-be30-32038bb5c3b3"",
-                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -150,6 +147,17 @@ public class @InputController : IInputActionCollection, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""862fb33d-5d80-46be-a003-9416c7223a4f"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -162,6 +170,7 @@ public class @InputController : IInputActionCollection, IDisposable
         m_UI_Select_Horizontal = m_UI.FindAction("Select_Horizontal", throwIfNotFound: true);
         m_UI_Select_Vertical = m_UI.FindAction("Select_Vertical", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
+        m_UI_MouseClick = m_UI.FindAction("MouseClick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -215,6 +224,7 @@ public class @InputController : IInputActionCollection, IDisposable
     private readonly InputAction m_UI_Select_Horizontal;
     private readonly InputAction m_UI_Select_Vertical;
     private readonly InputAction m_UI_Pause;
+    private readonly InputAction m_UI_MouseClick;
     public struct UIActions
     {
         private @InputController m_Wrapper;
@@ -223,6 +233,7 @@ public class @InputController : IInputActionCollection, IDisposable
         public InputAction @Select_Horizontal => m_Wrapper.m_UI_Select_Horizontal;
         public InputAction @Select_Vertical => m_Wrapper.m_UI_Select_Vertical;
         public InputAction @Pause => m_Wrapper.m_UI_Pause;
+        public InputAction @MouseClick => m_Wrapper.m_UI_MouseClick;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -244,6 +255,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @MouseClick.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMouseClick;
+                @MouseClick.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMouseClick;
+                @MouseClick.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMouseClick;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -260,6 +274,9 @@ public class @InputController : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @MouseClick.started += instance.OnMouseClick;
+                @MouseClick.performed += instance.OnMouseClick;
+                @MouseClick.canceled += instance.OnMouseClick;
             }
         }
     }
@@ -270,5 +287,6 @@ public class @InputController : IInputActionCollection, IDisposable
         void OnSelect_Horizontal(InputAction.CallbackContext context);
         void OnSelect_Vertical(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnMouseClick(InputAction.CallbackContext context);
     }
 }

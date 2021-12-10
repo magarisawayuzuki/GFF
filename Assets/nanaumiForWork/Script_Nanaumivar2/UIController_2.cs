@@ -123,6 +123,11 @@ public class UIController_2 : MonoBehaviour
         }
     }
 
+    public void MouseDecide(string objName)
+    {
+        _isInput[1] = true;
+    }
+
     protected virtual void OnEnable()
     {
         _inputs.Enable();

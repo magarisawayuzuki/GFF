@@ -768,18 +768,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1408449967}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dfb1e7b90de451478894c558bd0c2a6, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPScroll: {fileID: 1239088165}
-  life: 100
-  _playerPara: {fileID: 0}
-  _weaponImage:
-  - {fileID: 1143575759}
-  - {fileID: 270857030}
-  _memoryScroll: {fileID: 1761268275}
-  _memoryAchive: {fileID: 0}
-  memoryAchievement: {fileID: 0}
 --- !u!114 &1408449969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -809,7 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -873,7 +864,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1408449967}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a17fa120d31fcf042bf4892fbd552e3e, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cd61ce8441a72b45834c81fe30db8a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _select: []

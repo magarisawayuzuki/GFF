@@ -288,8 +288,8 @@ GameObject:
   - component: {fileID: 339542666}
   - component: {fileID: 339542668}
   - component: {fileID: 339542667}
-  - component: {fileID: 339542669}
   - component: {fileID: 339542670}
+  - component: {fileID: 339542669}
   m_Layer: 5
   m_Name: StartImage
   m_TagString: Untagged
@@ -364,7 +364,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 339542665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116b91715817db349bff29a7c72a14a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 29dad87a4eee47d4491fc891cb1d17d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &339542670
@@ -385,9 +385,41 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 339542669}
-          m_TargetAssemblyTypeName: UnityEngine.Component, UnityEngine
-          m_MethodName: SendMessage
-          m_Mode: 5
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseChoose
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: OnMouseChoose
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 339542669}
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseExitHere
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: OnMouseChoose
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 339542669}
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseDecide
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -827,7 +859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -894,8 +926,8 @@ GameObject:
   - component: {fileID: 959876969}
   - component: {fileID: 959876971}
   - component: {fileID: 959876970}
-  - component: {fileID: 959876972}
   - component: {fileID: 959876973}
+  - component: {fileID: 959876972}
   m_Layer: 5
   m_Name: ExitImage
   m_TagString: Untagged
@@ -970,7 +1002,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 959876968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116b91715817db349bff29a7c72a14a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 29dad87a4eee47d4491fc891cb1d17d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &959876973
@@ -991,9 +1023,41 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 959876972}
-          m_TargetAssemblyTypeName: UnityEngine.Component, UnityEngine
-          m_MethodName: SendMessage
-          m_Mode: 5
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseChoose
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: OnMouseChoose
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 959876972}
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseExitHere
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: OnMouseChoose
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 959876972}
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseDecide
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1168,7 +1232,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1192769065}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116b91715817db349bff29a7c72a14a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 29dad87a4eee47d4491fc891cb1d17d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1192769070
@@ -1480,8 +1544,8 @@ GameObject:
   - component: {fileID: 1310335994}
   - component: {fileID: 1310335996}
   - component: {fileID: 1310335995}
-  - component: {fileID: 1310335997}
   - component: {fileID: 1310335998}
+  - component: {fileID: 1310335997}
   m_Layer: 5
   m_Name: SettingImage
   m_TagString: Untagged
@@ -1556,7 +1620,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1310335993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116b91715817db349bff29a7c72a14a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 29dad87a4eee47d4491fc891cb1d17d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1310335998
@@ -1577,9 +1641,41 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1310335997}
-          m_TargetAssemblyTypeName: UnityEngine.Component, UnityEngine
-          m_MethodName: SendMessage
-          m_Mode: 5
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseChoose
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: OnMouseChoose
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1310335997}
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseExitHere
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: OnMouseChoose
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1310335997}
+          m_TargetAssemblyTypeName: ChildrenOnMouse_2, Assembly-CSharp
+          m_MethodName: OnMouseDecide
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1844,8 +1940,8 @@ GameObject:
   - component: {fileID: 1905806595}
   - component: {fileID: 1905806597}
   - component: {fileID: 1905806596}
-  - component: {fileID: 1905806599}
   - component: {fileID: 1905806598}
+  - component: {fileID: 1905806599}
   m_Layer: 5
   m_Name: Caution_NoImage
   m_TagString: Untagged
@@ -1949,6 +2045,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1905806594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116b91715817db349bff29a7c72a14a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 29dad87a4eee47d4491fc891cb1d17d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
