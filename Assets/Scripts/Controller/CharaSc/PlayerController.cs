@@ -291,83 +291,86 @@ public class PlayerController : CharacterController
     public override void Attack()
     {
         #region 敵の状態判定
-        _isHit = Physics.BoxCast(transform.position, _attackScale, Vector3.right, out _attackHit, Quaternion.identity, _ONE, LayerMask.GetMask("Enemy"));
-        #endregion
-
-        #region 攻撃力代入
-        if (_isHit)
+        RaycastHit[] _attackHit = Physics.BoxCastAll(transform.position, _attackScale, Vector3.right, Quaternion.identity, _ONE, LayerMask.GetMask("Enemy"));
+        foreach (RaycastHit raycastHit in _attackHit)
         {
-            if (_isInvincible)
+
+            #endregion
+
+            #region 攻撃力代入
+            if (_isHit)
             {
-                _attackPower = charaData.basicPower * _invincibleAttack;
-            }
-            else
-            {
-                switch (charaStatus)
+                if (_isInvincible)
                 {
-                    case CharacterStatus.swordAttack:
-                        if (_swordTime > _MIDDLEPOWERTIME)
-                        {
-                            _attackPower = charaData.basicPower * _swordHeavyAttack * _memoryGaugeAttackPoint;
-                            Debug.Log("剣強攻撃");
-                        }
-                        else if (_swordTime > _NORMALPOWERTIME)
-                        {
-                            _attackPower = charaData.basicPower * _swordMiddleAttack * _memoryGaugeAttackPoint;
-                            Debug.Log("剣中攻撃");
-                        }
-                        else
-                        {
-                            _attackPower = charaData.basicPower * _memoryGaugeAttackPoint;
-                            Debug.Log("剣弱攻撃");
-                        }
-                        break;
-                    case CharacterStatus.hammerAttack:
-                        // 槌協攻撃2段階目
-                        if (_hammerTime > _MIDDLEPOWERTIME)
-                        {
-                            _attackPower = charaData.basicPower * _hammerHeavyAttack * _memoryGaugeAttackPoint;
-                            Debug.Log("槌強攻撃");
-                        }
-                        // 槌強攻撃1段階目
-                        else if (_hammerTime > _NORMALPOWERTIME)
-                        {
-                            _attackPower = charaData.basicPower * _hammerMiddleAttack * _memoryGaugeAttackPoint;
-                            Debug.Log("槌中攻撃");
-                        }
-                        // 槌弱攻撃
-                        else
-                        {
-                            _attackPower = charaData.basicPower * _hammerLightAttack * _memoryGaugeAttackPoint;
-                            Debug.Log("槌弱攻撃");
-                        }
-                        break;
+                    _attackPower = charaData.basicPower * _invincibleAttack;
+                }
+                else
+                {
+                    switch (charaStatus)
+                    {
+                        case CharacterStatus.swordAttack:
+                            if (_swordTime > _MIDDLEPOWERTIME)
+                            {
+                                _attackPower = charaData.basicPower * _swordHeavyAttack * _memoryGaugeAttackPoint;
+                                Debug.Log("剣強攻撃");
+                            }
+                            else if (_swordTime > _NORMALPOWERTIME)
+                            {
+                                _attackPower = charaData.basicPower * _swordMiddleAttack * _memoryGaugeAttackPoint;
+                                Debug.Log("剣中攻撃");
+                            }
+                            else
+                            {
+                                _attackPower = charaData.basicPower * _memoryGaugeAttackPoint;
+                                Debug.Log("剣弱攻撃");
+                            }
+                            break;
+                        case CharacterStatus.hammerAttack:
+                            // 槌協攻撃2段階目
+                            if (_hammerTime > _MIDDLEPOWERTIME)
+                            {
+                                _attackPower = charaData.basicPower * _hammerHeavyAttack * _memoryGaugeAttackPoint;
+                                Debug.Log("槌強攻撃");
+                            }
+                            // 槌強攻撃1段階目
+                            else if (_hammerTime > _NORMALPOWERTIME)
+                            {
+                                _attackPower = charaData.basicPower * _hammerMiddleAttack * _memoryGaugeAttackPoint;
+                                Debug.Log("槌中攻撃");
+                            }
+                            // 槌弱攻撃
+                            else
+                            {
+                                _attackPower = charaData.basicPower * _hammerLightAttack * _memoryGaugeAttackPoint;
+                                Debug.Log("槌弱攻撃");
+                            }
+                            break;
+                    }
                 }
             }
-        }
-        #endregion
+            #endregion
 
-        #region 敵の種別分け
-        if (_isHit)
-        {
-            if (_attackHit.collider.tag == "Normal")
+            #region 敵の種別分け
+            if (_isHit)
             {
-                Debug.Log("ふつう当たった");
-                _attackHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_damage, _knockBack, _weapon);
+                if (raycastHit.collider.tag == "Normal")
+                {
+                    Debug.Log("ふつう当たった");
+                    raycastHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
+                }
+                else if (raycastHit.collider.tag == "Soft")
+                {
+                    Debug.Log("やわらかい当たった");
+                    raycastHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
+                }
+                else if (raycastHit.collider.tag == "Hard")
+                {
+                    Debug.Log("硬い当たった");
+                    raycastHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
+                }
             }
-            else if (_attackHit.collider.tag == "Soft")
-            {
-                Debug.Log("やわらかい当たった");
-                _attackHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_damage, _knockBack, _weapon);
-            }
-            else if (_attackHit.collider.tag == "Hard")
-            {
-                Debug.Log("硬い当たった");
-                _attackHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_damage, _knockBack, _weapon);
-            }
-            _isHit = false;
+            #endregion
         }
-        #endregion
 
         base.Attack();
     }
