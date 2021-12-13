@@ -198,7 +198,7 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-        print(acceleration);
+       // print(acceleration);
         //攻撃中は停止
         if (input._isAttack)
         {
