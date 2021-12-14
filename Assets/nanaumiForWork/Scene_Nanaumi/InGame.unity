@@ -768,9 +768,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1408449967}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: cc88b989964477946a1191b43dafb010, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _select: []
+  _selectPoint: []
+  _selector: {fileID: 0}
+  _selectorMagnitude: 0
 --- !u!114 &1408449969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -867,10 +871,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cd61ce8441a72b45834c81fe30db8a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _select: []
-  _selectPoint: []
-  _selector: {fileID: 0}
-  _selectorMagnitude: 0
+  life: 100
+  _aaa: 0
+  playerPara: {fileID: 11400000, guid: 4151cbbf6c811f94dad07f1d3ce7b7be, type: 2}
+  _bbb: 0
+  _memoryGaugeBar: {fileID: 1761268275}
+  weaponImage:
+  - {fileID: 1143575759}
+  - {fileID: 270857030}
 --- !u!1 &1535368079
 GameObject:
   m_ObjectHideFlags: 0

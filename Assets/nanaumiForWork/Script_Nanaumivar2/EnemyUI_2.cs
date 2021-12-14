@@ -9,6 +9,11 @@ public class EnemyUI_2 : Chara_2
 
     private void Awake()
     {
+        HPScroll = this.GetComponent<Scrollbar>();
+    }
+
+    private void Start()
+    {
         //SetChara(_enemyPara);
     }
 

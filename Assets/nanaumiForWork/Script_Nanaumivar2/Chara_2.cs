@@ -10,7 +10,7 @@ public class Chara_2 : MonoBehaviour
     private int beforeLife;
     private int afterLife;
 
-    [SerializeField] private Scrollbar HPScroll;
+    protected Scrollbar HPScroll;
 
     [SerializeField] private int life;
 
