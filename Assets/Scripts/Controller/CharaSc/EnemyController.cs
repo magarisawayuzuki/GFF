@@ -224,12 +224,12 @@ public class EnemyController : CharacterController
                 if (_Retrcking == true)
                 {
                     num = -1;
-                    EnemySprite.flipX = true; //反転処理 　左
+                    EnemySprite.flipX = false; //反転処理 　左
                 }
                 else if (_Retrcking == false)
                 {
                     num = 1;
-                    EnemySprite.flipX = false; //反転処理 右
+                    EnemySprite.flipX = true; //反転処理 右
                 }
                 transform.localScale = scale;
                 return;
@@ -320,7 +320,7 @@ public class EnemyController : CharacterController
     //-----------------二次元配列によって行動変化----------------------
     private void MapMove()
     {
-
+       
         GameObject[] EnemyM = GameObject.FindGameObjectsWithTag("Enemy");
 
         for (int i = 0; i < EnemyM.Length; i++)
@@ -433,52 +433,52 @@ public class EnemyController : CharacterController
     private void EnemyTracking()
     {
 
-        //Vector3 pv = player.transform.position;
+        Vector3 pv = player.transform.position;
         Vector3 ev = transform.position;
 
-        //float TrackingposX = pv.x - ev.x;
-        //float TrackingposY = pv.y - ev.y;
+        float TrackingposX = pv.x - ev.x;
+        float TrackingposY = pv.y - ev.y;
 
-        //float vx = 0f;
-        //float vy = 0f;
+        float vx = 0f;
+        float vy = 0f;
 
-        //float sp = 10f;
+        float sp = 10f;
 
-        //// 減算した結果がマイナスであればXは減算処理
-        //if (TrackingposX < 0 || TrackingposX == 0)
-        //{
-        //    _Retrcking = true;
-        //    vx = -sp;
-        //}
-        //else
-        //{
-        //    _Retrcking = false;
-        //    vx = sp;
-        //}
+        // 減算した結果がマイナスであればXは減算処理
+        if (TrackingposX < 0 || TrackingposX == 0)
+        {
+            _Retrcking = true;
+            vx = -sp;
+        }
+        else
+        {
+            _Retrcking = false;
+            vx = sp;
+        }
 
-        //// 減算した結果がマイナスであればYは減算処理
-        //if (TrackingposY < 0)
-        //{
-        //    vy = -sp;
-        //}
-        //else
-        //{
-        //    vy = sp;
-        //}
-        //if (_IsTracking == true)
-        //{
-        //    transform.Translate(vx / data.TrackingSpeed, 0, 0);
-        //}
+        // 減算した結果がマイナスであればYは減算処理
+        if (TrackingposY < 0)
+        {
+            vy = -sp;
+        }
+        else
+        {
+            vy = sp;
+        }
+        if (_IsTracking == true)
+        {
+            transform.Translate(vx / data.TrackingSpeed, 0, 0);
+        }
 
-        rad = Mathf.Atan2(
-           player.transform.position.y - transform.position.y,
-           player.transform.position.x - transform.position.x);
+  //      rad = Mathf.Atan2(
+  //         player.transform.position.y - transform.position.y,
+  //         player.transform.position.x - transform.position.x);
 
 
-        // これで特定の方向へ向かって進んでいく。
-		ev.x += speed.x * Mathf.Cos(rad);
-        print(rad);
-        // 現在の位置に加算減算を行ったPositionを代入する
-        transform.position = ev;
+  //      // これで特定の方向へ向かって進んでいく。
+		//ev.x += speed.x * Mathf.Cos(rad);
+        
+  //      // 現在の位置に加算減算を行ったPositionを代入する
+  //      transform.position = ev;
     }
 }

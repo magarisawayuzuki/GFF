@@ -48,8 +48,9 @@ MonoBehaviour:
   playerObj: {fileID: 3549602746911713255, guid: e0714c8e8a016744d905968bfc6e1f70, type: 3}
   BossSprite: {fileID: 7717912961577527279, guid: 1d4338d7b1371354ca371dddb52170e1, type: 3}
   mono: {fileID: 11400000, guid: 1e8d535f9566b13448a73de8157bae88, type: 2}
+  HP: 210
   AnimeSpeed: 5
-  TrackingSpeed: 500
+  TrackingSpeed: 800
   WeaponForce: 6
   ReScale: 1
   AttackRange: 5
@@ -89,6 +90,7 @@ MonoBehaviour:
   _IsSummonSpell: 0
   _IsTracking: 1
   _IsNext: 0
+  slider: {fileID: 786576887497769829, guid: b8856e9ac597f1b4ab50dc75437dd8ba, type: 3}
   aiState: 0
 --- !u!212 &4503539027462731859
 SpriteRenderer:
