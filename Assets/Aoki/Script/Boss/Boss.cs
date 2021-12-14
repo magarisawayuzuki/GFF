@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {       
@@ -8,7 +9,9 @@ public class Boss : MonoBehaviour
     public SpriteRenderer BossSprite;
 
     [SerializeField]
-    public BossData mono; // spriteデータ   
+    public BossData mono; // spriteデータ
+    [SerializeField]
+    private float HP;
     [SerializeField]
     private float AnimeSpeed; //spriteアニメのスピード  
     [SerializeField]
@@ -39,11 +42,14 @@ public class Boss : MonoBehaviour
     private bool _IsLook;
     private bool _IsHit;
     private bool _IsCount;
+    public bool _IsSwitch;
 
     private Vector2 pos;　//自身の位置
     private Vector3 DefaultPos;　//最初の位置
     private Vector2 MapPos;　//二次元配列の位置
-   
+    private Vector2 scale;
+
+    private int DefaultPosXInt;
     private int WarpPosX;
     private int anime;　//switch変数
     
@@ -52,13 +58,20 @@ public class Boss : MonoBehaviour
     private float num = 1; //反転するときに使う数字（1で固定
     private float DefaultSpeed;
 
+    [HideInInspector]
     public bool _IsRetrcking;
+    [HideInInspector]
     public bool _IsSpell;
+    [HideInInspector]
     public bool _IsSummonSpell;
+    [HideInInspector]
     public bool _IsTracking = true;
+    [HideInInspector]
     public bool _IsNext;
+    [HideInInspector]
+    public bool _IsDefaultWarp;
 
-    private int SpellCount = 1;
+    private int SpellCount;
     private int SummonCount = 3;
     int EnemyPositionX = 0; //二次元配列の敵の横
     int EnemyPositionY = 0; //二次元配列の敵の縦
@@ -66,6 +79,7 @@ public class Boss : MonoBehaviour
     Maping map;
     Play play;
 
+    public int HpState;
     public EnemyAiState aiState = EnemyAiState.Resporn;
     public enum EnemyAiState
     {
@@ -116,6 +130,7 @@ public class Boss : MonoBehaviour
 
         MapPos = transform.position;
         DefaultPos = transform.position;
+        DefaultPosXInt = Mathf.FloorToInt(DefaultPos.x);
         DefaultSpeed = TrackingSpeed;
 
         MaxLeng[0] = mono.Resporn.GetLength(0);
@@ -126,48 +141,13 @@ public class Boss : MonoBehaviour
         MaxLeng[5] = mono.WarpAttack.GetLength(0);
         MaxLeng[6] = mono.Spell.GetLength(0);
         MaxLeng[7] = mono.StrongAttack.GetLength(0);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    AttackPattern = 4;
 
-        //    _IsSpell = false;
-        //    Spritetime[6] = 0;
-        //    SpellCount = 0;
-        //    aiState = EnemyAiState.StrongSpell;
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    AttackPattern = 2;
-
-        //    _IsSpell = false;
-        //    Spritetime[6] = 0;
-        //    SpellCount = 0;
-        //    aiState = EnemyAiState.Summon;
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.R))
-        //{
-        //    anime = 10;
-        //}
-
-        //if(Input.GetKeyDown(KeyCode.G))
-        //{
-        //    GameObject SummonEn = GameObject.Find("MushroomS(Clone)");
-        //    SummonCount -= 1;
-        //    Destroy(SummonEn);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Return))
-        //{
-        //    GameObject SummonEn = GameObject.Find("Mushroom(Clone)");            
-        //    Destroy(SummonEn);
-        //}
         MapMove();
 
         EnemyPos();
@@ -180,30 +160,61 @@ public class Boss : MonoBehaviour
 
         Hit();
 
-    }
+        HPMove();
 
+    }
+    //--------------------------HPによって行動変化---------------------
+    private void HPMove()
+    {
+       
+        switch (HpState)
+        {
+            case 1:
+
+                break;
+
+            case 2:
+                print("Hp75%以下");
+                _IsDefaultWarp = true;
+                if (!_IsSwitch)
+                {
+                    aiState = EnemyAiState.Warp;
+                    _IsSwitch = true;
+                }
+                break;
+
+            case 3:
+                print("Hp50%以下");
+                _IsDefaultWarp = true;
+                
+                if (!_IsSwitch)
+                {
+                    aiState = EnemyAiState.Warp;
+                    _IsSwitch = true;
+                }
+                break;
+
+            case 4:
+                print("Hp25%以下");
+                aiState = EnemyAiState.Summon;
+                break;
+        }
+    }
     //--------------------------switch文-------------------------------
     private void AnimeMotion()
     {
-       
-        Vector2 scale = transform.localScale;
+        scale = transform.localScale;
         switch (aiState)
-        {
+        {            
             //--------------------------------------リスポーンアニメーション処理--------------------------------
             case EnemyAiState.Resporn:
                 BossSprite.sprite = mono.Resporn[(int)Spritetime[0]];
                 Spritetime[0] += Time.deltaTime * AnimeSpeed;
 
                 if (Spritetime[0] >= MaxLeng[0])
-                {
-                    if (_IsSummonSpell == false)
-                    {
-                        aiState = EnemyAiState.IDLE;
-                    }
-                    if (_IsSummonSpell == true)
-                    {
-                        aiState = EnemyAiState.Summon;
-                    }
+                {                   
+                    aiState = EnemyAiState.IDLE;
+                                                             
                 }
                 break;
             //--------------------------------------待機アニメーション処理-------------------------------------- 
@@ -216,7 +227,10 @@ public class Boss : MonoBehaviour
                 {
                     Spritetime[1] = 0;
                     AttackCount[1] = 0;
-                    //anime = 3;
+                    if (AttackPattern == 1 || AttackPattern == 2)
+                    {
+                        aiState = EnemyAiState.Tracking;
+                    }
                 }
 
 
@@ -302,14 +316,18 @@ public class Boss : MonoBehaviour
 
             //------------------------------------召喚処理----------------------------------
             case EnemyAiState.Summon:
+                AttackPattern = 2;
+                _IsDefaultWarp = false;
                 _IsReset = false;
+
                 BossSprite.sprite = mono.Spell[(int)Spritetime[6]];
                 Spritetime[6] += Time.deltaTime * AttackAnimeSpeed[1];
-
+                
                 GameObject SummonEn = GameObject.Find("MushroomS(Clone)");
-
+               
                 if (SpellCount < 1)
                 {
+                    _IsSummonSpell = false;
                     Instantiate(SummonSpell[0], new Vector2(SummonSpell[0].transform.position.x, SummonSpell[0].transform.position.y), Quaternion.identity); // 固定座標に魔法
                     SpellCount++;
                 }
@@ -320,7 +338,7 @@ public class Boss : MonoBehaviour
                     Instantiate(SummonSpell[1], new Vector2(SummonSpell[1].transform.position.x, SummonSpell[1].transform.position.y), Quaternion.identity); // 固定座標に魔法
                     SummonCount = 3;
                 }
-                if (Spritetime[6] >= MaxLeng[5])
+                if (Spritetime[6] >= MaxLeng[6])
                 {
                     _IsSummonSpell = true;
 
@@ -362,7 +380,16 @@ public class Boss : MonoBehaviour
 
                 BossSprite.sprite = mono.Warp[(int)Spritetime[4]];
                 Spritetime[4] += Time.deltaTime * AnimeSpeed;
-                if (Spritetime[4] >= MaxLeng[4])
+
+
+                if (_IsDefaultWarp == true && Spritetime[4] >= MaxLeng[4])
+                {
+                    WarpPosX = DefaultPosXInt;
+                    this.transform.position = new Vector2(WarpPosX, transform.position.y);
+                    aiState = EnemyAiState.WarpAttack;
+                }
+
+                if (_IsDefaultWarp == false && Spritetime[4] >= MaxLeng[4])
                 {
                     Spritetime[5] = 0;
                     AttackCount[1] += 1;
@@ -389,6 +416,13 @@ public class Boss : MonoBehaviour
 
                 BossSprite.sprite = mono.WarpAttack[(int)Spritetime[5]];
                 Spritetime[5] += Time.deltaTime * AttackAnimeSpeed[0];
+
+                if (_IsDefaultWarp == true && Spritetime[5] >= MaxLeng[5] - 10)
+                {
+                    _IsReset = true;
+                    aiState = EnemyAiState.Summon;
+                }
+
 
                 if (Spritetime[5] >= MaxLeng[5])
                 {
@@ -448,14 +482,15 @@ public class Boss : MonoBehaviour
     private void Warp()
     {
         _IsReset = false;
+        
+        
+            BossSprite.sprite = mono.Warp[(int)Spritetime[4]];
+            Spritetime[4] += Time.deltaTime * AnimeSpeed;
 
-        BossSprite.sprite = mono.Warp[(int)Spritetime[4]];
-        Spritetime[4] += Time.deltaTime * AnimeSpeed;
-
-        if (Spritetime[4] > MaxLeng[3])
-        {
-            Spritetime[4] = MaxLeng[3] - 1;
-        }
+            if (Spritetime[4] > MaxLeng[4])
+            {
+                Spritetime[4] = MaxLeng[4] - 1;
+            }
     }
     //--------------------------ヒット判定-----------------------------
     private void Hit()
@@ -533,7 +568,7 @@ public class Boss : MonoBehaviour
                 //2つ右がプレイヤーだった場合攻撃
                 if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX)
                 {                   
-                    anime = 8;
+                    aiState = EnemyAiState.ATTACK;
                 }
             }
            
@@ -550,8 +585,8 @@ public class Boss : MonoBehaviour
             {
                 //１つ左がプレイヤーだった場合攻撃
                 if (EnemyPositionX - AttackRange <= map.PlayerPositionX && EnemyPositionX - AttackRange >= map.PlayerPositionX)
-                {                                                                          
-                    anime = 8;
+                {
+                    aiState = EnemyAiState.ATTACK;
                 }
             }
             

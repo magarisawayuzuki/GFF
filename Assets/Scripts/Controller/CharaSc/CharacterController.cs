@@ -51,6 +51,7 @@ public class CharacterController : MonoBehaviour
     protected float _attackPower = 0;
     // Rayの長さ
     private float[] _animationTime = { 0, 0, 0, 0, 0 };
+    [SerializeField]
     protected float _groundDistance = -0.65f;
 
 
