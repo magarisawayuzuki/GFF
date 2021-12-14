@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class CharacterController : MonoBehaviour
 {
+    CharacterAnimationController charaAnimCtrl;
+
     [SerializeField]
     protected CharaParameter charaData = default;
     /*
@@ -25,6 +27,7 @@ public class CharacterController : MonoBehaviour
     protected SpriteRenderer spriteRenderer = default;
     // Charaのstatsを入れる
     protected CharacterStatus charaStatus = default;
+    private CharacterStatus old_charaStatus = default;
 
 
     /// Vector3
@@ -110,7 +113,6 @@ public class CharacterController : MonoBehaviour
         Damage,
     }
 
-
     //==========================================================
 
 
@@ -121,6 +123,15 @@ public class CharacterController : MonoBehaviour
     {
         input = InputMethod();
 
+        //前フレームと状態が違ったら
+        if (old_charaStatus != charaStatus)
+        {
+            //アニメーションを切り替える
+            charaAnimCtrl.AnimationChenge(charaStatus);
+            old_charaStatus = charaStatus;
+        }
+
+        
         // 移動
         Move();
 

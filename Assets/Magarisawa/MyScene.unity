@@ -229,6 +229,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerSide
       objectReference: {fileID: 0}
+    - target: {fileID: -8978801113799092663, guid: f7affe64a367c0343bde25c400b8894b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -7579463776732969153, guid: f7affe64a367c0343bde25c400b8894b, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
@@ -912,6 +916,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerFront
       objectReference: {fileID: 0}
+    - target: {fileID: 8263152425645250464, guid: db6dec8621d8dd24ab82d8a558b4264b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: -2388900732422209841, guid: db6dec8621d8dd24ab82d8a558b4264b, type: 3}
 --- !u!1 &959853955
@@ -1343,8 +1351,21 @@ MonoBehaviour:
     _wasx: 0
     _isAttack: 0
     _isJump: 0
+    _isDown: 0
+  ObjectScale: {x: 1, y: 2, z: 1}
+  _groundDistance: -0.65
   jumpSpeedScale: 1
   _memoryGauge: 50
+  _invincibleTime: 5
+  _maxMemoryGaugeAttack: 1.5
+  _mediumMemoryGaugeAttack: 1.3
+  _minMemoryGaugeAttack: 1
+  _swordMiddleAttack: 2
+  _swordHeavyAttack: 3
+  _hammerLightAttack: 1.5
+  _hammerMiddleAttack: 3
+  _hammerHeavyAttack: 4.5
+  _invincibleAttack: 6
 --- !u!65 &1979345814
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1415,7 +1436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979345809}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.21, y: 0.2, z: 0}
+  m_LocalPosition: {x: 2.22, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
