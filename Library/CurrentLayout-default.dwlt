@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 321}
   m_MaxSize: {x: 4002, y: 8021}
   vertical: 1
-  controlID: 62
+  controlID: 22
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_MinSize: {x: 908, y: 442}
   m_MaxSize: {x: 22005, y: 10021}
   vertical: 0
-  controlID: 108
+  controlID: 193
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -226,7 +226,7 @@ MonoBehaviour:
   m_MinSize: {x: 201, y: 442}
   m_MaxSize: {x: 4001, y: 8042}
   vertical: 1
-  controlID: 17
+  controlID: 63
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -386,7 +386,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 5cfbffff404b0000
+      m_ExpandedIDs: 5cfbffff404b0000f44b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -486,21 +486,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Aoki/Script/Boss
+    - Assets/Aoki/Prefab/Enemy
     m_Globs: []
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Aoki/Script/Boss
+  - Assets/Aoki/Prefab/Enemy
   m_LastFoldersGridSize: 96
   m_LastProjectPath: "C:\\Users\\kuu32\\OneDrive\\\u30C7\u30B9\u30AF\u30C8\u30C3\u30D7\\GFF"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: aa570000
-    m_LastClickedID: 22442
-    m_ExpandedIDs: 000000001a5700001c5700001e5700002057000022570000245700002657000056570000a657000000ca9a3b
+    m_SelectedIDs: d86d0000
+    m_LastClickedID: 28120
+    m_ExpandedIDs: 000000001a5700001c5700001e5700002057000022570000245700002657000058570000785700008857000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -709,9 +709,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 700.6767, y: 179.12328, z: -2.221144}
+    m_Target: {x: 1.0462599, y: 7.6074276, z: -0.9997054}
     speed: 2
-    m_Value: {x: 700.6767, y: 179.12328, z: -2.221144}
+    m_Value: {x: 1.0462599, y: 7.6074276, z: -0.9997054}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -762,9 +762,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 22.352911
+    m_Target: 15.3200035
     speed: 2
-    m_Value: 22.352911
+    m_Value: 15.3200035
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -782,7 +782,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewRotation: {x: -0.08719874, y: -0.00089951593, z: 0.00007874898, w: -0.9961901}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 

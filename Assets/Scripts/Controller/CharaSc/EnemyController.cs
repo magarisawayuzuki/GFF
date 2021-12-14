@@ -40,7 +40,7 @@ public class EnemyController : CharacterController
     public float num = 1; //反転するときに使う数字（1で固定
 
     private Vector2 pos;　//自身の位置
-    private Vector3 DefaultPos; //最初の位置
+    private Vector2 DefaultPos; //最初の位置
 
     private float GetAttackRange;
 
@@ -48,14 +48,15 @@ public class EnemyController : CharacterController
     public bool _IsTrackingWait;
     public bool _IsTracking;
 
-    int EnemyPositionX = 0; //二次元配列の横
-    int EnemyPositionY = 0; //二次元配列の縦
+    private int EnemyPositionX = 0; //二次元配列の横
+    private int EnemyPositionY = 0; //二次元配列の縦
 
+    public int MoveX;
     Maping map;
-
-    public Vector2[] DefaultMobPos;
-    public int[] MobPositionX;
-    public int[] MobPositionY;
+    [SerializeField]
+    private Vector2[] DefaultMobPos;
+    private int[] MobPositionX;
+    private int[] MobPositionY;
 
     private float rad;
     public Vector2 speed = new Vector2(0.05f, 0.05f);
@@ -164,6 +165,19 @@ public class EnemyController : CharacterController
         EnemyPositionX = Mathf.FloorToInt(pos.x);
         EnemyPositionY = Mathf.FloorToInt(pos.y);
 
+        if(pos.x >= DefaultPos.x + 1)
+        {
+            MoveX = 1;
+            DefaultPos.x = pos.x;
+           
+        }
+
+        if (pos.x <= DefaultPos.x - 1)
+        {
+            MoveX = -1;
+            DefaultPos.x = pos.x;            
+        }
+        
     }
 
     private void OnBecameVisible()　//カメラ内処理
@@ -237,6 +251,11 @@ public class EnemyController : CharacterController
             case 3:　//最初のアニメーションに戻る
                 EnemySprite.sprite = Anime.Death[(int)Spritetime[2]];
                 Spritetime[2] += Time.deltaTime * data.AnimeSpeed[0];
+                if (Spritetime[2] >= MaxLeng[5])
+                {
+                    Spritetime[2] = MaxLeng[5] -1;
+                    Spritetime[3] = 0; 
+                }
                 break;
 
             case 4://---------------------------待機-----------------------------
@@ -319,47 +338,27 @@ public class EnemyController : CharacterController
 
     //-----------------二次元配列によって行動変化----------------------
     private void MapMove()
-    {
-       
-        GameObject[] EnemyM = GameObject.FindGameObjectsWithTag("Enemy");
-
-        for (int i = 0; i < EnemyM.Length; i++)
+    {            
+        if (num == 1) //右向き
         {
-            DefaultMobPos[i] = EnemyM[i].transform.position;
-            MobPositionX[i] = Mathf.FloorToInt(DefaultMobPos[i].x);
-            MobPositionY[i] = Mathf.FloorToInt(DefaultMobPos[i].y);
-
-            if (num == 1) //右向き
+            //2つ右がプレイヤーだった場合攻撃
+            if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX)
             {
-                //2つ右がプレイヤーだった場合攻撃
-                if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX)
+                if (_IsAttack == true)
                 {
-                    if (_IsAttack == true)
-                    {
                         anime = 5;
-                    }
-                    else
-                    {
+                }
+                else
+                {
                         anime = 4;
-                    }
-                }
-                else if (_InEnemy == true && _IsTrackingWait == false)
-                {
-                    anime = 2;
-                }
-
-                if (EnemyPositionX + WaitRange >= MobPositionX[1] && EnemyPositionX + WaitRange <= MobPositionX[1])
-                {
-                    print("右待機");
-                    _IsTrackingWait = true;
-                    anime = 4;
-                }
-                else if (_IsTrackingWait == true)
-                {
-                    _IsTrackingWait = false;
-                    anime = 2;
                 }
             }
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsTracking == true)
+            {
+                anime = 2;
+            }
+
+        }
             if (num == -1) //左向き
             {
 
@@ -375,25 +374,12 @@ public class EnemyController : CharacterController
                         anime = 4;
                     }
                 }
-                else if (_InEnemy == true && _IsTrackingWait == false)
+                else if (_InEnemy == true && _IsTrackingWait == false && _IsTracking == true)
                 {
                     anime = 2;
-                }
-
-                if (EnemyPositionX - WaitRange >= MobPositionX[0] && EnemyPositionX - WaitRange <= MobPositionX[0])
-                {
-                    print("左待機");
-
-                    _IsTrackingWait = true;
-                    anime = 4;
-                }
-                else if (_IsTrackingWait == true)
-                {
-                    _IsTrackingWait = false;
-                    anime = 2;
-                }
+                }               
             }
-        }
+        
     }
 
     //--------------------------bool処理-------------------------------

@@ -8,6 +8,9 @@ TagManager:
   - Boss
   - BossObj
   - Map
+  - Soft
+  - Normal
+  - Hard
   layers:
   - Default
   - TransparentFX
