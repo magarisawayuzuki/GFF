@@ -41,7 +41,7 @@ public class PlayerController : CharacterController
     // 記憶ゲージ減少時間
     private float _memoryDownTimer = 1;
     // Objectの半径
-    private float _sidedistance = 0.5f;
+    private float _sidedistance = 0.45f;
     [SerializeField,Header("無双時間")]
     private float _invincibleTime = 5;
 
@@ -163,10 +163,12 @@ public class PlayerController : CharacterController
             if (_isInputSwordAttack)
             {
                 _isInputSwordAttack = false;
+                input._isAttack = false;
             }
             else
             {
                 _isInputHammerAttack = false;
+                input._isAttack = false;
                 _canHammerAttack = false;
             }
         }
@@ -230,7 +232,7 @@ public class PlayerController : CharacterController
             {
                 input._isAttack = true;
                 _weapon = _ZERO;
-                charaStatus = CharacterStatus.swordAttack;
+                _charaStatus = CharacterStatus.swordAttack;
             }
         }
         #endregion
@@ -264,7 +266,7 @@ public class PlayerController : CharacterController
             {
                 input._isAttack = true;
                 _weapon = _ONE;
-                charaStatus = CharacterStatus.hammerAttack;
+                _charaStatus = CharacterStatus.hammerAttack;
             }
         }
         #endregion
@@ -292,11 +294,10 @@ public class PlayerController : CharacterController
     {
         #region 敵の状態判定
         RaycastHit[] _attackHit = Physics.BoxCastAll(transform.position, _attackScale, Vector3.right, Quaternion.identity, _ONE, LayerMask.GetMask("Enemy"));
+        Debug.DrawRay(transform.position, Vector3.right * _ONE);
+            #endregion
         foreach (RaycastHit raycastHit in _attackHit)
         {
-
-            #endregion
-
             #region 攻撃力代入
             if (_isHit)
             {
@@ -306,7 +307,7 @@ public class PlayerController : CharacterController
                 }
                 else
                 {
-                    switch (charaStatus)
+                    switch (_charaStatus)
                     {
                         case CharacterStatus.swordAttack:
                             if (_swordTime > _MIDDLEPOWERTIME)
@@ -458,11 +459,11 @@ public class PlayerController : CharacterController
         else
         {
             //敵の種類によって加算する数を変える
-            if (_memoryGauge < _MAXMEMORYGAUGE)
+            if (_memoryGauge < _MAXMEMORYGAUGE && _isHit)
             {
-                switch (charaStatus)
+                switch (_weapon)
                 {
-                    case CharacterStatus.swordAttack:
+                    case 0:
                         if (_isSoft)
                         {
                             _memoryGauge += _GOODMEMORYPLUS;
@@ -482,7 +483,7 @@ public class PlayerController : CharacterController
                             _memoryGauge = _MAXMEMORYGAUGE;
                         }
                         break;
-                    case CharacterStatus.hammerAttack:
+                    case 1:
                         if (_isHard)
                         {
                             _memoryGauge += _GOODMEMORYPLUS;

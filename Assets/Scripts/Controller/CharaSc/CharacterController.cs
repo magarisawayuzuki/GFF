@@ -10,6 +10,9 @@ public class CharacterController : MonoBehaviour
 {
     [SerializeField]
     protected CharaParameter charaData = default;
+
+    CharacterAnimationController charaAnimCtrl;
+
     /*
     [SerializeField]
     Weapons[] weapon = null;
@@ -23,8 +26,11 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     protected PlayerInput input = default;
     protected SpriteRenderer spriteRenderer = default;
+
     // Charaのstatsを入れる
-    protected CharacterStatus charaStatus = default;
+    protected CharacterStatus _charaStatus = default;
+    public CharacterStatus characterStatus { get { return _charaStatus; } }
+    public CharacterStatus old_charaStatus = default;
 
 
     /// Vector3
@@ -52,7 +58,7 @@ public class CharacterController : MonoBehaviour
     // Rayの長さ
     private float[] _animationTime = { 0, 0, 0, 0, 0 };
     [SerializeField]
-    protected float _groundDistance = -0.65f;
+    protected float _groundDistance = 1.69f;
 
 
     /// bool
@@ -139,6 +145,14 @@ public class CharacterController : MonoBehaviour
             Attack();
         }
 
+        //前フレームと状態が違ったら
+        if (old_charaStatus != _charaStatus)
+        {
+            //アニメーションを切り替える
+            charaAnimCtrl.AnimationChenge(_charaStatus);
+            old_charaStatus = _charaStatus;
+        }
+
         // velocityへ入れる
         transform.position += CharacterMove * Time.deltaTime;
     }
@@ -155,11 +169,11 @@ public class CharacterController : MonoBehaviour
     {
         if (input._x != 0 && !input._isJump && input._isAttack)
         {
-            charaStatus = CharacterStatus.Move;
+            _charaStatus = CharacterStatus.Move;
         }
         else if(!input._isJump && !input._isAttack)
         {
-            charaStatus = CharacterStatus.Idle;
+            _charaStatus = CharacterStatus.Idle;
         }
         return null;
     }
@@ -186,7 +200,7 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            charaStatus = CharacterStatus.Idle;
+            _charaStatus = CharacterStatus.Idle;
             CharacterMove.x = _ZERO;
         }
     }
@@ -352,7 +366,7 @@ public class CharacterController : MonoBehaviour
 
     public virtual void Death()
     {
-        charaStatus = CharacterStatus.Death;
+        _charaStatus = CharacterStatus.Death;
     }
 
 
@@ -365,7 +379,7 @@ public class CharacterController : MonoBehaviour
     /// <param name="power"></param>
     public virtual void CharaLifeCalculation(float damage, int knockBack, int weapon)
     {
-        charaStatus = CharacterStatus.Damage;
+        _charaStatus = CharacterStatus.Damage;
 
         charaData.life -= (int)Mathf.Floor(damage);
 
