@@ -58,6 +58,7 @@ MonoBehaviour:
   - {fileID: 6066405207250506459, guid: 11bd5f84eed184f46a7a8aa7472d32a5, type: 3}
   - {fileID: 4958960580899864360, guid: 7c517ff82f90f5e45b09524bfb82af74, type: 3}
   - {fileID: 6979431124915740080, guid: 39a4b23f53b38134e89dc27919650889, type: 3}
+  - {fileID: 4958960580899864360, guid: 7c517ff82f90f5e45b09524bfb82af74, type: 3}
   SummonSpell:
   - {fileID: 6066405207250506459, guid: 11bd5f84eed184f46a7a8aa7472d32a5, type: 3}
   - {fileID: 406119615553340818, guid: e30459629b48f9946b8bd463ebef3cbe, type: 3}
@@ -83,14 +84,15 @@ MonoBehaviour:
   - {x: 0, y: 0}
   - {x: 0, y: 0}
   - {x: -1, y: 8}
-  - {x: 0, y: 8}
+  - {x: -7, y: 8}
   - {x: 0, y: 8}
   _IsRetrcking: 0
   _IsSpell: 0
   _IsSummonSpell: 0
   _IsTracking: 1
   _IsNext: 0
-  slider: {fileID: 786576887497769829, guid: b8856e9ac597f1b4ab50dc75437dd8ba, type: 3}
+  _IsDefaultWarp: 0
+  HpState: 0
   aiState: 0
 --- !u!212 &4503539027462731859
 SpriteRenderer:
