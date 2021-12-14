@@ -227,7 +227,7 @@ public class Boss : MonoBehaviour
                 {
                     Spritetime[1] = 0;
                     AttackCount[1] = 0;
-                    if (AttackPattern == 1 || AttackPattern == 2)
+                    if (AttackPattern == 1)
                     {
                         aiState = EnemyAiState.Tracking;
                     }
