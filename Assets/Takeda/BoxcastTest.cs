@@ -18,7 +18,7 @@ public class BoxcastTest : MonoBehaviour
 			return;
 
 		Gizmos.DrawWireCube(transform.position + Vector3.down * distance, scale);
-		Gizmos.DrawWireCube(transform.position + Vector3.up * jumpdistance, scale);
+		Gizmos.DrawWireCube(transform.position + Vector3.up * distance, scale);
 		Gizmos.DrawWireCube(transform.position + Vector3.right * xdistance, ascale);
 		Gizmos.DrawWireCube(transform.position + Vector3.left * xdistance, ascale);
 

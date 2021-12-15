@@ -14,7 +14,7 @@ public class PlayerController : CharacterController
 
     #region Vecter3
     // 攻撃の範囲
-    private Vector3 _attackScale = default;
+    private Vector3 _attackScale = new Vector3(1,2);
     #endregion
 
     #region int
@@ -298,6 +298,7 @@ public class PlayerController : CharacterController
             #endregion
         foreach (RaycastHit raycastHit in _attackHit)
         {
+            _isHit = true;
             #region 攻撃力代入
             if (_isHit)
             {
@@ -358,17 +359,19 @@ public class PlayerController : CharacterController
                 {
                     Debug.Log("ふつう当たった");
                     raycastHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
+                    
                 }
                 else if (raycastHit.collider.tag == "Soft")
                 {
                     Debug.Log("やわらかい当たった");
-                    raycastHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
+                    raycastHit.collider.GetComponent<EnemyController>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
                 else if (raycastHit.collider.tag == "Hard")
                 {
                     Debug.Log("硬い当たった");
                     raycastHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
+                _isHit = false;
             }
             #endregion
         }
@@ -440,7 +443,7 @@ public class PlayerController : CharacterController
         else
         {
             // 時間での減少
-            if (_memoryDownTimer > _ZERO)
+            if (_memoryDownTimer > _ZERO && _memoryGauge > _ZERO)
             {
                 _memoryDownTimer -= Time.deltaTime;
             }
