@@ -69,7 +69,6 @@
     <Compile Include="Assets\Aoki\Script\Enemy\Enemy.cs" />
     <Compile Include="Assets\Magarisawa\CameraMove.cs" />
     <Compile Include="Assets\Aoki\Script\Boss\BossData.cs" />
-    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyController.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharacterAnimationController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryAchievementController.cs" />
     <Compile Include="Assets\Scripts\Controller\Input\InputSystem.cs" />
@@ -82,15 +81,12 @@
     <Compile Include="Assets\Aoki\Script\Enemy\EnemyData.cs" />
     <Compile Include="Assets\Aoki\Script\Play.cs" />
     <Compile Include="Assets\Scripts\Model\EnemyParameter.cs" />
-    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
     <Compile Include="Assets\Scripts\Model\AnimationSpriteData.cs" />
     <Compile Include="Assets\Takeda\CharaController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\SceneController.cs" />
     <Compile Include="Assets\Aoki\Script\Enemy\EnemyAnime.cs" />
-    <Compile Include="Assets\Aoki\Script\Maping.cs" />
     <Compile Include="Assets\Magarisawa\CreateStageEditor.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyNormal.cs" />
     <Compile Include="Assets\Scripts\Model\CharaParameter.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\GameOver.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharacterEffectController.cs" />
