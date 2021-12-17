@@ -41,7 +41,7 @@ public class Boss : MonoBehaviour
     private bool _IsReset;
     private bool _IsLook;
     private bool _IsHit;
-    private bool _IsCount;
+    private bool _IsStrongHit;
     private bool _IsSwitch;
     private bool _IsSwitch2;
     private bool _IsSwitch3;
@@ -59,18 +59,20 @@ public class Boss : MonoBehaviour
     private float num = 1; //反転するときに使う数字（1で固定
     private float DefaultSpeed;
 
-    [HideInInspector]
+    [System.NonSerialized]
     public bool _IsRetrcking;
-    [HideInInspector]
+    [System.NonSerialized]
     public bool _IsSpell;
-    [HideInInspector]
+    [System.NonSerialized]
     public bool _IsSummonSpell;
-    [HideInInspector]
+    [System.NonSerialized]
     public bool _IsTracking = true;
-    [HideInInspector]
+    [System.NonSerialized]
     public bool _IsNext;
-    [HideInInspector]
+    [System.NonSerialized]
     public bool _IsDefaultWarp;
+    [System.NonSerialized]
+    public bool _IsCount;
 
     private int SpellCount;
     private int SummonCount = 3;
@@ -165,8 +167,7 @@ public class Boss : MonoBehaviour
     }
     //--------------------------HPによって行動変化---------------------
     private void HPMove()
-    {
-       
+    {       
         switch (HpState)
         {
             case 1:
@@ -252,13 +253,14 @@ public class Boss : MonoBehaviour
                 }
                 if (_IsNext == true)
                 {
-                    if (!_IsCount)
+                    if (_IsCount == true)
                     {
                         SpellCount += 1;
                         _IsCount = false;
+                        aiState = EnemyAiState.StrongSpell;
                     }
 
-                    aiState = EnemyAiState.StrongSpell;
+                    //aiState = EnemyAiState.StrongSpell;
                 }
 
                 if (SpellCount >= 4)
@@ -269,6 +271,7 @@ public class Boss : MonoBehaviour
                 if(AttackCount[1] >= 4)
                 {
                     SpellCount = 0;
+                    _IsCount = true;
                     aiState = EnemyAiState.StrongSpell;
                 }
 
@@ -467,6 +470,7 @@ public class Boss : MonoBehaviour
 
                 if (SpellCount < 1)
                 {
+                    _IsSpell = false;
                     Instantiate(AttackEffect[1], new Vector2(-7, 8), Quaternion.identity); // 固定座標に魔法
                     SpellCount++;
                 }
@@ -474,7 +478,7 @@ public class Boss : MonoBehaviour
                 if (_IsNext == true && SpellCount >=2 && SpellCount<= 3)
                 {
                     _IsSpell = false;
-                    Instantiate(AttackEffect[SpellCount], new Vector2(SpellPos[SpellCount].x, SpellPos[SpellCount].y), Quaternion.identity); // 固定座標に魔法
+                    Instantiate(AttackEffect[SpellCount], new Vector2(SpellPos[SpellCount].x, SpellPos[SpellCount].y), Quaternion.identity); // 固定座標に魔法                  
                     _IsNext = false;
                 }
                 if(SpellCount >= 4)
@@ -501,13 +505,13 @@ public class Boss : MonoBehaviour
                 _IsLook = false;
                 _IsTracking = false;
                 _IsReset = false;
-
+                
                 BossSprite.sprite = mono.StrongAttack[(int)Spritetime[8]];
                 Spritetime[8] += Time.deltaTime * AttackAnimeSpeed[3];
 
                 if (Spritetime[8] >= MaxLeng[7] - 4 && Spritetime[8] <= MaxLeng[7] - 3)
                 {
-                    _IsHit = true;
+                    _IsStrongHit = true;
                 }
 
                 if (Spritetime[8] >= MaxLeng[7])                  
@@ -566,7 +570,7 @@ public class Boss : MonoBehaviour
         }
 
         //--------------------弱.強攻撃をしている最中のアニメーション-------------
-        if (_IsHit == true)
+        if (_IsHit == true || _IsStrongHit == true)
         {
             if (_IsRetrcking == false)
             {
@@ -582,10 +586,16 @@ public class Boss : MonoBehaviour
                 _IsHit = false;
             }
 
-            if (GetAttackRange >= -AttackRange && GetAttackRange <= 0)
+            if (GetAttackRange >= -AttackRange && GetAttackRange <= 0 && _IsStrongHit == false)
             {
                 print("hit");
             }
+
+            if (GetAttackRange >= -AttackRange -3 && GetAttackRange <= 0 && _IsStrongHit == true)
+            {
+                print("hitStrong");
+            }
+
         }
     }
 
@@ -619,7 +629,7 @@ public class Boss : MonoBehaviour
             }           
             
             //2つ右がプレイヤーだった場合攻撃
-            if (AttackPattern == 3 && AttackCount[1] <= 4 &&  EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX)
+            if (AttackPattern == 3 && AttackCount[1] <= 3 &&  EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX)
             {
                 aiState = EnemyAiState.StorongAttack;
             }            
@@ -634,7 +644,7 @@ public class Boss : MonoBehaviour
             }            
           
             //2つ右がプレイヤーだった場合攻撃
-            if (AttackPattern == 3 && AttackCount[1] <= 4 && EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX)
+            if (AttackPattern == 3 && AttackCount[1] <= 3 && EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX)
             {
                 aiState = EnemyAiState.StorongAttack;
             }

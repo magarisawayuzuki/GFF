@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541885931111772530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 690.44, y: 16.77, z: 0}
+  m_LocalPosition: {x: 690.44, y: 21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7745949284541817607}
@@ -50,7 +50,7 @@ MonoBehaviour:
   mono: {fileID: 11400000, guid: 1e8d535f9566b13448a73de8157bae88, type: 2}
   HP: 210
   AnimeSpeed: 5
-  TrackingSpeed: 800
+  TrackingSpeed: 500
   WeaponForce: 6
   ReScale: 1
   AttackRange: 5
@@ -86,12 +86,6 @@ MonoBehaviour:
   - {x: -1, y: 8}
   - {x: -7, y: 8}
   - {x: 0, y: 8}
-  _IsRetrcking: 0
-  _IsSpell: 0
-  _IsSummonSpell: 0
-  _IsTracking: 1
-  _IsNext: 0
-  _IsDefaultWarp: 0
   HpState: 0
   aiState: 0
 --- !u!212 &4503539027462731859
