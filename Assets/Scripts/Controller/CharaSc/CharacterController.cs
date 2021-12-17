@@ -37,7 +37,7 @@ public class CharacterController : MonoBehaviour
     // キャラの移動
     protected Vector3 CharacterMove = new Vector3();
     [SerializeField,Header("オブジェクトの大きさ")]
-    protected Vector3 ObjectScale = new Vector3(0.5f,0);
+    protected Vector3 ObjectScale = new Vector3(0.25f,0);
 
 
     /// int
@@ -58,7 +58,7 @@ public class CharacterController : MonoBehaviour
     // Rayの長さ
     private float[] _animationTime = { 0, 0, 0, 0, 0 };
     [SerializeField]
-    protected float _groundDistance = 1.69f;
+    protected float _groundDistance = 1.3f;
 
 
     /// bool
@@ -144,6 +144,7 @@ public class CharacterController : MonoBehaviour
         {
             Attack();
         }
+        /*
 
         //前フレームと状態が違ったら
         if (old_charaStatus != _charaStatus)
@@ -153,8 +154,10 @@ public class CharacterController : MonoBehaviour
             old_charaStatus = _charaStatus;
         }
 
+        */
+
         // velocityへ入れる
-        transform.position += CharacterMove * Time.deltaTime;
+        transform.position += CharacterMove;
     }
 
 
@@ -191,16 +194,15 @@ public class CharacterController : MonoBehaviour
         {
             if (_isInvincible)
             {
-                CharacterMove.x = input._x * 10 * 1.5f;
+                CharacterMove.x = input._x * 10 * 1.5f * Time.deltaTime;
             }
             else
             {
-                CharacterMove.x = input._x * 10;
+                CharacterMove.x = input._x * 10 * Time.deltaTime;
             }
         }
         else
         {
-            _charaStatus = CharacterStatus.Idle;
             CharacterMove.x = _ZERO;
         }
     }
@@ -249,7 +251,7 @@ public class CharacterController : MonoBehaviour
             _isGround = true;
             acceleration = _ZERO;
             fallTimeCount = _ZERO;
-            this.transform.position = new Vector3(transform.position.x, hit.point.y + 1f, transform.position.z);
+            //this.transform.position = new Vector3(transform.position.x, hit.point.y + 0.5f, transform.position.z);
 
             //ジャンプ中に着地なら強制終了
             if (_nowJump)
@@ -342,7 +344,7 @@ public class CharacterController : MonoBehaviour
         jumpAccelerationValue = jumpSpeedScale * jumpCurve.Evaluate(jumpTimeCount);
 
         //加速度にジャンプの加速値を加算する
-        acceleration += jumpAccelerationValue;
+        acceleration += jumpAccelerationValue * Time.deltaTime;
     }
 
     /// <summary>
