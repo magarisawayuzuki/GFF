@@ -9,6 +9,45 @@ public class EnemyRock : EnemyController
 {
     [SerializeField]
     EnemyParameter enemyData;
+    private void Awake()
+    {
+        //------------二次元配列のスクリプト取得------------------
+        GameObject en = GameObject.FindGameObjectWithTag("Map");
+        map = en.GetComponent<Maping>();
+
+        //SpriteRendererコンポーネントを取得
+        EnemySprite = GetComponent<SpriteRenderer>();
+
+        // PLAYERオブジェクトを取得
+        player = GameObject.FindGameObjectWithTag("Player");
+        //最初の座標
+        DefaultPos = transform.position;
+
+        DefaultPosInt = Mathf.FloorToInt(DefaultPos.x);
+        //spriteの最大数を取得maxLeng(0リスポーン　1移動　２待機　3攻撃　4攻撃を当てられた　5死亡
+        MaxLeng[0] = Anime.Resporn.GetLength(0);
+        MaxLeng[1] = Anime.move.GetLength(0);
+        MaxLeng[2] = Anime.Idel.GetLength(0);
+        MaxLeng[3] = Anime.Attack.GetLength(0);
+        MaxLeng[4] = Anime.TakeHit.GetLength(0);
+        MaxLeng[5] = Anime.Death.GetLength(0);
+
+        //座標を整数に変換　XY
+        EnemyPositionX = Mathf.FloorToInt(DefaultPos.x);
+        EnemyPositionY = Mathf.FloorToInt(DefaultPos.y);
+
+        //spriteアニメーションの時間をリセット
+        for (int i = 0; i < Spritetime.GetLength(0); i++)
+        {
+            Spritetime[i] = 0;
+        }
+    }
+
+    private void Start()
+    {
+        // PLAYERオブジェクトを取得
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
     //AI動作を記述
     public override PlayerInput InputMethod()
     {
@@ -70,7 +109,7 @@ public class EnemyRock : EnemyController
 
         if (EnemyPositionX >= DefaultPosInt + 1)
         {
-            map.stageArray[EnemyPositionY, EnemyPositionX] = 7;
+            map.stageArray[EnemyPositionY, EnemyPositionX] = 8;
             map.stageArray[EnemyPositionY, EnemyPositionX - 1] = 0;
             DefaultPosInt = EnemyPositionX;
         }
@@ -78,7 +117,7 @@ public class EnemyRock : EnemyController
         if (EnemyPositionX >= DefaultPosInt - 1)
         {
 
-            map.stageArray[EnemyPositionY, EnemyPositionX] = 7;
+            map.stageArray[EnemyPositionY, EnemyPositionX] = 8;
             map.stageArray[EnemyPositionY, EnemyPositionX + 1] = 0;
             DefaultPosInt = EnemyPositionX;
         }
@@ -90,7 +129,7 @@ public class EnemyRock : EnemyController
         {
             Spritetime[i] = 0;
         }
-
+      
         anime = 1;
 
     }
@@ -121,14 +160,15 @@ public class EnemyRock : EnemyController
 
                 if (Spritetime[0] >= MaxLeng[0])
                 {
-                    _IsTracking = true;
                     _InEnemy = true;
+                    _IsTracking = true;                  
                 }
 
                 break;
 
             case 2:  //-------------------------追跡アニメーション処理---------------------------------- 
                 _IsTracking = true;
+                _InEnemy = true;
                 EnemySprite.sprite = Anime.move[(int)Spritetime[1]];
                 Spritetime[1] += Time.deltaTime * data.AnimeSpeed[1];
 
@@ -164,7 +204,7 @@ public class EnemyRock : EnemyController
 
             case 4://---------------------------待機-----------------------------
                 _IsTracking = false;
-
+                
                 EnemySprite.sprite = Anime.Idel[(int)Spritetime[3]];
                 Spritetime[3] += Time.deltaTime * data.AnimeSpeed[2];
 

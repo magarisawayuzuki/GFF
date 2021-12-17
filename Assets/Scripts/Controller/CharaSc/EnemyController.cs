@@ -18,9 +18,7 @@ public class EnemyController : CharacterController
     [SerializeField]
     public EnemyData data; //変数データ   
     [SerializeField]
-    protected float AttackRange;
-    [SerializeField]
-    protected float WaitRange;
+    protected float AttackRange;   
     [SerializeField]
     protected int[] MaxLeng; //spriteのマックス
     [SerializeField]
@@ -53,46 +51,7 @@ public class EnemyController : CharacterController
     protected int EnemyPositionY = 0; //二次元配列の縦
 
     protected Maping map;
-   
-    private  void Awake()
-    {
-        //------------二次元配列のスクリプト取得------------------
-        GameObject en = GameObject.FindGameObjectWithTag("Map");
-        map = en.GetComponent<Maping>();
-
-        //SpriteRendererコンポーネントを取得
-        EnemySprite = GetComponent<SpriteRenderer>();
-
-        // PLAYERオブジェクトを取得
-        player = GameObject.FindGameObjectWithTag("Player");
-        //最初の座標
-        DefaultPos = transform.position;
-
-        DefaultPosInt = Mathf.FloorToInt(DefaultPos.x);
-        //spriteの最大数を取得maxLeng(0リスポーン　1移動　２待機　3攻撃　4攻撃を当てられた　5死亡
-        MaxLeng[0] = Anime.Resporn.GetLength(0);
-        MaxLeng[1] = Anime.move.GetLength(0);
-        MaxLeng[2] = Anime.Idel.GetLength(0);
-        MaxLeng[3] = Anime.Attack.GetLength(0);
-        MaxLeng[4] = Anime.TakeHit.GetLength(0);
-        MaxLeng[5] = Anime.Death.GetLength(0);
-
-        //座標を整数に変換　XY
-        EnemyPositionX = Mathf.FloorToInt(DefaultPos.x);
-        EnemyPositionY = Mathf.FloorToInt(DefaultPos.y);
-
-        //spriteアニメーションの時間をリセット
-        for (int i = 0; i < Spritetime.GetLength(0); i++)
-        {
-            Spritetime[i] = 0;
-        }
-    }
-
-    private void Start()
-    {
-        // PLAYERオブジェクトを取得
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
+        
     /// <summary>
     /// 子クラスのinputを用いてinputを返す。ここでは共通処理のみ記述可
     /// </summary>

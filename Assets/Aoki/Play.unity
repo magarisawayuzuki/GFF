@@ -940,10 +940,12 @@ MonoBehaviour:
   Enemy:
   - {fileID: 6864962030823404740, guid: 008a4b38d4f9f384586e5dd5813630f4, type: 3}
   - {fileID: 9058631903617046654, guid: bda0e2afda0e59346bdfbdfc7bb2e7bb, type: 3}
+  - {fileID: 359531841558033560, guid: 4d0ae3bb5c4b1db41ba294e9981d9b58, type: 3}
   - {fileID: 1541885931111772530, guid: aa6d512685994f041abbcb5be8ecc204, type: 3}
   EnemyY:
   - 0.8
   - 0.8
+  - 1
   - 4
   EnemyNormalPos:
   - {x: 0, y: 0}
