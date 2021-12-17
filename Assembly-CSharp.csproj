@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Controller\CharaSc\CharacterController.cs" />
     <Compile Include="Assets\Aoki\Script\EnemySpel.cs" />
     <Compile Include="Assets\Scripts\StageController.cs" />
+    <Compile Include="Assets\CameraMove.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyPlant.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharaAnimation\DefaultAnimation.cs" />
     <Compile Include="Assets\Scripts\Model\EnemyParameter.cs" />
@@ -168,6 +169,9 @@
     <Reference Include="Unity.2D.Common.Runtime">
       <HintPath>C:/Users/kyou_/OneDrive/デスクトップ/GFFlocal/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+      <HintPath>C:/Users/kyou_/OneDrive/デスクトップ/GFFlocal/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Animation.Editor">
       <HintPath>C:/Users/kyou_/OneDrive/デスクトップ/GFFlocal/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
     </Reference>
@@ -194,9 +198,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Users/kyou_/OneDrive/デスクトップ/GFFlocal/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>C:/Users/kyou_/OneDrive/デスクトップ/GFFlocal/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Users/kyou_/OneDrive/デスクトップ/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
