@@ -8,9 +8,11 @@ using UnityEngine;
 public class PlayerController : CharacterController
 {
     private InputSystem IC;
-    private RaycastHit _attackHit = default;
 
     private LayerMask movelayer = 1 << 8 | 1 << 9;
+
+    [SerializeField]
+    private GameObject[] _memoryFragments = default;
 
     #region Vecter3
     // 攻撃の範囲
@@ -98,6 +100,13 @@ public class PlayerController : CharacterController
     private bool _canHammerAttack = true;
     #endregion
 
+    #region
+    private string _soft = "Soft";
+    private string _normal = "Normal";
+    private string _hard = "Hard";
+    private string _weaponMemory = "WeaponMemory";
+    #endregion
+
     #region const
     // 最大値
     private const int _MAXMEMORYGAUGE = 100;
@@ -144,6 +153,9 @@ public class PlayerController : CharacterController
     protected override void Update()
     {
         base.Update();
+
+        Evasion();
+
         MomoryGauge();
 
         // デバッグ用
@@ -355,18 +367,18 @@ public class PlayerController : CharacterController
             #region 敵の種別分け
             if (_isHit)
             {
-                if (raycastHit.collider.tag == "Normal")
+                if (raycastHit.collider.tag == _normal)
                 {
                     Debug.Log("ふつう当たった");
                     raycastHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                     
                 }
-                else if (raycastHit.collider.tag == "Soft")
+                else if (raycastHit.collider.tag == _soft)
                 {
                     Debug.Log("やわらかい当たった");
                     raycastHit.collider.GetComponent<EnemyController>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
-                else if (raycastHit.collider.tag == "Hard")
+                else if (raycastHit.collider.tag == _hard)
                 {
                     Debug.Log("硬い当たった");
                     raycastHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
@@ -397,7 +409,18 @@ public class PlayerController : CharacterController
     //回避挙動
     protected void Evasion()
     {
+        foreach (GameObject memoryFragment in _memoryFragments)
+        {
+            if (this.transform.position != memoryFragment.transform.position)
+                return;
 
+            if (memoryFragment.tag == _weaponMemory)
+            {
+                _weaponMemoryCount++;
+            }
+                _memoryCount++;
+            memoryFragment.SetActive(false);
+        }
     }
 
 
