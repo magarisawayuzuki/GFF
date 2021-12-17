@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1400002288684528572, guid: 895ce69a98d58464aaaf85c1f9ee9497, type: 3}
+  m_Sprite: {fileID: 3968659893341466949, guid: 25f51a2a74f3e8848b72676214b57b94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2150208880821369514}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33913a0901f5cd64c885988b12cfcd6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4828aaf1c72b50f4ebff5bffa92e29f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   charaData: {fileID: 11400000, guid: 6334fec45470752448642149d75c0a5b, type: 2}
@@ -108,8 +108,8 @@ MonoBehaviour:
     _isAttack: 0
     _isJump: 0
     _isDown: 0
-  ObjectScale: {x: 3, y: 0, z: 0}
-  _groundDistance: 3
+  ObjectScale: {x: 5, y: 0, z: 0}
+  _groundDistance: 5
   jumpSpeedScale: 1
   player: {fileID: 3549602746911713255, guid: e0714c8e8a016744d905968bfc6e1f70, type: 3}
   Anime: {fileID: 11400000, guid: 7bd662fb2d8eac54886d2c2d84063569, type: 2}

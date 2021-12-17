@@ -85,15 +85,12 @@
     <Compile Include="Assets\Aoki\Script\Play.cs" />
     <Compile Include="Assets\Scripts\Model\EnemyParameter.cs" />
     <Compile Include="Assets\Takeda\BoxcastTest.cs" />
-    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
     <Compile Include="Assets\Scripts\Model\AnimationSpriteData.cs" />
     <Compile Include="Assets\Takeda\CharaController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\SceneController.cs" />
     <Compile Include="Assets\Aoki\Script\Enemy\EnemyAnime.cs" />
-    <Compile Include="Assets\Aoki\Script\Maping.cs" />
     <Compile Include="Assets\Magarisawa\CreateStageEditor.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyNormal.cs" />
     <Compile Include="Assets\Scripts\Model\CharaParameter.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\GameOver.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharacterEffectController.cs" />
@@ -106,6 +103,9 @@
     <Compile Include="Assets\Scripts\Controller\EventSc\EventController.cs" />
     <Compile Include="Assets\Scripts\View\StageDirector\StageAudioController.cs" />
     <Compile Include="Assets\Aoki\Script\Enemy\EnemyboolData.cs" />
+    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
+    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyNormal.cs" />
+    <Compile Include="Assets\Aoki\Script\Maping.cs" />
     <None Include="Assets\Aoki\Aseets\Bringer Of Death\License.txt" />
     <None Include="Assets\ParticleShadersVol1\Shaders\EM_Particles_Unlit.shader" />
     <None Include="Assets\Aoki\Aseets\Bringer Of Death\Contact.txt" />
