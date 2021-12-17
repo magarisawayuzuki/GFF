@@ -8,6 +8,7 @@ TagManager:
   - Normal
   - Soft
   - Hard
+  - Selector
   layers:
   - Default
   - TransparentFX

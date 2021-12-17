@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class TitleUI_2 : UIController_2
@@ -10,9 +11,13 @@ public class TitleUI_2 : UIController_2
 
     [SerializeField] private GameObject cautionPanel;
     [SerializeField] private CautionPanel_2 caucau;
+    [SerializeField] private Image bookimage;
+    private float _imageFlipTime = default;
 
     private void Start()
     {
+        bookimage.material.SetFloat("_Flip", 1f);
+
         _nowSelectNumber = 1;
 
         _selector.anchoredPosition = _selectPoint[_nowSelectNumber - 1].anchoredPosition;
@@ -21,7 +26,15 @@ public class TitleUI_2 : UIController_2
 
     private void Update()
     {
-        InputManager();
+        if (_imageFlipTime <= 2)
+        {
+            bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") - Time.deltaTime);
+            _imageFlipTime += Time.deltaTime;
+        }
+        else
+        {
+            InputManager();
+        }
 
         if (_isInput[1])
         {

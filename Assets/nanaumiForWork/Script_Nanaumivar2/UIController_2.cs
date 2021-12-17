@@ -10,16 +10,16 @@ public class CalledFromSendMessageAttribute : Attribute { }
 
 public class UIController_2 : MonoBehaviour
 {
-    protected InputController _inputs;
-    protected UISceneManager_2 sceneMan;
+    protected InputController _inputs = default;
+    protected UISceneManager_2 sceneMan = default;
 
-    [SerializeField] SelectorMove_2[] _select;
+    [SerializeField] SelectorMove_2[] _select = default;
     protected int _nowSelectNumber = 1;
-    [SerializeField] protected RectTransform[] _selectPoint;
+    [SerializeField] protected RectTransform[] _selectPoint = default;
 
-    [SerializeField] protected RectTransform _selector;
-    [SerializeField] private float _selectorMagnitude;
-    private float _selectorResizeProgressTime = 0;
+    [SerializeField] protected RectTransform _selector = default;
+    [SerializeField] private float _selectorMagnitude = default;
+    private float _selectorResizeProgressTime = default;
     protected float _selectorSizeDeltaMagnitude = 1.1f;
 
     /// <summary>
@@ -28,10 +28,14 @@ public class UIController_2 : MonoBehaviour
     protected bool[] _isInput = { false, false };
 
     private const int ONE = 1;
+
+    [SerializeField] private Image _selectorImage = default;
+    private Color _selectorColorTransparency = default;
+    private float _selectorFlashCycle = 1;
+
     protected virtual void Awake()
     {
         _inputs = new InputController();
-        //sceneMan = new UISceneManager_2();
         sceneMan = gameObject.AddComponent<UISceneManager_2>();
     }
 
@@ -40,6 +44,15 @@ public class UIController_2 : MonoBehaviour
         if (!_isInput[0] && !_isInput[1])
         {
             InputSelector();
+            var a = _selectorImage.color.a;
+            a = Mathf.Sin(_selectorFlashCycle * Mathf.PI);
+            _selectorFlashCycle += Time.deltaTime;
+            _selectorColorTransparency = _selectorImage.color;
+            if (a >= 0.65f)
+            {
+                _selectorColorTransparency.a = a;
+            }
+            _selectorImage.color = _selectorColorTransparency;
         }
         else if (_isInput[0] && !_isInput[1])
         {
