@@ -9,7 +9,7 @@ public class EnemyUI_2 : Chara_2
 
     private void Awake()
     {
-        HPScroll = this.GetComponent<Scrollbar>();
+        //HPScroll = this.GetComponent<RectMask2D>();
     }
 
     private void Start()
@@ -19,6 +19,6 @@ public class EnemyUI_2 : Chara_2
 
     private void Update()
     {
-        ChangeLife(_enemyPara);
+        ChangeLife(_enemyPara, false);
     }
 }
