@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 7270842749967195496}
   - component: {fileID: 2040343565709832283}
   - component: {fileID: 6025146369645622594}
-  m_Layer: 0
+  - component: {fileID: 4560292643702287029}
+  m_Layer: 9
   m_Name: Troll
   m_TagString: Hard
   m_Icon: {fileID: 0}
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2150208880821369514}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -5, y: 5, z: 5}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,10 +75,10 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 3968659893341466949, guid: 25f51a2a74f3e8848b72676214b57b94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.44, y: 0.52}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -108,10 +109,11 @@ MonoBehaviour:
     _isAttack: 0
     _isJump: 0
     _isDown: 0
+  old_charaStatus: 0
   ObjectScale: {x: 5, y: 0, z: 0}
   _groundDistance: 5
   jumpSpeedScale: 1
-  player: {fileID: 3549602746911713255, guid: e0714c8e8a016744d905968bfc6e1f70, type: 3}
+  player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
   Anime: {fileID: 11400000, guid: 7bd662fb2d8eac54886d2c2d84063569, type: 2}
   data: {fileID: 11400000, guid: 65330411f46d8d74389d7f733cc43d2d, type: 2}
   AttackRange: 3
@@ -129,8 +131,36 @@ MonoBehaviour:
   _IsAttack: 1
   _IsReturn: 0
   num: 1
+  _IsWait: 0
   _InEnemy: 0
   _IsTrackingWait: 0
   _IsTracking: 0
   _IsMove: 0
+  _IsLook: 1
   enemyData: {fileID: 0}
+--- !u!61 &4560292643702287029
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2150208880821369514}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.12, y: 0.12}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 2, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.1, y: 0.93}
+  m_EdgeRadius: 0

@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnable: 1
-  distance: 1.25
   xdistance: 0.5
+  ydistance: 0
   scale: {x: 0.72, y: 0, z: 0}
   ascale: {x: 0, y: 2.5, z: 0}
 --- !u!114 &7051199934797495176
@@ -103,9 +103,10 @@ MonoBehaviour:
     _isJump: 0
     _isDown: 0
   old_charaStatus: 0
-  ObjectScale: {x: 0.5, y: 0, z: 0}
-  _groundDistance: 1.25
+  ObjectScale: {x: 3, y: 0, z: 0}
+  _groundDistance: 2.5
   jumpSpeedScale: 1
+  _memoryFragments: []
   _memoryGauge: 50
   _invincibleTime: 5
   _maxMemoryGaugeAttack: 1.5
@@ -290,7 +291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5269660794380592116, guid: f7affe64a367c0343bde25c400b8894b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5269660794380592116, guid: f7affe64a367c0343bde25c400b8894b, type: 3}
       propertyPath: m_LocalRotation.x
