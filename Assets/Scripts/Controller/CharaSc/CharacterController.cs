@@ -38,6 +38,7 @@ public class CharacterController : MonoBehaviour
     protected Vector3 CharacterMove = new Vector3();
     [SerializeField,Header("オブジェクトの大きさ")]
     protected Vector3 ObjectScale = new Vector3(0.25f,0);
+    protected Vector3 Scale = new Vector3(-1,1);
 
 
     /// int
@@ -170,7 +171,7 @@ public class CharacterController : MonoBehaviour
     /// <returns></returns>
     public virtual PlayerInput InputMethod()
     {
-        if (input._x != 0 && !input._isJump && input._isAttack)
+        if (input._x != 0 && !input._isJump && !input._isAttack)
         {
             _charaStatus = CharacterStatus.Move;
         }

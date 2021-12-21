@@ -98,6 +98,8 @@ public class PlayerController : CharacterController
 
     // 槌攻撃のクールタイムが終わっているか
     private bool _canHammerAttack = true;
+
+    private bool isStartAttack = false;
     #endregion
 
     #region
@@ -176,6 +178,7 @@ public class PlayerController : CharacterController
             {
                 _isInputSwordAttack = false;
                 input._isAttack = false;
+                isStartAttack = false;
             }
             else
             {
@@ -199,7 +202,8 @@ public class PlayerController : CharacterController
 
         _canNotRight = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right, Quaternion.identity, _sidedistance, movelayer);
         _canNotLeft = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.left, Quaternion.identity, _sidedistance, movelayer);
-
+        
+        
         if (_canNotRight && input._x > _ZERO)
         {
             input._x = _ZERO;
@@ -304,16 +308,27 @@ public class PlayerController : CharacterController
     //攻撃の追記とかあれば
     public override void Attack()
     {
+        RaycastHit[] attackHit = null;
+
         #region 敵の状態判定
-        RaycastHit[] _attackHit = Physics.BoxCastAll(transform.position, _attackScale, Vector3.right, Quaternion.identity, _ONE, LayerMask.GetMask("Enemy"));
-        Debug.DrawRay(transform.position, Vector3.right * _ONE);
-            #endregion
-        foreach (RaycastHit raycastHit in _attackHit)
+        if (!isStartAttack)
         {
+            attackHit = Physics.BoxCastAll(transform.position, _attackScale, Vector3.right, Quaternion.identity, _ONE, LayerMask.GetMask("Enemy"));
+            isStartAttack = true;
+        }
+        else
+        {
+            return;
+        }
+        #endregion
+
+        foreach (RaycastHit raycastHit in attackHit)
+        {
+            Debug.Log(raycastHit.collider.name);
             _isHit = true;
-            #region 攻撃力代入
             if (_isHit)
             {
+                #region 攻撃力代入
                 if (_isInvincible)
                 {
                     _attackPower = charaData.basicPower * _invincibleAttack;
@@ -361,33 +376,31 @@ public class PlayerController : CharacterController
                             break;
                     }
                 }
-            }
-            #endregion
+                #endregion
 
-            #region 敵の種別分け
-            if (_isHit)
-            {
+                #region 敵の種別分け
                 if (raycastHit.collider.tag == _normal)
                 {
-                    Debug.Log("ふつう当たった");
                     raycastHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
-                    
+                    _isHit = false;
+
+
                 }
                 else if (raycastHit.collider.tag == _soft)
                 {
+                    raycastHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
+                    _isHit = false;
                     Debug.Log("やわらかい当たった");
-                    raycastHit.collider.GetComponent<EnemyController>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
+
                 }
                 else if (raycastHit.collider.tag == _hard)
                 {
                     Debug.Log("硬い当たった");
                     raycastHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
-                _isHit = false;
+                #endregion
             }
-            #endregion
         }
-
         base.Attack();
     }
 
