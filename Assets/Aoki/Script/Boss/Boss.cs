@@ -27,8 +27,6 @@ public class Boss : MonoBehaviour
     [SerializeField]
     private GameObject[] SummonSpell;
     [SerializeField]
-    private float[] AttackAnimeSpeed;　//spriteアニメのスピード
-    [SerializeField]
     private float[] Spritetime;   // spriteループ用の変数
     [SerializeField]
     int[] MaxLeng; //spriteのマックス　0待機1追跡2ワープ
@@ -42,6 +40,7 @@ public class Boss : MonoBehaviour
     private bool _IsLook;
     private bool _IsHit;
     private bool _IsStrongHit;
+    private bool _IsAttackWait;
     private bool _IsSwitch;
     private bool _IsSwitch2;
     private bool _IsSwitch3;
@@ -165,9 +164,14 @@ public class Boss : MonoBehaviour
         HPMove();
 
     }
+
+   
     //--------------------------HPによって行動変化---------------------
     private void HPMove()
-    {       
+    {    //HP100%の時.リスポーン→（プレイヤー追跡→弱攻撃→繰り返し）
+         //HP75%の時. 柔敵召喚　→（召喚した敵が死んだら）追跡弱 ×5　→　繰り返し
+         //HP50%の時. 複数魔法(撃っている時が隙　→　追跡強　→　繰り返し
+         //HP25%の時. 硬敵召喚　→（召喚した敵が死んだら）ワープ攻撃　×3　→　複数魔法（撃っている時が隙）　→　繰り返し    
         switch (HpState)
         {
             case 1:
@@ -176,35 +180,36 @@ public class Boss : MonoBehaviour
 
             case 2:
                 print("Hp75%以下");
-                AttackPattern = 2;
-                _IsDefaultWarp = true;
+                AttackPattern = 2;　//攻撃パターンを切り替え
+                _IsDefaultWarp = true;　//元の位置に戻るbool
                
-                if (!_IsSwitch)
+                if (!_IsSwitch) //一度だけ切り替え
                 {
-                    aiState = EnemyAiState.Warp;
+                    aiState = EnemyAiState.Warp;　//ワープのアニメーション処理へ
                     _IsSwitch = true;
                 }
                 break;
 
             case 3:
                 print("Hp50%以下");
-                AttackPattern = 3;
-                _IsDefaultWarp = true;
-                
-                if (!_IsSwitch2)
+                AttackPattern = 3;　//攻撃パターンを切り替え
+                _IsDefaultWarp = true; //元の位置に戻るbool
+
+                if (!_IsSwitch2)　//一度だけ切り替え
                 {
-                    aiState = EnemyAiState.Warp;
+                    aiState = EnemyAiState.Warp;　//ワープのアニメーション処理へ
                     _IsSwitch2 = true;
                 }
                 break;
 
             case 4:
                 print("Hp25%以下");
-                AttackPattern = 4;
-                _IsDefaultWarp = true;
-                if (!_IsSwitch3)
+                AttackPattern = 4;　//攻撃パターンを切り替え
+                _IsDefaultWarp = true;　//元の位置に戻るbool
+
+                if (!_IsSwitch3)　//一度だけ切り替え
                 {                  
-                    aiState = EnemyAiState.Warp;
+                    aiState = EnemyAiState.Warp;　//ワープのアニメーション処理へ
                     _IsSwitch3 = true;
                 }               
                 break;
@@ -259,12 +264,11 @@ public class Boss : MonoBehaviour
                         _IsCount = false;
                         aiState = EnemyAiState.StrongSpell;
                     }
-
-                    //aiState = EnemyAiState.StrongSpell;
                 }
 
                 if (SpellCount >= 4)
                 {
+                    _IsAttackWait = false;
                     aiState = EnemyAiState.Tracking;
                 }
 
@@ -315,7 +319,7 @@ public class Boss : MonoBehaviour
                 _IsTracking = false;
 
                 BossSprite.sprite = mono.Attack[(int)Spritetime[7]];
-                Spritetime[7] += Time.deltaTime * AttackAnimeSpeed[2];
+                Spritetime[7] += Time.deltaTime * AnimeSpeed;
 
                 if (Spritetime[7] >= MaxLeng[3] - 4 && Spritetime[7] <= MaxLeng[3] - 3)
                 {
@@ -337,7 +341,7 @@ public class Boss : MonoBehaviour
                 _IsReset = false;
 
                 BossSprite.sprite = mono.Spell[(int)Spritetime[6]];
-                Spritetime[6] += Time.deltaTime * AttackAnimeSpeed[1];
+                Spritetime[6] += Time.deltaTime * AnimeSpeed;
                 
                 GameObject SummonEn = GameObject.Find("MushroomS(Clone)");
             
@@ -403,6 +407,7 @@ public class Boss : MonoBehaviour
                 if (_IsDefaultWarp == true && Spritetime[4] >= MaxLeng[4])
                 {
                     WarpPosX = DefaultPosXInt;
+                    Spritetime[5] = 0;
                     this.transform.position = new Vector2(WarpPosX, transform.position.y);
                     aiState = EnemyAiState.WarpAttack;
                 }
@@ -433,11 +438,14 @@ public class Boss : MonoBehaviour
                 }
 
                 BossSprite.sprite = mono.WarpAttack[(int)Spritetime[5]];
-                Spritetime[5] += Time.deltaTime * AttackAnimeSpeed[0];
+                Spritetime[5] += Time.deltaTime * AnimeSpeed;
 
-                if (_IsDefaultWarp == true && Spritetime[5] >= MaxLeng[5] - 10 && AttackPattern == 2 || AttackPattern == 4)
+                if (_IsDefaultWarp == true && Spritetime[5] >= MaxLeng[5] - 10 && AttackPattern == 2 ||
+                    _IsDefaultWarp == true && Spritetime[5] >= MaxLeng[5] - 10 && AttackPattern == 4)
                 {
                     _IsReset = true;
+                    _IsNext = false;
+                    _IsSpell = false;
                     SpellCount = 0;
                     aiState = EnemyAiState.Summon;
                 }
@@ -460,13 +468,13 @@ public class Boss : MonoBehaviour
 
             //-------------------------------------------魔法遠距離攻撃----------------------------------------------   
             case EnemyAiState.StrongSpell:
+                _IsAttackWait = true;
                 _IsTracking = false;
-
                 _IsReset = false;
-
+              
                 AttackCount[1] = 0;
                 BossSprite.sprite = mono.Spell[(int)Spritetime[6]];
-                Spritetime[6] += Time.deltaTime * AttackAnimeSpeed[1];
+                Spritetime[6] += Time.deltaTime * AnimeSpeed;
 
                 if (SpellCount < 1)
                 {
@@ -507,9 +515,9 @@ public class Boss : MonoBehaviour
                 _IsReset = false;
                 
                 BossSprite.sprite = mono.StrongAttack[(int)Spritetime[8]];
-                Spritetime[8] += Time.deltaTime * AttackAnimeSpeed[3];
+                Spritetime[8] += Time.deltaTime * AnimeSpeed;
 
-                if (Spritetime[8] >= MaxLeng[7] - 4 && Spritetime[8] <= MaxLeng[7] - 3)
+                if (Spritetime[8] >= MaxLeng[7] - 5 && Spritetime[8] <= MaxLeng[7] - 3)
                 {
                     _IsStrongHit = true;
                 }
@@ -576,14 +584,14 @@ public class Boss : MonoBehaviour
             {
                 //プレイヤーとボスとの距離を計算
                 GetAttackRange = EnemyPositionX - map.PlayerPositionX;
-                _IsHit = false;
+                _IsHit = false;              
             }
 
             if (_IsRetrcking == true)
             {
                 //プレイヤーとボスとの距離を計算
                 GetAttackRange = map.PlayerPositionX - EnemyPositionX;
-                _IsHit = false;
+                _IsHit = false;                
             }
 
             if (GetAttackRange >= -AttackRange && GetAttackRange <= 0 && _IsStrongHit == false)
@@ -591,9 +599,10 @@ public class Boss : MonoBehaviour
                 print("hit");
             }
 
-            if (GetAttackRange >= -AttackRange -3 && GetAttackRange <= 0 && _IsStrongHit == true)
+            if (GetAttackRange >= -(AttackRange + 3)&& GetAttackRange <= 0 && _IsStrongHit == true)
             {
                 print("hitStrong");
+                _IsStrongHit = false;
             }
 
         }
@@ -622,14 +631,15 @@ public class Boss : MonoBehaviour
     {        
         if (_IsRetrcking == false) //右向き
         {            
-            //2つ右がプレイヤーだった場合攻撃
+            //3つ右がプレイヤーだった場合攻撃
             if (AttackPattern == 1 && EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX)
             {                   
                 aiState = EnemyAiState.ATTACK;
             }           
             
-            //2つ右がプレイヤーだった場合攻撃
-            if (AttackPattern == 3 && AttackCount[1] <= 3 &&  EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX)
+            //3つ右がプレイヤーだった場合攻撃
+            if (AttackPattern == 3 && AttackCount[1] <= 3 &&  _IsAttackWait == false &&
+                EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX)
             {
                 aiState = EnemyAiState.StorongAttack;
             }            
@@ -637,14 +647,15 @@ public class Boss : MonoBehaviour
 
         if (_IsRetrcking == true)　//左向き
         {            
-            //１つ左がプレイヤーだった場合攻撃
+            //3つ左がプレイヤーだった場合攻撃
             if (AttackPattern == 1 && EnemyPositionX - AttackRange <= map.PlayerPositionX && EnemyPositionX - AttackRange >= map.PlayerPositionX)
             {
                 aiState = EnemyAiState.ATTACK;
             }            
           
-            //2つ右がプレイヤーだった場合攻撃
-            if (AttackPattern == 3 && AttackCount[1] <= 3 && EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX)
+            //3右がプレイヤーだった場合攻撃
+            if (AttackPattern == 3 && AttackCount[1] <= 3 && _IsAttackWait == false &&
+                EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX)
             {
                 aiState = EnemyAiState.StorongAttack;
             }
@@ -704,7 +715,7 @@ public class Boss : MonoBehaviour
             Spritetime[i] = 0;
         }
 
-        anime = 1;
+        aiState = EnemyAiState.Resporn;
 
     }
 
@@ -715,7 +726,7 @@ public class Boss : MonoBehaviour
             Spritetime[i] = 0;
         }
 
-        anime = 4;
+        aiState = EnemyAiState.IDLE;
     }
-
+ 
 }

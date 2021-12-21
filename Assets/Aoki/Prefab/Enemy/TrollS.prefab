@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5767892250516991812}
   - component: {fileID: 2935311414571336311}
-  - component: {fileID: 7453753388371134318}
-  m_Layer: 0
+  - component: {fileID: 7859604001358175825}
+  - component: {fileID: 8539373856092158527}
+  m_Layer: 9
   m_Name: TrollS
   m_TagString: Hard
   m_Icon: {fileID: 0}
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2971109193466022022}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -5, y: 5, z: 5}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 3968659893341466949, guid: 25f51a2a74f3e8848b72676214b57b94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.44, y: 0.52}
@@ -83,7 +84,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &7453753388371134318
+--- !u!61 &7859604001358175825
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2971109193466022022}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 0.44, y: 0.52}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2}
+  m_EdgeRadius: 0
+--- !u!114 &8539373856092158527
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,7 +119,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2971109193466022022}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4828aaf1c72b50f4ebff5bffa92e29f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 41e0b0c8184b930418ba8685fba4d320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   charaData: {fileID: 11400000, guid: 6334fec45470752448642149d75c0a5b, type: 2}
@@ -108,10 +135,11 @@ MonoBehaviour:
     _isAttack: 0
     _isJump: 0
     _isDown: 0
+  old_charaStatus: 0
   ObjectScale: {x: 3, y: 0, z: 0}
   _groundDistance: 3
   jumpSpeedScale: 1
-  player: {fileID: 3549602746911713255, guid: e0714c8e8a016744d905968bfc6e1f70, type: 3}
+  player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
   Anime: {fileID: 11400000, guid: 7bd662fb2d8eac54886d2c2d84063569, type: 2}
   data: {fileID: 11400000, guid: 65330411f46d8d74389d7f733cc43d2d, type: 2}
   AttackRange: 3
@@ -129,8 +157,10 @@ MonoBehaviour:
   _IsAttack: 1
   _IsReturn: 0
   num: 1
+  _IsWait: 0
   _InEnemy: 0
   _IsTrackingWait: 0
   _IsTracking: 0
   _IsMove: 0
+  _IsLook: 1
   enemyData: {fileID: 0}

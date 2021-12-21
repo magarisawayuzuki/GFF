@@ -42,11 +42,13 @@ public class EnemyController : CharacterController
     protected int DefaultPosInt;
     protected float GetAttackRange;
 
+    public bool _IsWait;
+
     public bool _InEnemy;
     public bool _IsTrackingWait;
     public bool _IsTracking;
     public bool _IsMove;
-
+    public bool _IsLook = true;
     protected int EnemyPositionX = 0; //二次元配列の横
     protected int EnemyPositionY = 0; //二次元配列の縦
 
