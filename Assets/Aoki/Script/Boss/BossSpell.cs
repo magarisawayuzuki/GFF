@@ -55,7 +55,7 @@ public class BossSpell : MonoBehaviour
 
             if(Spritetime[0] >= MaxLeng[0])
             {
-                Spritetime[0] = 0;                
+                Spritetime[0] = 0;                 
             }
         }
         else if(boss._IsSpell == true)
@@ -71,6 +71,7 @@ public class BossSpell : MonoBehaviour
             if (Spritetime[1] >= MaxLeng[1])
             {
                 boss._IsNext = true;
+                boss._IsCount = true;
                 Destroy(this.gameObject);
             }
         }
