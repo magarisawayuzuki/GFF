@@ -63,28 +63,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Aoki\Script\Boss\BossSwitch.cs" />
-    <Compile Include="Assets\Aoki\Script\Boss\Boss.cs" />
     <Compile Include="Assets\Aoki\Script\SlideHp.cs" />
     <Compile Include="Assets\Takeda\Player.cs" />
-    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
     <Compile Include="Assets\Aoki\Script\Enemy\Enemy.cs" />
     <Compile Include="Assets\Magarisawa\CameraMove.cs" />
     <Compile Include="Assets\Aoki\Script\Boss\BossData.cs" />
-    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyController.cs" />
-    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyNormal.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharacterAnimationController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryAchievementController.cs" />
     <Compile Include="Assets\Scripts\Controller\Input\InputSystem.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharacterAudioController.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\CharacterController.cs" />
     <Compile Include="Assets\Aoki\Script\Enemy\EnemySpell.cs" />
+    <Compile Include="Assets\Aoki\Script\Maping.cs" />
+    <Compile Include="Assets\Aoki\Script\Boss\Boss.cs" />
     <Compile Include="Assets\Scripts\StageController.cs" />
-    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyPlant.cs" />
+    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyController.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharaAnimation\DefaultAnimation.cs" />
     <Compile Include="Assets\Aoki\Script\Enemy\EnemyData.cs" />
-    <Compile Include="Assets\Aoki\Script\Maping.cs" />
     <Compile Include="Assets\Aoki\Script\Play.cs" />
     <Compile Include="Assets\Scripts\Model\EnemyParameter.cs" />
+    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
     <Compile Include="Assets\Takeda\BoxcastTest.cs" />
     <Compile Include="Assets\Scripts\Model\AnimationSpriteData.cs" />
     <Compile Include="Assets\Takeda\CharaController.cs" />
@@ -98,9 +96,11 @@
     <Compile Include="Assets\Scripts\Model\WeaponParameter.cs" />
     <Compile Include="Assets\Magarisawa\Test.cs" />
     <Compile Include="Assets\Scripts\Controller\GimmickSc\GimmickController.cs" />
+    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyPlant.cs" />
     <Compile Include="Assets\Scripts\Tool\Convertor.cs" />
     <Compile Include="Assets\Scripts\View\StageDirector\StageEffectController.cs" />
     <Compile Include="Assets\Aoki\Script\Boss\BossSpell.cs" />
+    <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyNormal.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\EventController.cs" />
     <Compile Include="Assets\Scripts\View\StageDirector\StageAudioController.cs" />
     <Compile Include="Assets\Aoki\Script\Enemy\EnemyboolData.cs" />

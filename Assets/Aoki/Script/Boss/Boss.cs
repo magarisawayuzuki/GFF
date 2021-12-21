@@ -27,8 +27,6 @@ public class Boss : MonoBehaviour
     [SerializeField]
     private GameObject[] SummonSpell;
     [SerializeField]
-    private float[] AttackAnimeSpeed;　//spriteアニメのスピード
-    [SerializeField]
     private float[] Spritetime;   // spriteループ用の変数
     [SerializeField]
     int[] MaxLeng; //spriteのマックス　0待機1追跡2ワープ
@@ -321,7 +319,7 @@ public class Boss : MonoBehaviour
                 _IsTracking = false;
 
                 BossSprite.sprite = mono.Attack[(int)Spritetime[7]];
-                Spritetime[7] += Time.deltaTime * AttackAnimeSpeed[2];
+                Spritetime[7] += Time.deltaTime * AnimeSpeed;
 
                 if (Spritetime[7] >= MaxLeng[3] - 4 && Spritetime[7] <= MaxLeng[3] - 3)
                 {
@@ -343,7 +341,7 @@ public class Boss : MonoBehaviour
                 _IsReset = false;
 
                 BossSprite.sprite = mono.Spell[(int)Spritetime[6]];
-                Spritetime[6] += Time.deltaTime * AttackAnimeSpeed[1];
+                Spritetime[6] += Time.deltaTime * AnimeSpeed;
                 
                 GameObject SummonEn = GameObject.Find("MushroomS(Clone)");
             
@@ -409,6 +407,7 @@ public class Boss : MonoBehaviour
                 if (_IsDefaultWarp == true && Spritetime[4] >= MaxLeng[4])
                 {
                     WarpPosX = DefaultPosXInt;
+                    Spritetime[5] = 0;
                     this.transform.position = new Vector2(WarpPosX, transform.position.y);
                     aiState = EnemyAiState.WarpAttack;
                 }
@@ -439,11 +438,14 @@ public class Boss : MonoBehaviour
                 }
 
                 BossSprite.sprite = mono.WarpAttack[(int)Spritetime[5]];
-                Spritetime[5] += Time.deltaTime * AttackAnimeSpeed[0];
+                Spritetime[5] += Time.deltaTime * AnimeSpeed;
 
-                if (_IsDefaultWarp == true && Spritetime[5] >= MaxLeng[5] - 10 && AttackPattern == 2 || AttackPattern == 4)
+                if (_IsDefaultWarp == true && Spritetime[5] >= MaxLeng[5] - 10 && AttackPattern == 2 ||
+                    _IsDefaultWarp == true && Spritetime[5] >= MaxLeng[5] - 10 && AttackPattern == 4)
                 {
                     _IsReset = true;
+                    _IsNext = false;
+                    _IsSpell = false;
                     SpellCount = 0;
                     aiState = EnemyAiState.Summon;
                 }
@@ -472,7 +474,7 @@ public class Boss : MonoBehaviour
               
                 AttackCount[1] = 0;
                 BossSprite.sprite = mono.Spell[(int)Spritetime[6]];
-                Spritetime[6] += Time.deltaTime * AttackAnimeSpeed[1];
+                Spritetime[6] += Time.deltaTime * AnimeSpeed;
 
                 if (SpellCount < 1)
                 {
@@ -513,7 +515,7 @@ public class Boss : MonoBehaviour
                 _IsReset = false;
                 
                 BossSprite.sprite = mono.StrongAttack[(int)Spritetime[8]];
-                Spritetime[8] += Time.deltaTime * AttackAnimeSpeed[3];
+                Spritetime[8] += Time.deltaTime * AnimeSpeed;
 
                 if (Spritetime[8] >= MaxLeng[7] - 5 && Spritetime[8] <= MaxLeng[7] - 3)
                 {
