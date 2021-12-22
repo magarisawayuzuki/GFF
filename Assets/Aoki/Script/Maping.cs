@@ -99,10 +99,12 @@ public class Maping : UnityEngine.MonoBehaviour
 
     void Awake()
     {
+        
         for (int i = 0; i < stageArray.GetLength(0); i++)
         {
             for (int j = 0; j < stageArray.GetLength(1); j++)
             {
+                /*
                 if (stageArray[i, j] == 1)
                 {
                     Instantiate(floorBlock, new Vector3(j, i, 0), Quaternion.identity,block);
@@ -112,7 +114,7 @@ public class Maping : UnityEngine.MonoBehaviour
                 {
                     Instantiate(Player, new Vector3(j, i, 0), Quaternion.identity);
                 }
-
+                */
                 if (stageArray[i, j] == 6)
                 {
                     Instantiate(Enemy[0], new Vector3(j, i + EnemyY[0], 0), Quaternion.identity, EnemyList[0]);                  
@@ -140,7 +142,7 @@ public class Maping : UnityEngine.MonoBehaviour
                 }
             }
         }
-
+        
         //-----------二次元配列からプレイヤーの位置取得--------
         for (int i = 0; i < stageArray.GetLength(0); i++)
         {

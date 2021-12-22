@@ -9,17 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bfc75f13349be34392f7c3b98eb4cc1, type: 3}
-  m_Name: SkeletonData
+  m_Script: {fileID: 11500000, guid: d55c1568b06aa8748b4ea570708a8e0e, type: 3}
+  m_Name: EnemyboolParamater
   m_EditorClassIdentifier: 
-  TrackingSpeed: 1100
-  ReturnSpeed: 2.5
-  jumpForce: 8
-  WeaponForce: 0
-  AnimeSpeed:
-  - 3
-  - 6
-  - 3
-  - 7
-  - 3
-  - 3
+  Retrcking: 0
+  IsJump: 0
+  IsAttack: 0
+  IsTracking: 1
+  IsReturn: 0
+  num: 1

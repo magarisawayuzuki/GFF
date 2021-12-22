@@ -43,17 +43,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1541885931111772530}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd5dff269a9de3147b425e77192ec64d, type: 3}
+  m_Script: {fileID: 11500000, guid: cd51fea7c70c62040acb997c935ea96c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObj: {fileID: 677229189713997750, guid: 41b6eecd05e330944b3f21ca7d7ee4eb, type: 3}
-  BossSprite: {fileID: 7717912961577527279, guid: 8513e8130105a5547ae1d7577f00fb98, type: 3}
+  playerObj: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
+  BossSprite: {fileID: 5209403665502590627}
   mono: {fileID: 11400000, guid: 1e8d535f9566b13448a73de8157bae88, type: 2}
   HP: 210
   AnimeSpeed: 5
   TrackingSpeed: 500
   WeaponForce: 0
-  ReScale: 1
   AttackRange: 5
   AttackEffect:
   - {fileID: 6979431124915740080, guid: 39a4b23f53b38134e89dc27919650889, type: 3}
@@ -82,7 +81,7 @@ MonoBehaviour:
   - {x: -2, y: 8}
   - {x: -7, y: 8}
   HpState: 0
-  aiState: 10
+  aiState: 0
 --- !u!212 &4503539027462731859
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -224,5 +223,10 @@ PrefabInstance:
 --- !u!4 &5209403665502590625 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7717912961577527277, guid: 8513e8130105a5547ae1d7577f00fb98, type: 3}
+  m_PrefabInstance: {fileID: 2544549161149165900}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &5209403665502590627 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7717912961577527279, guid: 8513e8130105a5547ae1d7577f00fb98, type: 3}
   m_PrefabInstance: {fileID: 2544549161149165900}
   m_PrefabAsset: {fileID: 0}

@@ -93,7 +93,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9058631903617046654}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aeabb7f8ab9e85489cbf06884d599d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 9163d1a3d5bbcf545939815b0f7f4a7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   charaData: {fileID: 11400000, guid: 6334fec45470752448642149d75c0a5b, type: 2}
@@ -110,10 +110,10 @@ MonoBehaviour:
     _isJump: 0
     _isDown: 0
   old_charaStatus: 0
-  ObjectScale: {x: 3, y: 0, z: 0}
-  _groundDistance: 3
+  ObjectScale: {x: 0.25, y: 0, z: 0}
+  _groundDistance: 1.3
   jumpSpeedScale: 1
-  player: {fileID: 677229189713997750, guid: 41b6eecd05e330944b3f21ca7d7ee4eb, type: 3}
+  player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
   Anime: {fileID: 11400000, guid: 438e24d270197a44c9cbdc80d768e4cd, type: 2}
   data: {fileID: 11400000, guid: 10b44550162fbeb41b06f61c1b10ca82, type: 2}
   AttackRange: 3

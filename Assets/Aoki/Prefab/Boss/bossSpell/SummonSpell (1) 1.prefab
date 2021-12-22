@@ -1,5 +1,47 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &6809424264871561405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417514127830363835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca7e3851dacb5649ba95b4a8f0dbdff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mono: {fileID: 11400000, guid: ebca023170a942d4097053af9f04583a, type: 2}
+  SummonEnemy: {fileID: 2971109193466022022, guid: d5981ebfcb20d8743bba381b3b3fa845, type: 3}
+  AnimeSpeed: 8
+  Spritetime:
+  - 0
+  - 0
+  MaxLeng: 0000000000000000
+  EnemyY:
+  - 0.8
+--- !u!114 &5844407487230454340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417514128763378357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca7e3851dacb5649ba95b4a8f0dbdff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mono: {fileID: 11400000, guid: ebca023170a942d4097053af9f04583a, type: 2}
+  SummonEnemy: {fileID: 2971109193466022022, guid: d5981ebfcb20d8743bba381b3b3fa845, type: 3}
+  AnimeSpeed: 8
+  Spritetime:
+  - 0
+  - 0
+  MaxLeng: 0000000000000000
+  EnemyY:
+  - 0.8
 --- !u!1 &406119615553340818
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 406119615553340828}
   m_Layer: 0
-  m_Name: SummonSpell (1)
+  m_Name: SummonSpell (1) 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,6 +75,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &937847830450454348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417514129513457660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca7e3851dacb5649ba95b4a8f0dbdff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mono: {fileID: 11400000, guid: ebca023170a942d4097053af9f04583a, type: 2}
+  SummonEnemy: {fileID: 2971109193466022022, guid: d5981ebfcb20d8743bba381b3b3fa845, type: 3}
+  AnimeSpeed: 8
+  Spritetime:
+  - 0
+  - 0
+  MaxLeng: 0000000000000000
+  EnemyY:
+  - 0.8
 --- !u!1001 &406119613752478740
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112,8 +175,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spel (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1266359104036594161, guid: 4ea133a8562845f4897fcfea3470ae06, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4ea133a8562845f4897fcfea3470ae06, type: 3}
+--- !u!1 &3417514127830363835 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3084861690680713903, guid: 4ea133a8562845f4897fcfea3470ae06, type: 3}
+  m_PrefabInstance: {fileID: 406119613752478740}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3417514127830363833 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3084861690680713901, guid: 4ea133a8562845f4897fcfea3470ae06, type: 3}
@@ -198,8 +267,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spel
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1266359104036594161, guid: 4ea133a8562845f4897fcfea3470ae06, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4ea133a8562845f4897fcfea3470ae06, type: 3}
+--- !u!1 &3417514128763378357 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3084861690680713903, guid: 4ea133a8562845f4897fcfea3470ae06, type: 3}
+  m_PrefabInstance: {fileID: 406119614757337114}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3417514128763378359 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3084861690680713901, guid: 4ea133a8562845f4897fcfea3470ae06, type: 3}
@@ -284,8 +359,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spel (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1266359104036594161, guid: 4ea133a8562845f4897fcfea3470ae06, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4ea133a8562845f4897fcfea3470ae06, type: 3}
+--- !u!1 &3417514129513457660 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3084861690680713903, guid: 4ea133a8562845f4897fcfea3470ae06, type: 3}
+  m_PrefabInstance: {fileID: 406119615576081747}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3417514129513457662 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3084861690680713901, guid: 4ea133a8562845f4897fcfea3470ae06, type: 3}

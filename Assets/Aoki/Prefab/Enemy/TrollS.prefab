@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5767892250516991812}
   - component: {fileID: 2935311414571336311}
   - component: {fileID: 7859604001358175825}
-  - component: {fileID: 8539373856092158527}
+  - component: {fileID: 2877876974627714265}
   m_Layer: 9
   m_Name: TrollS
   m_TagString: Hard
@@ -110,7 +110,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!114 &8539373856092158527
+--- !u!114 &2877876974627714265
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2971109193466022022}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41e0b0c8184b930418ba8685fba4d320, type: 3}
+  m_Script: {fileID: 11500000, guid: 4828aaf1c72b50f4ebff5bffa92e29f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   charaData: {fileID: 11400000, guid: 6334fec45470752448642149d75c0a5b, type: 2}
@@ -136,11 +136,11 @@ MonoBehaviour:
     _isJump: 0
     _isDown: 0
   old_charaStatus: 0
-  ObjectScale: {x: 3, y: 0, z: 0}
-  _groundDistance: 3
+  ObjectScale: {x: 0.25, y: 0, z: 0}
+  _groundDistance: 1.3
   jumpSpeedScale: 1
-  player: {fileID: 677229189713997750, guid: 41b6eecd05e330944b3f21ca7d7ee4eb, type: 3}
-  Anime: {fileID: 11400000, guid: 7bd662fb2d8eac54886d2c2d84063569, type: 2}
+  player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
+  Anime: {fileID: 11400000, guid: 010adc0431c77004197028e9858cca0d, type: 2}
   data: {fileID: 11400000, guid: 65330411f46d8d74389d7f733cc43d2d, type: 2}
   AttackRange: 3
   MaxLeng: 000000000000000000000000000000000000000000000000

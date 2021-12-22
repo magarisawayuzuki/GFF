@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f6583ff5c7cb1a40aee4ec5d3fa2bd6, type: 3}
-  m_Name: MushBool
+  m_Script: {fileID: 11500000, guid: 6bfc75f13349be34392f7c3b98eb4cc1, type: 3}
+  m_Name: EnemyParamater
   m_EditorClassIdentifier: 
-  Retrcking: 1
-  IsJump: 0
-  IsAttack: 1
-  IsTracking: 0
-  IsReturn: 1
-  num: -1
+  TrackingSpeed: 0
+  ReturnSpeed: 0
+  jumpForce: 0
+  WeaponForce: 0
+  AnimeSpeed: []
