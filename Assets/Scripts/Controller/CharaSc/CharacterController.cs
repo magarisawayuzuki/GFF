@@ -67,7 +67,7 @@ public class CharacterController : MonoBehaviour
     // 記憶を持っているか
     protected bool _hasMemory = false;
     protected bool _isSpeedDown = false;
-    protected bool _isInvincible = false;
+    protected bool _isPeerless = false;
 
     /// const
     protected const int _ZERO = 0;
@@ -192,7 +192,7 @@ public class CharacterController : MonoBehaviour
         // 攻撃状態じゃなければ
         if (!input._isAttack)
         {
-            if (_isInvincible)
+            if (_isPeerless)
             {
                 CharacterMove.x = input._x * 10 * 1.5f * Time.deltaTime;
             }
