@@ -15,10 +15,10 @@ public class Chara_2 : MonoBehaviour
 
     [SerializeField, Range(0, 100)] protected int life = default;
 
-    private float lifeChangeMagnitude = 0.01f;
+    private float lifeChangeMagnitude = 2f;
     private float lerpTime = default;
 
-    private Vector4 vectorHP = new Vector4(0, 0, 1, 0);
+    protected Vector4 vectorHP = new Vector4(0, 0, 1, 0);
 
     protected void SetChara(CharaParameter charaPara)
     {
@@ -32,16 +32,21 @@ public class Chara_2 : MonoBehaviour
     {
         afterLife = /*maxLife - _chara.*/100 - life;
         HPScroll[0].padding = vectorHP * afterLife * 2.68f;
-        if (!isDamage && lerpTime >= 0f)
+        if (!isDamage)
         {
-            lerpTime += Time.deltaTime * lifeChangeMagnitude / (beforeLife - afterLife);
-            Debug.Log(vectorHP * beforeLife * 2.68f);
-            HPScroll[1].padding = Vector4.Lerp(vectorHP * afterLife * 2.68f, vectorHP * beforeLife * 2.68f, lerpTime);
+            if (lerpTime <= 1f)
+            {
+                lerpTime += Time.deltaTime * lifeChangeMagnitude;
+                HPScroll[1].padding = Vector4.Lerp(vectorHP * beforeLife * 2.68f, vectorHP * afterLife * 2.68f, lerpTime);
+            }
+            else
+            {
+                beforeLife = afterLife;
+            }
         }
-        else 
+        else if(isDamage)
         {
             lerpTime = 0;
-            beforeLife = afterLife;
         }
     }
 }

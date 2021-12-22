@@ -29,7 +29,7 @@ public class TitleUI_2 : UIController_2
         if (_imageFlipTime <= 2)
         {
             bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") - Time.deltaTime);
-            _imageFlipTime += Time.deltaTime;
+            _imageFlipTime += Time.deltaTime * 2;
         }
         else
         {
