@@ -24,7 +24,8 @@ public class EnemyPlant : EnemyController
         //最初の座標
         DefaultPos = transform.position;
 
-        DefaultPosInt = Mathf.FloorToInt(DefaultPos.x);
+        DefaultPosIntX = Mathf.FloorToInt(DefaultPos.x);
+        DefaultPosIntY = Mathf.FloorToInt(DefaultPos.y);
         //spriteの最大数を取得maxLeng(0リスポーン　1移動　２待機　3攻撃　4攻撃を当てられた　5死亡
         MaxLeng[0] = Anime.Resporn.GetLength(0);
         MaxLeng[1] = Anime.move.GetLength(0);
@@ -108,20 +109,59 @@ public class EnemyPlant : EnemyController
         EnemyPositionX = Mathf.FloorToInt(pos.x);
         EnemyPositionY = Mathf.FloorToInt(pos.y);
 
-        if (EnemyPositionX >= DefaultPosInt + 1)
+        if (EnemyPositionX >= DefaultPosIntX + 1)
         {
             map.stageArray[EnemyPositionY, EnemyPositionX] = 6;
-            map.stageArray[EnemyPositionY, EnemyPositionX - 1] = 0;
-            DefaultPosInt = EnemyPositionX;
+            //map.stageArray[EnemyPositionY, EnemyPositionX - 1] = 0;
+            if (map.stageArray[EnemyPositionY - 1, EnemyPositionX] == 3)
+            {
+                map.stageArray[EnemyPositionY - 1, EnemyPositionX] = 3;
+            }           
+            else
+            {
+                map.stageArray[EnemyPositionY - 1, EnemyPositionX] = 0;
+            }
+
+            DefaultPosIntX = EnemyPositionX;
         }
 
-        if (EnemyPositionX >= DefaultPosInt - 1)
+        if (EnemyPositionX >= DefaultPosIntX - 1)
         {
-
             map.stageArray[EnemyPositionY, EnemyPositionX] = 6;
-            map.stageArray[EnemyPositionY, EnemyPositionX + 1] = 0;
-            DefaultPosInt = EnemyPositionX;
-        }           
+            map.stageArray[EnemyPositionY, EnemyPositionX + 1] = 0;            
+            DefaultPosIntX = EnemyPositionX;
+        }
+
+        if (EnemyPositionY >= DefaultPosIntY + 1)
+        {
+            map.stageArray[EnemyPositionY, EnemyPositionX] = 6;
+            
+            if (map.stageArray[EnemyPositionY - 1, EnemyPositionX] == 3)
+            {
+                map.stageArray[EnemyPositionY - 1, EnemyPositionX] = 3;
+            }           
+            else
+            {
+                map.stageArray[EnemyPositionY - 1, EnemyPositionX] = 0;
+            }
+            DefaultPosIntY = EnemyPositionY;
+        }
+
+        if (EnemyPositionY >= DefaultPosIntY - 1)
+        {
+            map.stageArray[EnemyPositionY, EnemyPositionX] = 6;
+            
+            if(map.stageArray[EnemyPositionY + 1, EnemyPositionX] == 3)
+            {
+                map.stageArray[EnemyPositionY + 1, EnemyPositionX] = 0;
+            }           
+            else
+            {
+                map.stageArray[EnemyPositionY -+1, EnemyPositionX] = 0;
+            }
+
+            DefaultPosIntY = EnemyPositionY;
+        }
     }
 
     private void OnBecameVisible()　//カメラ内処理
@@ -167,8 +207,9 @@ public class EnemyPlant : EnemyController
 
                 break;
 
-            case 2:  //-------------------------追跡アニメーション処理---------------------------------- 
-                _IsTracking = true;
+            case 2:  //-------------------------追跡アニメーション処理----------------------------------               
+                Spritetime[4] = 0;
+
                 EnemySprite.sprite = Anime.move[(int)Spritetime[1]];
                 Spritetime[1] += Time.deltaTime * data.AnimeSpeed[1];
 
@@ -182,12 +223,12 @@ public class EnemyPlant : EnemyController
                 if (_Retrcking == true)
                 {
                     num = -1;
-                    EnemySprite.flipX = false; //反転処理 　左
+                    EnemySprite.flipX = true; //反転処理 　左
                 }
                 else if (_Retrcking == false)
                 {
                     num = 1;
-                    EnemySprite.flipX = true; //反転処理 右
+                    EnemySprite.flipX = false; //反転処理 右
                 }
                 transform.localScale = scale;
                 return;
@@ -208,6 +249,21 @@ public class EnemyPlant : EnemyController
                 EnemySprite.sprite = Anime.Idel[(int)Spritetime[3]];
                 Spritetime[3] += Time.deltaTime * data.AnimeSpeed[2];
 
+                if (EnemyPositionX + AttackRange + 3 >= map.PlayerPositionX && EnemyPositionX + AttackRange + 3 <= map.PlayerPositionX && num == 1 && _IsWait == true)
+                {
+                    _IsTracking = true;
+                    _IsLook = true;
+                    _IsWait = false;
+                    anime = 2;
+                }
+                if (EnemyPositionX - AttackRange - 3 >= map.PlayerPositionX && EnemyPositionX - AttackRange - 3 <= map.PlayerPositionX && num == -1 && _IsWait == true)
+                {
+                    _IsTracking = true;
+                    _IsLook = true;
+                    _IsWait = false;
+                    anime = 2;
+                }
+
                 if (Spritetime[3] >= MaxLeng[2])
                 {
                     Spritetime[3] = 0;
@@ -217,17 +273,18 @@ public class EnemyPlant : EnemyController
                     {
                         _IsAttack = true;
                     }
+
                 }
 
                 if (_Retrcking == true)
                 {
                     num = -1;
-                    EnemySprite.flipX = false; //反転処理 　左
+                    EnemySprite.flipX = true; //反転処理 　左
                 }
                 else if (_Retrcking == false)
                 {
                     num = 1;
-                    EnemySprite.flipX = true; //反転処理 右
+                    EnemySprite.flipX = false; //反転処理 右
                 }
                 transform.localScale = scale;
                 return;
@@ -264,7 +321,7 @@ public class EnemyPlant : EnemyController
                 }
                 break;
 
-            case 6: //----------------------------ヒット--------------------------------                              
+            case 6: //----------------------------攻撃をくらった--------------------------------                              
                 EnemySprite.sprite = Anime.TakeHit[(int)Spritetime[5]];
                 Spritetime[5] += Time.deltaTime * data.AnimeSpeed[4];
 
@@ -286,7 +343,7 @@ public class EnemyPlant : EnemyController
         if (num == 1) //右向き
         {
             //2つ右がプレイヤーだった場合攻撃
-            if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX)
+            if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX && _IsLook == true)
             {
                 if (_IsAttack == true)
                 {
@@ -297,17 +354,17 @@ public class EnemyPlant : EnemyController
                     anime = 4;
                 }
             }
-            else if (_InEnemy == true && _IsTrackingWait == false)
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true)
             {
+                _IsTracking = true;
                 anime = 2;
             }
 
         }
         if (num == -1) //左向き
         {
-
             //2つ左がプレイヤーだった場合攻撃
-            if (EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX)
+            if (EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX && _IsLook == true)
             {
                 if (_IsAttack == true)
                 {
@@ -318,8 +375,9 @@ public class EnemyPlant : EnemyController
                     anime = 4;
                 }
             }
-            else if (_InEnemy == true && _IsTrackingWait == false)
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true)
             {
+                _IsTracking = true;
                 anime = 2;
             }
         }
@@ -338,6 +396,8 @@ public class EnemyPlant : EnemyController
         //----------------元の座標に戻っている---------------
         if (_IsReturn == true)
         {
+            _IsLook = false;
+            _IsTracking = false;
             transform.Translate(transform.right * Time.deltaTime * data.ReturnSpeed * num);
         }
 
@@ -347,14 +407,18 @@ public class EnemyPlant : EnemyController
             if (pos.x <= DefaultPos.x && _Retrcking == true)　//左に向いている
             {
                 _IsReturn = false;
+                _Retrcking = false;
+                _IsWait = true;
                 Spritetime[2] = 0;
-                anime = 3;
+                anime = 4;
             }
             if (pos.x >= DefaultPos.x && _Retrcking == false)　//右に向いている
             {
                 _IsReturn = false;
+                _Retrcking = true;
+                _IsWait = true;
                 Spritetime[2] = 0;
-                anime = 3;
+                anime = 4;
             }
         }
     }
@@ -362,53 +426,44 @@ public class EnemyPlant : EnemyController
     //--------------------------追跡処理-------------------------------
     private void EnemyTracking()
     {
-
-        Vector3 pv = player.transform.position;
-        Vector3 ev = transform.position;
-
-        float TrackingposX = pv.x - ev.x;
-        float TrackingposY = pv.y - ev.y;
-
-        float vx = 0f;
-        float vy = 0f;
-
-        float sp = 10f;
-
-        // 減算した結果がマイナスであればXは減算処理
-        if (TrackingposX < 0 || TrackingposX == 0)
+        if (_IsLook == true)
         {
-            _Retrcking = true;
-            vx = -sp;
-        }
-        else
-        {
-            _Retrcking = false;
-            vx = sp;
-        }
+            Vector3 pv = player.transform.position;
+            Vector3 ev = transform.position;
 
-        // 減算した結果がマイナスであればYは減算処理
-        if (TrackingposY < 0)
-        {
-            vy = -sp;
+            float TrackingposX = pv.x - ev.x;
+            float TrackingposY = pv.y - ev.y;
+
+            float vx = 0f;
+            float vy = 0f;
+
+            float sp = 10f;
+
+            // 減算した結果がマイナスであればXは減算処理
+            if (TrackingposX < 0 || TrackingposX == 0)
+            {
+                _Retrcking = true;
+                vx = -sp;
+            }
+            else
+            {
+                _Retrcking = false;
+                vx = sp;
+            }
+
+            // 減算した結果がマイナスであればYは減算処理
+            if (TrackingposY < 0)
+            {
+                vy = -sp;
+            }
+            else
+            {
+                vy = sp;
+            }
+            if (_IsTracking == true)
+            {
+                transform.Translate(vx / data.TrackingSpeed, 0, 0);
+            }
         }
-        else
-        {
-            vy = sp;
-        }
-        if (_IsTracking == true)
-        {
-            transform.Translate(vx / data.TrackingSpeed, 0, 0);
-        }
-
-        //      rad = Mathf.Atan2(
-        //         player.transform.position.y - transform.position.y,
-        //         player.transform.position.x - transform.position.x);
-
-
-        //      // これで特定の方向へ向かって進んでいく。
-        //ev.x += speed.x * Mathf.Cos(rad);
-
-        //      // 現在の位置に加算減算を行ったPositionを代入する
-        //      transform.position = ev;
     }
 }

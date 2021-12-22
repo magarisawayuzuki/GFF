@@ -39,14 +39,17 @@ public class EnemyController : CharacterController
 
     protected Vector2 pos;　//自身の位置
     protected Vector2 DefaultPos; //最初の位置
-    protected int DefaultPosInt;
+    protected int DefaultPosIntX;
+    protected int DefaultPosIntY;
     protected float GetAttackRange;
+
+    public bool _IsWait;
 
     public bool _InEnemy;
     public bool _IsTrackingWait;
     public bool _IsTracking;
     public bool _IsMove;
-
+    public bool _IsLook = true;
     protected int EnemyPositionX = 0; //二次元配列の横
     protected int EnemyPositionY = 0; //二次元配列の縦
 
