@@ -14,6 +14,8 @@ public class PlayerController : CharacterController
     [SerializeField]
     private GameObject[] _memoryFragments = default;
 
+    private Vector3 _playerFlontScale = new Vector3(1, 1);
+
     #region Vecter3
     // 攻撃の範囲
     private Vector3 _attackScale = new Vector3(1,2);
@@ -33,7 +35,7 @@ public class PlayerController : CharacterController
     private float _swordTime = 0;
     // 槌攻撃経過時間
     private float _hammerTime = 0;
-    //
+    // 槌攻撃のクールダウン
     private float _hammerCoolDown = 3;
 
     [SerializeField,Header("記憶ゲージ")]
@@ -45,7 +47,9 @@ public class PlayerController : CharacterController
     // Objectの半径
     private float _sidedistance = 0.45f;
     [SerializeField,Header("無双時間")]
-    private float _invincibleTime = 5;
+    private float _peerlessTime = 5;
+    [SerializeField, Header("無敵時間")]
+    private float _invincibleTime = 0.5f;
 
     // 攻撃力の記憶ゲージ倍率
     private float _memoryGaugeAttackPoint = 0;
@@ -98,9 +102,11 @@ public class PlayerController : CharacterController
 
     // 槌攻撃のクールタイムが終わっているか
     private bool _canHammerAttack = true;
+
+    private bool _isInvincible = false;
     #endregion
 
-    #region
+    #region string
     private string _soft = "Soft";
     private string _normal = "Normal";
     private string _hard = "Hard";
@@ -158,32 +164,7 @@ public class PlayerController : CharacterController
 
         MomoryGauge();
 
-        // デバッグ用
-        if (input._isAttack)
-        {
-            _AttackTime += Time.deltaTime;
-        }
-        else
-        {
-            _AttackTime = _ZERO;
-        }
-
-        if (_AttackTime > _ONE)
-        {
-            _swordTime = _ZERO;
-            _hammerTime = _ZERO;
-            if (_isInputSwordAttack)
-            {
-                _isInputSwordAttack = false;
-                input._isAttack = false;
-            }
-            else
-            {
-                _isInputHammerAttack = false;
-                input._isAttack = false;
-                _canHammerAttack = false;
-            }
-        }
+        Timer();
     }
 
     //=====================================================
@@ -197,8 +178,15 @@ public class PlayerController : CharacterController
         // 入力値を_xに入れる
         input._x = IC.Player.Move.ReadValue<float>();
 
+        if (input._x != 0)
+        {
+            _playerFlontScale.x = -input._x;
+            transform.localScale = _playerFlontScale;
+        }
+
         _canNotRight = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right, Quaternion.identity, _sidedistance, movelayer);
         _canNotLeft = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.left, Quaternion.identity, _sidedistance, movelayer);
+
 
         if (_canNotRight && input._x > _ZERO)
         {
@@ -224,7 +212,7 @@ public class PlayerController : CharacterController
         if (IC.Player.Invincible.triggered && _memoryGauge == _MAXMEMORYGAUGE)
         {
             Debug.Log("無双");
-            _isInvincible = true;
+            _isPeerless = true;
         }
 
         // 左クリックで剣攻撃
@@ -314,7 +302,7 @@ public class PlayerController : CharacterController
             #region 攻撃力代入
             if (_isHit)
             {
-                if (_isInvincible)
+                if (_isPeerless)
                 {
                     _attackPower = charaData.basicPower * _invincibleAttack;
                 }
@@ -418,7 +406,7 @@ public class PlayerController : CharacterController
             {
                 _weaponMemoryCount++;
             }
-                _memoryCount++;
+            _memoryCount++;
             memoryFragment.SetActive(false);
         }
     }
@@ -459,9 +447,9 @@ public class PlayerController : CharacterController
         }
         #endregion
 
-        if (_isInvincible)
+        if (_isPeerless)
         {
-            _memoryGauge = _MAXMEMORYGAUGE / _invincibleTime * Time.deltaTime;
+            _memoryGauge = _MAXMEMORYGAUGE / _peerlessTime * Time.deltaTime;
         }
         else
         {
@@ -478,7 +466,7 @@ public class PlayerController : CharacterController
         }
 
         #region 記憶ゲージ加算
-        if (_isInvincible)
+        if (_isPeerless)
         {
             return;
         }
@@ -537,12 +525,74 @@ public class PlayerController : CharacterController
         }
         #endregion
 
-        if (_memoryGauge <= _ZERO && _isInvincible)
+        if (_memoryGauge <= _ZERO && _isPeerless)
         {
-            _isInvincible = false;
+            _isPeerless = false;
         }
     }
 
+
+    //==========================================================
+
+
+    // Playerで行うタイマー処理
+    private void Timer()
+    {
+        if (_isInvincible)
+        {
+            _peerlessTime -= Time.deltaTime;
+        }
+
+        if (_peerlessTime <= _ZERO)
+        {
+            _isInvincible = false;
+        }
+
+        // デバッグ用
+        if (input._isAttack)
+        {
+            _AttackTime += Time.deltaTime;
+        }
+        else
+        {
+            _AttackTime = _ZERO;
+        }
+
+        if (_AttackTime > _ONE)
+        {
+            _swordTime = _ZERO;
+            _hammerTime = _ZERO;
+            if (_isInputSwordAttack)
+            {
+                _isInputSwordAttack = false;
+                input._isAttack = false;
+            }
+            else
+            {
+                _isInputHammerAttack = false;
+                input._isAttack = false;
+                _canHammerAttack = false;
+            }
+        }
+    }
+
+
+    //==========================================================
+
+
+    // 無敵時間だったらCharaLifeCalculationを実行しない
+    public override void CharaLifeCalculation(float damage, int knockBack, int weapon)
+    {
+        if (_isInvincible)
+        {
+            return;
+        }
+        else
+        {
+            _isInvincible = true;
+        }
+        base.CharaLifeCalculation(damage, knockBack, weapon);
+    }
 
     //==================InputSystem========================
 
