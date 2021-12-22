@@ -1,9 +1,0 @@
-diff a/Library/CurrentLayout-default.dwlt b/Library/CurrentLayout-default.dwlt	(rejected hunks)
-@@ -14,6 +14,7 @@
-   m_EditorClassIdentifier: 
-   m_PixelRect:
-     serializedVersion: 2
-+<<<<<<< HEAD
-     x: 0
-     y: 43
-     width: 1920
