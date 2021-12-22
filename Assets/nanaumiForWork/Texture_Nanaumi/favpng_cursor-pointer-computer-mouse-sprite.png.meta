@@ -1,0 +1,412 @@
+fileFormatVersion: 2
+guid: 97196f1935f2fe443a4ad42da7f3ccef
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6710251908366378694
+    second: favpng_cursor-pointer-computer-mouse-sprite_0
+  - first:
+      213: -2390848077712318586
+    second: favpng_cursor-pointer-computer-mouse-sprite_1
+  - first:
+      213: -3620864371502745812
+    second: favpng_cursor-pointer-computer-mouse-sprite_2
+  - first:
+      213: -5607586695091655560
+    second: favpng_cursor-pointer-computer-mouse-sprite_3
+  - first:
+      213: -5231237245669602039
+    second: favpng_cursor-pointer-computer-mouse-sprite_4
+  - first:
+      213: -6950602566745545382
+    second: favpng_cursor-pointer-computer-mouse-sprite_5
+  - first:
+      213: 3672460069764881552
+    second: favpng_cursor-pointer-computer-mouse-sprite_6
+  - first:
+      213: 8897512027888367239
+    second: favpng_cursor-pointer-computer-mouse-sprite_7
+  - first:
+      213: -2923267201022970302
+    second: favpng_cursor-pointer-computer-mouse-sprite_8
+  - first:
+      213: 3340209047677633812
+    second: favpng_cursor-pointer-computer-mouse-sprite_9
+  - first:
+      213: -6433946368882075162
+    second: favpng_cursor-pointer-computer-mouse-sprite_10
+  - first:
+      213: 1398733401818926683
+    second: favpng_cursor-pointer-computer-mouse-sprite_11
+  - first:
+      213: 4517277181147623648
+    second: favpng_cursor-pointer-computer-mouse-sprite_12
+  - first:
+      213: 2799354134220508146
+    second: favpng_cursor-pointer-computer-mouse-sprite_13
+  - first:
+      213: -8936117501864514712
+    second: favpng_cursor-pointer-computer-mouse-sprite_14
+  - first:
+      213: 5477231405659353080
+    second: favpng_cursor-pointer-computer-mouse-sprite_15
+  - first:
+      213: -741693584859412279
+    second: favpng_cursor-pointer-computer-mouse-sprite_16
+  - first:
+      213: -143888475699827534
+    second: favpng_cursor-pointer-computer-mouse-sprite_17
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: favpng_cursor-pointer-computer-mouse-sprite_0
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 360
+        width: 72
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c6a097ee8a9f1d50800000000000000
+      internalID: 6710251908366378694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: favpng_cursor-pointer-computer-mouse-sprite_1
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 360
+        width: 62
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68f1800375002ded0800000000000000
+      internalID: -2390848077712318586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: favpng_cursor-pointer-computer-mouse-sprite_2
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 360
+        width: 62
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c27f5bcc90b10cdc0800000000000000
+      internalID: -3620864371502745812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: favpng_cursor-pointer-computer-mouse-sprite_3
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 360
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87ceadf6c99dd22b0800000000000000
+      internalID: -5607586695091655560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: favpng_cursor-pointer-computer-mouse-sprite_4
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 200
+        width: 65
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90d021cf079e667b0800000000000000
+      internalID: -5231237245669602039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: favpng_cursor-pointer-computer-mouse-sprite_6
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 200
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09c5426d9f237f230800000000000000
+      internalID: 3672460069764881552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: favpng_cursor-pointer-computer-mouse-sprite_8
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 200
+        width: 70
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 246b97308f77e67d0800000000000000
+      internalID: -2923267201022970302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: favpng_cursor-pointer-computer-mouse-sprite_9
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 200
+        width: 57
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4150f528e6eca5e20800000000000000
+      internalID: 3340209047677633812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: favpng_cursor-pointer-computer-mouse-sprite_12
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 40
+        width: 62
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e03846a9a790be30800000000000000
+      internalID: 4517277181147623648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: favpng_cursor-pointer-computer-mouse-sprite_13
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 40
+        width: 51
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fb0cb2e0cd49d620800000000000000
+      internalID: 2799354134220508146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: favpng_cursor-pointer-computer-mouse-sprite_14
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 40
+        width: 81
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86be6364a788cf380800000000000000
+      internalID: -8936117501864514712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: favpng_cursor-pointer-computer-mouse-sprite_16
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 40
+        width: 26
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c8c44e3d99f4b5f0800000000000000
+      internalID: -741693584859412279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
