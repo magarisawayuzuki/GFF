@@ -156,6 +156,8 @@ public class CharacterController : MonoBehaviour
 
         */
 
+        Debug.Log(charaData.life);
+
         // velocityへ入れる
         transform.position += CharacterMove;
     }

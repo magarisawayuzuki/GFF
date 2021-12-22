@@ -160,7 +160,7 @@ public class PlayerController : CharacterController
     {
         base.Update();
 
-        Evasion();
+        MemoryGet();
 
         MomoryGauge();
 
@@ -178,7 +178,7 @@ public class PlayerController : CharacterController
         // 入力値を_xに入れる
         input._x = IC.Player.Move.ReadValue<float>();
 
-        if (input._x != 0)
+        if (input._x != 0 && !input._isAttack)
         {
             _playerFlontScale.x = -input._x;
             transform.localScale = _playerFlontScale;
@@ -397,6 +397,16 @@ public class PlayerController : CharacterController
     //回避挙動
     protected void Evasion()
     {
+        
+    }
+
+
+    //==========================================================
+
+
+    //付近の記憶の欠片を自動取得
+    protected void MemoryGet()
+    {
         foreach (GameObject memoryFragment in _memoryFragments)
         {
             if (this.transform.position != memoryFragment.transform.position)
@@ -409,16 +419,6 @@ public class PlayerController : CharacterController
             _memoryCount++;
             memoryFragment.SetActive(false);
         }
-    }
-
-
-    //==========================================================
-
-
-    //付近の記憶の欠片を自動取得
-    protected void MemoryGet()
-    {
-
     }
 
 
