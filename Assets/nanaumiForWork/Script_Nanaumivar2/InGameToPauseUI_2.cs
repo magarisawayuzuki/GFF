@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class InGameToPauseUI_2 : UIController_2
 {
-    private bool _isPause = false;
+    public static bool _isPause = false;
 
     private void Update()
     {
@@ -14,12 +14,12 @@ public class InGameToPauseUI_2 : UIController_2
             _isPause = true;
         }
 
+        ToPause();
+
         if (!ContainsScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause)))
         {
             _isPause = false;
         }
-
-        ToPause();
     }
 
     private void ToPause()
@@ -33,7 +33,7 @@ public class InGameToPauseUI_2 : UIController_2
     private bool ContainsScene(string sceneName)
     {
         for (int i = 0; i < SceneManager.sceneCount; i++)
-    {
+        {
             if (SceneManager.GetSceneAt(i).name == sceneName)
             {
                 return true;

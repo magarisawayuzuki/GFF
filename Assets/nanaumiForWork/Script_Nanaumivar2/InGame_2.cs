@@ -11,10 +11,16 @@ public class InGame_2 : Chara_2
     [SerializeField, Range(0, 100)] private int _testbbb = default;
 
     [SerializeField] private RectMask2D _memoryGaugeBar = default;
-    private int _beforeMemory = default;
-    private int _afterMemory = default;
+    private float _beforeMemory = default;
+    private float _afterMemory = default;
     private float _memoryChangeTime = default;
     private bool _isMemoryChange = default;
+
+    [SerializeField] private RectMask2D _memoryGaugeAchievementBar = default;
+    private float _beforeMemoryAchievement = default;
+    private float _afterMemoryAchievement = default;
+    private float _memoryAchievementChangeTime = default;
+    private bool _isMemoryAchievementChange = default;
 
     [SerializeField, Tooltip("0sord/1hummer")] private GameObject[] _weaponImage = default;
 
@@ -22,9 +28,11 @@ public class InGame_2 : Chara_2
     private float _DamageTime = default;
     private int _beforeLifeChild = default;
 
+    private PlayerController playerCon = default;
+
     private void Awake()
     {
-        //HPScroll = this.GetComponentInChildren<RectMask2D>();
+        playerCon = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         _isDamage = false;
     }
 
@@ -33,14 +41,14 @@ public class InGame_2 : Chara_2
         SetChara(_playerPara);
         _beforeLifeChild = _playerPara.life;
 
-        _beforeMemory = _testaaa;// memoryの取得
+        _beforeMemory = playerCon._MemoryGauge;// memoryの取得
     }
 
     private void Update()
     {
         PlayerHPUI();
 
-        if (_beforeMemory != /*memoryの取得*/_testbbb || _isMemoryChange)
+        if (_beforeMemory != playerCon._MemoryGauge/*_testbbb*/ || _isMemoryChange)
         {
             PlayerMemoryUI();
             if (!_isMemoryChange)
@@ -50,12 +58,22 @@ public class InGame_2 : Chara_2
             }
         }
 
+        if (_beforeMemoryAchievement != playerCon._MemoryGauge/*_testbbb*/ || _isMemoryChange)
+        {
+            PlayerMemoryAchievementUI();
+            if (!_isMemoryChange)
+            {
+                _isMemoryAchievementChange = true;
+                _memoryAchievementChangeTime = 0;
+            }
+        }
+
         WeaponChangeUI();
     }
 
     private void WeaponChangeUI()
     {
-        switch (_testaaa/*武器の取得状況*/)
+        switch (/*_testaaa*/playerCon._WeaponMemoryCount)
         {
             case 0:
                 _weaponImage[0].SetActive(false);
@@ -74,7 +92,7 @@ public class InGame_2 : Chara_2
 
     private void PlayerMemoryUI()
     {
-        _afterMemory = /*maxLife - _chara.*/100 - _testbbb;
+        _afterMemory = 100 - playerCon._MemoryGauge/*_testbbb*/;
         if (_memoryChangeTime <= 1f)
         {
             _memoryChangeTime += Time.deltaTime * 2;
@@ -87,13 +105,29 @@ public class InGame_2 : Chara_2
         }
     }
 
+    // メモリーアチーブメント イベントから取得
+    private void PlayerMemoryAchievementUI()
+    {
+        _afterMemoryAchievement = 100 - playerCon._MemoryGauge/*_testbbb*/;
+        if (_memoryChangeTime <= 1f)
+        {
+            _memoryAchievementChangeTime += Time.deltaTime * 2;
+            _memoryGaugeBar.padding = Vector4.Lerp(vectorHP * _beforeMemoryAchievement * 2.4f, vectorHP * _afterMemoryAchievement * 2.4f, _memoryAchievementChangeTime);
+        }
+        else
+        {
+            _beforeMemoryAchievement = _afterMemoryAchievement;
+            _isMemoryAchievementChange = false;
+        }
+    }
+
     private void PlayerHPUI()
     {
-        if (_beforeLifeChild != /*playerPara.*/life)
+        if (_beforeLifeChild != _playerPara.life)
         {
             _isDamage = true;
             _DamageTime = 0;
-            _beforeLifeChild = /*playerPara.*/life;
+            _beforeLifeChild = _playerPara.life;
         }
 
         if (_isDamage)
@@ -101,7 +135,7 @@ public class InGame_2 : Chara_2
             ChangeLife(_playerPara, true);
             _DamageTime += Time.deltaTime;
 
-            if (_DamageTime >= 2)
+            if (_DamageTime >= 1)
             {
                 _isDamage = false;
             }
