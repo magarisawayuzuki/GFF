@@ -7,13 +7,11 @@ using UnityEngine;
 /// </summary>
 public class EnemyNormal : EnemyController
 {
-    [SerializeField]
-    CharaParameter enemyPara;
-
-    CharacterController chara;
+    PlayerController chara;
     private float damage = 3;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         //------------二次元配列のスクリプト取得------------------
         GameObject en = GameObject.FindGameObjectWithTag("Map");
         map = en.GetComponent<Maping>();
@@ -51,7 +49,7 @@ public class EnemyNormal : EnemyController
     {
         // PLAYERオブジェクトを取得
         player = GameObject.FindGameObjectWithTag("Player");
-        chara = player.GetComponent<CharacterController>();
+        chara = player.GetComponent<PlayerController>();
     }
     //AI動作を記述
     public override PlayerInput InputMethod()

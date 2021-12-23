@@ -18,6 +18,7 @@ public class PlayerCheckPoint : MonoBehaviour
             if (Physics.Raycast(transform.position, Vector3.up, 10, LayerMask.GetMask("Player")))
             {
 
+                _canCheckPoint = false;
             }
         }
     }

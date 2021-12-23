@@ -3,7 +3,11 @@ guid: e63324f648d6d4f4c9d5cfa07f6587c1
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - charaData: {fileID: 11400000, guid: e17de66812f62804aa1cd970ad132243, type: 2}
+  - player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
+  - Anime: {fileID: 11400000, guid: 5ee3478ea26bac1478bfd5c5c66bdad1, type: 2}
+  - data: {fileID: 11400000, guid: 9e7bc4b603b1f8849858d30b76bd9501, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

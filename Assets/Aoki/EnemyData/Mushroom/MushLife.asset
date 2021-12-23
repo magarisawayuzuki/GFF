@@ -9,17 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bfc75f13349be34392f7c3b98eb4cc1, type: 3}
-  m_Name: TrollData
+  m_Script: {fileID: 11500000, guid: 6513f89c934dc724292cf4aa3fdb14ac, type: 3}
+  m_Name: MushLife
   m_EditorClassIdentifier: 
-  TrackingSpeed: 1500
-  ReturnSpeed: 1.5
-  swordScale: 1
-  hammerScale: 2
-  AnimeSpeed:
-  - 3
-  - 6
-  - 3
-  - 7
-  - 3
-  - 5
+  basicPower: 5
+  speed: 0
+  life: 30

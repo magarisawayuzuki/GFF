@@ -148,7 +148,6 @@ public class PlayerController : CharacterController
 
     protected override void Awake()
     {
-        base.Awake();
         IC = new InputSystem();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }

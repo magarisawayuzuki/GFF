@@ -12,6 +12,8 @@ TagManager:
   - Normal
   - Hard
   - MemoryFragment
+  - SoftS
+  - HardS
   layers:
   - Default
   - TransparentFX

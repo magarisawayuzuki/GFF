@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SkeletonData
   m_EditorClassIdentifier: 
   TrackingSpeed: 1100
-  ReturnSpeed: 2.5
-  jumpForce: 8
-  WeaponForce: 0
+  ReturnSpeed: 2
+  swordScale: 1.5
+  hammerScale: 1
   AnimeSpeed:
   - 3
   - 6

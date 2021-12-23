@@ -9,17 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bfc75f13349be34392f7c3b98eb4cc1, type: 3}
-  m_Name: TrollData
+  m_Script: {fileID: 11500000, guid: d5c7c4c76fcdd004893079f65e907126, type: 3}
+  m_Name: BossData
   m_EditorClassIdentifier: 
-  TrackingSpeed: 1500
-  ReturnSpeed: 1.5
+  TrackingSpeed: 0
+  ReturnSpeed: 0
   swordScale: 1
-  hammerScale: 2
-  AnimeSpeed:
-  - 3
-  - 6
-  - 3
-  - 7
-  - 3
-  - 5
+  hammerScale: 1
+  AnimeSpeed: []

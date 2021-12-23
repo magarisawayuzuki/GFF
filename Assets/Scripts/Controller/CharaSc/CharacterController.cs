@@ -133,7 +133,7 @@ public class CharacterController : MonoBehaviour
         _life = charaData.life;
     }
 
-
+    
     //==========================================================
 
 

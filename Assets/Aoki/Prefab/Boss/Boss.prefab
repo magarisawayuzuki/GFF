@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1541885931111772540}
   - component: {fileID: -5811318743782145634}
   - component: {fileID: 4503539027462731859}
-  - component: {fileID: 1601747055635907980}
+  - component: {fileID: -7456125223235776863}
   m_Layer: 0
   m_Name: Boss
   m_TagString: BossObj
@@ -46,22 +46,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd51fea7c70c62040acb997c935ea96c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObj: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
-  BossSprite: {fileID: 5209403665502590627}
-  mono: {fileID: 11400000, guid: 1e8d535f9566b13448a73de8157bae88, type: 2}
-  HP: 210
-  AnimeSpeed: 5
-  TrackingSpeed: 500
-  WeaponForce: 0
+  charaData: {fileID: 11400000, guid: 5b302e208ade732499868339d4385b22, type: 2}
+  jumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.00000001
+      value: 12
+      inSlope: -50.532146
+      outSlope: 1.186237
+      tangentMode: 1
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.01
+      value: -0.13
+      inSlope: Infinity
+      outSlope: 0.24546644
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.27361795
+    - serializedVersion: 3
+      time: 0.8407053
+      value: -0.6
+      inSlope: -1.4992328
+      outSlope: -0.7044327
+      tangentMode: 1
+      weightedMode: 3
+      inWeight: 0.16762668
+      outWeight: 0.3930056
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  input:
+    _x: 0
+    _wasx: 0
+    _isAttack: 0
+    _isJump: 0
+    _isDown: 0
+  old_charaStatus: 0
+  ObjectScale: {x: 0.25, y: 0, z: 0}
+  _groundDistance: 1.3
+  _life: 0
+  jumpSpeedScale: 1
+  player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
+  Anime: {fileID: 0}
+  data: {fileID: 0}
   AttackRange: 5
-  AttackEffect:
-  - {fileID: 6979431124915740080, guid: 39a4b23f53b38134e89dc27919650889, type: 3}
-  - {fileID: 4958960580899864360, guid: 7c517ff82f90f5e45b09524bfb82af74, type: 3}
-  - {fileID: 6979431124915740080, guid: 39a4b23f53b38134e89dc27919650889, type: 3}
-  - {fileID: 4958960580899864360, guid: 7c517ff82f90f5e45b09524bfb82af74, type: 3}
-  SummonSpell:
-  - {fileID: 6066405207250506459, guid: 9701c9e723c55884a85bf65b3396fc7e, type: 3}
-  - {fileID: 406119615553340818, guid: a422ba267812082479be6013be7892f6, type: 3}
+  MaxLeng: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   Spritetime:
   - 0
   - 0
@@ -73,7 +107,33 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  MaxLeng: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  anime: 0
+  _Retrcking: 0
+  _IsJump: 0
+  _IsAttack: 1
+  _IsReturn: 0
+  num: 1
+  _IsWait: 0
+  _InEnemy: 0
+  _IsTrackingWait: 0
+  _IsTracking: 0
+  _IsMove: 0
+  _IsLook: 1
+  BossSprite: {fileID: 5209403665502590627}
+  mono: {fileID: 11400000, guid: 1e8d535f9566b13448a73de8157bae88, type: 2}
+  BossPara: {fileID: 11400000, guid: 5b302e208ade732499868339d4385b22, type: 2}
+  HP: 0
+  AnimeSpeed: 5
+  TrackingSpeed: 500
+  WeaponForce: 0
+  AttackEffect:
+  - {fileID: 6979431124915740080, guid: 39a4b23f53b38134e89dc27919650889, type: 3}
+  - {fileID: 4958960580899864360, guid: 7c517ff82f90f5e45b09524bfb82af74, type: 3}
+  - {fileID: 6979431124915740080, guid: 39a4b23f53b38134e89dc27919650889, type: 3}
+  - {fileID: 4958960580899864360, guid: 7c517ff82f90f5e45b09524bfb82af74, type: 3}
+  SummonSpell:
+  - {fileID: 6066405207250506459, guid: 9701c9e723c55884a85bf65b3396fc7e, type: 3}
+  - {fileID: 406119615553340818, guid: a422ba267812082479be6013be7892f6, type: 3}
   AttackCount: 000000000000000000000000
   SpellPos:
   - {x: -7, y: 8}
@@ -81,7 +141,7 @@ MonoBehaviour:
   - {x: -2, y: 8}
   - {x: -7, y: 8}
   HpState: 0
-  aiState: 0
+  aiState: 10
 --- !u!212 &4503539027462731859
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -133,32 +193,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &1601747055635907980
-BoxCollider2D:
+--- !u!65 &-7456125223235776863
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1541885931111772530}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.64764404, y: -1.7984216}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.78, y: 0.78}
-    newSize: {x: 0.78, y: 0.78}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.3494873, y: 5.373157}
-  m_EdgeRadius: 0
+  m_Size: {x: 6, y: 5.4, z: 0.2}
+  m_Center: {x: -0.48, y: -1.8, z: 0}
 --- !u!1001 &2544549161149165900
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -218,7 +265,8 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -2960163153839071603, guid: 1914d95466e3d4341a618c35a56d5f82, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7717912961577527185, guid: 8513e8130105a5547ae1d7577f00fb98, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8513e8130105a5547ae1d7577f00fb98, type: 3}
 --- !u!4 &5209403665502590625 stripped
 Transform:
