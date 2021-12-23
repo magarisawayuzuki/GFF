@@ -60,6 +60,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "SlowTap(duration=1)"
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "aeae503b-829e-40ab-9e05-ea1da5a3b4ae",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "SlowTap(duration=1)"
                 }
             ],
             "bindings": [
@@ -249,6 +257,17 @@
                     "action": "Invincible",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "a4ec5233-f36d-4cd8-a3d5-44c7ea1af234",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -73,6 +73,14 @@ public class @InputSystem : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""SlowTap(duration=1)""
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""aeae503b-829e-40ab-9e05-ea1da5a3b4ae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""SlowTap(duration=1)""
                 }
             ],
             ""bindings"": [
@@ -262,6 +270,17 @@ public class @InputSystem : IInputActionCollection, IDisposable
                     ""action"": ""Invincible"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4ec5233-f36d-4cd8-a3d5-44c7ea1af234"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -305,6 +324,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
         m_Player_Invincible = m_Player.FindAction("Invincible", throwIfNotFound: true);
         m_Player_Evasion = m_Player.FindAction("Evasion", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -361,6 +381,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Test;
     private readonly InputAction m_Player_Invincible;
     private readonly InputAction m_Player_Evasion;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @InputSystem m_Wrapper;
@@ -372,6 +393,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         public InputAction @Test => m_Wrapper.m_Player_Test;
         public InputAction @Invincible => m_Wrapper.m_Player_Invincible;
         public InputAction @Evasion => m_Wrapper.m_Player_Evasion;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -402,6 +424,9 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 @Evasion.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEvasion;
                 @Evasion.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEvasion;
                 @Evasion.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEvasion;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -427,6 +452,9 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 @Evasion.started += instance.OnEvasion;
                 @Evasion.performed += instance.OnEvasion;
                 @Evasion.canceled += instance.OnEvasion;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -458,5 +486,6 @@ public class @InputSystem : IInputActionCollection, IDisposable
         void OnTest(InputAction.CallbackContext context);
         void OnInvincible(InputAction.CallbackContext context);
         void OnEvasion(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

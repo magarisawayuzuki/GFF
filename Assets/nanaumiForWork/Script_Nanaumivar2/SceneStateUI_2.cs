@@ -6,20 +6,22 @@ public static class SceneStateUI_2
 {
     public static SceneState sceneState = SceneState.Title;
 
-    public static string SceneName(this SceneState sceneState)
+    public static int SceneName(this SceneState sceneState)
     {
         switch (sceneState)
         {
             case SceneState.Title:
-                return "Title";
+                return 0;
             case SceneState.Pause:
-                return "Pause";
+                return 1;
             case SceneState.InGame:
-                return "InGame";
+                return 2;
             case SceneState.Option:
-                return "Option";
+                return 3;
+            case SceneState.Main:
+                return 4;
             default:
-                return "";
+                return 10;
         }
     }
 
@@ -28,6 +30,7 @@ public static class SceneStateUI_2
         Title,
         Pause,
         InGame,
-        Option
+        Option,
+        Main
     }
 }

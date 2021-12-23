@@ -33,12 +33,14 @@ public class OptionUI_2 : UIController_2
 
         if (_isInput[1] || _inputs.UI.Decide.triggered)
         {
-            _isVolumeChange = !_isVolumeChange;
-            _isInput[1] = false;
-
-            if(_nowSelectNumber == 4)
+            if (_nowSelectNumber == 4)
             {
                 BackToScene(SceneStateUI_2.sceneState);
+            }
+            else
+            {
+                _isVolumeChange = !_isVolumeChange;
+                _isInput[1] = false;
             }
         }
     }
@@ -71,14 +73,36 @@ public class OptionUI_2 : UIController_2
     private void BackToScene(SceneStateUI_2.SceneState sceneState)
     {
         _isVolumeChange = false;
-        switch (sceneState)
+        if (!_isLoaded)
         {
-            case SceneStateUI_2.SceneState.Title:
-                sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option));
-                break;
-            case SceneStateUI_2.SceneState.Pause:
-                sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option));
-                break;
+            _isLoaded = true;
+            bookimage.material.SetFloat("_Flip", -1f);
+
+            switch (sceneState)
+            {
+                case SceneStateUI_2.SceneState.Title:
+                    sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option));
+                    break;
+                case SceneStateUI_2.SceneState.Pause:
+                    sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option));
+                    break;
+            }
         }
+
+        if (_imageFlipTime >= 0)
+        {
+            bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") + Time.deltaTime * 4);
+            _imageFlipTime -= Time.deltaTime;
+        }
+        else
+        {
+            _isInput[1] = false;
+        }
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _isLoaded = false;
     }
 }

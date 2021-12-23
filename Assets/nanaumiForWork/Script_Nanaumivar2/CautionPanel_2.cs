@@ -12,6 +12,9 @@ public class CautionPanel_2 : UIController_2
     private void Start()
     {
         cautionText.text = cautionSetence;
+
+        _isFlip = true;
+        bookimage.material.SetFloat("_Flip", -1f);
     }
 
     private void Update()
@@ -20,11 +23,11 @@ public class CautionPanel_2 : UIController_2
 
         if (_isInput[1])
         {
-            CautionPanel(SceneManager.GetActiveScene().name);
+            CautionPanel(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
-    private void CautionPanel(string getSceneName)
+    private void CautionPanel(int getSceneName)
     {
         switch (_nowSelectNumber)
         {
@@ -59,9 +62,9 @@ public class CautionPanel_2 : UIController_2
                     GetComponentInParent<PauseUI_2>().enabled = true;
                 }
 
+                _isInput[1] = false;
                 this.gameObject.SetActive(false);
                 this.enabled = false;
-                _isInput[1] = false;
                 break;
         }
     }

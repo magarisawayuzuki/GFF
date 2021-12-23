@@ -32,12 +32,12 @@ public class InGame_2 : Chara_2
 
     private void Awake()
     {
-        playerCon = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         _isDamage = false;
     }
 
     private void Start()
     {
+        playerCon = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         SetChara(_playerPara);
         _beforeLifeChild = _playerPara.life;
 
