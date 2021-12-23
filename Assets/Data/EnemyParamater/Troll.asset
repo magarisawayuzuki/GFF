@@ -9,16 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5c7c4c76fcdd004893079f65e907126, type: 3}
-  m_Name: FlyData
+  m_Script: {fileID: 11500000, guid: 90756a8893e1f5d45b9a3608c610517a, type: 3}
+  m_Name: Troll
   m_EditorClassIdentifier: 
-  TrackingSpeed: 0
-  ReturnSpeed: 0
-  jumpForce: 0
-  WeaponForce: 0
-  AnimeSpeed:
-  - 5
-  - 5
-  - 10
-  - 7
-  - 10
+  swordScale: 1
+  hammerScale: 3

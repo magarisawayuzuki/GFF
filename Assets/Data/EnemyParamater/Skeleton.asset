@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d55c1568b06aa8748b4ea570708a8e0e, type: 3}
-  m_Name: EnemyboolParamater
+  m_Script: {fileID: 11500000, guid: 90756a8893e1f5d45b9a3608c610517a, type: 3}
+  m_Name: Skeleton
   m_EditorClassIdentifier: 
-  Retrcking: 0
-  IsJump: 0
-  IsAttack: 0
-  IsTracking: 1
-  IsReturn: 0
-  num: 1
+  swordScale: 1.5
+  hammerScale: 1

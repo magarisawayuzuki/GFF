@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 326109481214083004}
   - component: {fileID: 8949052152022651535}
   - component: {fileID: -8454962924413497826}
-  - component: {fileID: 3451797375152562028}
+  - component: {fileID: 3163304432063655078}
   m_Layer: 9
   m_Name: Skelton
   m_TagString: Normal
@@ -137,30 +137,17 @@ MonoBehaviour:
   _IsTracking: 0
   _IsMove: 0
   _IsLook: 1
-  enemyData: {fileID: 0}
---- !u!61 &3451797375152562028
-BoxCollider2D:
+  enemyData: {fileID: 11400000, guid: 185318fd2ae9f6c4f8b6e1f415eae5f2, type: 2}
+--- !u!65 &3163304432063655078
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9058631903617046654}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.5}
-    newSize: {x: 0.44, y: 0.52}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5}
-  m_EdgeRadius: 0
+  m_Size: {x: 1.5, y: 1.5, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}

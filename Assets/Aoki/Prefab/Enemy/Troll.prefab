@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7270842749967195496}
   - component: {fileID: 2040343565709832283}
   - component: {fileID: 6025146369645622594}
-  - component: {fileID: 4560292643702287029}
+  - component: {fileID: 8579855513111751217}
   m_Layer: 9
   m_Name: Troll
   m_TagString: Hard
@@ -115,7 +115,7 @@ MonoBehaviour:
   jumpSpeedScale: 1
   player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
   Anime: {fileID: 11400000, guid: 010adc0431c77004197028e9858cca0d, type: 2}
-  data: {fileID: 11400000, guid: 65330411f46d8d74389d7f733cc43d2d, type: 2}
+  data: {fileID: 11400000, guid: d456059abb46aa44594b5c9787f975e2, type: 2}
   AttackRange: 3
   MaxLeng: 000000000000000000000000000000000000000000000000
   Spritetime:
@@ -137,30 +137,17 @@ MonoBehaviour:
   _IsTracking: 0
   _IsMove: 0
   _IsLook: 1
-  enemyData: {fileID: 0}
---- !u!61 &4560292643702287029
-BoxCollider2D:
+  enemyData: {fileID: 11400000, guid: fd0eb798508d5e7499c2cb14b4907c64, type: 2}
+--- !u!65 &8579855513111751217
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2150208880821369514}
-  m_Enabled: 1
-  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.12, y: 0.12}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 2, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.1, y: 0.93}
-  m_EdgeRadius: 0
+  m_Size: {x: 2, y: 2, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}

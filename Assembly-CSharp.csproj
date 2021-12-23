@@ -79,6 +79,7 @@
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\SoundOption.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharacterAnimationController.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\TitleUI_2.cs" />
+    <Compile Include="Assets\Scripts\Controller\GimmickSc\CheckPointSystem.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryAchievementController.cs" />
     <Compile Include="Assets\Aoki\Script\BossData.cs" />
     <Compile Include="Assets\Scripts\Controller\Input\InputSystem.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\EnemyUI_2.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\OptionUI_2.cs" />
     <Compile Include="Assets\Aoki\Script\EnemySpell.cs" />
+    <Compile Include="Assets\Scripts\Controller\GimmickSc\PlayerCheckPoint.cs" />
     <Compile Include="Assets\Aoki\Script\EnemyAnime.cs" />
     <Compile Include="Assets\Scripts\Tool\Convertor.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\SceneStateUI_2.cs" />

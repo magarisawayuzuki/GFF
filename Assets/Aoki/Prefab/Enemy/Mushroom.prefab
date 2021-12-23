@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2771145303238005510}
   - component: {fileID: 6828280175509765685}
-  - component: {fileID: -2140689576571993993}
   - component: {fileID: 2430030100019667905}
+  - component: {fileID: 878958819394764188}
   m_Layer: 9
   m_Name: Mushroom
   m_TagString: Soft
@@ -84,32 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!61 &-2140689576571993993
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6864962030823404740}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.084107585}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.5}
-    newSize: {x: 0.44, y: 0.52}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.26785642, y: 0.3669591}
-  m_EdgeRadius: 0
 --- !u!114 &2430030100019667905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63324f648d6d4f4c9d5cfa07f6587c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charaData: {fileID: 11400000, guid: 6334fec45470752448642149d75c0a5b, type: 2}
+  charaData: {fileID: 0}
   jumpCurve:
     serializedVersion: 2
     m_Curve: []
@@ -138,10 +112,11 @@ MonoBehaviour:
   old_charaStatus: 0
   ObjectScale: {x: 0.25, y: 0, z: 0}
   _groundDistance: 1.3
+  _life: 0
   jumpSpeedScale: 1
   player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
   Anime: {fileID: 11400000, guid: 5ee3478ea26bac1478bfd5c5c66bdad1, type: 2}
-  data: {fileID: 11400000, guid: 1d07be05eb8515a438fc39ffb39a8082, type: 2}
+  data: {fileID: 11400000, guid: 9e7bc4b603b1f8849858d30b76bd9501, type: 2}
   AttackRange: 1
   MaxLeng: 000000000000000000000000000000000000000000000000
   Spritetime:
@@ -163,4 +138,17 @@ MonoBehaviour:
   _IsTracking: 0
   _IsMove: 0
   _IsLook: 1
-  enemyData: {fileID: 0}
+  enemyData: {fileID: 11400000, guid: b98517e8c8201ae418e444b4d9cde57b, type: 2}
+--- !u!65 &878958819394764188
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6864962030823404740}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.23948912, y: 0.2724835, z: 0.11631936}
+  m_Center: {x: -0.0520888, y: -0.12397482, z: -0.0009741366}

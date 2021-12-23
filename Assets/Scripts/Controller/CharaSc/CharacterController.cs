@@ -33,14 +33,14 @@ public class CharacterController : MonoBehaviour
     public CharacterStatus old_charaStatus = default;
 
 
-    /// Vector3
+    #region Vector3
     // キャラの移動
     protected Vector3 CharacterMove = new Vector3();
     [SerializeField,Header("オブジェクトの大きさ")]
     protected Vector3 ObjectScale = new Vector3(0.25f,0);
+    #endregion
 
-
-    /// int
+    #region int
     /*
     private int _anim = 0;
     private int[] _maxAnimationCount = { 4, 8, 5, 13, 0 };
@@ -48,9 +48,9 @@ public class CharacterController : MonoBehaviour
     protected int _weapon = 0;
     protected int _knockBack = 0;
     protected float _damage = 0;
+    #endregion
 
-
-    /// flooat
+    #region flooat
     // 移動毒度低下時間
     protected float _speedDownTimer = 0;
     // 攻撃力
@@ -60,8 +60,10 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     protected float _groundDistance = 1.3f;
 
+    public float _life = default;
+    #endregion
 
-    /// bool
+    #region bool
     // 着地判定
     protected bool _isGround = false;
     // 記憶を持っているか
@@ -69,12 +71,18 @@ public class CharacterController : MonoBehaviour
     protected bool _isSpeedDown = false;
     protected bool _isPeerless = false;
 
+    // 右に移動できるか
+    protected bool _canNotRight = default;
+    // 左に移動できるか
+    protected bool _canNotLeft = default;
+
     /// const
     protected const int _ZERO = 0;
     protected const int _ONE = 1;
 
     private const int layerMix = 1 << 8 | 1 << 10;
     private const int layerGround = 1 << 8;
+    #endregion
 
     #region Jumpメソッド変数
     //加速度
@@ -120,6 +128,15 @@ public class CharacterController : MonoBehaviour
     //==========================================================
 
 
+    protected virtual void Awake()
+    {
+        _life = charaData.life;
+    }
+
+
+    //==========================================================
+
+
     /// <summary>
     /// 処理を呼び出す
     /// </summary>
@@ -156,7 +173,7 @@ public class CharacterController : MonoBehaviour
 
         */
 
-        Debug.Log(charaData.life);
+        Debug.Log(_life);
 
         // velocityへ入れる
         transform.position += CharacterMove;
@@ -191,6 +208,16 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     public virtual void Move()
     {
+
+        if (_canNotRight && input._x > _ZERO)
+        {
+            input._x = _ZERO;
+        }
+        if (_canNotLeft && input._x < _ZERO)
+        {
+            input._x = _ZERO;
+        }
+
         // 攻撃状態じゃなければ
         if (!input._isAttack)
         {
@@ -385,9 +412,9 @@ public class CharacterController : MonoBehaviour
     {
         _charaStatus = CharacterStatus.Damage;
 
-        charaData.life -= (int)Mathf.Floor(damage);
+        _life -= (int)Mathf.Floor(damage);
 
-        if (charaData.life <= 0)
+        if (_life <= 0)
         {
             Death();
         }

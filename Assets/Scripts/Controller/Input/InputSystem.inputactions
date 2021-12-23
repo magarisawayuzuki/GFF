@@ -52,14 +52,6 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "SlowTap(duration=1)"
-                },
-                {
-                    "name": "Evasion",
-                    "type": "Button",
-                    "id": "ce85b00d-99e4-4e8e-90b1-9144e1e2f75e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "SlowTap(duration=1)"
                 }
             ],
             "bindings": [
