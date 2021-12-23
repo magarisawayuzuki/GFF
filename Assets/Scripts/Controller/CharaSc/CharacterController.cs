@@ -390,8 +390,6 @@ public class CharacterController : MonoBehaviour
             Death();
         }
     }
-
-
     //=====================================================================
 
 

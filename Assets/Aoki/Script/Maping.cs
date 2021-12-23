@@ -107,12 +107,12 @@ public class Maping : UnityEngine.MonoBehaviour
                 {
                     Instantiate(floorBlock, new Vector3(j, i, 0), Quaternion.identity,block);
                 }
-
+                /*
                 if (stageArray[i, j] == 5)
                 {
                     Instantiate(Player, new Vector3(j, i, 0), Quaternion.identity);
                 }
-
+                
                 if (stageArray[i, j] == 6)
                 {
                     Instantiate(Enemy[0], new Vector3(j, i + EnemyY[0], 0), Quaternion.identity, EnemyList[0]);                  
@@ -138,6 +138,7 @@ public class Maping : UnityEngine.MonoBehaviour
                 {
                     Instantiate(Enemy[4], new Vector3(j, i + EnemyY[4], 0), Quaternion.identity);
                 }
+                */
             }
         }
 
