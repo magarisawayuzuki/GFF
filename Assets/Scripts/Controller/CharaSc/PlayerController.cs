@@ -14,17 +14,18 @@ public class PlayerController : CharacterController
     [SerializeField]
     private GameObject[] _memoryFragments = default;
 
-    private Vector3 _playerFlontScale = new Vector3(1, 1);
 
     #region Vecter3
     // 攻撃の範囲
-    private Vector3 _attackScale = new Vector3(1,2);
+    private Vector3 _attackScale = new Vector3(1, 2.5f);
+    private Vector3 _attackDirection = new Vector3(1, 0);
+    private Vector3 _playerFlontScale = new Vector3(1, 1);
     #endregion
 
     #region int
     // 武器の記憶の個数
     protected int _weaponMemoryCount = 0;
-    public int _WeaponMemoryCount { get{ return _weaponMemoryCount; } }
+    public int _WeaponMemoryCount { get { return _weaponMemoryCount; } }
     // 記憶の個数
     protected int _memoryCount = 0;
 
@@ -38,15 +39,15 @@ public class PlayerController : CharacterController
     // 槌攻撃のクールダウン
     private float _hammerCoolDown = 3;
 
-    [SerializeField,Header("記憶ゲージ")]
+    [SerializeField, Header("記憶ゲージ")]
     private float _memoryGauge = 50;
-    public float _MemoryGauge{ get { return _memoryGauge; } }
+    public float _MemoryGauge { get { return _memoryGauge; } }
 
     // 記憶ゲージ減少時間
     private float _memoryDownTimer = 1;
     // Objectの半径
     private float _sidedistance = 0.45f;
-    [SerializeField,Header("無双時間")]
+    [SerializeField, Header("無双時間")]
     private float _peerlessTime = 5;
     [SerializeField, Header("無敵時間")]
     private float _invincibleTime = 0.5f;
@@ -95,15 +96,13 @@ public class PlayerController : CharacterController
     // 槌の攻撃入力判定
     private bool _isInputHammerAttack = default;
 
-    // 右に移動できるか
-    private bool _canNotRight = default;
-    // 左に移動できるか
-    private bool _canNotLeft = default;
+
 
     // 槌攻撃のクールタイムが終わっているか
     private bool _canHammerAttack = true;
 
     private bool _isInvincible = false;
+    private bool _isStartAttack = false;
     #endregion
 
     #region string
@@ -147,7 +146,7 @@ public class PlayerController : CharacterController
     //=====================================================
 
 
-    private void Awake()
+    protected override void Awake()
     {
         IC = new InputSystem();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -160,7 +159,7 @@ public class PlayerController : CharacterController
     {
         base.Update();
 
-        Evasion();
+        MemoryGet();
 
         MomoryGauge();
 
@@ -178,7 +177,7 @@ public class PlayerController : CharacterController
         // 入力値を_xに入れる
         input._x = IC.Player.Move.ReadValue<float>();
 
-        if (input._x != 0)
+        if (input._x != 0 && !input._isAttack)
         {
             _playerFlontScale.x = -input._x;
             transform.localScale = _playerFlontScale;
@@ -187,15 +186,6 @@ public class PlayerController : CharacterController
         _canNotRight = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right, Quaternion.identity, _sidedistance, movelayer);
         _canNotLeft = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.left, Quaternion.identity, _sidedistance, movelayer);
 
-
-        if (_canNotRight && input._x > _ZERO)
-        {
-            input._x = _ZERO;
-        }
-        if (_canNotLeft && input._x < _ZERO)
-        {
-            input._x = _ZERO;
-        }
 
         if (IC.Player.Jump.triggered)
         {
@@ -251,7 +241,7 @@ public class PlayerController : CharacterController
 
         // 右クリックで槌攻撃
         #region 槌攻撃入力時間加算
-        if (IC.Player.HammerAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started　&& _canHammerAttack)
+        if (IC.Player.HammerAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started && _canHammerAttack)
         {
             _hammerTime += Time.deltaTime;
 
@@ -292,16 +282,21 @@ public class PlayerController : CharacterController
     //攻撃の追記とかあれば
     public override void Attack()
     {
+        Debug.Log("攻撃");
+        _attackDirection.x = -transform.localScale.x;
+        RaycastHit[] attackHit;
         #region 敵の状態判定
-        RaycastHit[] _attackHit = Physics.BoxCastAll(transform.position, _attackScale, Vector3.right, Quaternion.identity, _ONE, LayerMask.GetMask("Enemy"));
-        Debug.DrawRay(transform.position, Vector3.right * _ONE);
-            #endregion
-        foreach (RaycastHit raycastHit in _attackHit)
+        if (!_isStartAttack)
         {
-            _isHit = true;
-            #region 攻撃力代入
-            if (_isHit)
+            _isStartAttack = true;
+            attackHit = Physics.BoxCastAll(transform.position, _attackScale, _attackDirection, Quaternion.identity, _ONE, LayerMask.GetMask("Enemy"));
+            Debug.Log(attackHit);
+            #endregion
+
+            foreach (RaycastHit raycastHit in attackHit)
             {
+                _isHit = true;
+                #region 攻撃力代入
                 if (_isPeerless)
                 {
                     _attackPower = charaData.basicPower * _invincibleAttack;
@@ -349,31 +344,28 @@ public class PlayerController : CharacterController
                             break;
                     }
                 }
-            }
-            #endregion
 
-            #region 敵の種別分け
-            if (_isHit)
-            {
+                #endregion
+
+                #region 敵の種別分け
                 if (raycastHit.collider.tag == _normal)
                 {
-                    Debug.Log("ふつう当たった");
                     raycastHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
-                    
+                    Debug.Log("ふつう当たった");
+
                 }
                 else if (raycastHit.collider.tag == _soft)
                 {
                     Debug.Log("やわらかい当たった");
-                    raycastHit.collider.GetComponent<EnemyController>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
+                    raycastHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
                 else if (raycastHit.collider.tag == _hard)
                 {
                     Debug.Log("硬い当たった");
                     raycastHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
-                _isHit = false;
+                #endregion
             }
-            #endregion
         }
 
         base.Attack();
@@ -397,6 +389,16 @@ public class PlayerController : CharacterController
     //回避挙動
     protected void Evasion()
     {
+        
+    }
+
+
+    //==========================================================
+
+
+    //付近の記憶の欠片を自動取得
+    protected void MemoryGet()
+    {
         foreach (GameObject memoryFragment in _memoryFragments)
         {
             if (this.transform.position != memoryFragment.transform.position)
@@ -409,16 +411,6 @@ public class PlayerController : CharacterController
             _memoryCount++;
             memoryFragment.SetActive(false);
         }
-    }
-
-
-    //==========================================================
-
-
-    //付近の記憶の欠片を自動取得
-    protected void MemoryGet()
-    {
-
     }
 
 
@@ -517,6 +509,7 @@ public class PlayerController : CharacterController
                         }
                         break;
                 }
+                _isHit = false;
             }
             else
             {
@@ -565,14 +558,15 @@ public class PlayerController : CharacterController
             if (_isInputSwordAttack)
             {
                 _isInputSwordAttack = false;
-                input._isAttack = false;
+                _isStartAttack = false;
             }
             else
             {
                 _isInputHammerAttack = false;
-                input._isAttack = false;
                 _canHammerAttack = false;
             }
+            input._isAttack = false;
+            _isStartAttack = false;
         }
     }
 

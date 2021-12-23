@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7370367637986086645}
-  - component: {fileID: 2841641139016467147}
   - component: {fileID: 7051199934797495176}
   m_Layer: 0
   m_Name: Player
@@ -27,29 +26,12 @@ Transform:
   m_GameObject: {fileID: 677229189713997750}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 995676476708251079}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2841641139016467147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 677229189713997750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d82991f86ffc8a14f8ee8a395cf6880d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isEnable: 1
-  distance: 1.25
-  xdistance: 0.5
-  scale: {x: 0.72, y: 0, z: 0}
-  ascale: {x: 0, y: 2.5, z: 0}
 --- !u!114 &7051199934797495176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2799c60cf0f12bb42a1f44b12d75379b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charaData: {fileID: 0}
+  charaData: {fileID: 11400000, guid: 56f849f6b7d5f8e42b01ea45bd8dda8a, type: 2}
   jumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -105,8 +87,11 @@ MonoBehaviour:
   old_charaStatus: 0
   ObjectScale: {x: 0.5, y: 0, z: 0}
   _groundDistance: 1.25
+  _life: 0
   jumpSpeedScale: 1
+  _memoryFragments: []
   _memoryGauge: 50
+  _peerlessTime: 5
   _invincibleTime: 5
   _maxMemoryGaugeAttack: 1.5
   _mediumMemoryGaugeAttack: 1.3

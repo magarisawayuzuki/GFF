@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TrackingSpeed: 1500
   ReturnSpeed: 1.5
-  jumpForce: 0
-  WeaponForce: 0
+  swordScale: 1
+  hammerScale: 2
   AnimeSpeed:
   - 3
   - 6

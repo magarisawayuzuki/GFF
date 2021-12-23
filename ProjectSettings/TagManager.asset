@@ -12,6 +12,8 @@ TagManager:
   - Normal
   - Hard
   - MemoryFragment
+  - SoftS
+  - HardS
   layers:
   - Default
   - TransparentFX
@@ -23,7 +25,7 @@ TagManager:
   - 
   - Ground
   - Enemy
-  - 
+  - Player
   - 
   - 
   - 
