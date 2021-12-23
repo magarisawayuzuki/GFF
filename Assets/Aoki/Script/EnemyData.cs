@@ -8,10 +8,10 @@ public class EnemyData : ScriptableObject
     public float TrackingSpeed;　//追跡のスピード
 
     public float ReturnSpeed; //元の位置のスピード
-   
-    public float jumpForce;　//ジャンプパワー
-    
-    public float WeaponForce;
+     
+    public float swordScale;
+
+    public float hammerScale;
 
     public float[] AnimeSpeed;　//spriteアニメのスピード 
           

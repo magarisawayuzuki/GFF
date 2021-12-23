@@ -6,10 +6,12 @@ using UnityEngine;
 /// 近距離攻撃のAI
 /// </summary>
 public class EnemyPlant : EnemyController
-{
+{  
     [SerializeField]
-    EnemyParameter enemyData;
-   
+    CharaParameter enemyPara;
+
+    CharacterController chara;
+    private float damage = 5;
     private void Awake()
     {
         //------------二次元配列のスクリプト取得------------------
@@ -49,13 +51,14 @@ public class EnemyPlant : EnemyController
     {
         // PLAYERオブジェクトを取得
         player = GameObject.FindGameObjectWithTag("Player");
+        chara = player.GetComponent<CharacterController>();
     }
     //AI動作を記述
     public override PlayerInput InputMethod()
     {
         _ = base.InputMethod();
         if (_IsJump == true)
-        {
+        {           
             input._isJump = true;
         }
 
@@ -80,8 +83,8 @@ public class EnemyPlant : EnemyController
     public override void CharaLifeCalculation(float damage, int knockBack, int weapon)
     {
         //倍率を代入
-        damageScaleSword = enemyData.swordScale;
-        damageScaleHammer = enemyData.hammerScale;
+        damageScaleSword = data.swordScale;
+        damageScaleHammer = data.hammerScale;
 
         base.CharaLifeCalculation(damage, knockBack, weapon);
     }
@@ -111,57 +114,45 @@ public class EnemyPlant : EnemyController
 
         if (EnemyPositionX >= DefaultPosIntX + 1)
         {
-            map.stageArray[EnemyPositionY, EnemyPositionX] = 6;
-            //map.stageArray[EnemyPositionY, EnemyPositionX - 1] = 0;
-            if (map.stageArray[EnemyPositionY - 1, EnemyPositionX] == 3)
+            //ジャンプ時の配列更新
+            if (map.stageArray[EnemyPositionY, EnemyPositionX + 1] == 3)
             {
-                map.stageArray[EnemyPositionY - 1, EnemyPositionX] = 3;
-            }           
+                map.stageArray[EnemyPositionY, EnemyPositionX] = 0;
+            }
+            else if (map.stageArray[EnemyPositionY, EnemyPositionX + 2] == 3)
+            {
+                map.stageArray[EnemyPositionY, EnemyPositionX - 1] = 0;
+            }
+            //ジャンプ以外の配列更新
             else
             {
-                map.stageArray[EnemyPositionY - 1, EnemyPositionX] = 0;
-            }
+                map.stageArray[EnemyPositionY, EnemyPositionX] = 6;
+                map.stageArray[EnemyPositionY, EnemyPositionX - 1] = 0;
 
+            }
             DefaultPosIntX = EnemyPositionX;
         }
 
-        if (EnemyPositionX >= DefaultPosIntX - 1)
+        if (EnemyPositionX <= DefaultPosIntX - 1)
         {
-            map.stageArray[EnemyPositionY, EnemyPositionX] = 6;
-            map.stageArray[EnemyPositionY, EnemyPositionX + 1] = 0;            
+            //ジャンプ時の配列更新
+            if (map.stageArray[EnemyPositionY, EnemyPositionX - 1] == 3)
+            {
+                map.stageArray[EnemyPositionY, EnemyPositionX] = 0;
+            }
+            else if (map.stageArray[EnemyPositionY, EnemyPositionX - 2] == 3)
+            {
+                map.stageArray[EnemyPositionY, EnemyPositionX + 1] = 0;
+            }
+            //ジャンプ以外の配列更新
+            else
+            {
+                map.stageArray[EnemyPositionY, EnemyPositionX] = 6;
+                map.stageArray[EnemyPositionY, EnemyPositionX + 1] = 0;
+
+            }
             DefaultPosIntX = EnemyPositionX;
-        }
-
-        if (EnemyPositionY >= DefaultPosIntY + 1)
-        {
-            map.stageArray[EnemyPositionY, EnemyPositionX] = 6;
-            
-            if (map.stageArray[EnemyPositionY - 1, EnemyPositionX] == 3)
-            {
-                map.stageArray[EnemyPositionY - 1, EnemyPositionX] = 3;
-            }           
-            else
-            {
-                map.stageArray[EnemyPositionY - 1, EnemyPositionX] = 0;
-            }
-            DefaultPosIntY = EnemyPositionY;
-        }
-
-        if (EnemyPositionY >= DefaultPosIntY - 1)
-        {
-            map.stageArray[EnemyPositionY, EnemyPositionX] = 6;
-            
-            if(map.stageArray[EnemyPositionY + 1, EnemyPositionX] == 3)
-            {
-                map.stageArray[EnemyPositionY + 1, EnemyPositionX] = 0;
-            }           
-            else
-            {
-                map.stageArray[EnemyPositionY -+1, EnemyPositionX] = 0;
-            }
-
-            DefaultPosIntY = EnemyPositionY;
-        }
+        }        
     }
 
     private void OnBecameVisible()　//カメラ内処理
@@ -249,6 +240,7 @@ public class EnemyPlant : EnemyController
                 EnemySprite.sprite = Anime.Idel[(int)Spritetime[3]];
                 Spritetime[3] += Time.deltaTime * data.AnimeSpeed[2];
 
+                //待機状態中にplayerが範囲に入った場合追跡再開
                 if (EnemyPositionX + AttackRange + 3 >= map.PlayerPositionX && EnemyPositionX + AttackRange + 3 <= map.PlayerPositionX && num == 1 && _IsWait == true)
                 {
                     _IsTracking = true;
@@ -310,6 +302,7 @@ public class EnemyPlant : EnemyController
                     //計算した距離が-2から0だった時攻撃を当てた
                     if (GetAttackRange >= -AttackRange && GetAttackRange <= 0)
                     {
+                        chara.CharaLifeCalculation(damage, 0, 0);
                         print("hit");
                     }
                 }
@@ -327,7 +320,7 @@ public class EnemyPlant : EnemyController
 
                 if (Spritetime[5] >= MaxLeng[4])
                 {
-                    print("hit");
+                    print("Takehit");
                     Spritetime[5] = 0;
 
                     anime = 2;
@@ -349,11 +342,12 @@ public class EnemyPlant : EnemyController
                 {
                     anime = 5;
                 }
-                else
+                else　//攻撃待機
                 {
                     anime = 4;
                 }
             }
+            //攻撃範囲外の場合追跡
             else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true)
             {
                 _IsTracking = true;
@@ -370,11 +364,12 @@ public class EnemyPlant : EnemyController
                 {
                     anime = 5;
                 }
-                else
+                else　//攻撃待機
                 {
                     anime = 4;
                 }
             }
+            //攻撃範囲外の場合追跡
             else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true)
             {
                 _IsTracking = true;
@@ -386,16 +381,11 @@ public class EnemyPlant : EnemyController
 
     //--------------------------bool処理-------------------------------
     private void Bool()
-    {
-        //----------------ジャンプ処理----------------------
-        //if (_IsJump == true)
-        //{
-        //    input._isJump = true;
-        //}
-
+    {       
         //----------------元の座標に戻っている---------------
         if (_IsReturn == true)
         {
+            //追跡をoff
             _IsLook = false;
             _IsTracking = false;
             transform.Translate(transform.right * Time.deltaTime * data.ReturnSpeed * num);
@@ -406,17 +396,17 @@ public class EnemyPlant : EnemyController
         {
             if (pos.x <= DefaultPos.x && _Retrcking == true)　//左に向いている
             {
-                _IsReturn = false;
-                _Retrcking = false;
-                _IsWait = true;
+                _IsReturn = false;  //元に戻った
+                _Retrcking = false; //反転
+                _IsWait = true;     //待機状態に
                 Spritetime[2] = 0;
                 anime = 4;
             }
             if (pos.x >= DefaultPos.x && _Retrcking == false)　//右に向いている
             {
-                _IsReturn = false;
-                _Retrcking = true;
-                _IsWait = true;
+                _IsReturn = false; //元に戻った
+                _Retrcking = true; //反転
+                _IsWait = true;    //待機状態に
                 Spritetime[2] = 0;
                 anime = 4;
             }

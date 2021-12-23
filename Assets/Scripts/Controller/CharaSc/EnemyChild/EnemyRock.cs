@@ -6,9 +6,14 @@ using UnityEngine;
 /// 近距離攻撃のAI
 /// </summary>
 public class EnemyRock : EnemyController
-{
+{  
     [SerializeField]
-    EnemyParameter enemyData;
+    CharaParameter enemyPara;
+
+    CharacterController chara;
+    private float damage = 10;
+    [SerializeField]
+    private float CenterX;
     private void Awake()
     {
         //------------二次元配列のスクリプト取得------------------
@@ -23,8 +28,10 @@ public class EnemyRock : EnemyController
         //最初の座標
         DefaultPos = transform.position;
 
+        box = GetComponent<BoxCollider>();
         DefaultPosIntX = Mathf.FloorToInt(DefaultPos.x);
         DefaultPosIntY = Mathf.FloorToInt(DefaultPos.y);
+        
         //spriteの最大数を取得maxLeng(0リスポーン　1移動　２待機　3攻撃　4攻撃を当てられた　5死亡
         MaxLeng[0] = Anime.Resporn.GetLength(0);
         MaxLeng[1] = Anime.move.GetLength(0);
@@ -42,12 +49,15 @@ public class EnemyRock : EnemyController
         {
             Spritetime[i] = 0;
         }
+
+        boxcenter = box.center;
     }
 
     private void Start()
     {
         // PLAYERオブジェクトを取得
         player = GameObject.FindGameObjectWithTag("Player");
+        chara = player.GetComponent<CharacterController>();
     }
     //AI動作を記述
     public override PlayerInput InputMethod()
@@ -78,8 +88,8 @@ public class EnemyRock : EnemyController
     public override void CharaLifeCalculation(float damage, int knockBack, int weapon)
     {
         //倍率を代入
-        damageScaleSword = enemyData.swordScale;
-        damageScaleHammer = enemyData.hammerScale;
+        damageScaleSword = data.swordScale;
+        damageScaleHammer = data.hammerScale;
 
         base.CharaLifeCalculation(damage, knockBack, weapon);
     }
@@ -109,36 +119,47 @@ public class EnemyRock : EnemyController
 
 
         if (EnemyPositionX >= DefaultPosIntX + 1)
-        {
-            map.stageArray[EnemyPositionY, EnemyPositionX] = 8;
-            map.stageArray[EnemyPositionY, EnemyPositionX - 1] = 0;
+        {   
+            //ジャンプ時の配列更新
+            if (map.stageArray[EnemyPositionY, EnemyPositionX + 1] == 3)
+            {
+                map.stageArray[EnemyPositionY, EnemyPositionX] = 0;
+            }
+            else if(map.stageArray[EnemyPositionY, EnemyPositionX + 2] == 3)
+            {
+                map.stageArray[EnemyPositionY, EnemyPositionX - 1] = 0;
+            }
+            //ジャンプ以外の配列更新
+            else
+            {
+                map.stageArray[EnemyPositionY, EnemyPositionX] = 8;
+                map.stageArray[EnemyPositionY, EnemyPositionX - 1] = 0;
 
-            
+            }           
             DefaultPosIntX = EnemyPositionX;
         }
 
-        if (EnemyPositionX >= DefaultPosIntX - 1)
+        if (EnemyPositionX <= DefaultPosIntX - 1)
         {
-            map.stageArray[EnemyPositionY, EnemyPositionX] = 8;
-            map.stageArray[EnemyPositionY, EnemyPositionX + 1] = 0;            
+            //ジャンプ時の配列更新
+            if (map.stageArray[EnemyPositionY, EnemyPositionX - 1] == 3)
+            {
+                map.stageArray[EnemyPositionY, EnemyPositionX] = 0;
+            }
+            else if (map.stageArray[EnemyPositionY, EnemyPositionX - 2] == 3)
+            {
+                map.stageArray[EnemyPositionY, EnemyPositionX + 1] = 0;
+            }
+            //ジャンプ以外の配列更新
+            else
+            {
+                map.stageArray[EnemyPositionY, EnemyPositionX] = 8;
+                map.stageArray[EnemyPositionY, EnemyPositionX + 1] = 0;
+
+            }
             DefaultPosIntX = EnemyPositionX;
         }
-
-        if (EnemyPositionY >= DefaultPosIntY + 1)
-        {
-            map.stageArray[EnemyPositionY, EnemyPositionX] = 8;
-            map.stageArray[EnemyPositionY - 1, EnemyPositionX] = 0;
-
-
-            DefaultPosIntY = EnemyPositionY;
-        }
-
-        if (EnemyPositionY >= DefaultPosIntY - 1)
-        {
-            map.stageArray[EnemyPositionY, EnemyPositionX] = 8;
-            map.stageArray[EnemyPositionY + 1, EnemyPositionX] = 0;
-            DefaultPosIntY = EnemyPositionY;
-        }
+        
     }
 
     private void OnBecameVisible()　//カメラ内処理
@@ -164,11 +185,10 @@ public class EnemyRock : EnemyController
 
     //--------------------------switch文-------------------------------
     private void AnimeMotion()
-    {
-        Vector2 scale = transform.localScale;
+    {             
         // MaxLeng[](0リスポーン 1移動　２待機 3攻撃 4攻撃を当てられた 5死亡
         // Spritetime[](0リスポーン　1移動　2最初のspritに（死亡）　3待機　4攻撃　5攻撃を当てられた
-
+       
         switch (anime)
         {
             case 1:　//----------------------リスポーンアニメーション処理--------------------------------
@@ -200,13 +220,17 @@ public class EnemyRock : EnemyController
                 {
                     num = -1;
                     EnemySprite.flipX = true; //反転処理 　左
+                    boxcenter = new Vector2(-CenterX, 0);
+                    box.center = boxcenter;
                 }
                 else if (_Retrcking == false)
                 {
                     num = 1;
                     EnemySprite.flipX = false; //反転処理 右
+                    boxcenter = new Vector2(CenterX, 0);
+                    box.center = boxcenter;
                 }
-                transform.localScale = scale;
+             
                 return;
 
             case 3:　//最初のアニメーションに戻る
@@ -220,11 +244,12 @@ public class EnemyRock : EnemyController
                 break;
 
             case 4://---------------------------待機-----------------------------
-                _IsTracking = false;
+                _IsTracking = false; //追跡をoff
 
                 EnemySprite.sprite = Anime.Idel[(int)Spritetime[3]];
                 Spritetime[3] += Time.deltaTime * data.AnimeSpeed[2];
 
+                //待機状態中にplayerが範囲に入った場合追跡再開
                 if (EnemyPositionX + AttackRange + 3 >= map.PlayerPositionX && EnemyPositionX + AttackRange + 3 <= map.PlayerPositionX && num == 1
                     && _IsWait == true)
                 {
@@ -264,7 +289,7 @@ public class EnemyRock : EnemyController
                     num = 1;
                     EnemySprite.flipX = false; //反転処理 右
                 }
-                transform.localScale = scale;
+               
                 return;
 
             case 5: // ---------------------------攻撃--------------------------------- 
@@ -288,6 +313,7 @@ public class EnemyRock : EnemyController
                     //計算した距離が-2から0だった時攻撃を当てた
                     if (GetAttackRange >= -AttackRange && GetAttackRange <= 0)
                     {
+                        chara.CharaLifeCalculation(damage,0,0);
                         print("hit");
                     }
                 }
@@ -327,11 +353,12 @@ public class EnemyRock : EnemyController
                 {
                     anime = 5;
                 }
-                else
+                else　//攻撃待機
                 {
                     anime = 4;
                 }
             }
+            //攻撃範囲外の場合追跡
             else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true)
             {
                 _IsTracking = true;
@@ -348,11 +375,12 @@ public class EnemyRock : EnemyController
                 {
                     anime = 5;
                 }
-                else
+                else //攻撃待機
                 {
                     anime = 4;
                 }
             }
+            //攻撃範囲外の場合追跡
             else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true)
             {
                 _IsTracking = true;
@@ -364,16 +392,11 @@ public class EnemyRock : EnemyController
 
     //--------------------------bool処理-------------------------------
     private void Bool()
-    {
-        //----------------ジャンプ処理----------------------
-        //if (_IsJump == true)
-        //{
-        //    input._isJump = true;
-        //}
-
+    {      
         //----------------元の座標に戻っている---------------
         if (_IsReturn == true)
         {
+            //追跡をoff
             _IsLook = false;
             _IsTracking = false;
             transform.Translate(transform.right * Time.deltaTime * data.ReturnSpeed * num);
@@ -384,17 +407,17 @@ public class EnemyRock : EnemyController
         {
             if (pos.x <= DefaultPos.x && _Retrcking == true)　//左に向いている
             {
-                _IsReturn = false;
-                _Retrcking = false;
-                _IsWait = true;
+                _IsReturn = false;　//元に戻った
+                _Retrcking = false; //反転
+                _IsWait = true;     //待機状態に
                 Spritetime[2] = 0;
                 anime = 4;
             }
             if (pos.x >= DefaultPos.x && _Retrcking == false)　//右に向いている
             {
-                _IsReturn = false;
-                _Retrcking = true;
-                _IsWait = true;
+                _IsReturn = false; //元に戻った
+                _Retrcking = true; //反転
+                _IsWait = true;    //待機状態に
                 Spritetime[2] = 0;
                 anime = 4;
             }

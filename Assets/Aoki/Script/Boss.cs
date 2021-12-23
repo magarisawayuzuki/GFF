@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Boss : MonoBehaviour
-{       
-    public GameObject playerObj; //追跡ターゲット
+public class Boss : EnemyController
+{           
     public SpriteRenderer BossSprite;
 
     [SerializeField]
     public BossData mono; // spriteデータ
+    [SerializeField]
+    private CharaParameter BossPara;
     [SerializeField]
     private float HP;
     [SerializeField]
@@ -17,44 +18,32 @@ public class Boss : MonoBehaviour
     [SerializeField]
     private float TrackingSpeed;　//追跡のスピード    
     [SerializeField]
-    private float WeaponForce;
-    [SerializeField]
-    private int AttackRange;
+    private float WeaponForce;   
     [SerializeField]
     private GameObject[] AttackEffect;
     [SerializeField]
-    private GameObject[] SummonSpell;
-    [SerializeField]
-    private float[] Spritetime;   // spriteループ用の変数
-    [SerializeField]
-    int[] MaxLeng; //spriteのマックス　0待機1追跡2ワープ
+    private GameObject[] SummonSpell;    
     [SerializeField]
     private int[] AttackCount;
     [SerializeField]
     private Vector2[] SpellPos;
-
-    private bool _IsAttack;　//攻撃するか判定 
-    private bool _IsReset;
-    private bool _IsLook;
+  
+    private bool _IsReset;   
     private bool _IsHit;
     private bool _IsStrongHit;
     private bool _IsAttackWait;
     private bool _IsSwitch;
     private bool _IsSwitch2;
     private bool _IsSwitch3;
-
-    private Vector2 pos;　//自身の位置
-    private Vector3 DefaultPos;　//最初の位置
+  
     private Vector2 scale;
     private Vector2 DefaultScale;
 
     private int DefaultPosXInt;
     private int WarpPosX;
-    private int anime;　//switch変数
+  
     
-    private int AttackPattern = 1;
-    private float GetAttackRange; 
-    private float num = 1; //反転するときに使う数字（1で固定
+    private int AttackPattern = 1;   
     private float DefaultSpeed;
 
     [System.NonSerialized]
@@ -62,23 +51,21 @@ public class Boss : MonoBehaviour
     [System.NonSerialized]
     public bool _IsSpell;
     [System.NonSerialized]
-    public bool _IsSummonSpell;
-    [System.NonSerialized]
-    public bool _IsTracking = false;
+    public bool _IsSummonSpell;   
     [System.NonSerialized]
     public bool _IsNext;
     [System.NonSerialized]
     public bool _IsDefaultWarp;
     [System.NonSerialized]
     public bool _IsCount;
+    [System.NonSerialized]
+    public bool _IsHitSpell;
 
     private int SpellCount;
     private int SummonCount = 3;
-    int EnemyPositionX = 0; //二次元配列の敵の横
-    int EnemyPositionY = 0; //二次元配列の敵の縦
-       
-    Maping map;
-    Play play;
+          
+    CharacterController chara;
+    private float damage;
 
     public int HpState;
     public EnemyAiState aiState = EnemyAiState.Resporn;
@@ -105,10 +92,10 @@ public class Boss : MonoBehaviour
         GameObject en = GameObject.FindGameObjectWithTag("Map");
         map = en.GetComponent<Maping>();
 
-        //------------二次元配列のプレイヤーのスクリプト取得------------------
-        GameObject PlayerScript = GameObject.FindGameObjectWithTag("Player");
-        play = PlayerScript.GetComponent<Play>();
-        
+        //------------プレイヤーのスクリプト取得------------------
+        player = GameObject.FindGameObjectWithTag("Player");
+        chara = player.GetComponent<CharacterController>();
+
         GameObject boss = GameObject.FindGameObjectWithTag("Boss");
         BossSprite = boss.GetComponent<SpriteRenderer>();
   
@@ -124,11 +111,7 @@ public class Boss : MonoBehaviour
                 }
             }
         }
-        
-        
-        // PLAYERオブジェクトを取得
-        playerObj = GameObject.FindGameObjectWithTag("Player");
-   
+                   
         DefaultPos = transform.position;
         DefaultPosXInt = Mathf.FloorToInt(DefaultPos.x);
         DefaultSpeed = TrackingSpeed;
@@ -146,9 +129,10 @@ public class Boss : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-      
+        base.Update();
+
         MapMove();
 
         EnemyPos();
@@ -165,6 +149,14 @@ public class Boss : MonoBehaviour
   
     }
 
+    public override void CharaLifeCalculation(float damage, int knockBack, int weapon)
+    {
+        //倍率を代入
+        damageScaleSword = data.swordScale;
+        damageScaleHammer = data.hammerScale;
+
+        base.CharaLifeCalculation(damage, knockBack, weapon);
+    }
     private void OnBecameVisible()　//カメラ内処理
     {        
         for (int i = 0; i < Spritetime.GetLength(0); i++)
@@ -594,6 +586,8 @@ public class Boss : MonoBehaviour
 
             if (GetAttackRange >= -AttackRange && GetAttackRange <= 0)
             {
+                damage = 12;
+                chara.CharaLifeCalculation(damage, 0, 0);
                 print("hitW");
             }
         }
@@ -617,15 +611,27 @@ public class Boss : MonoBehaviour
 
             if (GetAttackRange >= -AttackRange && GetAttackRange <= 0 && _IsStrongHit == false)
             {
+                damage = 8;
+                chara.CharaLifeCalculation(damage, 0, 0);
                 print("hit");
             }
 
             if (GetAttackRange >= -(AttackRange + 3)&& GetAttackRange <= 0 && _IsStrongHit == true)
             {
+                damage = 12;
+                chara.CharaLifeCalculation(damage, 0, 0);
                 print("hitStrong");
                 _IsStrongHit = false;
             }
 
+        }
+
+        if(_IsHitSpell == true)
+        {
+            damage = 12;
+            chara.CharaLifeCalculation(damage, 0, 0);
+            print("HitSpell");
+            _IsHitSpell = false;
         }
     }
 
@@ -690,7 +696,7 @@ public class Boss : MonoBehaviour
     {
         if (_IsLook == true)
         {
-            Vector3 pv = playerObj.transform.position;
+            Vector3 pv = player.transform.position;
             Vector3 ev = transform.position;
 
             float TrackingposX = pv.x - ev.x;

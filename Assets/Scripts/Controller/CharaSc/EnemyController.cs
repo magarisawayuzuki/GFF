@@ -11,14 +11,14 @@ public class EnemyController : CharacterController
     protected float damageScaleHammer;
 
     protected SpriteRenderer EnemySprite;　//  エネミー
-    public GameObject player; //追跡ターゲット                              
+    public GameObject player;              //追跡ターゲット                              
 
     [SerializeField]
     public EnemyAnime Anime; // spriteデータ
     [SerializeField]
     public EnemyData data; //変数データ   
     [SerializeField]
-    protected float AttackRange;   
+    protected float AttackRange;  //攻撃範囲
     [SerializeField]
     protected int[] MaxLeng; //spriteのマックス
     [SerializeField]
@@ -27,9 +27,9 @@ public class EnemyController : CharacterController
     public int anime;　//switch変数
 
     [HideInInspector]
-    public bool _Retrcking;
+    public bool _Retrcking; //反転するか判定
     [HideInInspector]
-    public bool _IsJump;
+    public bool _IsJump;　//ジャンプするか判定
     [HideInInspector]
     public bool _IsAttack = true; //攻撃するか判定 
     [HideInInspector]
@@ -39,6 +39,8 @@ public class EnemyController : CharacterController
 
     protected Vector2 pos;　//自身の位置
     protected Vector2 DefaultPos; //最初の位置
+    protected Vector2 boxcenter;
+
     protected int DefaultPosIntX;
     protected int DefaultPosIntY;
     protected float GetAttackRange;
@@ -54,6 +56,7 @@ public class EnemyController : CharacterController
     protected int EnemyPositionY = 0; //二次元配列の縦
 
     protected Maping map;
+    protected BoxCollider box;
         
     /// <summary>
     /// 子クラスのinputを用いてinputを返す。ここでは共通処理のみ記述可
@@ -94,6 +97,7 @@ public class EnemyController : CharacterController
     {
         base.Death();
 
+        anime = 3;
 
     }
    

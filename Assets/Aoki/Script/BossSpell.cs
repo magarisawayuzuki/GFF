@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossSpell : MonoBehaviour
 {
+   
     SpriteRenderer EnemySprite;　//  エネミー
 
     [SerializeField]
@@ -24,10 +25,10 @@ public class BossSpell : MonoBehaviour
    
     Boss boss;
     Maping map;
-
+   
     // Start is called before the first frame update
     void Start()
-    {
+    {       
         GameObject script = GameObject.FindGameObjectWithTag("BossObj");
         boss = script.GetComponent<Boss>();
 
@@ -65,9 +66,9 @@ public class BossSpell : MonoBehaviour
            
             if (transform.position.x >= map.PlayerPositionX && transform.position.x - 3 <= map.PlayerPositionX)
             {
-                    print("HitS");
+                boss._IsHitSpell = true;
             }
-          
+           
             if (Spritetime[1] >= MaxLeng[1])
             {
                 boss._IsNext = true;
