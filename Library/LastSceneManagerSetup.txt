@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Juri/Juri_EffectScene.unity
+- path: Assets/Juri/Juri_Clear.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
