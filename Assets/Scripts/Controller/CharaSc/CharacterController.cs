@@ -32,7 +32,6 @@ public class CharacterController : MonoBehaviour
     public CharacterStatus characterStatus { get { return _charaStatus; } }
     public CharacterStatus old_charaStatus = default;
 
-
     #region Vector3
     // キャラの移動
     protected Vector3 CharacterMove = new Vector3();
@@ -72,13 +71,16 @@ public class CharacterController : MonoBehaviour
     protected bool _hasMemory = false;
     protected bool _isSpeedDown = false;
     protected bool _isPeerless = false;
+    // 無敵状態
+    protected bool _isInvincible = false;
 
     // 右に移動できるか
     protected bool _canNotRight = default;
     // 左に移動できるか
     protected bool _canNotLeft = default;
+    #endregion
 
-    /// const
+    #region const
     protected const int _ZERO = 0;
     protected const int _ONE = 1;
 
@@ -164,7 +166,6 @@ public class CharacterController : MonoBehaviour
             Attack();
         }
         /*
-
         //前フレームと状態が違ったら
         if (old_charaStatus != _charaStatus)
         {
@@ -172,7 +173,6 @@ public class CharacterController : MonoBehaviour
             charaAnimCtrl.AnimationChenge(_charaStatus);
             old_charaStatus = _charaStatus;
         }
-
         */
 
         Debug.Log(_life);
@@ -221,7 +221,7 @@ public class CharacterController : MonoBehaviour
         }
 
         // 攻撃状態じゃなければ
-        if (!input._isAttack)
+        if (!input._isAttack && !_isInvincible)
         {
             if (_isPeerless)
             {
@@ -259,10 +259,10 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-       // print(acceleration);
         //攻撃中は停止
         if (input._isAttack)
         {
+            StopJump();
             CharacterMove.y = _ZERO;
             return;
         }
@@ -343,6 +343,20 @@ public class CharacterController : MonoBehaviour
             //落下
             CharaFallProcess();
         }
+    }
+
+    /// <summary>
+    /// ジャンプを一時停止する際に呼び出す
+    /// </summary>
+    private void StopJump()
+    {
+        _nowJump = false;
+        _startJump = false;
+
+        acceleration = _ZERO;
+
+        jumpTimeCount = _ZERO;
+        fallTimeCount = _ZERO;
     }
 
     /// <summary>

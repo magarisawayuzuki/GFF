@@ -101,8 +101,9 @@ public class PlayerController : CharacterController
     // 槌攻撃のクールタイムが終わっているか
     private bool _canHammerAttack = true;
 
-    private bool _isInvincible = false;
+    // 攻撃開始
     private bool _isStartAttack = false;
+
     #endregion
 
     #region string
@@ -534,14 +535,14 @@ public class PlayerController : CharacterController
     // Playerで行うタイマー処理
     private void Timer()
     {
-        if (_isInvincible)
+        if (_isPeerless)
         {
             _peerlessTime -= Time.deltaTime;
         }
 
         if (_peerlessTime <= _ZERO)
         {
-            _isInvincible = false;
+            _isPeerless = false;
         }
 
         // デバッグ用
