@@ -31,7 +31,6 @@ public class PlayerController : CharacterController
     public int _WeaponMemoryCount { get { return _weaponMemoryCount; } }
     // 記憶の個数
     protected int _memoryCount = 0;
-
     #endregion
 
     #region float
@@ -293,7 +292,7 @@ public class PlayerController : CharacterController
         {
             _isStartAttack = true;
             attackHit = Physics.BoxCastAll(transform.position, _attackScale, _attackDirection, Quaternion.identity, _ONE, LayerMask.GetMask("Enemy"));
-            Debug.Log(attackHit);
+            Debug.Log(attackHit.Length);
             #endregion
 
             foreach (RaycastHit raycastHit in attackHit)
