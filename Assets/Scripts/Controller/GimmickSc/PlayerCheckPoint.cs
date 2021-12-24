@@ -19,7 +19,7 @@ public class PlayerCheckPoint : MonoBehaviour
         {
             if (Physics.Raycast(transform.position, Vector3.up, 10, LayerMask.GetMask("Player")))
             {
-                _checkPointSystem._checkPoint.position = transform.position;
+                _checkPointSystem._checkPoint = transform.position;
                 this.gameObject.SetActive(false);
             }
         }

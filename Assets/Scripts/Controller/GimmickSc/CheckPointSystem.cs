@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CheckPointSystem : MonoBehaviour
 {
-    public Transform _checkPoint = default;
+    public Vector3 _checkPoint = default;
 
     private GameObject player = default;
 
@@ -15,6 +15,7 @@ public class CheckPointSystem : MonoBehaviour
 
     public void Respawn()
     {
-
+        _checkPoint.y += 3;
+        player.transform.position = _checkPoint;
     }
 }

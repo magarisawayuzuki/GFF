@@ -14,6 +14,9 @@ public class PlayerController : CharacterController
     [SerializeField]
     private GameObject[] _memoryFragments = default;
 
+    private CheckPointSystem checkPointSys;
+    private MemoryAchievementController memoryAchievementController;
+
 
     #region Vecter3
     // 攻撃の範囲
@@ -28,7 +31,6 @@ public class PlayerController : CharacterController
     public int _WeaponMemoryCount { get { return _weaponMemoryCount; } }
     // 記憶の個数
     protected int _memoryCount = 0;
-
     #endregion
 
     #region float
@@ -96,13 +98,12 @@ public class PlayerController : CharacterController
     // 槌の攻撃入力判定
     private bool _isInputHammerAttack = default;
 
-
-
     // 槌攻撃のクールタイムが終わっているか
     private bool _canHammerAttack = true;
 
-    private bool _isInvincible = false;
+    // 攻撃開始
     private bool _isStartAttack = false;
+
     #endregion
 
     #region string
@@ -110,6 +111,7 @@ public class PlayerController : CharacterController
     private string _normal = "Normal";
     private string _hard = "Hard";
     private string _weaponMemory = "WeaponMemory";
+    private string _eventSystem = "EventSystem";
     #endregion
 
     #region const
@@ -149,7 +151,8 @@ public class PlayerController : CharacterController
     protected override void Awake()
     {
         IC = new InputSystem();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        checkPointSys = GameObject.FindWithTag(_eventSystem).GetComponent<CheckPointSystem>();
+        memoryAchievementController = GameObject.FindWithTag(_eventSystem).GetComponent<MemoryAchievementController>();
     }
 
     //=====================================================
@@ -290,7 +293,7 @@ public class PlayerController : CharacterController
         {
             _isStartAttack = true;
             attackHit = Physics.BoxCastAll(transform.position, _attackScale, _attackDirection, Quaternion.identity, _ONE, LayerMask.GetMask("Enemy"));
-            Debug.Log(attackHit);
+            Debug.Log(attackHit.Length);
             #endregion
 
             foreach (RaycastHit raycastHit in attackHit)
@@ -379,7 +382,8 @@ public class PlayerController : CharacterController
     public override void Death()
     {
         base.Death();
-        OnDisable();
+        checkPointSys.Respawn();
+        _isDeath = false;
     }
 
 
@@ -408,7 +412,7 @@ public class PlayerController : CharacterController
             {
                 _weaponMemoryCount++;
             }
-            _memoryCount++;
+            memoryAchievementController._nowMemoryToral++;
             memoryFragment.SetActive(false);
         }
     }
@@ -531,14 +535,14 @@ public class PlayerController : CharacterController
     // Playerで行うタイマー処理
     private void Timer()
     {
-        if (_isInvincible)
+        if (_isPeerless)
         {
             _peerlessTime -= Time.deltaTime;
         }
 
         if (_peerlessTime <= _ZERO)
         {
-            _isInvincible = false;
+            _isPeerless = false;
         }
 
         // デバッグ用
