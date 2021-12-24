@@ -430,15 +430,7 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     private void CharaViewController()
     {
-        // _xが0より小さければ左を向く
-        if (input._x < _ZERO)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else
-        {
-            spriteRenderer.flipX = false;
-        }
+
     }
 }
 

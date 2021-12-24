@@ -15,6 +15,7 @@ public class PlayerController : CharacterController
     private GameObject[] _memoryFragments = default;
 
     private CheckPointSystem checkPointSys;
+    private MemoryAchievementController memoryAchievementController;
 
 
     #region Vecter3
@@ -110,6 +111,7 @@ public class PlayerController : CharacterController
     private string _normal = "Normal";
     private string _hard = "Hard";
     private string _weaponMemory = "WeaponMemory";
+    private string _eventSystem = "EventSystem";
     #endregion
 
     #region const
@@ -149,8 +151,8 @@ public class PlayerController : CharacterController
     protected override void Awake()
     {
         IC = new InputSystem();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        checkPointSys = GameObject.FindWithTag("CheckPointSystem").GetComponent<CheckPointSystem>();
+        checkPointSys = GameObject.FindWithTag(_eventSystem).GetComponent<CheckPointSystem>();
+        memoryAchievementController = GameObject.FindWithTag(_eventSystem).GetComponent<MemoryAchievementController>();
     }
 
     //=====================================================
@@ -410,7 +412,7 @@ public class PlayerController : CharacterController
             {
                 _weaponMemoryCount++;
             }
-            _memoryCount++;
+            memoryAchievementController._nowMemoryToral++;
             memoryFragment.SetActive(false);
         }
     }

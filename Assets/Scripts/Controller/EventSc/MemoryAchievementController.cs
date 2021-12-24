@@ -15,7 +15,7 @@ public class MemoryAchievementController : EventController
     /// </summary>
     public float _nowMemoryToral
     {
-        set { value = nowMemoryTotal; }
+        set { nowMemoryTotal = value; }
         get { return nowMemoryTotal; }
     }
 

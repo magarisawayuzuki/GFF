@@ -15,7 +15,8 @@ TagManager:
   - SoftS
   - HardS
   - Ground
-  - CheckPointSystem
+  - EventSystem
+  - WeaponMemory
   layers:
   - Default
   - TransparentFX
