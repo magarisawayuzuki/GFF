@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PlayerCheckPoint : MonoBehaviour
 {
+    private CheckPointSystem _checkPointSystem= default;
+
     private bool _canCheckPoint = true;
 
     private void Awake()
     {
-        GameObject.FindWithTag("");
+        _checkPointSystem = GameObject.FindWithTag("CheckPointSystem").GetComponent<CheckPointSystem>();
     }
 
     private void Update()
@@ -17,8 +19,8 @@ public class PlayerCheckPoint : MonoBehaviour
         {
             if (Physics.Raycast(transform.position, Vector3.up, 10, LayerMask.GetMask("Player")))
             {
-
-                _canCheckPoint = false;
+                _checkPointSystem._checkPoint = transform.position;
+                this.gameObject.SetActive(false);
             }
         }
     }

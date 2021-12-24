@@ -64,6 +64,8 @@ public class CharacterController : MonoBehaviour
     #endregion
 
     #region bool
+    // 死亡判定
+    protected bool _isDeath = false;
     // 着地判定
     protected bool _isGround = false;
     // 記憶を持っているか
@@ -189,11 +191,11 @@ public class CharacterController : MonoBehaviour
     /// <returns></returns>
     public virtual PlayerInput InputMethod()
     {
-        if (input._x != 0 && !input._isJump && input._isAttack)
+        if (input._x != 0 && !input._isJump && input._isAttack && !_isDeath)
         {
             _charaStatus = CharacterStatus.Move;
         }
-        else if(!input._isJump && !input._isAttack)
+        else if(!input._isJump && !input._isAttack && !_isDeath)
         {
             _charaStatus = CharacterStatus.Idle;
         }
@@ -397,6 +399,7 @@ public class CharacterController : MonoBehaviour
 
     public virtual void Death()
     {
+        _isDeath = true;
         _charaStatus = CharacterStatus.Death;
     }
 

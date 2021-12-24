@@ -14,6 +14,8 @@ public class PlayerController : CharacterController
     [SerializeField]
     private GameObject[] _memoryFragments = default;
 
+    private CheckPointSystem checkPointSys;
+
 
     #region Vecter3
     // 攻撃の範囲
@@ -96,8 +98,6 @@ public class PlayerController : CharacterController
     // 槌の攻撃入力判定
     private bool _isInputHammerAttack = default;
 
-
-
     // 槌攻撃のクールタイムが終わっているか
     private bool _canHammerAttack = true;
 
@@ -150,6 +150,7 @@ public class PlayerController : CharacterController
     {
         IC = new InputSystem();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        checkPointSys = GameObject.FindWithTag("CheckPointSystem").GetComponent<CheckPointSystem>();
     }
 
     //=====================================================
@@ -379,7 +380,8 @@ public class PlayerController : CharacterController
     public override void Death()
     {
         base.Death();
-        OnDisable();
+        checkPointSys.Respawn();
+        _isDeath = false;
     }
 
 

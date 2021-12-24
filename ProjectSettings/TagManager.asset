@@ -14,6 +14,8 @@ TagManager:
   - MemoryFragment
   - SoftS
   - HardS
+  - Ground
+  - CheckPointSystem
   layers:
   - Default
   - TransparentFX
