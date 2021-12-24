@@ -13,7 +13,8 @@ public class CreateStageEditor : MonoBehaviour
     [SerializeField] private Texture2D texture;
 
     [Header("生成オブジェクト")]
-    [SerializeField] private GameObject instanceObject;
+    [SerializeField] private GameObject instanceObject = default;
+    [SerializeField] private GameObject checkPointObject = default;
 
     [Header("識別色")]
     [SerializeField] private List<Color> colors;
@@ -137,7 +138,7 @@ public class CreateStageEditor : MonoBehaviour
 
         //親オブジェクト生成
         GameObject parentObj = new GameObject("Stage");
-
+        GameObject checkParentObj = new GameObject("CheckPoint");
 
         Quaternion QUATERNION = new Quaternion(0,0,0,0);
 
@@ -160,7 +161,7 @@ public class CreateStageEditor : MonoBehaviour
             for (int j = 0; j < mapInfo.GetLength(1); j++)
             {
                 //今の位置にブロックがあるなら
-                if (mapInfo[i, j] == 1)
+                if (mapInfo[i, j] == 1 || mapInfo[i,j] == 2)
                 {
                     //初期生成
                     if(nowCreateObject == default)
@@ -182,6 +183,12 @@ public class CreateStageEditor : MonoBehaviour
                 {
                     //ブロックの更新を終了
                     nowCreateObject = default;
+                }
+
+                //チェックポイント生成
+                if(mapInfo[i,j] == 11)
+                {
+                    Instantiate(checkPointObject, new Vector3(j, (mapInfo.GetLength(0) - 1) - i, 0), QUATERNION, checkParentObj.transform);
                 }
             }
             nowCreateObject = default;
