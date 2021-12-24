@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class Chara_2 : MonoBehaviour
 {
-    private CharaParameter _chara = default;
-    private int maxLife = 100;
+    private int maxLife = default;
     private float maxLifeMag = default;
     private int beforeLife = default;
     private int afterLife = default;
@@ -24,6 +23,7 @@ public class Chara_2 : MonoBehaviour
     {
         beforeLife = 0;
         maxLifeMag = 2.68f;
+        maxLife = charaPara.life;
     }
 
     protected virtual void ChangeLife(CharaParameter charaPara, bool isDamage)
