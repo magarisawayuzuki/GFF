@@ -137,8 +137,8 @@ MonoBehaviour:
     _isJump: 0
     _isDown: 0
   old_charaStatus: 0
-  ObjectScale: {x: 0.25, y: 0, z: 0}
-  _groundDistance: 1.3
+  ObjectScale: {x: 1.05, y: 0.6, z: 0}
+  _groundDistance: 1.5
   _life: 0
   jumpSpeedScale: 1
   player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}

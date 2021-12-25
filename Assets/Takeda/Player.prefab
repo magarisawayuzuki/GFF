@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7370367637986086645}
   - component: {fileID: 7051199934797495176}
+  - component: {fileID: 2237163489984913701}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -102,6 +103,23 @@ MonoBehaviour:
   _hammerMiddleAttack: 3
   _hammerHeavyAttack: 4.5
   _invincibleAttack: 6
+--- !u!114 &2237163489984913701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677229189713997750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82991f86ffc8a14f8ee8a395cf6880d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnable: 0
+  attackdistance: 1
+  grounddistance: 1.3
+  scale: {x: 1.25, y: 0, z: 0}
+  ascale: {x: 0, y: 2.5, z: 0}
 --- !u!1001 &4967684692400916019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -275,7 +293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5269660794380592116, guid: f7affe64a367c0343bde25c400b8894b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5269660794380592116, guid: f7affe64a367c0343bde25c400b8894b, type: 3}
       propertyPath: m_LocalRotation.x

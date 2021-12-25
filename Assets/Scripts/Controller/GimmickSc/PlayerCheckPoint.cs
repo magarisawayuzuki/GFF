@@ -8,16 +8,18 @@ public class PlayerCheckPoint : MonoBehaviour
 
     private bool _canCheckPoint = true;
 
+    private int _checkPointRange = 10;
+
     private void Awake()
     {
-        _checkPointSystem = GameObject.FindWithTag("CheckPointSystem").GetComponent<CheckPointSystem>();
+        _checkPointSystem = GameObject.FindWithTag("EventSystem").GetComponent<CheckPointSystem>();
     }
 
     private void Update()
     {
         if (_canCheckPoint)
         {
-            if (Physics.Raycast(transform.position, Vector3.up, 10, LayerMask.GetMask("Player")))
+            if (Physics.Raycast(transform.position, Vector3.up, _checkPointRange, LayerMask.GetMask("Player")))
             {
                 _checkPointSystem._checkPoint = transform.position;
                 this.gameObject.SetActive(false);

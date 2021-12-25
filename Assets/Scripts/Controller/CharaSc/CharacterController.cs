@@ -165,17 +165,16 @@ public class CharacterController : MonoBehaviour
         {
             Attack();
         }
-        /*
-        //前フレームと状態が違ったら
-        if (old_charaStatus != _charaStatus)
-        {
-            //アニメーションを切り替える
-            charaAnimCtrl.AnimationChenge(_charaStatus);
-            old_charaStatus = _charaStatus;
-        }
-        */
-
-        Debug.Log(_life);
+        
+        
+        ////前フレームと状態が違ったら
+        //if (old_charaStatus != _charaStatus)
+        //{
+        //    //アニメーションを切り替える
+        //    charaAnimCtrl.AnimationChenge(_charaStatus);
+        //    old_charaStatus = _charaStatus;
+        //}
+        
 
         // velocityへ入れる
         transform.position += CharacterMove;
