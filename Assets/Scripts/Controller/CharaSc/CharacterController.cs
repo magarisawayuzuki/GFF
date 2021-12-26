@@ -59,7 +59,11 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     protected float _groundDistance = 1.3f;
 
-    public float _life = default;
+    private float _life = 0;
+
+    public float GetLife{ get { return _life; }
+    }
+
     #endregion
 
     #region bool

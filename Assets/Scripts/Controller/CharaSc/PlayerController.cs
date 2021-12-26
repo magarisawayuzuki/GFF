@@ -589,6 +589,7 @@ public class PlayerController : CharacterController
         {
             _isInvincible = true;
         }
+        Debug.Log("当たった");
         base.CharaLifeCalculation(damage, knockBack, weapon);
     }
 
