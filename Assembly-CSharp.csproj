@@ -73,6 +73,7 @@
     <Compile Include="Assets\Aoki\Script\EnemyData.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
     <Compile Include="Assets\Magarisawa\CameraMove.cs" />
+    <Compile Include="Assets\Scripts\Controller\GimmickSc\DeathPoint.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\UIController_2.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyNormal.cs" />

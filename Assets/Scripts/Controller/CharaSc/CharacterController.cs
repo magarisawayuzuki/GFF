@@ -49,7 +49,7 @@ public class CharacterController : MonoBehaviour
     protected float _damage = 0;
     #endregion
 
-    #region flooat
+    #region float
     // 移動毒度低下時間
     protected float _speedDownTimer = 0;
     // 攻撃力

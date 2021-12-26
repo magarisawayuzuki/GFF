@@ -21,6 +21,7 @@ public class PlayerController : CharacterController
     #region Vecter3
     // 攻撃の範囲
     private Vector3 _attackScale = new Vector3(1, 2.5f);
+    private Vector3 _playerScale = new Vector3(0, 2);
     private Vector3 _attackDirection = new Vector3(1, 0);
     private Vector3 _playerFlontScale = new Vector3(1, 1);
     #endregion
@@ -47,7 +48,7 @@ public class PlayerController : CharacterController
 
     // 記憶ゲージ減少時間
     private float _memoryDownTimer = 1;
-    // Objectの半径
+    // player
     private float _sidedistance = 0.45f;
     [SerializeField, Header("無双時間")]
     private float _peerlessTime = 5;
@@ -186,8 +187,8 @@ public class PlayerController : CharacterController
             transform.localScale = _playerFlontScale;
         }
 
-        _canNotRight = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.right, Quaternion.identity, _sidedistance, movelayer);
-        _canNotLeft = Physics.BoxCast(transform.position, new Vector3(0, 2, 0), Vector3.left, Quaternion.identity, _sidedistance, movelayer);
+        _canNotRight = Physics.BoxCast(transform.position, _playerScale, Vector3.right, Quaternion.identity, _sidedistance, movelayer);
+        _canNotLeft = Physics.BoxCast(transform.position, _playerScale, Vector3.left, Quaternion.identity, _sidedistance, movelayer);
 
 
         if (IC.Player.Jump.triggered)
@@ -543,6 +544,16 @@ public class PlayerController : CharacterController
         if (_peerlessTime <= _ZERO)
         {
             _isPeerless = false;
+        }
+
+        if (_isInvincible)
+        {
+            _invincibleTime -= Time.deltaTime;
+        }
+
+        if (_invincibleTime <= _ZERO)
+        {
+            _isInvincible = false;
         }
 
         // デバッグ用
