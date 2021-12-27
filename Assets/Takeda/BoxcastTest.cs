@@ -19,7 +19,7 @@ public class BoxcastTest : MonoBehaviour
 			return;
 		_attackDirection.x = -transform.localScale.x;
 		Gizmos.DrawWireCube(transform.position + Vector3.down * grounddistance, scale);
-		Gizmos.DrawWireCube(transform.position + _attackDirection * attackdistance, ascale);
+		Gizmos.DrawWireCube(transform.position + Vector3.right * attackdistance, ascale);
 
 	}
 }

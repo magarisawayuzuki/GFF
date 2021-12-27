@@ -8,7 +8,7 @@ public class DeathPoint : MonoBehaviour
 
     private CheckPointSystem checkPointSystem = default;
 
-    private Vector3 scale = new Vector3(1,1500);
+    private Vector3 scale = new Vector3(1500, 10);
     private void Awake()
     {
         player = GameObject.FindWithTag("Player");
