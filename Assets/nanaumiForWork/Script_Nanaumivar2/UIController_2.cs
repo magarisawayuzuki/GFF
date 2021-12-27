@@ -38,12 +38,16 @@ public class UIController_2 : MonoBehaviour
     protected bool _isFlip = default;
     protected bool _isLoaded = default;
 
+    protected AudioManager audio = default;
+
     protected virtual void Awake()
     {
         bookimage.material.SetFloat("_Flip", 1f);
 
         _inputs = new InputController();
         sceneMan = gameObject.AddComponent<UISceneManager_2>();
+
+        audio = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     protected void InputManager()
@@ -94,6 +98,8 @@ public class UIController_2 : MonoBehaviour
             {
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].up;
                 _isInput[0] = true;
+                audio.uiSE = (AudioManager.UISE)0;
+                audio.AudioChanger("UI");
             }
         }
         // 下
@@ -103,6 +109,8 @@ public class UIController_2 : MonoBehaviour
             {
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].down;
                 _isInput[0] = true;
+                audio.uiSE = (AudioManager.UISE)0;
+                audio.AudioChanger("UI");
             }
         }
         // 右
@@ -112,6 +120,8 @@ public class UIController_2 : MonoBehaviour
             {
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].right;
                 _isInput[0] = true;
+                audio.uiSE = (AudioManager.UISE)0;
+                audio.AudioChanger("UI");
             }
         }
         // 左
@@ -121,6 +131,8 @@ public class UIController_2 : MonoBehaviour
             {
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].left;
                 _isInput[0] = true;
+                audio.uiSE = (AudioManager.UISE)0;
+                audio.AudioChanger("UI");
             }
         }
     }

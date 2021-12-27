@@ -11,6 +11,9 @@ public class TitleUI_2 : UIController_2
 
     private void Start()
     {
+        audio.bgm = (AudioManager.BGM)0;
+        audio.AudioChanger("BGM");
+
         _nowSelectNumber = 1;
 
         _selector.anchoredPosition = _selectPoint[_nowSelectNumber - 1].anchoredPosition;
@@ -38,6 +41,11 @@ public class TitleUI_2 : UIController_2
                     _isLoaded = true;
                     bookimage.material.SetFloat("_Flip", -1f);
 
+                    audio.uiSE = (AudioManager.UISE)1;
+                    audio.AudioChanger("UI");
+                    audio.uiSE = (AudioManager.UISE)4;
+                    audio.AudioChanger("UI");
+
                     sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Main), false, 10);
                     sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title));
                 }
@@ -59,6 +67,9 @@ public class TitleUI_2 : UIController_2
                     _isLoaded = true;
                     bookimage.material.SetFloat("_Flip", -1f);
 
+                    audio.uiSE = (AudioManager.UISE)4;
+                    audio.AudioChanger("UI");
+
                     sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title));
                 }
 
@@ -74,6 +85,8 @@ public class TitleUI_2 : UIController_2
                 break;
             // Exit Game to CautionPanel
             case 3:
+                audio.uiSE = (AudioManager.UISE)1;
+                audio.AudioChanger("UI");
                 cautionPanel.SetActive(true);
                 caucau.enabled = true;
                 this.enabled = false;
@@ -89,6 +102,9 @@ public class TitleUI_2 : UIController_2
         base.OnEnable();
         _isFlip = false;
         _isLoaded = false;
+
+        audio.bgm = (AudioManager.BGM)0;
+        audio.AudioChanger("BGM");
         SceneStateUI_2.sceneState = SceneStateUI_2.SceneState.Title;
     }
 }

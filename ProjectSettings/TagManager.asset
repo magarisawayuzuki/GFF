@@ -12,6 +12,8 @@ TagManager:
   - Normal
   - Hard
   - MemoryFragment
+  - Selector
+  - Audio
   layers:
   - Default
   - TransparentFX

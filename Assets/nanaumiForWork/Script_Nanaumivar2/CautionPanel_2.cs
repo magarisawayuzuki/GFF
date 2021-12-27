@@ -36,6 +36,8 @@ public class CautionPanel_2 : UIController_2
                 // Exit Game
                 if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title))
                 {
+                    audio.uiSE = (AudioManager.UISE)1;
+                    audio.AudioChanger("UI");
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -45,12 +47,16 @@ public class CautionPanel_2 : UIController_2
                 // Back to Title
                 else /*if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame))*/
                 {
+                    audio.uiSE = (AudioManager.UISE)4;
+                    audio.AudioChanger("UI");
                     SceneManager.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title),LoadSceneMode.Single);
                 }
                 break;
 
             // No
             case 2:
+                audio.uiSE = (AudioManager.UISE)2;
+                audio.AudioChanger("UI");
                 // Back to Title
                 if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title))
                 {

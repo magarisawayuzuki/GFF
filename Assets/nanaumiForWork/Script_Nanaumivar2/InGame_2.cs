@@ -75,7 +75,7 @@ public class InGame_2 : Chara_2
             }
         }
 
-        if (_beforeMemoryAchievement != /*memoAchi._nowMemoryToral*/_testbbb)
+        if (_beforeMemoryAchievement != 100 - memoAchi._nowMemoryToral/*_testbbb*/ && !_isMemoryAchievementChange)
         {
             _isMemoryAchievementChange = true;
             _memoryAchievementChangeTime = 0;
@@ -131,8 +131,8 @@ public class InGame_2 : Chara_2
     // メモリーアチーブメント イベントから取得
     private void PlayerMemoryAchievementUI()
     {
-        _afterMemoryAchievement = MAX_MEMORY_ACHIVEMENT - /*memoAchi._nowMemoryToral*/_testbbb;
-        if (_memoryAchievementChangeTime <= 1f)
+        _afterMemoryAchievement = MAX_MEMORY_ACHIVEMENT - memoAchi._nowMemoryToral/*_testbbb*/;
+        if (_memoryAchievementChangeTime <= 3f)
         {
             _memoryAchievementChangeTime += Time.deltaTime * 2;
             _memoryGaugeAchievementBar.padding = Vector4.Lerp(VECTOR_UP * _beforeMemoryAchievement * 1.4f, VECTOR_UP * _afterMemoryAchievement * 1.4f, _memoryAchievementChangeTime);

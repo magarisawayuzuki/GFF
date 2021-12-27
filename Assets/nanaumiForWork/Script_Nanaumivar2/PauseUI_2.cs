@@ -38,6 +38,9 @@ public class PauseUI_2 : UIController_2
                     _isLoaded = true;
                     bookimage.material.SetFloat("_Flip", -1f);
 
+                    audio.uiSE = (AudioManager.UISE)2;
+                    audio.AudioChanger("UI");
+
                     InGameToPauseUI_2._isPause = false;
                     SceneManager.UnloadSceneAsync(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
                 }
@@ -54,6 +57,9 @@ public class PauseUI_2 : UIController_2
                 break;
             // Back to Title to CautionPanel
             case 2:
+                audio.uiSE = (AudioManager.UISE)1;
+                audio.AudioChanger("UI");
+
                 cautionPanel.SetActive(true);
                 caucau.enabled = true;
                 _isInput[1] = false;
@@ -65,6 +71,9 @@ public class PauseUI_2 : UIController_2
                 {
                     _isLoaded = true;
                     bookimage.material.SetFloat("_Flip", -1f);
+
+                    audio.uiSE = (AudioManager.UISE)4;
+                    audio.AudioChanger("UI");
 
                     InGameToPauseUI_2._isPause = false;
                     sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
