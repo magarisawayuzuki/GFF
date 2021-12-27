@@ -68,7 +68,6 @@
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\EnemyUI.cs" />
     <Compile Include="Assets\Aoki\Script\SlideHp.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\OptionUI.cs" />
-    <Compile Include="Assets\Takeda\Player.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\PauseUI.cs" />
     <Compile Include="Assets\Aoki\Script\EnemyData.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
@@ -105,7 +104,6 @@
     <Compile Include="Assets\Takeda\BoxcastTest.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\InGameToPauseUI_2.cs" />
     <Compile Include="Assets\Scripts\Model\AnimationSpriteData.cs" />
-    <Compile Include="Assets\Takeda\CharaController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\SceneController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryFragment.cs" />
     <Compile Include="Assets\Aoki\Script\Enemy.cs" />

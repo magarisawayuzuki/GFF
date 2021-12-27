@@ -11,12 +11,11 @@ public class CheckPointSystem : MonoBehaviour
 
     private void Awake()
     {
-        GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player");
     }
 
     public void Respawn()
     {
-        _checkPoint.y += 3;
         player.transform.position = _checkPoint;
     }
 }
