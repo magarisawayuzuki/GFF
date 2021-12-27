@@ -21,10 +21,19 @@ public class SoundOption : MonoBehaviour
 
 	private InputController inputs;
 
+	[SerializeField] private Slider[] sliders;
+
+	private bool _isChange = default;
     private void Awake()
     {
 		inputs = new InputController();
-    }
+        audioMixer.GetFloat("MasterVolume", out float a);
+		sliders[0].value = a;
+		audioMixer.GetFloat("BGMVolume", out float b);
+		sliders[1].value = b;
+		audioMixer.GetFloat("SEVolume", out float c);
+		sliders[2].value = c;
+	}
 
     void Update()
 	{
@@ -45,19 +54,19 @@ public class SoundOption : MonoBehaviour
 	}
 
 
-	public void SetMaster(float volume)
+	public void SetMaster()
 	{
-		audioMixer.SetFloat("MasterVolume", volume);
+		audioMixer.SetFloat("MasterVolume", sliders[0].value);
 	}
 
 	public void SetBGM(float volume)
 	{
-		audioMixer.SetFloat("BGMVolume", volume);
+		audioMixer.SetFloat("BGMVolume", sliders[1].value);
 	}
 
 	public void SetSE(float volume)
 	{
-		audioMixer.SetFloat("SEVolume", volume);
+		audioMixer.SetFloat("SEVolume", sliders[2].value);
 	}
 }
 

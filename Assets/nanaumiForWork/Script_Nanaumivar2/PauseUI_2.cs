@@ -23,36 +23,81 @@ public class PauseUI_2 : UIController_2
 
         if (_isInput[1])
         {
-            TitleSelector();
+            PauseSelector();
         }
     }
 
-    private void TitleSelector()
+    private void PauseSelector()
     {
         switch (_nowSelectNumber)
         {
             // Back to InGame
             case 1:
-                SceneManager.UnloadSceneAsync(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
+                if (!_isLoaded)
+                {
+                    _isLoaded = true;
+                    bookimage.material.SetFloat("_Flip", -1f);
+
+                    audio.uiSE = (AudioManager.UISE)2;
+                    audio.AudioChanger("UI");
+
+                    InGameToPauseUI_2._isPause = false;
+                    SceneManager.UnloadSceneAsync(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
+                }
+
+                if (_imageFlipTime >= 0)
+                {
+                    bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") + Time.deltaTime);
+                    _imageFlipTime -= Time.deltaTime;
+                }
+                else
+                {
+                    _isInput[1] = false;
+                }
                 break;
             // Back to Title to CautionPanel
             case 2:
+                audio.uiSE = (AudioManager.UISE)1;
+                audio.AudioChanger("UI");
+
                 cautionPanel.SetActive(true);
                 caucau.enabled = true;
+                _isInput[1] = false;
                 this.enabled = false;
                 break;
             // to Option
             case 3:
-                sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
+                if (!_isLoaded)
+                {
+                    _isLoaded = true;
+                    bookimage.material.SetFloat("_Flip", -1f);
+
+                    audio.uiSE = (AudioManager.UISE)4;
+                    audio.AudioChanger("UI");
+
+                    InGameToPauseUI_2._isPause = false;
+                    sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
+                }
+
+                if (_imageFlipTime >= 0)
+                {
+                    bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") + Time.deltaTime * 4);
+                    _imageFlipTime -= Time.deltaTime;
+                }
+                else
+                {
+                    _isInput[1] = false;
+                }
                 break;
         }
-
-        _isInput[1] = false;
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
+        _isFlip = false;
+        _isLoaded = false;
+        _imageFlipTime = 0;
         SceneStateUI_2.sceneState = SceneStateUI_2.SceneState.Pause;
     }
 }

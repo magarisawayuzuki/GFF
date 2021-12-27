@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Chara_2 : MonoBehaviour
 {
-    private CharaParameter _chara = default;
     private int maxLife = default;
     private float maxLifeMag = default;
     private int beforeLife = default;
@@ -22,15 +21,14 @@ public class Chara_2 : MonoBehaviour
 
     protected void SetChara(CharaParameter charaPara)
     {
-        //_chara = GameObject.FindGameObjectWithTag(charaTag).GetComponent<CharaParameter>();
         beforeLife = 0;
-        //maxLife = _chara.life;
         maxLifeMag = 2.68f;
+        maxLife = charaPara.life;
     }
 
     protected virtual void ChangeLife(CharaParameter charaPara, bool isDamage)
     {
-        afterLife = /*maxLife - _chara.*/100 - life;
+        afterLife = maxLife - charaPara.life;
         HPScroll[0].padding = vectorHP * afterLife * 2.68f;
         if (!isDamage)
         {

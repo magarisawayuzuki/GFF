@@ -33,30 +33,53 @@ public class UIController_2 : MonoBehaviour
     private Color _selectorColorTransparency = default;
     private float _selectorFlashCycle = 1;
 
+    [SerializeField] protected Image bookimage;
+    protected float _imageFlipTime = default;
+    protected bool _isFlip = default;
+    protected bool _isLoaded = default;
+
+    protected AudioManager audio = default;
+
     protected virtual void Awake()
     {
+        bookimage.material.SetFloat("_Flip", 1f);
+
         _inputs = new InputController();
         sceneMan = gameObject.AddComponent<UISceneManager_2>();
+
+        audio = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     protected void InputManager()
     {
-        if (!_isInput[0] && !_isInput[1])
+        if (_isFlip)
         {
-            InputSelector();
-            var a = _selectorImage.color.a;
-            a = Mathf.Sin(_selectorFlashCycle * Mathf.PI);
-            _selectorFlashCycle += Time.deltaTime;
-            _selectorColorTransparency = _selectorImage.color;
-            if (a >= 0.65f)
+            if (!_isInput[0] && !_isInput[1])
             {
-                _selectorColorTransparency.a = a;
+                InputSelector();
+                var a = _selectorImage.color.a;
+                a = Mathf.Sin(_selectorFlashCycle * Mathf.PI);
+                _selectorFlashCycle += Time.deltaTime;
+                _selectorColorTransparency = _selectorImage.color;
+                if (a >= 0.65f)
+                {
+                    _selectorColorTransparency.a = a;
+                }
+                _selectorImage.color = _selectorColorTransparency;
             }
-            _selectorImage.color = _selectorColorTransparency;
+            else if (_isInput[0] && !_isInput[1])
+            {
+                SelectorResize();
+            }
         }
-        else if (_isInput[0] && !_isInput[1])
+        else if(!_isFlip)
         {
-            SelectorResize();
+            bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") - Time.deltaTime * 4);
+            _imageFlipTime += Time.deltaTime;
+            if (!(_imageFlipTime < 0.6f && _imageFlipTime > -0.6f) && !_isLoaded)
+            {
+                _isFlip = true;
+            }
         }
     }
 
@@ -75,6 +98,8 @@ public class UIController_2 : MonoBehaviour
             {
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].up;
                 _isInput[0] = true;
+                audio.uiSE = (AudioManager.UISE)0;
+                audio.AudioChanger("UI");
             }
         }
         // 下
@@ -84,6 +109,8 @@ public class UIController_2 : MonoBehaviour
             {
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].down;
                 _isInput[0] = true;
+                audio.uiSE = (AudioManager.UISE)0;
+                audio.AudioChanger("UI");
             }
         }
         // 右
@@ -93,6 +120,8 @@ public class UIController_2 : MonoBehaviour
             {
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].right;
                 _isInput[0] = true;
+                audio.uiSE = (AudioManager.UISE)0;
+                audio.AudioChanger("UI");
             }
         }
         // 左
@@ -102,6 +131,8 @@ public class UIController_2 : MonoBehaviour
             {
                 _nowSelectNumber = _select[_nowSelectNumber - ONE].left;
                 _isInput[0] = true;
+                audio.uiSE = (AudioManager.UISE)0;
+                audio.AudioChanger("UI");
             }
         }
     }

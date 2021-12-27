@@ -6,17 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class TitleUI_2 : UIController_2
 {
-    [SerializeField] private string InGameSceneName;
-    [SerializeField] private string OptionSceneName;
-
     [SerializeField] private GameObject cautionPanel;
     [SerializeField] private CautionPanel_2 caucau;
-    [SerializeField] private Image bookimage;
-    private float _imageFlipTime = default;
 
     private void Start()
     {
-        bookimage.material.SetFloat("_Flip", 1f);
+        audio.bgm = (AudioManager.BGM)0;
+        audio.AudioChanger("BGM");
 
         _nowSelectNumber = 1;
 
@@ -26,17 +22,9 @@ public class TitleUI_2 : UIController_2
 
     private void Update()
     {
-        if (_imageFlipTime <= 2)
-        {
-            bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") - Time.deltaTime);
-            _imageFlipTime += Time.deltaTime * 2;
-        }
-        else
-        {
-            InputManager();
-        }
+        InputManager();
 
-        if (_isInput[1])
+        if(_isInput[1])
         {
             TitleSelector();
         }
@@ -48,26 +36,75 @@ public class TitleUI_2 : UIController_2
         {
             // to InGame
             case 1:
-                sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title));
+                if (!_isLoaded)
+                {
+                    _isLoaded = true;
+                    bookimage.material.SetFloat("_Flip", -1f);
+
+                    audio.uiSE = (AudioManager.UISE)1;
+                    audio.AudioChanger("UI");
+                    audio.uiSE = (AudioManager.UISE)4;
+                    audio.AudioChanger("UI");
+
+                    sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Main), false, 10);
+                    sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title));
+                }
+
+                if (_imageFlipTime >= 0)
+                {
+                    bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") + Time.deltaTime * 4);
+                    _imageFlipTime -= Time.deltaTime;
+                }
+                else
+                {
+                    _isInput[1] = false;
+                }
                 break;
             // to Option
             case 2:
-                sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title));
+                if (!_isLoaded)
+                {
+                    _isLoaded = true;
+                    bookimage.material.SetFloat("_Flip", -1f);
+
+                    audio.uiSE = (AudioManager.UISE)4;
+                    audio.AudioChanger("UI");
+
+                    sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title));
+                }
+
+                if (_imageFlipTime >= 0)
+                {
+                    bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") + Time.deltaTime * 4);
+                    _imageFlipTime += Time.deltaTime;
+                }
+                else
+                {
+                    _isInput[1] = false;
+                }
                 break;
             // Exit Game to CautionPanel
             case 3:
+                audio.uiSE = (AudioManager.UISE)1;
+                audio.AudioChanger("UI");
                 cautionPanel.SetActive(true);
                 caucau.enabled = true;
                 this.enabled = false;
+
+                _isInput[1] = false;
+                _isFlip = false;
                 break;
         }
-
-        _isInput[1] = false;
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
+        _isFlip = false;
+        _isLoaded = false;
+
+        audio.bgm = (AudioManager.BGM)0;
+        audio.AudioChanger("BGM");
         SceneStateUI_2.sceneState = SceneStateUI_2.SceneState.Title;
     }
 }

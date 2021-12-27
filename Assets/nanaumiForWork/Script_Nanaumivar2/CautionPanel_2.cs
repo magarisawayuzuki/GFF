@@ -12,6 +12,9 @@ public class CautionPanel_2 : UIController_2
     private void Start()
     {
         cautionText.text = cautionSetence;
+
+        _isFlip = true;
+        bookimage.material.SetFloat("_Flip", -1f);
     }
 
     private void Update()
@@ -20,11 +23,11 @@ public class CautionPanel_2 : UIController_2
 
         if (_isInput[1])
         {
-            CautionPanel(SceneManager.GetActiveScene().name);
+            CautionPanel(SceneManager.GetActiveScene().buildIndex);
         }
     }
 
-    private void CautionPanel(string getSceneName)
+    private void CautionPanel(int getSceneName)
     {
         switch (_nowSelectNumber)
         {
@@ -33,6 +36,8 @@ public class CautionPanel_2 : UIController_2
                 // Exit Game
                 if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title))
                 {
+                    audio.uiSE = (AudioManager.UISE)1;
+                    audio.AudioChanger("UI");
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -42,12 +47,16 @@ public class CautionPanel_2 : UIController_2
                 // Back to Title
                 else /*if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame))*/
                 {
+                    audio.uiSE = (AudioManager.UISE)4;
+                    audio.AudioChanger("UI");
                     SceneManager.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title),LoadSceneMode.Single);
                 }
                 break;
 
             // No
             case 2:
+                audio.uiSE = (AudioManager.UISE)2;
+                audio.AudioChanger("UI");
                 // Back to Title
                 if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title))
                 {
@@ -59,9 +68,9 @@ public class CautionPanel_2 : UIController_2
                     GetComponentInParent<PauseUI_2>().enabled = true;
                 }
 
+                _isInput[1] = false;
                 this.gameObject.SetActive(false);
                 this.enabled = false;
-                _isInput[1] = false;
                 break;
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class UISceneManager_2 : MonoBehaviour
 {
-    private string DefaultSceneName;
+    private int DefaultSceneName;
 
     /// <summary>
     /// シーンのロード
@@ -13,7 +13,7 @@ public class UISceneManager_2 : MonoBehaviour
     /// <param name="NextSceneName">次に読み込むシーン名</param>
     /// <param name="IsUnloadScene">アンロードするしないフラグ</param>
     /// <param name="ThisSceneName">破棄するシーン名</param>
-    public void LoadScene(string NextSceneName, bool IsUnloadScene, string ThisSceneName)
+    public void LoadScene(int NextSceneName, bool IsUnloadScene, int ThisSceneName)
     {
         // アンロードする場合
         if (IsUnloadScene)
@@ -25,7 +25,16 @@ public class UISceneManager_2 : MonoBehaviour
         }
 
         // シーンの追加ロード
-        SceneManager.LoadScene(NextSceneName, LoadSceneMode.Additive);
+        AsyncOperation async = SceneManager.LoadSceneAsync(NextSceneName, LoadSceneMode.Additive);
+        async.allowSceneActivation = false;
+        StartCoroutine(WaitSec(async));
+    }
+
+    private IEnumerator WaitSec(AsyncOperation activeScene)
+    {
+        yield return new WaitForSeconds(0.4f);
+        yield return activeScene.allowSceneActivation = true;
+        yield break;
     }
 
     // イベントハンドラー（イベント発生時に動かしたいアンロードの処理）
@@ -38,7 +47,7 @@ public class UISceneManager_2 : MonoBehaviour
     /// シ－ンのアンロード
     /// </summary>
     /// <param name="SceneName">アンロードするシーン名</param>
-    public void UnLoadScene(string SceneName)
+    public void UnLoadScene(int SceneName)
     {
         SceneManager.UnloadSceneAsync(SceneName,UnloadSceneOptions.None);
         SceneManager.sceneLoaded -= SceneLoaded;
