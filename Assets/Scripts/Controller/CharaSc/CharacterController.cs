@@ -11,7 +11,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     protected CharaParameter charaData = default;
 
-    CharacterAnimationController charaAnimCtrl;
+    protected CharacterAnimationController charaAnimCtrl;
 
     /*
     [SerializeField]
@@ -141,7 +141,11 @@ public class CharacterController : MonoBehaviour
         _life = charaData.life;
     }
 
-    
+    private void Start()
+    {
+        charaAnimCtrl = this.GetComponent<CharacterAnimationController>();
+    }
+
     //==========================================================
 
 
@@ -169,16 +173,9 @@ public class CharacterController : MonoBehaviour
         {
             Attack();
         }
-        
-        
-        ////前フレームと状態が違ったら
-        //if (old_charaStatus != _charaStatus)
-        //{
-        //    //アニメーションを切り替える
-        //    charaAnimCtrl.AnimationChenge(_charaStatus);
-        //    old_charaStatus = _charaStatus;
-        //}
-        
+
+
+
 
         // velocityへ入れる
         transform.position += CharacterMove;
@@ -336,6 +333,7 @@ public class CharacterController : MonoBehaviour
             if (!input._isAttack && input._isJump)
             {
                 //ジャンプ開始
+                _charaStatus = CharacterStatus.Jump;
                 _startJump = true;
                 input._isJump = false;
             }

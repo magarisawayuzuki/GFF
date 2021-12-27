@@ -163,6 +163,18 @@ public class PlayerController : CharacterController
     {
         base.Update();
 
+        print("今" + _charaStatus);
+        print("古い" + old_charaStatus);
+        ////前フレームと状態が違ったら
+        if (old_charaStatus != _charaStatus)
+        {
+            print("a");
+            //アニメーションを切り替える
+            charaAnimCtrl.AnimationChenge(_charaStatus);
+            old_charaStatus = _charaStatus;
+        }
+
+
         MemoryGet();
 
         MomoryGauge();
