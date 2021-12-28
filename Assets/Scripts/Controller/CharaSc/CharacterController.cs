@@ -390,7 +390,7 @@ public class CharacterController : MonoBehaviour
         jumpAccelerationValue = jumpSpeedScale * jumpCurve.Evaluate(jumpTimeCount);
 
         //加速度にジャンプの加速値を加算する
-        acceleration += jumpAccelerationValue * Time.deltaTime;
+        acceleration = jumpAccelerationValue;
     }
 
     /// <summary>
@@ -402,10 +402,10 @@ public class CharacterController : MonoBehaviour
         fallTimeCount += Time.deltaTime;
 
         //重力計算式 時間s*重力加速度m/s²=速度m/s
-        fallAccelerationValue = (fallTimeCount * 9.8f) / 4;
+        fallAccelerationValue = (fallTimeCount * 9.8f) / 6;
 
         //加速度にジャンプの加速値を加算する
-        acceleration -= fallAccelerationValue;
+        acceleration = -fallAccelerationValue;
     }
 
 
