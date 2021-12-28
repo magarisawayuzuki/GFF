@@ -177,8 +177,13 @@ public class CharacterController : MonoBehaviour
 
 
 
+    }
+
+    protected void FixedUpdate()
+    {
         // velocityへ入れる
         transform.position += CharacterMove;
+
     }
 
 

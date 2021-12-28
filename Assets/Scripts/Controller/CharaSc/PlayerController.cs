@@ -221,7 +221,7 @@ public class PlayerController : CharacterController
             _isPeerless = true;
         }
 
-        /*
+        
         // 左クリックで剣攻撃
         #region 剣攻撃入力時間加算
         if (IC.Player.SwordAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started)
@@ -288,7 +288,7 @@ public class PlayerController : CharacterController
         {
             _isSpeedDown = false;
         }
-        */
+        
         return input;
     }
 
