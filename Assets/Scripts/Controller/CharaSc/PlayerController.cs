@@ -163,6 +163,18 @@ public class PlayerController : CharacterController
     {
         base.Update();
 
+        print("今" + _charaStatus);
+        print("古い" + old_charaStatus);
+        ////前フレームと状態が違ったら
+        if (old_charaStatus != _charaStatus)
+        {
+            print("a");
+            //アニメーションを切り替える
+            charaAnimCtrl.AnimationChenge(_charaStatus);
+            old_charaStatus = _charaStatus;
+        }
+
+
         MemoryGet();
 
         MomoryGauge();
@@ -209,6 +221,7 @@ public class PlayerController : CharacterController
             _isPeerless = true;
         }
 
+        
         // 左クリックで剣攻撃
         #region 剣攻撃入力時間加算
         if (IC.Player.SwordAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started)
@@ -275,7 +288,7 @@ public class PlayerController : CharacterController
         {
             _isSpeedDown = false;
         }
-
+        
         return input;
     }
 

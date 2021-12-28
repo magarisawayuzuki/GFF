@@ -17,6 +17,8 @@ TagManager:
   - Ground
   - EventSystem
   - WeaponMemory
+  - HorizontalArea
+  - VerticulArea
   layers:
   - Default
   - TransparentFX

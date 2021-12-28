@@ -11,7 +11,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     protected CharaParameter charaData = default;
 
-    CharacterAnimationController charaAnimCtrl;
+    protected CharacterAnimationController charaAnimCtrl;
 
     /*
     [SerializeField]
@@ -141,7 +141,11 @@ public class CharacterController : MonoBehaviour
         _life = charaData.life;
     }
 
-    
+    private void Start()
+    {
+        charaAnimCtrl = this.GetComponent<CharacterAnimationController>();
+    }
+
     //==========================================================
 
 
@@ -169,19 +173,17 @@ public class CharacterController : MonoBehaviour
         {
             Attack();
         }
-        
-        
-        ////前フレームと状態が違ったら
-        //if (old_charaStatus != _charaStatus)
-        //{
-        //    //アニメーションを切り替える
-        //    charaAnimCtrl.AnimationChenge(_charaStatus);
-        //    old_charaStatus = _charaStatus;
-        //}
-        
 
+
+
+
+    }
+
+    protected void FixedUpdate()
+    {
         // velocityへ入れる
         transform.position += CharacterMove;
+
     }
 
 
@@ -336,6 +338,7 @@ public class CharacterController : MonoBehaviour
             if (!input._isAttack && input._isJump)
             {
                 //ジャンプ開始
+                _charaStatus = CharacterStatus.Jump;
                 _startJump = true;
                 input._isJump = false;
             }
@@ -392,7 +395,7 @@ public class CharacterController : MonoBehaviour
         jumpAccelerationValue = jumpSpeedScale * jumpCurve.Evaluate(jumpTimeCount);
 
         //加速度にジャンプの加速値を加算する
-        acceleration += jumpAccelerationValue * Time.deltaTime;
+        acceleration = jumpAccelerationValue;
     }
 
     /// <summary>
@@ -404,10 +407,10 @@ public class CharacterController : MonoBehaviour
         fallTimeCount += Time.deltaTime;
 
         //重力計算式 時間s*重力加速度m/s²=速度m/s
-        fallAccelerationValue = (fallTimeCount * 9.8f) / 4;
+        fallAccelerationValue = (fallTimeCount * 9.8f) / 6;
 
         //加速度にジャンプの加速値を加算する
-        acceleration -= fallAccelerationValue;
+        acceleration = -fallAccelerationValue;
     }
 
 

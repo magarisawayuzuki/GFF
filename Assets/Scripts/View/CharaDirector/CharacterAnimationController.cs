@@ -20,6 +20,9 @@ public class CharacterAnimationController : MonoBehaviour
 
     private List<AnimationClip> animas = new List<AnimationClip>();
 
+
+    public bool start = false;
+
     private void Start()
     {
         anima = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Animation>();
@@ -28,9 +31,11 @@ public class CharacterAnimationController : MonoBehaviour
         foreach(AnimationState anim in anima)
         {
             this.animas.Add(anim.clip);
+            print("a");
         }
-    }
 
+        
+    }
 
 
     /// <summary>

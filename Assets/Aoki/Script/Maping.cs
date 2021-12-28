@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Maping : UnityEngine.MonoBehaviour
 {
-    //0空気　1床　2壁　3ジャンプエリア 4行けないエリア　
+    //0空気　1床　2壁　3ジャンプエリア 4行けないエリア
     //5プレイヤー 6柔らかい敵　7ノーマル敵 ８硬い敵 9ボス　10fly
     public int[,] stageArray = new int[115, 1066] {
 
@@ -194,12 +194,12 @@ public class Maping : UnityEngine.MonoBehaviour
                 {
                     Instantiate(floorBlock, new Vector3(j, i, 0), Quaternion.identity,block);
                 }
-
+                */
                 if (stageArray[i, j] == 5)
                 {
                     Instantiate(Player, new Vector3(j, i, 0), Quaternion.identity);
                 }
-                */
+                
                 if (stageArray[i, j] == 6)
                 {
                     Instantiate(Enemy[0], new Vector3(j, i + EnemyY[0], 0), Quaternion.identity, EnemyList[0]);                  
