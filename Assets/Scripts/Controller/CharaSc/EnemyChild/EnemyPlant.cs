@@ -6,8 +6,8 @@ using UnityEngine;
 /// 近距離攻撃のAI
 /// </summary>
 public class EnemyPlant : EnemyController
-{
-    PlayerController chara;
+{    
+    PlayerController playerController;
     private float damage = 5;
     protected override void Awake()
     {
@@ -49,7 +49,7 @@ public class EnemyPlant : EnemyController
     {
         // PLAYERオブジェクトを取得
         player = GameObject.FindGameObjectWithTag("Player");
-        chara = player.GetComponent<PlayerController>();
+        playerController = player.GetComponent<PlayerController>();
     }
     //AI動作を記述
     public override PlayerInput InputMethod()
@@ -84,6 +84,7 @@ public class EnemyPlant : EnemyController
         damageScaleSword = data.swordScale;
         damageScaleHammer = data.hammerScale;
 
+        anime = 6;
         base.CharaLifeCalculation(damage, knockBack, weapon);
     }
 
@@ -229,6 +230,11 @@ public class EnemyPlant : EnemyController
                 {
                     Spritetime[2] = MaxLeng[5] - 1;
                     Spritetime[3] = 0;
+
+                    if (charaData.life <= 0)
+                    {
+                        gameObject.SetActive(false);
+                    }
                 }
                 break;
 
@@ -300,7 +306,7 @@ public class EnemyPlant : EnemyController
                     //計算した距離が-2から0だった時攻撃を当てた
                     if (GetAttackRange >= -AttackRange && GetAttackRange <= 0)
                     {
-                        chara.CharaLifeCalculation(damage, 0, 0);
+                        playerController.CharaLifeCalculation(damage, 0, 0);
                         print("hit");
                     }
                 }

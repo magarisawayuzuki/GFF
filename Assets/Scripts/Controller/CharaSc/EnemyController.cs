@@ -23,7 +23,7 @@ public class EnemyController : CharacterController
     protected int[] MaxLeng; //spriteのマックス
     [SerializeField]
     public float[] Spritetime;   // spriteループ用の変数
-
+   
     public int anime;　//switch変数
 
     [HideInInspector]
@@ -43,6 +43,7 @@ public class EnemyController : CharacterController
 
     protected int DefaultPosIntX;
     protected int DefaultPosIntY;
+   
     protected float GetAttackRange;
 
     public bool _IsWait;
@@ -52,6 +53,7 @@ public class EnemyController : CharacterController
     public bool _IsTracking;
     public bool _IsMove;
     public bool _IsLook = true;
+    protected bool _IsClone;
     protected int EnemyPositionX = 0; //二次元配列の横
     protected int EnemyPositionY = 0; //二次元配列の縦
 
@@ -96,9 +98,8 @@ public class EnemyController : CharacterController
     public override void Death()
     {
         base.Death();
-
+              
         anime = 3;
-
     }
    
 }
