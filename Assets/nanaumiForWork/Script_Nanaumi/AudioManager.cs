@@ -235,30 +235,24 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private bool isSEPlay = default;
     private void AudioChangedUISE()
     {
         switch (uiSE)
         {
             case UISE.Select:
                 ad[3].PlayOneShot(uiclip[0]);
-                isSEPlay = true;
                 break;
             case UISE.Decide:
                 ad[3].PlayOneShot(uiclip[1]);
-                isSEPlay = true;
                 break;
             case UISE.Back:
                 ad[3].PlayOneShot(uiclip[2]);
-                isSEPlay = true;
                 break;
             case UISE.ToPause:
                 ad[3].PlayOneShot(uiclip[3]);
-                isSEPlay = true;
                 break;
             case UISE.Transition:
                 ad[3].PlayOneShot(uiclip[4]);
-                isSEPlay = true;
                 break;
         }
     }

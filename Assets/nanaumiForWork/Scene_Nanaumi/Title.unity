@@ -964,10 +964,27 @@ MonoBehaviour:
   bossSE: 0
   uiSE: 0
   bgmclip:
-  - {fileID: 8300000, guid: dbbdb1c69fd8df748b1ded8a0b894242, type: 3}
-  - {fileID: 8300000, guid: 2b053e56124f11f45b20a4dc8314dd3c, type: 3}
-  playerclip: []
-  bossclip: []
+  - {fileID: 8300000, guid: 07f54671362fb334ca46f8ed24d0d0cf, type: 3}
+  - {fileID: 8300000, guid: e3d9209dcae770e40885625fcb260f79, type: 3}
+  - {fileID: 8300000, guid: 7734cc4ff5d3d444da7d1ff260f7a7d7, type: 3}
+  - {fileID: 8300000, guid: f767c0919644f1840895d5a3a74e513a, type: 3}
+  playerclip:
+  - {fileID: 8300000, guid: e4db50f5937ccf248aba82dbf78d03ad, type: 3}
+  - {fileID: 8300000, guid: e4db50f5937ccf248aba82dbf78d03ad, type: 3}
+  - {fileID: 8300000, guid: 61ad4c54b68acd840b83a6027438c86d, type: 3}
+  - {fileID: 8300000, guid: 61ad4c54b68acd840b83a6027438c86d, type: 3}
+  - {fileID: 8300000, guid: 61ad4c54b68acd840b83a6027438c86d, type: 3}
+  - {fileID: 8300000, guid: 903293ec8ff5abd4d9135914ba9147d6, type: 3}
+  - {fileID: 8300000, guid: 903293ec8ff5abd4d9135914ba9147d6, type: 3}
+  - {fileID: 8300000, guid: fb4b4b74097033441b26599150e3764f, type: 3}
+  bossclip:
+  - {fileID: 8300000, guid: 4bdf770f722c019438de9e43d249234a, type: 3}
+  - {fileID: 8300000, guid: 54fa6bb4ca63abe48ac98b14d1719315, type: 3}
+  - {fileID: 8300000, guid: f3b488152634fd54f8d2d338b7974659, type: 3}
+  - {fileID: 8300000, guid: 6650e3fb69a0f4d4c9f2fd26a077ce04, type: 3}
+  - {fileID: 8300000, guid: e6632b7508acacc4e9322fb7d70eac7b, type: 3}
+  - {fileID: 8300000, guid: e1ee0fc2c24860c41a2ece5e7ccdbc3f, type: 3}
+  - {fileID: 8300000, guid: 7c01f771afe32c549a274bf8543b4583, type: 3}
   uiclip:
   - {fileID: 8300000, guid: e1ef646f28106f0498e4e9a48196e24e, type: 3}
   - {fileID: 8300000, guid: e8813d048b11ce84ea1aab725d0d3041, type: 3}
@@ -1902,7 +1919,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 398.5, y: 226.6}
-  m_SizeDelta: {x: 843.95654, y: 495.0475}
+  m_SizeDelta: {x: 1066.7603, y: 625.7396}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2103550519
 MonoBehaviour:
@@ -1917,7 +1934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3773585, g: 0.3253827, b: 0.3253827, a: 1}
+  m_Color: {r: 0.34804204, g: 0.33495015, b: 0.3679245, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -52,8 +52,8 @@ public class InGameToPauseUI_2 : UIController_2
                 _isLoaded = true;
                 bookimage.material.SetFloat("_Flip", -1f);
 
-                audio.uiSE = (AudioManager.UISE)3;
-                audio.AudioChanger("UI");
+                audios.uiSE = (AudioManager.UISE)3;
+                audios.AudioChanger("UI");
 
                 sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause), false, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame));
             }
@@ -93,8 +93,8 @@ public class InGameToPauseUI_2 : UIController_2
         _isFlip = false;
         _isLoaded = false;
 
-        audio.bgm = (AudioManager.BGM)1;
-        audio.AudioChanger("BGM");
+        audios.bgm = (AudioManager.BGM)1;
+        audios.AudioChanger("BGM");
         SceneStateUI_2.sceneState = SceneStateUI_2.SceneState.InGame;
     }
 }

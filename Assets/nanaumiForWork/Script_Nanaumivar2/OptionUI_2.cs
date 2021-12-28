@@ -8,9 +8,9 @@ public class OptionUI_2 : UIController_2
 {
     private bool _isVolumeChange = false;
 
-    [SerializeField] private Slider[] slider;
+    [SerializeField] private Slider[] slider = default;
 
-    [SerializeField] private int _volumeSliderMagnitude;
+    [SerializeField] private int _volumeSliderMagnitude = default;
 
     private void Start()
     {
@@ -81,13 +81,13 @@ public class OptionUI_2 : UIController_2
             switch (sceneState)
             {
                 case SceneStateUI_2.SceneState.Title:
-                    audio.uiSE = (AudioManager.UISE)4;
-                    audio.AudioChanger("UI");
+                    audios.uiSE = (AudioManager.UISE)4;
+                    audios.AudioChanger("UI");
                     sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option));
                     break;
                 case SceneStateUI_2.SceneState.Pause:
-                    audio.uiSE = (AudioManager.UISE)4;
-                    audio.AudioChanger("UI");
+                    audios.uiSE = (AudioManager.UISE)4;
+                    audios.AudioChanger("UI");
                     sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option));
                     break;
             }

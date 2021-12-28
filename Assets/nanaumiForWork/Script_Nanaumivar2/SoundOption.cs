@@ -8,22 +8,21 @@ public class SoundOption : MonoBehaviour
 
 	//　SoundOptionキャンバスを設定
 	[SerializeField]
-	private GameObject soundUI;
+	private GameObject soundUI = default;
 	//　GameSoundShot
 	[SerializeField]
-	private AudioMixerSnapshot gameSoundShot;
+	private AudioMixerSnapshot gameSoundShot = default;
 	//　OptionSoundShot
 	[SerializeField]
-	private AudioMixerSnapshot optionSoundShot;
+	private AudioMixerSnapshot optionSoundShot = default;
 
 	[SerializeField]
-	private AudioMixer audioMixer;
+	private AudioMixer audioMixer = default;
 
-	private InputController inputs;
+	private InputController inputs = default;
 
-	[SerializeField] private Slider[] sliders;
+	[SerializeField] private Slider[] sliders = default;
 
-	private bool _isChange = default;
     private void Awake()
     {
 		inputs = new InputController();

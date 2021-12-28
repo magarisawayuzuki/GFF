@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Chara_2 : MonoBehaviour
 {
     private int maxLife = default;
-    private float maxLifeMag = default;
     private int beforeLife = default;
     private int afterLife = default;
 
@@ -22,7 +21,6 @@ public class Chara_2 : MonoBehaviour
     protected void SetChara(CharaParameter charaPara)
     {
         beforeLife = 0;
-        maxLifeMag = 2.68f;
         maxLife = charaPara.life;
     }
 

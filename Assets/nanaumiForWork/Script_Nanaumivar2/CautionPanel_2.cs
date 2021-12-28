@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class CautionPanel_2 : UIController_2
 {
-    [SerializeField] private string cautionSetence;
-    [SerializeField] private Text cautionText;
+    [SerializeField] private string cautionSetence = default;
+    [SerializeField] private Text cautionText = default;
 
     private void Start()
     {
@@ -36,8 +36,8 @@ public class CautionPanel_2 : UIController_2
                 // Exit Game
                 if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title))
                 {
-                    audio.uiSE = (AudioManager.UISE)1;
-                    audio.AudioChanger("UI");
+                    audios.uiSE = (AudioManager.UISE)1;
+                    audios.AudioChanger("UI");
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -47,16 +47,16 @@ public class CautionPanel_2 : UIController_2
                 // Back to Title
                 else /*if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame))*/
                 {
-                    audio.uiSE = (AudioManager.UISE)4;
-                    audio.AudioChanger("UI");
+                    audios.uiSE = (AudioManager.UISE)4;
+                    audios.AudioChanger("UI");
                     SceneManager.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title),LoadSceneMode.Single);
                 }
                 break;
 
             // No
             case 2:
-                audio.uiSE = (AudioManager.UISE)2;
-                audio.AudioChanger("UI");
+                audios.uiSE = (AudioManager.UISE)2;
+                audios.AudioChanger("UI");
                 // Back to Title
                 if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title))
                 {

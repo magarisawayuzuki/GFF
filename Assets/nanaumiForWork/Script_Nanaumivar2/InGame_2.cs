@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class InGame_2 : Chara_2
 {
-    [SerializeField, Range(0, 2)] private int _testaaa = default;
+    //[SerializeField, Range(0, 2)] private int _testaaa = default;
     [SerializeField] private CharaParameter _playerPara = default;
-    [SerializeField, Range(0, 100)] private int _testbbb = default;
+    //[SerializeField, Range(0, 100)] private int _testbbb = default;
 
     #region 記憶ゲージ
     [SerializeField] private RectMask2D _memoryGaugeBar = default;
@@ -23,7 +23,7 @@ public class InGame_2 : Chara_2
     private GameObject _memoryAchinementObj = default;
     private RectMask2D _memoryGaugeAchievementBar = default;
     private Text _memoryAchivementText = default;
-    [SerializeField] private MemoryAchievementController memoAchi = default;
+    [SerializeField,Tooltip("記憶達成度入れてください")] private MemoryAchievementController memoAchi = default;
     private const float MAX_MEMORY_ACHIVEMENT = 100;
     private float _beforeMemoryAchievement = default;
     private float _afterMemoryAchievement = default;
