@@ -6,14 +6,18 @@ using UnityEngine;
 /// 近距離攻撃のAI
 /// </summary>
 public class EnemyRock : EnemyController
-{
-    PlayerController chara;
+{  
+   
+
+    PlayerController playerController;
     private float damage = 10;
     [SerializeField]
     private float CenterX;
+
     protected override void Awake()
     {
         base.Awake();
+
         //------------二次元配列のスクリプト取得------------------
         GameObject en = GameObject.FindGameObjectWithTag("Map");
         map = en.GetComponent<Maping>();
@@ -55,7 +59,7 @@ public class EnemyRock : EnemyController
     {
         // PLAYERオブジェクトを取得
         player = GameObject.FindGameObjectWithTag("Player");
-        chara = player.GetComponent<PlayerController>();
+        playerController = player.GetComponent<PlayerController>();
     }
     //AI動作を記述
     public override PlayerInput InputMethod()
@@ -237,7 +241,12 @@ public class EnemyRock : EnemyController
                 if (Spritetime[2] >= MaxLeng[5])
                 {
                     Spritetime[2] = MaxLeng[5] - 1;
-                    Spritetime[3] = 0;                   
+                    Spritetime[3] = 0;
+
+                    if (charaData.life <= 0)
+                    {
+                        gameObject.SetActive(false);
+                    }
                 }
                 break;
 
@@ -311,7 +320,7 @@ public class EnemyRock : EnemyController
                     //計算した距離が-2から0だった時攻撃を当てた
                     if (GetAttackRange >= -AttackRange && GetAttackRange <= 0)
                     {
-                        chara.CharaLifeCalculation(damage,0,0);
+                        playerController.CharaLifeCalculation(damage,0,0);
                         print("hit");
                     }
                 }

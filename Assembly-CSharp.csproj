@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{21135F45-38B6-01AC-3331-50FBEFBC1AD2}</ProjectGuid>
+    <ProjectGuid>{D711B9AE-E080-47D1-FA3D-CC15963BCCDC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -47,7 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>4.9.1.0</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>4.11.4.0</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>2020.1.2f1</UnityVersion>
@@ -65,8 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\CautionPanel_2.cs" />
+    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\EnemyUI.cs" />
     <Compile Include="Assets\Aoki\Script\SlideHp.cs" />
-    <Compile Include="Assets\Takeda\Player.cs" />
+    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\OptionUI.cs" />
+    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\PauseUI.cs" />
     <Compile Include="Assets\Aoki\Script\EnemyData.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
     <Compile Include="Assets\Magarisawa\CameraMove.cs" />
@@ -81,27 +83,32 @@
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryAchievementController.cs" />
     <Compile Include="Assets\Aoki\Script\BossData.cs" />
     <Compile Include="Assets\Scripts\Controller\Input\InputSystem.cs" />
+    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\TitleUI.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharacterAudioController.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\CharacterController.cs" />
     <Compile Include="Assets\Aoki\Script\BossSpell.cs" />
-    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\DontAudioDestory.cs" />
+    <Compile Include="Assets\DontAudioDestory.cs" />
+    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\PlayerScreenUI.cs" />
     <Compile Include="Assets\Scripts\StageController.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyPlant.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharaAnimation\DefaultAnimation.cs" />
+    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\Chara.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\UISceneManager_2.cs" />
     <Compile Include="Assets\Aoki\Script\Boss.cs" />
+    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\InGame.cs" />
     <Compile Include="Assets\Aoki\Script\Maping.cs" />
     <Compile Include="Assets\Aoki\Script\EnemyboolData.cs" />
     <Compile Include="Assets\Aoki\Script\Play.cs" />
     <Compile Include="Assets\Scripts\Model\EnemyParameter.cs" />
+    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\UISceneManager.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\InGame_2.cs" />
     <Compile Include="Assets\Takeda\BoxcastTest.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\InGameToPauseUI_2.cs" />
     <Compile Include="Assets\Scripts\Model\AnimationSpriteData.cs" />
-    <Compile Include="Assets\Takeda\CharaController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\SceneController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryFragment.cs" />
     <Compile Include="Assets\Aoki\Script\Enemy.cs" />
+    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\UIController.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\InputController.cs" />
     <Compile Include="Assets\Magarisawa\CreateStageEditor.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\PlayerController.cs" />
@@ -116,6 +123,7 @@
     <Compile Include="Assets\Scripts\Model\WeaponParameter.cs" />
     <Compile Include="Assets\Magarisawa\Test.cs" />
     <Compile Include="Assets\Scripts\Controller\GimmickSc\GimmickController.cs" />
+    <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\EnemyUI_2.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\OptionUI_2.cs" />
     <Compile Include="Assets\Aoki\Script\EnemySpell.cs" />
     <Compile Include="Assets\Scripts\Controller\GimmickSc\PlayerCheckPoint.cs" />
@@ -131,106 +139,106 @@
     <None Include="Assets\ParticleShadersVol1\Shaders\EM_Particles_Unlit.shader" />
     <None Include="Assets\Aoki\Aseets\Bringer Of Death\Contact.txt" />
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Runtime">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualEffectGraph.Runtime">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.VisualEffectGraph.Runtime.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.VisualEffectGraph.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Searcher.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Triangle.Runtime">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="PsdPlugin">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Psdimporter.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEngineBridge.001">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Common.Runtime">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualEffectGraph.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.VisualEffectGraph.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.VisualEffectGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Common.Editor">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEditorBridge.001">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/Owner/OneDrive/デスクトップ/GFF_Local/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/いしころ/デスクトップ/GFFLocal/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.2f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
