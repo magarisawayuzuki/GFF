@@ -9,6 +9,7 @@ public class EnemyPlant : EnemyController
 {    
     PlayerController playerController;
     private float damage = 5;
+    private float JumpTime;
     protected override void Awake()
     {
         base.Awake();
@@ -58,6 +59,13 @@ public class EnemyPlant : EnemyController
         if (_IsJump == true)
         {           
             input._isJump = true;
+            JumpTime += Time.deltaTime;
+            if(JumpTime >= 0.7)
+            {
+                JumpTime = 0;
+                input._isJump = false;
+                _IsJump = false;
+            }
         }
 
         return input;

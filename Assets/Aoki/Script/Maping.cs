@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Maping : UnityEngine.MonoBehaviour
 {
-    //0空気　1床　2壁　3ジャンプエリア 4行けないエリア
+    //0空気　1床　2壁　3ジャンプエリア 4行けないエリア　
     //5プレイヤー 6柔らかい敵　7ノーマル敵 ８硬い敵 9ボス　10fly
     public int[,] stageArray = new int[115, 1066] {
 
@@ -194,12 +194,12 @@ public class Maping : UnityEngine.MonoBehaviour
                 {
                     Instantiate(floorBlock, new Vector3(j, i, 0), Quaternion.identity,block);
                 }
-                */
+
                 if (stageArray[i, j] == 5)
                 {
                     Instantiate(Player, new Vector3(j, i, 0), Quaternion.identity);
                 }
-                
+                */
                 if (stageArray[i, j] == 6)
                 {
                     Instantiate(Enemy[0], new Vector3(j, i + EnemyY[0], 0), Quaternion.identity, EnemyList[0]);                  
@@ -306,7 +306,8 @@ public class Maping : UnityEngine.MonoBehaviour
             if (EnemyScript.num == 1) //右向き
             {
                 //１つ右が行けないエリアだった場合反転
-                if (stageArray[EnemyNormalPosY[i], EnemyNormalPosX[i] + 2] == 4 || stageArray[EnemyNormalPosY[i] - 1, EnemyNormalPosX[i] + 2] == 4)
+                if (stageArray[EnemyNormalPosY[i], EnemyNormalPosX[i] + 2] == 4 || stageArray[EnemyNormalPosY[i] - 1, EnemyNormalPosX[i] + 2] == 4 ||
+                    stageArray[EnemyNormalPosY[i], EnemyNormalPosX[i] + 2] == 2 && stageArray[EnemyNormalPosY[i], EnemyNormalPosX[i] + 1] == 0)
                 {                   
                     EnemyScript._IsTracking = false; //追跡オフ
                     EnemyScript._IsReturn = true;　//元の位置に戻る
@@ -341,7 +342,8 @@ public class Maping : UnityEngine.MonoBehaviour
             if (EnemyScript.num == -1) //左向き
             {               
                 //１つ左が行けないエリアだった場合反転
-                if (stageArray[EnemyNormalPosY[i], EnemyNormalPosX[i] - 2] == 4 || stageArray[EnemyNormalPosY[i] - 1, EnemyNormalPosX[i] - 2] == 4)
+                if (stageArray[EnemyNormalPosY[i], EnemyNormalPosX[i] - 2] == 4 || stageArray[EnemyNormalPosY[i] - 1, EnemyNormalPosX[i] - 2] == 4 ||
+                    stageArray[EnemyNormalPosY[i], EnemyNormalPosX[i] - 2] == 2 && stageArray[EnemyNormalPosY[i], EnemyNormalPosX[i] - 1] == 0 )
                 {
                     EnemyScript._IsTracking = false; //追跡オフ
                     EnemyScript._IsReturn = true;  //元の位置に戻る
@@ -387,7 +389,8 @@ public class Maping : UnityEngine.MonoBehaviour
             {
 
                 //１つ右が行けないエリアだった場合反転
-                if (stageArray[EnemySoftPosY[i], EnemySoftPosX[i] + 2] == 4 || stageArray[EnemySoftPosY[i] - 1, EnemySoftPosX[i] + 2] == 4)
+                if (stageArray[EnemySoftPosY[i], EnemySoftPosX[i] + 2] == 4 || stageArray[EnemySoftPosY[i] - 1, EnemySoftPosX[i] + 2] == 4 ||
+                    stageArray[EnemySoftPosY[i], EnemySoftPosX[i] + 2] == 2 && stageArray[EnemySoftPosY[i], EnemySoftPosX[i] + 1] == 0)
                 {
                     EnemyScript._IsTracking = false; //追跡オフ
                     EnemyScript._IsReturn = true;　//元の位置に戻る
@@ -423,7 +426,8 @@ public class Maping : UnityEngine.MonoBehaviour
             if (EnemyScript.num == -1) //左向き
             {                
                 //１つ左が行けないエリアだった場合反転
-                if (stageArray[EnemySoftPosY[i], EnemySoftPosX[i] - 2] == 4 || stageArray[EnemySoftPosY[i] - 1, EnemySoftPosX[i] - 2] == 4)
+                if (stageArray[EnemySoftPosY[i], EnemySoftPosX[i] - 2] == 4 || stageArray[EnemySoftPosY[i] - 1, EnemySoftPosX[i] - 2] == 4 ||
+                    stageArray[EnemySoftPosY[i], EnemySoftPosX[i] - 2] == 2 && stageArray[EnemySoftPosY[i], EnemySoftPosX[i] - 1] == 0)
                 {
                     EnemyScript._IsTracking = false; //追跡オフ
                     EnemyScript._IsReturn = true;  //元の位置に戻る
@@ -469,7 +473,8 @@ public class Maping : UnityEngine.MonoBehaviour
             if (EnemyScript.num == 1) //右向き
             {
                 //１つ右が行けないエリアだった場合反転
-                if (stageArray[EnemyHardPosY[i], EnemyHardPosX[i] + 2] == 4 || stageArray[EnemyHardPosY[i] - 1, EnemyHardPosX[i] + 2] == 4)
+                if (stageArray[EnemyHardPosY[i], EnemyHardPosX[i] + 2] == 4 || stageArray[EnemyHardPosY[i] - 1, EnemyHardPosX[i] + 2] == 4 ||
+                    stageArray[EnemyHardPosY[i], EnemyHardPosX[i] + 2] == 2 && stageArray[EnemyHardPosY[i], EnemyHardPosX[i] + 1] == 0)
                 {
                     EnemyScript._IsTracking = false; //追跡オフ
                     EnemyScript._IsReturn = true;　//元の位置に戻る
@@ -503,7 +508,8 @@ public class Maping : UnityEngine.MonoBehaviour
             if (EnemyScript.num == -1) //左向き
             {
                 //１つ左が行けないエリアだった場合反転
-                if (stageArray[EnemyHardPosY[i], EnemyHardPosX[i] - 2] == 4 || stageArray[EnemyHardPosY[i] - 1, EnemyHardPosX[i] - 2] == 4)
+                if (stageArray[EnemyHardPosY[i], EnemyHardPosX[i] - 2] == 4 || stageArray[EnemyHardPosY[i] - 1, EnemyHardPosX[i] - 2] == 4 ||
+                    stageArray[EnemyHardPosY[i], EnemyHardPosX[i] - 2] == 2 && stageArray[EnemyHardPosY[i], EnemyHardPosX[i] - 1] == 0)
                 {
                     EnemyScript._IsTracking = false; //追跡オフ
                     EnemyScript._IsReturn = true;  //元の位置に戻る

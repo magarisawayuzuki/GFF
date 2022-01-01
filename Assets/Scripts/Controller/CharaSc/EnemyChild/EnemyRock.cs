@@ -13,7 +13,7 @@ public class EnemyRock : EnemyController
     private float damage = 10;
     [SerializeField]
     private float CenterX;
-
+    private float JumpTime;
     protected override void Awake()
     {
         base.Awake();
@@ -68,6 +68,13 @@ public class EnemyRock : EnemyController
         if (_IsJump == true)
         {
             input._isJump = true;
+            JumpTime += Time.deltaTime;
+            if (JumpTime >= 0.7)
+            {
+                JumpTime = 0;
+                input._isJump = false;
+                _IsJump = false;
+            }
         }
         return input;
     }
