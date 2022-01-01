@@ -196,7 +196,7 @@ public class CharacterController : MonoBehaviour
     /// <returns></returns>
     public virtual PlayerInput InputMethod()
     {
-        if (input._x != 0 && !input._isJump && input._isAttack && !_isDeath)
+        if (input._x != 0 && !input._isJump && !input._isAttack && !_isDeath)
         {
             _charaStatus = CharacterStatus.Move;
         }

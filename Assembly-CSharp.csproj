@@ -65,10 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\CautionPanel_2.cs" />
-    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\EnemyUI.cs" />
     <Compile Include="Assets\Aoki\Script\SlideHp.cs" />
-    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\OptionUI.cs" />
-    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\PauseUI.cs" />
     <Compile Include="Assets\Aoki\Script\EnemyData.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
     <Compile Include="Assets\Magarisawa\CameraMove.cs" />
@@ -83,24 +80,19 @@
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryAchievementController.cs" />
     <Compile Include="Assets\Aoki\Script\BossData.cs" />
     <Compile Include="Assets\Scripts\Controller\Input\InputSystem.cs" />
-    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\TitleUI.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharacterAudioController.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\CharacterController.cs" />
     <Compile Include="Assets\Aoki\Script\BossSpell.cs" />
-    <Compile Include="Assets\DontAudioDestory.cs" />
-    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\PlayerScreenUI.cs" />
+    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\DontAudioDestory.cs" />
     <Compile Include="Assets\Scripts\StageController.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyPlant.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharaAnimation\DefaultAnimation.cs" />
-    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\Chara.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\UISceneManager_2.cs" />
     <Compile Include="Assets\Aoki\Script\Boss.cs" />
-    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\InGame.cs" />
     <Compile Include="Assets\Aoki\Script\Maping.cs" />
     <Compile Include="Assets\Aoki\Script\EnemyboolData.cs" />
     <Compile Include="Assets\Aoki\Script\Play.cs" />
     <Compile Include="Assets\Scripts\Model\EnemyParameter.cs" />
-    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\UISceneManager.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\InGame_2.cs" />
     <Compile Include="Assets\Takeda\BoxcastTest.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\InGameToPauseUI_2.cs" />
@@ -108,7 +100,6 @@
     <Compile Include="Assets\Scripts\Controller\EventSc\SceneController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryFragment.cs" />
     <Compile Include="Assets\Aoki\Script\Enemy.cs" />
-    <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\UIController.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\InputController.cs" />
     <Compile Include="Assets\Magarisawa\CreateStageEditor.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\PlayerController.cs" />
@@ -123,7 +114,6 @@
     <Compile Include="Assets\Scripts\Model\WeaponParameter.cs" />
     <Compile Include="Assets\Magarisawa\Test.cs" />
     <Compile Include="Assets\Scripts\Controller\GimmickSc\GimmickController.cs" />
-    <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\EnemyUI_2.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\OptionUI_2.cs" />
     <Compile Include="Assets\Aoki\Script\EnemySpell.cs" />
     <Compile Include="Assets\Scripts\Controller\GimmickSc\PlayerCheckPoint.cs" />
