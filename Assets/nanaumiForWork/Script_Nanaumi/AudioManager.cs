@@ -124,10 +124,16 @@ public class AudioManager : MonoBehaviour
                 AudioChangedBGM();
                 break;
             case "Player":
-                AudioChangedPlayerSE();
+                if (!ad[1].isPlaying)
+                {
+                    AudioChangedPlayerSE();
+                }
                 break;
             case "Boss":
-                AudioChangedBossSE();
+                if (!ad[2].isPlaying)
+                {
+                    AudioChangedBossSE();
+                }
                 break;
             case "UI":
                 AudioChangedUISE();

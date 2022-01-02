@@ -18,8 +18,10 @@ public static class SceneStateUI_2
                 return 2;
             case SceneState.Option:
                 return 3;
-            case SceneState.Main:
+            case SceneState.Option2:
                 return 4;
+            case SceneState.Main:
+                return 5;
             default:
                 return 10;
         }
@@ -31,6 +33,7 @@ public static class SceneStateUI_2
         Pause,
         InGame,
         Option,
+        Option2,
         Main
     }
 }

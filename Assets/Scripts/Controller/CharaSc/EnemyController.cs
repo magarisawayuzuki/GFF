@@ -18,6 +18,8 @@ public class EnemyController : CharacterController
     [SerializeField]
     public EnemyData data; //変数データ   
     [SerializeField]
+    protected GameObject kakera; //記憶のかけら
+    [SerializeField]
     protected float AttackRange;  //攻撃範囲
     [SerializeField]
     protected int[] MaxLeng; //spriteのマックス

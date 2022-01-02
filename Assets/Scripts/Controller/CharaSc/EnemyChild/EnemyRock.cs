@@ -252,6 +252,7 @@ public class EnemyRock : EnemyController
 
                     if (charaData.life <= 0)
                     {
+                        Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
                         gameObject.SetActive(false);
                     }
                 }

@@ -70,7 +70,7 @@ public class TitleUI_2 : UIController_2
                     audios.uiSE = (AudioManager.UISE)4;
                     audios.AudioChanger("UI");
 
-                    sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title));
+                    sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option2), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title));
                 }
 
                 if (_imageFlipTime >= 0)

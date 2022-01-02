@@ -83,7 +83,7 @@ public class OptionUI_2 : UIController_2
                 case SceneStateUI_2.SceneState.Title:
                     audios.uiSE = (AudioManager.UISE)4;
                     audios.AudioChanger("UI");
-                    sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option));
+                    sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option2));
                     break;
                 case SceneStateUI_2.SceneState.Pause:
                     audios.uiSE = (AudioManager.UISE)4;

@@ -84,10 +84,13 @@ public class Boss : EnemyController
         Back,
     }
 
+    private AudioManager audios = default;
 
     // Start is called before the first frame update
     void Start()
-    {      
+    {
+        audios = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
         //------------二次元配列のスクリプト取得------------------
         GameObject en = GameObject.FindGameObjectWithTag("Map");
         map = en.GetComponent<Maping>();
@@ -248,6 +251,10 @@ public class Boss : EnemyController
                 break;
             //--------------------------------------待機アニメーション処理-------------------------------------- 
             case EnemyAiState.IDLE:
+                // Audio再生
+                audios.bossSE = (AudioManager.BossSE)0;
+                audios.AudioChanger("Boss");
+
                 _IsReset = false;
 
                 if (_IsWarp == true)
@@ -396,6 +403,10 @@ public class Boss : EnemyController
                 return;
             //--------------------------------------弱攻撃-----------------------------------------
             case EnemyAiState.ATTACK:
+                // Audio再生
+                audios.bossSE = (AudioManager.BossSE)3;
+                audios.AudioChanger("Boss");
+
                 _IsAttack = true;
                 _IsLook = false;                
                 _IsTracking = false;
@@ -419,7 +430,11 @@ public class Boss : EnemyController
                 break;
 
             //------------------------------------召喚処理----------------------------------
-            case EnemyAiState.Summon:             
+            case EnemyAiState.Summon:
+                // Audio再生
+                audios.bossSE = (AudioManager.BossSE)1;
+                audios.AudioChanger("Boss");
+
                 _IsDefaultWarp = false;　
                 _IsReset = false;
                 _IsLook = true;
@@ -455,6 +470,10 @@ public class Boss : EnemyController
 
             //-------------------------------------最初のアニメーションに戻る---------------------------------------
             case EnemyAiState.Back:
+                // Audio再生
+                audios.bossSE = (AudioManager.BossSE)6;
+                audios.AudioChanger("Boss");
+
                 _IsLook = false;
                 _IsTracking = false;
                 BossSprite.sprite = mono.Return[(int)Spritetime[3]];
@@ -472,6 +491,10 @@ public class Boss : EnemyController
 
             //-------------------------------------ワープアニメーション処理-----------------------------------------
             case EnemyAiState.Warp:
+                // Audio再生
+                audios.bossSE = (AudioManager.BossSE)5;
+                audios.AudioChanger("Boss");
+
                 _IsTracking = false;
 
                 _IsReset = false;
@@ -559,6 +582,15 @@ public class Boss : EnemyController
                     aiState = EnemyAiState.StrongSpell;
                 }
 
+                if (Spritetime[5] >= MaxLeng[5] - 6 && Spritetime[5] <= MaxLeng[5] - 1 && _IsDefaultWarp == false)
+                {
+                    // Audio再生
+                    audios.bossSE = (AudioManager.BossSE)6;
+                    audios.AudioChanger("Boss");
+
+                    _IsStrongHit = true;
+                }
+
                 if (Spritetime[5] >= MaxLeng[5])
                 {
                     _IsReset = true;
@@ -612,6 +644,10 @@ public class Boss : EnemyController
 
                 if (Spritetime[6] >= MaxLeng[6])
                 {
+                    // Audio再生
+                    audios.bossSE = (AudioManager.BossSE)2;
+                    audios.AudioChanger("Boss");
+
                     _IsSpell = true;
 
                     _IsReset = true;
@@ -622,6 +658,10 @@ public class Boss : EnemyController
 
             //-------------------------------------------強攻撃----------------------------------------------          
             case EnemyAiState.StorongAttack:
+                // Audio再生
+                audios.bossSE = (AudioManager.BossSE)4;
+                audios.AudioChanger("Boss");
+
                 _IsLook = false;
                 _IsTracking = false;
                 _IsReset = false;

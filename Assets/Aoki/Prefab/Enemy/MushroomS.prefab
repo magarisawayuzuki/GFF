@@ -112,11 +112,11 @@ MonoBehaviour:
   old_charaStatus: 0
   ObjectScale: {x: 0.25, y: 0, z: 0}
   _groundDistance: 1.3
-  _life: 0
   jumpSpeedScale: 1
   player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
   Anime: {fileID: 11400000, guid: 5ee3478ea26bac1478bfd5c5c66bdad1, type: 2}
   data: {fileID: 11400000, guid: 9e7bc4b603b1f8849858d30b76bd9501, type: 2}
+  kakera: {fileID: 4974386505697102817, guid: d1b6d003ea682f040b28538fb84a51ac, type: 3}
   AttackRange: 2
   MaxLeng: 000000000000000000000000000000000000000000000000
   Spritetime:

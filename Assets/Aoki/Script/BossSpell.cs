@@ -61,6 +61,8 @@ public class BossSpell : MonoBehaviour
         }
         else if(boss._IsSpell == true)
         {
+            //////////////////////////////magic
+
             EnemySprite.sprite = mono.Spell[(int)Spritetime[1]];
             Spritetime[1] += Time.deltaTime * AnimeSpeed;
            
