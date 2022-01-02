@@ -26,6 +26,7 @@ public class CameraMove : MonoBehaviour
     //上下にカメラが動く場所か
     [SerializeField]
     private bool _inVerticalArea = false;
+    private bool _BossArea = false;
 
     /// <summary>
     /// 平行移動時に参照するカメラのY座標
@@ -37,17 +38,37 @@ public class CameraMove : MonoBehaviour
     /// </summary>
     private float defaultCameraPos_z = default;
 
-
+    private Vector3 bossStartPos = default;
+    private Vector3 bossEndPos = new Vector3(986, 52, -10);
+    private float distance = default;
+    private Camera camera;
+    [SerializeField]
+    private float bossCameraSizeSpeed = 0.1f;
+    private float bossCameraMoveSpeed = 0.2f;
+    [SerializeField]
+    private GameObject kabe;
 
     private void Start()
     {
+        camera = this.GetComponent<Camera>();
         playerChara = GameObject.FindGameObjectWithTag("Player");
-
+        distance = Vector3.Distance(bossStartPos, bossEndPos);
         defaultCameraPos_z = this.gameObject.transform.position.z;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        if (_BossArea )
+        {
+            if (this.transform.position != bossEndPos || camera.orthographicSize != 18)
+            {
+                this.gameObject.transform.position = Vector3.MoveTowards(this.transform.position,bossEndPos,bossCameraMoveSpeed);
+                if(camera.orthographicSize >= 18) { return; }
+                camera.orthographicSize += bossCameraSizeSpeed * 0.03f;
+            }
+
+            return;
+        }
         CheckDistance();
     }
 
@@ -121,6 +142,13 @@ public class CameraMove : MonoBehaviour
         else if (other.gameObject.tag == VERTICUL_AREA_TAG_NAME)
         {
             _inVerticalArea = true;
+        }
+
+        else if(other.gameObject.tag == "BossArea")
+        {
+            bossStartPos = playerChara.transform.position;
+            _BossArea = true;
+            kabe.gameObject.active = true;
         }
     }
 }

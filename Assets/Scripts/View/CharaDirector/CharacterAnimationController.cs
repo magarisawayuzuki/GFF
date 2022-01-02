@@ -25,7 +25,7 @@ public class CharacterAnimationController : MonoBehaviour
 
     private void Start()
     {
-        anima = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Animation>();
+        anima = this.gameObject.GetComponent<Animation>();
 
         //animationを取得
         foreach(AnimationState anim in anima)
@@ -43,6 +43,7 @@ public class CharacterAnimationController : MonoBehaviour
     /// <param name="charaStats"></param>
     public void AnimationChenge(CharacterController.CharacterStatus charaStats)
     {
+        print((int)charaStats);
         switch ((int)charaStats)
         {
             case (int)copy_status.Idle:
