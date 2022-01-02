@@ -59,14 +59,17 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     protected float _groundDistance = 1.3f;
 
-    private float _life = 0;
+    protected float _life = 0;
 
-    public float GetLife{ get { return _life; }
-    }
+    public float GetLife{ get { return _life; }}
 
     #endregion
 
     #region bool
+    // Damage状態
+    protected bool _isDamage = false;
+    // 落下状態
+    protected bool _isFall = false;
     // 死亡判定
     protected bool _isDeath = false;
     // 着地判定
@@ -74,6 +77,7 @@ public class CharacterController : MonoBehaviour
     // 記憶を持っているか
     protected bool _hasMemory = false;
     protected bool _isSpeedDown = false;
+    // 無双状態
     protected bool _isPeerless = false;
     // 無敵状態
     protected bool _isInvincible = false;
@@ -174,9 +178,6 @@ public class CharacterController : MonoBehaviour
             Attack();
         }
 
-
-
-
     }
 
     protected void FixedUpdate()
@@ -196,11 +197,11 @@ public class CharacterController : MonoBehaviour
     /// <returns></returns>
     public virtual PlayerInput InputMethod()
     {
-        if (input._x != 0 && !input._isJump && !input._isAttack && !_isDeath)
+        if (input._x != 0 && !input._isJump && !_startJump && !_nowJump && !input._isAttack && !_isDeath && !_isFall && !_isDamage)
         {
             _charaStatus = CharacterStatus.Move;
         }
-        else if(!input._isJump && !input._isAttack && !_isDeath)
+        else if(!input._isJump && !_startJump && !_nowJump && !input._isAttack && !_isDeath && !_isFall && !_isDamage)
         {
             _charaStatus = CharacterStatus.Idle;
         }
@@ -264,6 +265,12 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     private void Jump()
     {
+        #region Enum
+        if (input._isJump | _startJump | _nowJump)
+        {
+            _charaStatus = CharacterStatus.Jump;
+        }
+        #endregion
         //攻撃中は停止
         if (input._isAttack)
         {
@@ -285,6 +292,7 @@ public class CharacterController : MonoBehaviour
             }
 
             _isGround = true;
+            _isFall = false;
             acceleration = _ZERO;
             fallTimeCount = _ZERO;
             //this.transform.position = new Vector3(transform.position.x, hit.point.y + 0.5f, transform.position.z);
@@ -403,6 +411,11 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     private void CharaFallProcess()
     {
+        #region Enum
+        _isFall = true;
+        _charaStatus = CharacterStatus.Fall;
+        #endregion
+
         //落下時間
         fallTimeCount += Time.deltaTime;
 
@@ -433,6 +446,7 @@ public class CharacterController : MonoBehaviour
     /// <param name="power"></param>
     public virtual void CharaLifeCalculation(float damage, int knockBack, int weapon)
     {
+        _isDamage = true;
         _charaStatus = CharacterStatus.Damage;
 
         _life -= (int)Mathf.Floor(damage);

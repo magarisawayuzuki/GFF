@@ -151,6 +151,7 @@ public class PlayerController : CharacterController
 
     protected override void Awake()
     {
+        base.Awake();
         IC = new InputSystem();
         checkPointSys = GameObject.FindWithTag(_eventSystem).GetComponent<CheckPointSystem>();
         memoryAchievementController = GameObject.FindWithTag(_eventSystem).GetComponent<MemoryAchievementController>();
@@ -162,18 +163,19 @@ public class PlayerController : CharacterController
     protected override void Update()
     {
         base.Update();
-
+        /*
         print("今" + _charaStatus);
         print("古い" + old_charaStatus);
+        */
         ////前フレームと状態が違ったら
         if (old_charaStatus != _charaStatus)
         {
-            print("a");
             //アニメーションを切り替える
             charaAnimCtrl.AnimationChenge(_charaStatus);
             old_charaStatus = _charaStatus;
         }
 
+        Debug.Log(_life);
 
         MemoryGet();
 
@@ -221,6 +223,10 @@ public class PlayerController : CharacterController
             _isPeerless = true;
         }
 
+        if (transform.position.y <= _ZERO)
+        {
+            checkPointSys.Respawn();
+        }
         
         // 左クリックで剣攻撃
         #region 剣攻撃入力時間加算
@@ -397,6 +403,7 @@ public class PlayerController : CharacterController
     {
         base.Death();
         checkPointSys.Respawn();
+        _life = charaData.life;
         _isDeath = false;
     }
 
@@ -464,11 +471,12 @@ public class PlayerController : CharacterController
         else
         {
             // 時間での減少
-            if (_memoryDownTimer > _ZERO && _memoryGauge > _ZERO)
+            if (_memoryDownTimer > _ZERO)
             {
                 _memoryDownTimer -= Time.deltaTime;
             }
-            else
+            
+            if (_memoryDownTimer <= _ZERO && _memoryGauge > _ZERO)
             {
                 _memoryGauge -= _TIMEMEMORYDOWN;
                 _memoryDownTimer = _ONE;
@@ -567,6 +575,7 @@ public class PlayerController : CharacterController
         if (_invincibleTime <= _ZERO)
         {
             _isInvincible = false;
+            _isDamage = false;
         }
 
         // デバッグ用
@@ -613,7 +622,6 @@ public class PlayerController : CharacterController
         {
             _isInvincible = true;
         }
-        Debug.Log("当たった");
         base.CharaLifeCalculation(damage, knockBack, weapon);
     }
 
