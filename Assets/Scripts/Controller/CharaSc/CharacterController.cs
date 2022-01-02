@@ -88,7 +88,7 @@ public class CharacterController : MonoBehaviour
     protected const int _ZERO = 0;
     protected const int _ONE = 1;
 
-    private const int layerMix = 1 << 8 | 1 << 10;
+    private const int layerMix = 1 << 8 | 1 << 11;
     private const int layerGround = 1 << 8;
     #endregion
 
@@ -277,7 +277,7 @@ public class CharacterController : MonoBehaviour
         if (acceleration <= 0 && Physics.BoxCast(transform.position, ObjectScale, Vector3.down, out RaycastHit hit, Quaternion.identity, _groundDistance, layerMix))
         {
             //透過床の上でダウンが押された
-            if (input._isDown && hit.collider.gameObject.layer == 10)
+            if (input._isDown && hit.collider.gameObject.layer == 11)
             {
                 //落下
                 CharaFallProcess();

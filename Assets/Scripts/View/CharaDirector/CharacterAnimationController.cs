@@ -31,7 +31,6 @@ public class CharacterAnimationController : MonoBehaviour
         foreach(AnimationState anim in anima)
         {
             this.animas.Add(anim.clip);
-            print("a");
         }
 
         
