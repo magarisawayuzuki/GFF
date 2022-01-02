@@ -143,7 +143,7 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
-        charaAnimCtrl = this.GetComponent<CharacterAnimationController>();
+        charaAnimCtrl = this.GetComponentInChildren<CharacterAnimationController>();
     }
 
     //==========================================================
@@ -230,11 +230,11 @@ public class CharacterController : MonoBehaviour
         {
             if (_isPeerless)
             {
-                CharacterMove.x = input._x * 10 * 1.5f * Time.deltaTime;
+                CharacterMove.x = input._x * 20 * 1.5f * Time.deltaTime;
             }
             else
             {
-                CharacterMove.x = input._x * 10 * Time.deltaTime;
+                CharacterMove.x = input._x * 20 * Time.deltaTime;
             }
         }
         else

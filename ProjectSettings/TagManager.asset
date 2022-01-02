@@ -19,6 +19,7 @@ TagManager:
   - WeaponMemory
   - HorizontalArea
   - VerticulArea
+  - BossArea
   layers:
   - Default
   - TransparentFX
