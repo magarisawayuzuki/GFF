@@ -20,6 +20,8 @@ public class EnemyController : CharacterController
     [SerializeField]
     protected GameObject kakera; //記憶のかけら
     [SerializeField]
+    protected GameObject gekitui; //死んだ時のエフェクト
+    [SerializeField]
     protected float AttackRange;  //攻撃範囲
     [SerializeField]
     protected int[] MaxLeng; //spriteのマックス
@@ -100,8 +102,10 @@ public class EnemyController : CharacterController
     public override void Death()
     {
         base.Death();
-              
+
         anime = 3;
+        //Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+        //gameObject.SetActive(false);
     }
    
 }

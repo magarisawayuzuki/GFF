@@ -12,7 +12,87 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ca7e3851dacb5649ba95b4a8f0dbdff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mono: {fileID: 11400000, guid: ebca023170a942d4097053af9f04583a, type: 2}
+  mono: {fileID: 11400000, guid: 585c2a21fe8fda74ba765602097dd03e, type: 2}
+  SummonEnemy: {fileID: 0}
+  AnimeSpeed: 8
+  Spritetime:
+  - 0
+  - 0
+  MaxLeng: 0000000000000000
+  EnemyY: []
+--- !u!114 &7556872474464696195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337973905454019139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca7e3851dacb5649ba95b4a8f0dbdff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mono: {fileID: 11400000, guid: 585c2a21fe8fda74ba765602097dd03e, type: 2}
+  SummonEnemy: {fileID: 0}
+  AnimeSpeed: 8
+  Spritetime:
+  - 0
+  - 0
+  MaxLeng: 0000000000000000
+  EnemyY: []
+--- !u!114 &2394148480579613264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337973905485848312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca7e3851dacb5649ba95b4a8f0dbdff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mono: {fileID: 11400000, guid: 585c2a21fe8fda74ba765602097dd03e, type: 2}
+  SummonEnemy: {fileID: 0}
+  AnimeSpeed: 8
+  Spritetime:
+  - 0
+  - 0
+  MaxLeng: 0000000000000000
+  EnemyY: []
+--- !u!114 &731444738863648798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337973905947764618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca7e3851dacb5649ba95b4a8f0dbdff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mono: {fileID: 11400000, guid: 585c2a21fe8fda74ba765602097dd03e, type: 2}
+  SummonEnemy: {fileID: 0}
+  AnimeSpeed: 8
+  Spritetime:
+  - 0
+  - 0
+  MaxLeng: 0000000000000000
+  EnemyY: []
+--- !u!114 &147948871660664264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5337973906425157861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ca7e3851dacb5649ba95b4a8f0dbdff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mono: {fileID: 11400000, guid: 585c2a21fe8fda74ba765602097dd03e, type: 2}
   SummonEnemy: {fileID: 0}
   AnimeSpeed: 8
   Spritetime:
@@ -55,86 +135,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7556872474464696195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5337973905454019139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ca7e3851dacb5649ba95b4a8f0dbdff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mono: {fileID: 11400000, guid: ebca023170a942d4097053af9f04583a, type: 2}
-  SummonEnemy: {fileID: 0}
-  AnimeSpeed: 8
-  Spritetime:
-  - 0
-  - 0
-  MaxLeng: 0000000000000000
-  EnemyY: []
---- !u!114 &2394148480579613264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5337973905485848312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ca7e3851dacb5649ba95b4a8f0dbdff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mono: {fileID: 11400000, guid: ebca023170a942d4097053af9f04583a, type: 2}
-  SummonEnemy: {fileID: 0}
-  AnimeSpeed: 8
-  Spritetime:
-  - 0
-  - 0
-  MaxLeng: 0000000000000000
-  EnemyY: []
---- !u!114 &731444738863648798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5337973905947764618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ca7e3851dacb5649ba95b4a8f0dbdff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mono: {fileID: 11400000, guid: ebca023170a942d4097053af9f04583a, type: 2}
-  SummonEnemy: {fileID: 0}
-  AnimeSpeed: 8
-  Spritetime:
-  - 0
-  - 0
-  MaxLeng: 0000000000000000
-  EnemyY: []
---- !u!114 &147948871660664264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5337973906425157861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ca7e3851dacb5649ba95b4a8f0dbdff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mono: {fileID: 11400000, guid: ebca023170a942d4097053af9f04583a, type: 2}
-  SummonEnemy: {fileID: 0}
-  AnimeSpeed: 8
-  Spritetime:
-  - 0
-  - 0
-  MaxLeng: 0000000000000000
-  EnemyY: []
 --- !u!1001 &6979431124645691018
 PrefabInstance:
   m_ObjectHideFlags: 0

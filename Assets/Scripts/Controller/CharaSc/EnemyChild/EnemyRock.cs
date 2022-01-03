@@ -100,6 +100,7 @@ public class EnemyRock : EnemyController
         damageScaleSword = data.swordScale;
         damageScaleHammer = data.hammerScale;
 
+        anime = 6;
         base.CharaLifeCalculation(damage, knockBack, weapon);
     }
 
@@ -177,8 +178,10 @@ public class EnemyRock : EnemyController
         {
             Spritetime[i] = 0;
         }
-       
-            anime = 1;        
+        if (_isDeath == false)
+        {
+            anime = 1;
+        }
     }
 
     private void OnBecameInvisible() //カメラ外処理
@@ -189,12 +192,15 @@ public class EnemyRock : EnemyController
         }
 
         _InEnemy = false;
-        anime = 3;
+        if (_isDeath == false)
+        {
+            anime = 3;
+        }
     }
 
     //--------------------------switch文-------------------------------
     private void AnimeMotion()
-    {             
+    {
         // MaxLeng[](0リスポーン 1移動　２待機 3攻撃 4攻撃を当てられた 5死亡
         // Spritetime[](0リスポーン　1移動　2最初のspritに（死亡）　3待機　4攻撃　5攻撃を当てられた
        
@@ -245,16 +251,16 @@ public class EnemyRock : EnemyController
             case 3:　//最初のアニメーションに戻る
                 EnemySprite.sprite = Anime.Death[(int)Spritetime[2]];
                 Spritetime[2] += Time.deltaTime * data.AnimeSpeed[0];
+
+                gekitui.gameObject.SetActive(true);
+
                 if (Spritetime[2] >= MaxLeng[5])
                 {
-                    Spritetime[2] = MaxLeng[5] - 1;
-                    Spritetime[3] = 0;
+                    Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+                    gameObject.SetActive(false);
 
-                    if (charaData.life <= 0)
-                    {
-                        Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
-                        gameObject.SetActive(false);
-                    }
+                    //Spritetime[2] = MaxLeng[5] - 1;
+                    //Spritetime[3] = 0;                   
                 }
                 break;
 
@@ -266,7 +272,7 @@ public class EnemyRock : EnemyController
 
                 //待機状態中にplayerが範囲に入った場合追跡再開
                 if (EnemyPositionX + AttackRange + 3 >= map.PlayerPositionX && EnemyPositionX + AttackRange + 3 <= map.PlayerPositionX && num == 1
-                    && _IsWait == true)
+                    && _IsWait == true && _isDeath == false)
                 {
                     _IsTracking = true;
                     _IsLook = true;
@@ -274,7 +280,7 @@ public class EnemyRock : EnemyController
                     anime = 2;
                 }
                 if (EnemyPositionX - AttackRange - 3 >= map.PlayerPositionX && EnemyPositionX - AttackRange - 3 <= map.PlayerPositionX && num == -1
-                    && _IsWait == true)
+                    && _IsWait == true && _isDeath == false)
                 {
                     _IsTracking = true;
                     _IsLook = true;
@@ -287,7 +293,7 @@ public class EnemyRock : EnemyController
                     Spritetime[3] = 0;
 
                     //カメラ内にいるかつ待機中ではない時
-                    if (_InEnemy == true && _IsTrackingWait == false)
+                    if (_InEnemy == true && _IsTrackingWait == false && _isDeath == false)
                     {
                         _IsAttack = true;
                     }
@@ -344,7 +350,7 @@ public class EnemyRock : EnemyController
                 EnemySprite.sprite = Anime.TakeHit[(int)Spritetime[5]];
                 Spritetime[5] += Time.deltaTime * data.AnimeSpeed[4];
 
-                if (Spritetime[5] >= MaxLeng[4])
+                if (Spritetime[5] >= MaxLeng[4] && _isDeath == false)
                 {
                     print("hit");
                     Spritetime[5] = 0;
@@ -362,7 +368,8 @@ public class EnemyRock : EnemyController
         if (num == 1) //右向き
         {
             //2つ右がプレイヤーだった場合攻撃
-            if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX && _IsLook == true)
+            if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX && _IsLook == true
+                && _isDeath == false)
             {
                 if (_IsAttack == true)
                 {
@@ -374,7 +381,7 @@ public class EnemyRock : EnemyController
                 }
             }
             //攻撃範囲外の場合追跡
-            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true)
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false)
             {
                 _IsTracking = true;
                 anime = 2;
@@ -384,7 +391,8 @@ public class EnemyRock : EnemyController
         if (num == -1) //左向き
         {
             //2つ左がプレイヤーだった場合攻撃
-            if (EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX && _IsLook == true)
+            if (EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX && _IsLook == true
+                && _isDeath == false)
             {
                 if (_IsAttack == true)
                 {
@@ -396,7 +404,8 @@ public class EnemyRock : EnemyController
                 }
             }
             //攻撃範囲外の場合追跡
-            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true)
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true
+                && _isDeath == false)
             {
                 _IsTracking = true;
                 anime = 2;
@@ -409,7 +418,7 @@ public class EnemyRock : EnemyController
     private void Bool()
     {      
         //----------------元の座標に戻っている---------------
-        if (_IsReturn == true)
+        if (_IsReturn == true && _isDeath == false)
         {
             //追跡をoff
             _IsLook = false;
@@ -420,7 +429,7 @@ public class EnemyRock : EnemyController
         //---------------元の座標についたとき最初のspriteに戻る---------------------
         if (_IsTracking == false && _IsReturn == true)
         {
-            if (pos.x <= DefaultPos.x && _Retrcking == true)　//左に向いている
+            if (pos.x <= DefaultPos.x && _Retrcking == true && _isDeath == false)　//左に向いている
             {
                 _IsReturn = false;　//元に戻った
                 _Retrcking = false; //反転

@@ -231,11 +231,11 @@ public class CharacterController : MonoBehaviour
         {
             if (_isPeerless)
             {
-                CharacterMove.x = input._x * 20 * 1.5f * Time.deltaTime;
+                CharacterMove.x = input._x * 10 * 1.5f;
             }
             else
             {
-                CharacterMove.x = input._x * 20 * Time.deltaTime;
+                CharacterMove.x = input._x * 0.5f;
             }
         }
         else
@@ -271,6 +271,7 @@ public class CharacterController : MonoBehaviour
             _charaStatus = CharacterStatus.Jump;
         }
         #endregion
+
         //攻撃中は停止
         if (input._isAttack)
         {
@@ -450,6 +451,7 @@ public class CharacterController : MonoBehaviour
         _charaStatus = CharacterStatus.Damage;
 
         _life -= (int)Mathf.Floor(damage);
+        Debug.Log((int)Mathf.Floor(damage));
 
         if (_life <= 0)
         {

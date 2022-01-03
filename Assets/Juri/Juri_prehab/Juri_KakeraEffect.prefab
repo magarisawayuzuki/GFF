@@ -9634,9 +9634,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4974386505697102823}
   - component: {fileID: 4974386505697102816}
+  - component: {fileID: 2131359568359460671}
   m_Layer: 0
   m_Name: Juri_KakeraEffect
-  m_TagString: Untagged
+  m_TagString: MemoryFragment
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9677,6 +9678,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2131359568359460671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4974386505697102817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f5a24af8413c14e98b6c6e2e9b625f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 0}
+  _TRACKING_SPEED: 5
 --- !u!1 &4974386505843716821
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6513f89c934dc724292cf4aa3fdb14ac, type: 3}
   m_Name: PlayerParamater
   m_EditorClassIdentifier: 
-  basicPower: 0
+  basicPower: 5
   speed: 0
   life: 100

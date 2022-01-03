@@ -20,12 +20,15 @@ public class CharacterAnimationController : MonoBehaviour
 
     private List<AnimationClip> animas = new List<AnimationClip>();
 
+    private PlayerController playerc;
 
     public bool start = false;
 
     private void Start()
     {
         anima = this.gameObject.GetComponent<Animation>();
+
+        playerc = GetComponentInParent<PlayerController>();
 
         //animationを取得
         foreach(AnimationState anim in anima)
@@ -80,5 +83,11 @@ public class CharacterAnimationController : MonoBehaviour
 
                 return;
         }
+    }
+
+    public void EndAttack()
+    {
+        GameObject weapon = GameObject.FindWithTag("Weapon");
+        playerc.EndAttack(weapon);
     }
 }
