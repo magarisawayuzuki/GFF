@@ -12,7 +12,7 @@ public class MemoryFragment : MonoBehaviour
 
     private void Awake()
     {
-        GameObject.FindWithTag("Player");
+        _player = GameObject.FindWithTag("Player");
     }
 
     private void Update()

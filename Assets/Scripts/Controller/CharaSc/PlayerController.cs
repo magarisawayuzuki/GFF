@@ -17,11 +17,10 @@ public class PlayerController : CharacterController
     private CheckPointSystem checkPointSys;
     private MemoryAchievementController memoryAchievementController;
 
-
     #region Vecter3
     // 攻撃の範囲
     private Vector3 _attackScale = new Vector3(1, 2.5f);
-    private Vector3 _playerScale = new Vector3(0, 2);
+    private Vector3 _playerScale = new Vector3(0, 2.5f);
     private Vector3 _attackDirection = new Vector3(1, 0);
     private Vector3 _playerFlontScale = new Vector3(1, 1);
     #endregion
@@ -175,7 +174,7 @@ public class PlayerController : CharacterController
             old_charaStatus = _charaStatus;
         }
 
-        Debug.Log(_life);
+        Debug.Log(_canNotRight);
 
         MemoryGet();
 
@@ -219,7 +218,6 @@ public class PlayerController : CharacterController
 
         if (IC.Player.Invincible.triggered && _memoryGauge == _MAXMEMORYGAUGE)
         {
-            Debug.Log("無双");
             _isPeerless = true;
         }
 
@@ -250,17 +248,7 @@ public class PlayerController : CharacterController
         }
         #endregion
 
-        #region 槌のクールダウン
-        if (!_canHammerAttack)
-        {
-            _hammerCoolDown -= Time.deltaTime;
-        }
 
-        if (_hammerCoolDown <= _ZERO)
-        {
-            _canHammerAttack = true;
-        }
-        #endregion
 
         // 右クリックで槌攻撃
         #region 槌攻撃入力時間加算
@@ -426,13 +414,9 @@ public class PlayerController : CharacterController
     {
         foreach (GameObject memoryFragment in _memoryFragments)
         {
-            if (this.transform.position != memoryFragment.transform.position)
+            if (this.transform.position.x - 1 >= memoryFragment.transform.position.x || this.transform.position.x <= memoryFragment.transform.position.x + 1)
                 return;
 
-            if (memoryFragment.tag == _weaponMemory)
-            {
-                _weaponMemoryCount++;
-            }
             memoryAchievementController._nowMemoryToral++;
             memoryFragment.SetActive(false);
         }
@@ -578,33 +562,17 @@ public class PlayerController : CharacterController
             _isDamage = false;
         }
 
-        // デバッグ用
-        if (input._isAttack)
+        #region 槌のクールダウン
+        if (!_canHammerAttack)
         {
-            _AttackTime += Time.deltaTime;
-        }
-        else
-        {
-            _AttackTime = _ZERO;
+            _hammerCoolDown -= Time.deltaTime;
         }
 
-        if (_AttackTime > _ONE)
+        if (_hammerCoolDown <= _ZERO)
         {
-            _swordTime = _ZERO;
-            _hammerTime = _ZERO;
-            if (_isInputSwordAttack)
-            {
-                _isInputSwordAttack = false;
-                _isStartAttack = false;
-            }
-            else
-            {
-                _isInputHammerAttack = false;
-                _canHammerAttack = false;
-            }
-            input._isAttack = false;
-            _isStartAttack = false;
+            _canHammerAttack = true;
         }
+        #endregion
     }
 
 
@@ -614,17 +582,32 @@ public class PlayerController : CharacterController
     // 無敵時間だったらCharaLifeCalculationを実行しない
     public override void CharaLifeCalculation(float damage, int knockBack, int weapon)
     {
-        if (_isInvincible)
+        return;
+        base.CharaLifeCalculation(damage, knockBack, weapon);
+    }
+    
+    
+    //==========================================================
+
+
+    public void EndAttack( GameObject weapon)
+    {
+        Debug.Log("a");
+        input._isAttack = false;
+        weapon.SetActive(false);
+        
+        if (_isInputSwordAttack)
         {
-            return;
+            _isInputSwordAttack = false;
         }
         else
         {
-            _isInvincible = true;
+            _isInputHammerAttack = false;
+            _canHammerAttack = false;
         }
-        base.CharaLifeCalculation(damage, knockBack, weapon);
-    }
+        _isStartAttack = false;
 
+    }
     //==================InputSystem========================
 
     private void OnEnable()

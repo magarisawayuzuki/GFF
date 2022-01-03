@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CheckPointSystem : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class CheckPointSystem : MonoBehaviour
 
     [SerializeField]
     private GameObject player = default;
+
+    
 
     private void Awake()
     {
@@ -17,5 +20,6 @@ public class CheckPointSystem : MonoBehaviour
     public void Respawn()
     {
         player.transform.position = _checkPoint;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

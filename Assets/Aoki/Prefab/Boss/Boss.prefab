@@ -89,11 +89,11 @@ MonoBehaviour:
   old_charaStatus: 0
   ObjectScale: {x: 3, y: 3, z: 0.2}
   _groundDistance: 1.9
-  _life: 0
   jumpSpeedScale: 1
   player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
   Anime: {fileID: 0}
   data: {fileID: 0}
+  kakera: {fileID: 0}
   AttackRange: 5
   MaxLeng: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   Spritetime:
@@ -121,11 +121,9 @@ MonoBehaviour:
   _IsLook: 1
   BossSprite: {fileID: 5209403665502590627}
   mono: {fileID: 11400000, guid: 1e8d535f9566b13448a73de8157bae88, type: 2}
-  BossPara: {fileID: 11400000, guid: 5b302e208ade732499868339d4385b22, type: 2}
   HP: 0
   AnimeSpeed: 5
   TrackingSpeed: 500
-  WeaponForce: 0
   AttackEffect:
   - {fileID: 6979431124915740080, guid: 39a4b23f53b38134e89dc27919650889, type: 3}
   - {fileID: 4958960580899864360, guid: 7c517ff82f90f5e45b09524bfb82af74, type: 3}
@@ -136,10 +134,10 @@ MonoBehaviour:
   - {fileID: 406119615553340818, guid: a422ba267812082479be6013be7892f6, type: 3}
   AttackCount: 000000000000000000000000
   SpellPos:
-  - {x: -7, y: 8}
-  - {x: -7, y: 8}
-  - {x: -2, y: 8}
-  - {x: -7, y: 8}
+  - {x: 269, y: 35}
+  - {x: 269, y: 35}
+  - {x: 274, y: 35}
+  - {x: 269, y: 35}
   HpState: 0
   aiState: 10
 --- !u!212 &4503539027462731859
