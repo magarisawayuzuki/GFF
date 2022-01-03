@@ -22,6 +22,8 @@ public static class SceneStateUI_2
                 return 4;
             case SceneState.Main:
                 return 5;
+            case SceneState.GameClear:
+                return 6;
             default:
                 return 10;
         }
@@ -34,6 +36,7 @@ public static class SceneStateUI_2
         InGame,
         Option,
         Option2,
-        Main
+        Main,
+        GameClear
     }
 }

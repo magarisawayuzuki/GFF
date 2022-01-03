@@ -23,7 +23,7 @@ public class InGame_2 : Chara_2
     private GameObject _memoryAchinementObj = default;
     private RectMask2D _memoryGaugeAchievementBar = default;
     private Text _memoryAchivementText = default;
-    [SerializeField,Tooltip("記憶達成度入れてください")] private MemoryAchievementController memoAchi = default;
+    private MemoryAchievementController memoAchi = default;
     private const float MAX_MEMORY_ACHIVEMENT = 100;
     private float _beforeMemoryAchievement = default;
     private float _afterMemoryAchievement = default;
@@ -38,13 +38,14 @@ public class InGame_2 : Chara_2
     private float _DamageTime = default;
     private int _beforeLifeChild = default;
 
-    private PlayerController playerCon = default;
+    private PlayerController _playerCon = default;
 
     private void Awake()
     {
         _memoryAchinementObj = this.transform.GetChild(3).gameObject;
         _memoryGaugeAchievementBar = _memoryAchinementObj.GetComponentInChildren<RectMask2D>();
         _memoryAchivementText = _memoryAchinementObj.GetComponentInChildren<Text>();
+        memoAchi = GameObject.FindWithTag("EventSystem").GetComponent<MemoryAchievementController>();
     }
 
     private void Start()
@@ -53,11 +54,11 @@ public class InGame_2 : Chara_2
 
         _memoryAchinementObj.SetActive(false);
 
-        playerCon = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        SetChara(_playerPara);
-        _beforeLifeChild = _playerPara.life;
+        _playerCon = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        SetChara(_playerCon);
+        _beforeLifeChild = (int)_playerCon.GetLife;
 
-        _beforeMemory = playerCon._MemoryGauge;
+        _beforeMemory = _playerCon._MemoryGauge;
         _beforeMemoryAchievement = MAX_MEMORY_ACHIVEMENT;
     }
 
@@ -65,7 +66,7 @@ public class InGame_2 : Chara_2
     {
         PlayerHPUI();
 
-        if (_beforeMemory != playerCon._MemoryGauge/*_testbbb*/ || _isMemoryChange)
+        if (_beforeMemory != _playerCon._MemoryGauge/*_testbbb*/ || _isMemoryChange)
         {
             PlayerMemoryUI();
             if (!_isMemoryChange)
@@ -96,7 +97,7 @@ public class InGame_2 : Chara_2
 
     private void WeaponChangeUI()
     {
-        switch (/*_testaaa*/playerCon._WeaponMemoryCount)
+        switch (/*_testaaa*/_playerCon._WeaponMemoryCount)
         {
             case 0:
                 _weaponImage[0].SetActive(false);
@@ -115,7 +116,7 @@ public class InGame_2 : Chara_2
 
     private void PlayerMemoryUI()
     {
-        _afterMemory = MAX_MEMORY - playerCon._MemoryGauge/*_testbbb*/;
+        _afterMemory = MAX_MEMORY - _playerCon._MemoryGauge/*_testbbb*/;
         if (_memoryChangeTime <= 1f)
         {
             _memoryChangeTime += Time.deltaTime * 2;
@@ -148,16 +149,16 @@ public class InGame_2 : Chara_2
 
     private void PlayerHPUI()
     {
-        if (_beforeLifeChild != _playerPara.life)
+        if (_beforeLifeChild != (int)_playerCon.GetLife)
         {
             _isDamage = true;
             _DamageTime = 0;
-            _beforeLifeChild = _playerPara.life;
+            _beforeLifeChild = (int)_playerCon.GetLife;
         }
 
         if (_isDamage)
         {
-            ChangeLife(_playerPara, true);
+            ChangeLife(_playerCon, true);
             _DamageTime += Time.deltaTime;
 
             if (_DamageTime >= 1)
@@ -167,7 +168,7 @@ public class InGame_2 : Chara_2
         }
         else
         {
-            ChangeLife(_playerPara, false);
+            ChangeLife(_playerCon, false);
         }
     }
 }

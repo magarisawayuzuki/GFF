@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class Chara_2 : MonoBehaviour
 {
-    private int maxLife = default;
-    private int beforeLife = default;
-    private int afterLife = default;
+    private float maxLife = default;
+    private float beforeLife = default;
+    private float afterLife = default;
 
     [SerializeField] protected RectMask2D[] HPScroll = default;
 
@@ -18,15 +18,15 @@ public class Chara_2 : MonoBehaviour
 
     protected Vector4 vectorHP = new Vector4(0, 0, 1, 0);
 
-    protected void SetChara(CharaParameter charaPara)
+    protected void SetChara(CharacterController charaPara)
     {
         beforeLife = 0;
-        maxLife = charaPara.life;
+        maxLife = charaPara.GetLife;
     }
 
-    protected virtual void ChangeLife(CharaParameter charaPara, bool isDamage)
+    protected virtual void ChangeLife(CharacterController charaPara, bool isDamage)
     {
-        afterLife = maxLife - charaPara.life;
+        afterLife = maxLife - charaPara.GetLife;
         HPScroll[0].padding = vectorHP * afterLife * 2.68f;
         if (!isDamage)
         {
