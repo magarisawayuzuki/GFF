@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class InGameToPauseUI_2 : UIController_2
 {
+    public static bool _isStaticPause = default;
     public static bool _isPause = default;
 
     protected override void Awake()
@@ -15,6 +16,7 @@ public class InGameToPauseUI_2 : UIController_2
     private void Start()
     {
         bookimage.material.SetFloat("_Flip", 1f);
+        _isStaticPause = false;
         _isPause = false;
     }
 
@@ -24,6 +26,7 @@ public class InGameToPauseUI_2 : UIController_2
         {
             if (_inputs.UI.Pause.triggered && !_isPause)
             {
+                _isStaticPause = true;
                 _isPause = true;
             }
 
