@@ -158,33 +158,39 @@ public class CharacterController : MonoBehaviour
     /// </summary>
     protected virtual void Update()
     {
-        input = InputMethod();
-
-        // 移動
-        Move();
-
-        // CharacterAnimation
-        //CharaViewControll();
-
-        // ジャンプ処理
-        Jump();
-
-        //ジャンプの加速度をキャラのVector.yに
-        CharacterMove.y = acceleration;
-
-        // _isAttackがtrueの時攻撃
-        if (input._isAttack)
+        if (!InGameToPauseUI_2._isStaticPause)
         {
-            Attack();
-        }
 
+            input = InputMethod();
+
+            // 移動
+            Move();
+
+            // CharacterAnimation
+            //CharaViewControll();
+
+            // ジャンプ処理
+            Jump();
+
+            //ジャンプの加速度をキャラのVector.yに
+            CharacterMove.y = acceleration;
+
+            // _isAttackがtrueの時攻撃
+            if (input._isAttack)
+            {
+                Attack();
+            }
+
+        }
     }
 
     protected void FixedUpdate()
     {
-        // velocityへ入れる
-        transform.position += CharacterMove;
-
+        if (!InGameToPauseUI_2._isStaticPause)
+        {
+            // velocityへ入れる
+            transform.position += CharacterMove;
+        }
     }
 
 

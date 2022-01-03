@@ -412,9 +412,10 @@ public class PlayerController : CharacterController
     //付近の記憶の欠片を自動取得
     protected void MemoryGet()
     {
+
         foreach (GameObject memoryFragment in _memoryFragments)
         {
-            if (this.transform.position.x - 1 >= memoryFragment.transform.position.x || this.transform.position.x <= memoryFragment.transform.position.x + 1)
+            if (memoryFragment.transform.position.x >= this.transform.position.x + 1 || memoryFragment.transform.position.x <= this.transform.position.x - 1)
                 return;
 
             memoryAchievementController._nowMemoryToral++;

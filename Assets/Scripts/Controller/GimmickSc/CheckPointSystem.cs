@@ -21,5 +21,6 @@ public class CheckPointSystem : MonoBehaviour
     {
         player.transform.position = _checkPoint;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame),LoadSceneMode.Additive);
     }
 }
