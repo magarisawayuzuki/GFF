@@ -42,6 +42,7 @@ public class PauseUI_2 : UIController_2
                     audios.AudioChanger("UI");
 
                     InGameToPauseUI_2._isPause = false;
+                    InGameToPauseUI_2._isStaticPause = false;
                     SceneManager.UnloadSceneAsync(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
                 }
 

@@ -47,6 +47,8 @@ public class CautionPanel_2 : UIController_2
                 // Back to Title
                 else /*if (getSceneName == SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame))*/
                 {
+                    InGameToPauseUI_2._isStaticPause = false;
+                    InGameToPauseUI_2._isPause = false;
                     audios.uiSE = (AudioManager.UISE)4;
                     audios.AudioChanger("UI");
                     SceneManager.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Title),LoadSceneMode.Single);
