@@ -13,7 +13,8 @@ public class CreateStageEditor : MonoBehaviour
     [SerializeField] private Texture2D texture;
 
     [Header("生成オブジェクト")]
-    [SerializeField] private GameObject instanceObject;
+    [SerializeField] private GameObject instanceObject = default;
+    [SerializeField] private GameObject checkPointObject = default;
 
     [Header("識別色")]
     [SerializeField] private List<Color> colors;
@@ -27,11 +28,6 @@ public class CreateStageEditor : MonoBehaviour
     [Header("出力設定")]
     [SerializeField] private bool ReverseArrayHorizontal = false;
 
-    [ContextMenu("test")]
-    public void test()
-    {
-        
-    }
 
 
     [ContextMenu("Generate")]
@@ -142,6 +138,9 @@ public class CreateStageEditor : MonoBehaviour
 
         //親オブジェクト生成
         GameObject parentObj = new GameObject("Stage");
+        GameObject checkParentObj = new GameObject("CheckPoint");
+
+        Quaternion QUATERNION = new Quaternion(0,0,0,0);
 
         int yConsecutiveLength = 0;
         int xConsecutiveLength = 0;
@@ -151,114 +150,52 @@ public class CreateStageEditor : MonoBehaviour
         bool _isSpaceOneSide = false;
         bool _isInstanced = false;
 
-        //メイン縦方向
+        //↑
+        //→→
+
+        //縦方向
         for (int i = mapInfo.GetLength(0) - 1; i >= 0; i--)
         {
-            //メイン横方向
+            GameObject nowCreateObject = default;
+            //横方向
             for (int j = 0; j < mapInfo.GetLength(1); j++)
             {
-                print(j);
-                if (_isInstanced)
-                {
-                    yConsecutiveLength = 0;
-                    xConsecutiveLength = 0;
-
-                    min_xConsecutiveLength = mapInfo.GetLength(1)+1;
-
-                    _isSpaceOneSide = false;
-                    _isInstanced = false;
-                    print("reset");
-                }
-
                 //今の位置にブロックがあるなら
-                if (mapInfo[i, j] == 1)
+                if (mapInfo[i, j] == 1 || mapInfo[i,j] == 2)
                 {
-                    //print("mapInfo[" +i+","+ j+"]" + "true");
-
-                    //連続判定縦方向
-                    for (int k = i; k >= 0; k--)
+                    //初期生成
+                    if(nowCreateObject == default)
                     {
-                        //生成済みなら変数を初期化し終了
-                        if (_isInstanced)
-                        {
+                        nowCreateObject = Instantiate(instanceObject,new Vector3(j, (mapInfo.GetLength(0) - 1) - i, 0), QUATERNION, parentObj.transform);
+                    }
 
-                            break;
-                        }
+                    //生成済みなら
+                    else
+                    {
+                        //xを1大きくする
+                        nowCreateObject.transform.localScale += Vector3.right;
 
-                        //縦ブロック数加算
-                        yConsecutiveLength++;
-
-                        //下が空白もしくは要素の最後なら次の横の空白で生成する
-                        if (k == 0 ||　mapInfo[k-1, j] == 0)
-                        {
-                            _isSpaceOneSide = true;
-                        }
-
-                        //連続判定横方向
-                        for (int l = j; l < mapInfo.GetLength(1); l++)
-                        {
-                            //横ブロック数宇加算
-                            xConsecutiveLength++;
-
-                            //右が空白もしくは要素の最後なら
-                            if (l == mapInfo.GetLength(1) - 1 || mapInfo[k,l+1] == 0)
-                            {
-                                //最小値を保存しておく
-                                if (min_xConsecutiveLength > xConsecutiveLength)
-                                {
-                                    min_xConsecutiveLength = xConsecutiveLength;
-                                }
-
-
-                                //まだ下方向に続いている
-                                if (!_isSpaceOneSide)
-                                {
-                                    break;
-                                }
-
-                                //下と右の限界まで探索した
-                                else
-                                {
-                                    //print("gene");
-
-                                    //生成
-                                    GameObject newGameObject = Instantiate(instanceObject, parentObj.transform);
-
-                                    //サイズをブロックの連続数に変更
-                                    newGameObject.transform.localScale = new Vector3(min_xConsecutiveLength, yConsecutiveLength, 1);
-
-                                    //座標をX=(j + ((Scale - 1) /2 )),Y=(i - ((Scale - 1) /2 ))に変更
-                                    newGameObject.transform.position = new Vector3(j + ((min_xConsecutiveLength - 1) / 2), Mathf.Abs(i - mapInfo.GetLength(0)) - ((yConsecutiveLength - 1) / 2), 0);
-
-                                    print("i:" + i + ":" + yConsecutiveLength);
-                                    print("j:" + j + ":" + min_xConsecutiveLength);
-                                    //メイン探索位置から今回ブロックをまとめて生成する位置に探索済みの印をつける
-                                    //for (int m = yConsecutiveLength - 1; m >= 0; m--)
-                                    //{
-                                    //    for (int n = 0; n < min_xConsecutiveLength - 1; n++)
-                                    //    {
-                                    //        //探索済みの印
-                                    //        mapInfo[i - m, j + n] = -1;
-                                    //    }
-                                    //}
-
-                                    //今回x座標上で進んだ分探索を飛ばす
-                                    j += min_xConsecutiveLength - 1;
-                                    //生成終了フラグ
-                                    _isInstanced = true;
-
-                                    break;
-                                }
-                            }
-                        }
+                        //位置調整
+                        nowCreateObject.transform.position += Vector3.right * 0.5f;
                     }
                 }
                 else
                 {
-                    //print("mapInfo[" + i + "," + j + "]" + "false");
+                    //ブロックの更新を終了
+                    nowCreateObject = default;
+                }
+
+                //チェックポイント生成
+                if(mapInfo[i,j] == 11)
+                {
+                    Instantiate(checkPointObject, new Vector3(j, (mapInfo.GetLength(0) - 1) - i, 0), QUATERNION, checkParentObj.transform);
                 }
             }
+            nowCreateObject = default;
         }
+
+
+
 
         //シーンを保存
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
