@@ -237,11 +237,11 @@ public class CharacterController : MonoBehaviour
         {
             if (_isPeerless)
             {
-                CharacterMove.x = input._x * 10 * 1.5f;
+                CharacterMove.x = input._x * 0.2f * 1.5f;
             }
             else
             {
-                CharacterMove.x = input._x * 0.5f;
+                CharacterMove.x = input._x * 0.2f;
             }
         }
         else

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3005339671562760142}
   m_Layer: 9
   m_Name: MushroomS
-  m_TagString: Soft
+  m_TagString: SoftS
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

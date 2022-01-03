@@ -204,7 +204,7 @@ public class PlayerController : CharacterController
         _canNotLeft = Physics.BoxCast(transform.position, _playerScale, Vector3.left, Quaternion.identity, _sidedistance, movelayer);
 
 
-        if (IC.Player.Jump.triggered)
+        if (IC.Player.Jump.triggered && !input._isAttack)
         {
             input._isJump = true;
         }
@@ -365,15 +365,19 @@ public class PlayerController : CharacterController
                     Debug.Log("ふつう当たった");
 
                 }
-                else if (raycastHit.collider.tag == _soft)
+                else if (raycastHit.collider.tag == _soft | raycastHit.collider.tag == "SoftS")
                 {
                     Debug.Log("やわらかい当たった");
                     raycastHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
-                else if (raycastHit.collider.tag == _hard)
+                else if (raycastHit.collider.tag == _hard | raycastHit.collider.tag == "HardS")
                 {
                     Debug.Log("硬い当たった");
                     raycastHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
+                }
+                else if (raycastHit.collider.tag == "BossObj")
+                {
+                    raycastHit.collider.GetComponent<Boss>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
                 #endregion
             }
@@ -412,7 +416,7 @@ public class PlayerController : CharacterController
     //付近の記憶の欠片を自動取得
     protected void MemoryGet()
     {
-
+        _memoryFragments = GameObject.FindGameObjectsWithTag("MemoryFragment");
         foreach (GameObject memoryFragment in _memoryFragments)
         {
             if (memoryFragment.transform.position.x >= this.transform.position.x + 1 || memoryFragment.transform.position.x <= this.transform.position.x - 1)
@@ -572,6 +576,7 @@ public class PlayerController : CharacterController
         if (_hammerCoolDown <= _ZERO)
         {
             _canHammerAttack = true;
+            _hammerCoolDown = 3;
         }
         #endregion
     }

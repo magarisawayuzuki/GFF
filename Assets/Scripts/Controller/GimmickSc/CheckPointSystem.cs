@@ -14,13 +14,13 @@ public class CheckPointSystem : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.FindWithTag("Player");
     }
 
     public void Respawn()
     {
-        player.transform.position = _checkPoint;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         SceneManager.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.InGame),LoadSceneMode.Additive);
+        player = GameObject.FindWithTag("Player");
+        player.transform.position = _checkPoint;
     }
 }

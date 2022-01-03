@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -5811318743782145634}
   - component: {fileID: 4503539027462731859}
   - component: {fileID: -7456125223235776863}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Boss
   m_TagString: BossObj
   m_Icon: {fileID: 0}
@@ -51,20 +51,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.00000001
-      value: 12
+      time: 0.0010877922
+      value: 0.3733565
       inSlope: -50.532146
-      outSlope: 1.186237
-      tangentMode: 1
-      weightedMode: 2
+      outSlope: 0.0054387944
+      tangentMode: 65
+      weightedMode: 3
       inWeight: 0
       outWeight: 1
     - serializedVersion: 3
-      time: 0.01
-      value: -0.13
-      inSlope: Infinity
-      outSlope: 0.24546644
-      tangentMode: 1
+      time: 0.24646349
+      value: 0.37469104
+      inSlope: 0.0054387944
+      outSlope: -1.6402264
+      tangentMode: 69
       weightedMode: 3
       inWeight: 0
       outWeight: 0.27361795
@@ -94,6 +94,7 @@ MonoBehaviour:
   Anime: {fileID: 0}
   data: {fileID: 0}
   kakera: {fileID: 0}
+  gekitui: {fileID: 0}
   AttackRange: 5
   MaxLeng: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   Spritetime:
@@ -214,6 +215,10 @@ PrefabInstance:
     - target: {fileID: 7717912961577527184, guid: 8513e8130105a5547ae1d7577f00fb98, type: 3}
       propertyPath: m_Name
       value: BossSprite
+      objectReference: {fileID: 0}
+    - target: {fileID: 7717912961577527184, guid: 8513e8130105a5547ae1d7577f00fb98, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7717912961577527277, guid: 8513e8130105a5547ae1d7577f00fb98, type: 3}
       propertyPath: m_LocalPosition.x
