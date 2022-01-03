@@ -253,6 +253,7 @@ public class EnemyRock : EnemyController
                 Spritetime[2] += Time.deltaTime * data.AnimeSpeed[0];
 
                 gekitui.gameObject.SetActive(true);
+                gekitui.transform.parent = null;
 
                 if (Spritetime[2] >= MaxLeng[5])
                 {

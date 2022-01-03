@@ -101,7 +101,6 @@
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryFragment.cs" />
     <Compile Include="Assets\Aoki\Script\Enemy.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\InputController.cs" />
-    <Compile Include="Assets\Magarisawa\CreateStageEditor.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\PlayerController.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\PauseUI_2.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\ChildrenOnMouse_2.cs" />
