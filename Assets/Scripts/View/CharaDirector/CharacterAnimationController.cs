@@ -39,7 +39,6 @@ public class CharacterAnimationController : MonoBehaviour
         
     }
 
-
     /// <summary>
     /// アニメーションを切り替える判定を行う
     /// </summary>

@@ -50,7 +50,7 @@ public class PlayerController : CharacterController
     // player
     private float _sidedistance = 0.45f;
     [SerializeField, Header("無双時間")]
-    private float _peerlessTime = 5;
+    private float _peerlessTime = 1;
     [SerializeField, Header("無敵時間")]
     private float _invincibleTime = 0.5f;
 
@@ -181,6 +181,8 @@ public class PlayerController : CharacterController
         MomoryGauge();
 
         Timer();
+
+        Debug.Log(_isDamage);
     }
 
     //=====================================================
@@ -196,15 +198,23 @@ public class PlayerController : CharacterController
 
         if (input._x != 0 && !input._isAttack)
         {
-            _playerFlontScale.x = -input._x;
-            transform.localScale = _playerFlontScale;
+            if (-input._x >= 0)
+            {
+                _playerFlontScale.x = 1;
+            }
+            else if (-input._x < 0)
+            {
+                _playerFlontScale.x = -1;
+            }
+
+            transform.localScale =  _playerFlontScale;
         }
 
         _canNotRight = Physics.BoxCast(transform.position, _playerScale, Vector3.right, Quaternion.identity, _sidedistance, movelayer);
         _canNotLeft = Physics.BoxCast(transform.position, _playerScale, Vector3.left, Quaternion.identity, _sidedistance, movelayer);
 
 
-        if (IC.Player.Jump.triggered && !input._isAttack)
+        if (IC.Player.Jump.triggered && !input._isAttack && !_isDamage)
         {
             input._isJump = true;
         }
@@ -542,7 +552,6 @@ public class PlayerController : CharacterController
 
     //==========================================================
 
-
     // Playerで行うタイマー処理
     private void Timer()
     {
@@ -565,6 +574,8 @@ public class PlayerController : CharacterController
         {
             _isInvincible = false;
             _isDamage = false;
+
+            _invincibleTime = 1;
         }
 
         #region 槌のクールダウン
@@ -588,7 +599,15 @@ public class PlayerController : CharacterController
     // 無敵時間だったらCharaLifeCalculationを実行しない
     public override void CharaLifeCalculation(float damage, int knockBack, int weapon)
     {
-        return;
+        if (_isInvincible)
+        {
+            return;
+        }
+        else
+        {
+            _isInvincible = true;
+        }
+
         base.CharaLifeCalculation(damage, knockBack, weapon);
     }
     

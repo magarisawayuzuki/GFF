@@ -233,7 +233,7 @@ public class CharacterController : MonoBehaviour
         }
 
         // 攻撃状態じゃなければ
-        if (!input._isAttack && !_isInvincible)
+        if (!input._isAttack)
         {
             if (_isPeerless)
             {
