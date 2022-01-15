@@ -226,6 +226,7 @@ public class PlayerController : CharacterController
         }
         */
 
+        // 無双入力
         if (IC.Player.Invincible.triggered && _memoryGauge == _MAXMEMORYGAUGE)
         {
             _isPeerless = true;
@@ -233,12 +234,12 @@ public class PlayerController : CharacterController
 
         if (transform.position.y <= _ZERO)
         {
-            checkPointSys.Respawn();
+            Death();
         }
         
         // 左クリックで剣攻撃
         #region 剣攻撃入力時間加算
-        if (IC.Player.SwordAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started)
+        if (IC.Player.SwordAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started && !input._isAttack)
         {
             _swordTime += Time.deltaTime;
 
@@ -262,7 +263,7 @@ public class PlayerController : CharacterController
 
         // 右クリックで槌攻撃
         #region 槌攻撃入力時間加算
-        if (IC.Player.HammerAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started && _canHammerAttack)
+        if (IC.Player.HammerAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started && _canHammerAttack && !input._isAttack)
         {
             _hammerTime += Time.deltaTime;
 
@@ -306,10 +307,10 @@ public class PlayerController : CharacterController
         Debug.Log("攻撃");
         _attackDirection.x = -transform.localScale.x;
         RaycastHit[] attackHit;
-        #region 敵の状態判定
         if (!_isStartAttack)
         {
             _isStartAttack = true;
+            #region 敵の状態判定
             attackHit = Physics.BoxCastAll(transform.position, _attackScale, _attackDirection, Quaternion.identity, _ONE, LayerMask.GetMask("Enemy"));
             Debug.Log(attackHit.Length);
             #endregion
@@ -407,6 +408,7 @@ public class PlayerController : CharacterController
         checkPointSys.Respawn();
         _life = charaData.life;
         _isDeath = false;
+        memoryAchievementController._nowMemoryToral = _ZERO;
     }
 
 
@@ -615,7 +617,7 @@ public class PlayerController : CharacterController
     //==========================================================
 
 
-    public void EndAttack( GameObject weapon)
+    public void EndAttack(GameObject weapon)
     {
         Debug.Log("a");
         input._isAttack = false;
