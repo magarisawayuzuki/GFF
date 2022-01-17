@@ -12,7 +12,10 @@ public class PlayerController : CharacterController
     private LayerMask movelayer = 1 << 8 | 1 << 9;
 
     [SerializeField]
-    private GameObject[] _memoryFragments = default;
+    private GameObject[] swordEffects = default;
+    [SerializeField]
+    private GameObject[] hammerEffects = default;
+
 
     private CheckPointSystem checkPointSys;
     private MemoryAchievementController memoryAchievementController;
@@ -31,6 +34,7 @@ public class PlayerController : CharacterController
     public int _WeaponMemoryCount { get { return _weaponMemoryCount; } }
     // 記憶の個数
     protected int _memoryCount = 0;
+
     #endregion
 
     #region float
@@ -174,7 +178,6 @@ public class PlayerController : CharacterController
             old_charaStatus = _charaStatus;
         }
 
-        Debug.Log(_canNotRight);
 
         MemoryGet();
 
@@ -182,7 +185,7 @@ public class PlayerController : CharacterController
 
         Timer();
 
-        Debug.Log(_isDamage);
+        Debug.Log(_memoryGauge);
     }
 
     //=====================================================
@@ -260,7 +263,6 @@ public class PlayerController : CharacterController
         #endregion
 
 
-
         // 右クリックで槌攻撃
         #region 槌攻撃入力時間加算
         if (IC.Player.HammerAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started && _canHammerAttack && !input._isAttack)
@@ -304,7 +306,6 @@ public class PlayerController : CharacterController
     //攻撃の追記とかあれば
     public override void Attack()
     {
-        Debug.Log("攻撃");
         _attackDirection.x = -transform.localScale.x;
         RaycastHit[] attackHit;
         if (!_isStartAttack)
@@ -391,6 +392,68 @@ public class PlayerController : CharacterController
                     raycastHit.collider.GetComponent<Boss>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
                 #endregion
+
+                #region 記憶ゲージ加算
+                if (_isPeerless)
+                {
+                    return;
+                }
+                else
+                {
+                    //敵の種類によって加算する数を変える
+                    if (_memoryGauge < _MAXMEMORYGAUGE)
+                    {
+                        switch (_weapon)
+                        {
+                            case 0:
+                                if (_isSoft)
+                                {
+                                    _memoryGauge += _GOODMEMORYPLUS;
+                                }
+                                else if (_isNormal)
+                                {
+                                    _memoryGauge += _NORMALMEMORYPLUS;
+
+                                }
+                                else if (_isHard)
+                                {
+                                    _memoryGauge += _BADMEMORYPLUS;
+                                }
+
+                                if (_memoryGauge > _MAXMEMORYGAUGE)
+                                {
+                                    _memoryGauge = _MAXMEMORYGAUGE;
+                                }
+                                break;
+                            case 1:
+                                if (_isHard)
+                                {
+                                    _memoryGauge += _GOODMEMORYPLUS;
+                                }
+                                else if (_isNormal)
+                                {
+                                    _memoryGauge += _NORMALMEMORYPLUS;
+                                }
+                                else if (_isSoft)
+                                {
+                                    _memoryGauge += _BADMEMORYPLUS;
+                                }
+
+                                if (_memoryGauge > _MAXMEMORYGAUGE)
+                                {
+                                    _memoryGauge = _MAXMEMORYGAUGE;
+                                }
+                                break;
+                        }
+                        _isHit = false;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                #endregion
+
             }
         }
 
@@ -484,66 +547,6 @@ public class PlayerController : CharacterController
             }
         }
 
-        #region 記憶ゲージ加算
-        if (_isPeerless)
-        {
-            return;
-        }
-        else
-        {
-            //敵の種類によって加算する数を変える
-            if (_memoryGauge < _MAXMEMORYGAUGE && _isHit)
-            {
-                switch (_weapon)
-                {
-                    case 0:
-                        if (_isSoft)
-                        {
-                            _memoryGauge += _GOODMEMORYPLUS;
-                        }
-                        else if (_isNormal)
-                        {
-                            _memoryGauge += _NORMALMEMORYPLUS;
-
-                        }
-                        else if (_isHard)
-                        {
-                            _memoryGauge += _BADMEMORYPLUS;
-                        }
-
-                        if (_memoryGauge > _MAXMEMORYGAUGE)
-                        {
-                            _memoryGauge = _MAXMEMORYGAUGE;
-                        }
-                        break;
-                    case 1:
-                        if (_isHard)
-                        {
-                            _memoryGauge += _GOODMEMORYPLUS;
-                        }
-                        else if (_isNormal)
-                        {
-                            _memoryGauge += _NORMALMEMORYPLUS;
-                        }
-                        else if (_isSoft)
-                        {
-                            _memoryGauge += _BADMEMORYPLUS;
-                        }
-
-                        if (_memoryGauge > _MAXMEMORYGAUGE)
-                        {
-                            _memoryGauge = _MAXMEMORYGAUGE;
-                        }
-                        break;
-                }
-                _isHit = false;
-            }
-            else
-            {
-                return;
-            }
-        }
-        #endregion
 
         if (_memoryGauge <= _ZERO && _isPeerless)
         {
