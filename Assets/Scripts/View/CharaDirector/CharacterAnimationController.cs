@@ -16,6 +16,8 @@ public class CharacterAnimationController : MonoBehaviour
         Damage,
     }
 
+    private float time = 0;
+
     private Animation anima;
 
     private List<AnimationClip> animas = new List<AnimationClip>();
@@ -26,6 +28,7 @@ public class CharacterAnimationController : MonoBehaviour
 
     private void Start()
     {
+
         anima = this.gameObject.GetComponent<Animation>();
 
         playerc = GetComponentInParent<PlayerController>();
