@@ -116,12 +116,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        Debug.Log("None : "+InGameToPauseUI_2._isPause);
-        Debug.Log("Static : "+InGameToPauseUI_2._isStaticPause);
-    }
-
     public void AudioChanger(string nowState)
     {
         switch (nowState)

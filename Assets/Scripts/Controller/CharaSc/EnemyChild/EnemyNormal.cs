@@ -74,17 +74,20 @@ public class EnemyNormal : EnemyController
 
     protected override void Update()
     {
-        base.Update();
+        if (!InGameToPauseUI_2._isStaticPause)
+        {
+            base.Update();
 
-        MapMove();　//二次元配列・座標管理
+            MapMove(); //二次元配列・座標管理
 
-        EnemyPos();　//座標更新・整数に変更
+            EnemyPos(); //座標更新・整数に変更
 
-        Bool();
+            Bool();
 
-        AnimeMotion(); //switch文
+            AnimeMotion(); //switch文
 
-        EnemyTracking(); //追跡処理
+            EnemyTracking(); //追跡処理
+        }
     }
 
     public override void CharaLifeCalculation(float damage, int knockBack, int weapon)

@@ -46,6 +46,8 @@ public class InGame_2 : Chara_2
         _memoryGaugeAchievementBar = _memoryAchinementObj.GetComponentInChildren<RectMask2D>();
         _memoryAchivementText = _memoryAchinementObj.GetComponentInChildren<Text>();
         memoAchi = GameObject.FindWithTag("EventSystem").GetComponent<MemoryAchievementController>();
+
+        _memoryGaugeBar.padding = vectorHP * 50 * 2.4f;
     }
 
     private void Start()
@@ -161,7 +163,7 @@ public class InGame_2 : Chara_2
             ChangeLife(_playerCon, true);
             _DamageTime += Time.deltaTime;
 
-            if (_DamageTime >= 1)
+            if (_DamageTime >= 0.5f)
             {
                 _isDamage = false;
             }

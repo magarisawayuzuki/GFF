@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class InGameToPauseUI_2 : UIController_2
 {
+    // ポーズ中か
     public static bool _isStaticPause = default;
+    // ポーズシーンか
     public static bool _isPause = default;
 
     protected override void Awake()
