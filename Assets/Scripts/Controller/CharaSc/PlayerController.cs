@@ -12,6 +12,9 @@ public class PlayerController : CharacterController
     private LayerMask movelayer = 1 << 8 | 1 << 9;
 
     [SerializeField]
+    private GameObject[] _memoryFragments = default;
+
+    [SerializeField]
     private GameObject[] swordEffects = default;
     [SerializeField]
     private GameObject[] hammerEffects = default;
@@ -165,27 +168,38 @@ public class PlayerController : CharacterController
 
     protected override void Update()
     {
-        base.Update();
-        /*
-        print("今" + _charaStatus);
-        print("古い" + old_charaStatus);
-        */
-        ////前フレームと状態が違ったら
-        if (old_charaStatus != _charaStatus)
+        if (!InGameToPauseUI_2._isStaticPause)
         {
+
+            base.Update();
+            /*
+            print("今" + _charaStatus);
+            print("古い" + old_charaStatus);
+            */
+            ////前フレームと状態が違ったら
+            if (old_charaStatus != _charaStatus)
+            {
+                //アニメーションを切り替える
+                charaAnimCtrl.AnimationChenge(_charaStatus);
+                old_charaStatus = _charaStatus;
+            }
+
+
+            MemoryGet();
+
+            MomoryGauge();
+
+            Timer();
+
+            Debug.Log(_memoryGauge);
+        }
+        else
+        {
+            _charaStatus = CharacterStatus.Idle;
             //アニメーションを切り替える
             charaAnimCtrl.AnimationChenge(_charaStatus);
             old_charaStatus = _charaStatus;
         }
-
-
-        MemoryGet();
-
-        MomoryGauge();
-
-        Timer();
-
-        Debug.Log(_memoryGauge);
     }
 
     //=====================================================
