@@ -93,6 +93,7 @@ public class EnemyNormal : EnemyController
         damageScaleSword = data.swordScale;
         damageScaleHammer = data.hammerScale;
 
+        _IsTakeHit = true;
         anime = 6;
         base.CharaLifeCalculation(damage, knockBack, weapon);
     }
@@ -182,6 +183,8 @@ public class EnemyNormal : EnemyController
         }
 
         _InEnemy = false;
+        _IsTrackingWait = false;
+
         if (_isDeath == false)
         {
             anime = 3;
@@ -208,7 +211,8 @@ public class EnemyNormal : EnemyController
 
                 break;
 
-            case 2:  //-------------------------追跡アニメーション処理----------------------------------               
+            case 2:  //-------------------------追跡アニメーション処理----------------------------------
+                _IsTakeHit = false;
                 Spritetime[4] = 0;
 
                 EnemySprite.sprite = Anime.move[(int)Spritetime[1]];
@@ -230,34 +234,46 @@ public class EnemyNormal : EnemyController
                 {
                     num = 1;
                     EnemySprite.flipX = false; //反転処理 右
-                }               
+                }
+                if (_IsTakeHit == true)
+                {
+                    anime = 6;
+                }
                 return;
 
             case 3:　//----------------------最初のアニメーションに戻る-----------------------------------
                 EnemySprite.sprite = Anime.Death[(int)Spritetime[2]];
                 Spritetime[2] += Time.deltaTime * data.AnimeSpeed[0];
-
-                gekitui.gameObject.SetActive(true);
-                gekitui.transform.parent = null;
+                if (_isDeath == true)
+                {
+                    gekitui.gameObject.SetActive(true);
+                    gekitui.transform.parent = null;
+                }
 
                 if (Spritetime[2] >= MaxLeng[5])
                 {
-                    Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
-                    gameObject.SetActive(false);
-
-                    //Spritetime[2] = MaxLeng[5] - 1;
-                    //Spritetime[3] = 0; 
+                    if (_isDeath == true)
+                    {
+                        Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+                        gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        Spritetime[2] = MaxLeng[5] - 1;
+                        Spritetime[3] = 0;
+                    }
                 }
                 break;
 
             case 4://---------------------------待機-----------------------------
                 _IsTracking = false;
+                _IsTakeHit = false;
 
                 EnemySprite.sprite = Anime.Idel[(int)Spritetime[3]];
                 Spritetime[3] += Time.deltaTime * data.AnimeSpeed[2];
 
                 //待機状態中にplayerが範囲に入った場合追跡再開
-                if (EnemyPositionX + AttackRange + 3 >= map.PlayerPositionX && EnemyPositionX + AttackRange + 3 <= map.PlayerPositionX && num == 1 && _IsWait == true
+                if (EnemyPositionX + AttackRange + 5 >= map.PlayerPositionX && EnemyPositionX + AttackRange + 5 <= map.PlayerPositionX && num == 1 && _IsWait == true
                     && _isDeath == false)
                 {
                     _IsTracking = true;
@@ -295,7 +311,11 @@ public class EnemyNormal : EnemyController
                 {
                     num = 1;
                     EnemySprite.flipX = false; //反転処理 右
-                }                
+                }
+                if (_IsTakeHit == true)
+                {
+                    anime = 6;
+                }
                 return;
 
             case 5: // ---------------------------攻撃--------------------------------- 
@@ -323,7 +343,10 @@ public class EnemyNormal : EnemyController
                         print("hit");
                     }
                 }
-
+                if (_IsTakeHit == true)
+                {
+                    anime = 6;
+                }
                 if (Spritetime[4] >= MaxLeng[3])
                 {
                     Spritetime[4] = 0;
@@ -339,7 +362,7 @@ public class EnemyNormal : EnemyController
                 {
                     print("hit");
                     Spritetime[5] = 0;
-
+                    _IsTakeHit = false;
                     anime = 2;
                 }
                 break;
@@ -356,17 +379,17 @@ public class EnemyNormal : EnemyController
             if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX && _IsLook == true
                 && _isDeath == false)
             {
-                if (_IsAttack == true)
+                if (_IsAttack == true && _IsTakeHit == false)
                 {
                     anime = 5;
                 }
-                else　//攻撃待機
+                else if (_IsAttack == false && _IsTakeHit == false)　//攻撃待機
                 {
                     anime = 4;
                 }
             }
             //攻撃範囲外の場合追跡
-            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false)
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false && _IsTakeHit == false)
             {
                 _IsTracking = true;
                 anime = 2;
@@ -379,17 +402,17 @@ public class EnemyNormal : EnemyController
             if (EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX && _IsLook == true
                 && _isDeath == false)
             {
-                if (_IsAttack == true)
+                if (_IsAttack == true && _IsTakeHit == false)
                 {
                     anime = 5;
                 }
-                else　//攻撃待機
+                else if (_IsAttack == false && _IsTakeHit == false)　//攻撃待機
                 {
                     anime = 4;
                 }
             }
             //攻撃範囲外の場合追跡
-            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false)
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false && _IsTakeHit == false)
             {
                 _IsTracking = true;
                 anime = 2;

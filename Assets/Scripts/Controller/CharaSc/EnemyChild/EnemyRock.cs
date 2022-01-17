@@ -100,6 +100,7 @@ public class EnemyRock : EnemyController
         damageScaleSword = data.swordScale;
         damageScaleHammer = data.hammerScale;
 
+        _IsTakeHit = true;
         anime = 6;
         base.CharaLifeCalculation(damage, knockBack, weapon);
     }
@@ -192,6 +193,7 @@ public class EnemyRock : EnemyController
         }
 
         _InEnemy = false;
+        _IsTrackingWait = false;
         if (_isDeath == false)
         {
             anime = 3;
@@ -218,7 +220,9 @@ public class EnemyRock : EnemyController
 
                 break;
 
-            case 2:  //-------------------------追跡アニメーション処理----------------------------------               
+            case 2:  //-------------------------追跡アニメーション処理----------------------------------
+                _IsTracking = true;
+                _IsTakeHit = false;
                 Spritetime[4] = 0;
 
                 EnemySprite.sprite = Anime.move[(int)Spritetime[1]];
@@ -245,23 +249,33 @@ public class EnemyRock : EnemyController
                     boxcenter = new Vector2(CenterX, 0);
                     box.center = boxcenter;
                 }
-             
+                if (_IsTakeHit == true)
+                {
+                    anime = 6;
+                }
                 return;
 
             case 3:　//最初のアニメーションに戻る
                 EnemySprite.sprite = Anime.Death[(int)Spritetime[2]];
                 Spritetime[2] += Time.deltaTime * data.AnimeSpeed[0];
-
-                gekitui.gameObject.SetActive(true);
-                gekitui.transform.parent = null;
+                if (_isDeath == true)
+                {
+                    gekitui.gameObject.SetActive(true);
+                    gekitui.transform.parent = null;
+                }
 
                 if (Spritetime[2] >= MaxLeng[5])
                 {
-                    Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
-                    gameObject.SetActive(false);
-
-                    //Spritetime[2] = MaxLeng[5] - 1;
-                    //Spritetime[3] = 0;                   
+                    if (_isDeath == true)
+                    {
+                        Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+                        gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        Spritetime[2] = MaxLeng[5] - 1;
+                        Spritetime[3] = 0;
+                    }
                 }
                 break;
 
@@ -272,7 +286,7 @@ public class EnemyRock : EnemyController
                 Spritetime[3] += Time.deltaTime * data.AnimeSpeed[2];
 
                 //待機状態中にplayerが範囲に入った場合追跡再開
-                if (EnemyPositionX + AttackRange + 3 >= map.PlayerPositionX && EnemyPositionX + AttackRange + 3 <= map.PlayerPositionX && num == 1
+                if (EnemyPositionX + AttackRange + 5 >= map.PlayerPositionX && EnemyPositionX + AttackRange + 5 <= map.PlayerPositionX && num == 1
                     && _IsWait == true && _isDeath == false)
                 {
                     _IsTracking = true;
@@ -300,7 +314,10 @@ public class EnemyRock : EnemyController
                     }
                     
                 }
-
+                if (_IsTakeHit == true)
+                {
+                    anime = 6;
+                }
                 if (_Retrcking == true)
                 {
                     num = -1;
@@ -339,7 +356,10 @@ public class EnemyRock : EnemyController
                         print("hit");
                     }
                 }
-
+                if (_IsTakeHit == true)
+                {
+                    anime = 6;
+                }
                 if (Spritetime[4] >= MaxLeng[3])
                 {
                     Spritetime[4] = 0;
@@ -353,9 +373,9 @@ public class EnemyRock : EnemyController
 
                 if (Spritetime[5] >= MaxLeng[4] && _isDeath == false)
                 {
-                    print("hit");
+                    print("takehit");
                     Spritetime[5] = 0;
-
+                    _IsTakeHit = false;
                     anime = 2;
                 }
                 break;
@@ -372,17 +392,17 @@ public class EnemyRock : EnemyController
             if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX && _IsLook == true
                 && _isDeath == false)
             {
-                if (_IsAttack == true)
+                if (_IsAttack == true && _IsTakeHit == false)
                 {
                     anime = 5;
                 }
-                else　//攻撃待機
+                else if (_IsAttack == false && _IsTakeHit == false)　//攻撃待機
                 {
                     anime = 4;
                 }
             }
             //攻撃範囲外の場合追跡
-            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false)
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false && _IsTakeHit == false)
             {
                 _IsTracking = true;
                 anime = 2;
@@ -395,18 +415,17 @@ public class EnemyRock : EnemyController
             if (EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX && _IsLook == true
                 && _isDeath == false)
             {
-                if (_IsAttack == true)
+                if (_IsAttack == true && _IsTakeHit == false)
                 {
                     anime = 5;
                 }
-                else //攻撃待機
+                else if (_IsAttack == false && _IsTakeHit == false)　//攻撃待機
                 {
                     anime = 4;
                 }
             }
             //攻撃範囲外の場合追跡
-            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true
-                && _isDeath == false)
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false && _IsTakeHit == false)
             {
                 _IsTracking = true;
                 anime = 2;

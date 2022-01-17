@@ -57,6 +57,7 @@ public class EnemyController : CharacterController
     public bool _IsTracking;
     public bool _IsMove;
     public bool _IsLook = true;
+    protected bool _IsTakeHit;
     protected bool _IsClone;
     protected int EnemyPositionX = 0; //二次元配列の横
     protected int EnemyPositionY = 0; //二次元配列の縦
