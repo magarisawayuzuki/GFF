@@ -11,7 +11,7 @@ public class Chara_2 : MonoBehaviour
 
     [SerializeField] protected RectMask2D[] HPScroll = default;
 
-    [SerializeField, Range(0, 100)] protected int life = default;
+    //[SerializeField, Range(0, 100)] protected int life = default;
 
     private float lifeChangeMagnitude = 2f;
     private float lerpTime = default;
@@ -32,7 +32,7 @@ public class Chara_2 : MonoBehaviour
         {
             if (lerpTime <= 1f)
             {
-                lerpTime += Time.deltaTime * lifeChangeMagnitude;
+                lerpTime += Time.deltaTime * lifeChangeMagnitude * 2;
                 HPScroll[1].padding = Vector4.Lerp(vectorHP * beforeLife * 2.68f, vectorHP * afterLife * 2.68f, lerpTime);
             }
             else

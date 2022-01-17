@@ -6,16 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class TitleUI_2 : UIController_2
 {
+    // 警告パネルオブジェクトとスクリプト
     [SerializeField] private GameObject cautionPanel = default;
     [SerializeField] private CautionPanel_2 caucau = default;
 
     private void Start()
     {
+        // Audioの設定
         audios.bgm = (AudioManager.BGM)0;
         audios.AudioChanger("BGM");
 
         _nowSelectNumber = 1;
 
+        // カーソルの場所の初期化
         _selector.anchoredPosition = _selectPoint[_nowSelectNumber - 1].anchoredPosition;
         _selector.sizeDelta = _selectPoint[_nowSelectNumber - 1].sizeDelta * _selectorSizeDeltaMagnitude;
     }
@@ -24,12 +27,16 @@ public class TitleUI_2 : UIController_2
     {
         InputManager();
 
+        // 決定が押されたとき
         if(_isInput[1])
         {
             TitleSelector();
         }
     }
 
+    /// <summary>
+    /// 次に遷移するシーン管理
+    /// </summary>
     private void TitleSelector()
     {
         switch (_nowSelectNumber)
@@ -93,6 +100,8 @@ public class TitleUI_2 : UIController_2
 
                 _isInput[1] = false;
                 _isFlip = false;
+                break;
+            default:
                 break;
         }
     }

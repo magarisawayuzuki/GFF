@@ -74,17 +74,20 @@ public class EnemyNormal : EnemyController
 
     protected override void Update()
     {
-        base.Update();
+        if (!InGameToPauseUI_2._isStaticPause)
+        {
+            base.Update();
 
-        MapMove();　//二次元配列・座標管理
+            MapMove(); //二次元配列・座標管理
 
-        EnemyPos();　//座標更新・整数に変更
+            EnemyPos(); //座標更新・整数に変更
 
-        Bool();
+            Bool();
 
-        AnimeMotion(); //switch文
+            AnimeMotion(); //switch文
 
-        EnemyTracking(); //追跡処理
+            EnemyTracking(); //追跡処理
+        }
     }
 
     public override void CharaLifeCalculation(float damage, int knockBack, int weapon)
@@ -182,6 +185,8 @@ public class EnemyNormal : EnemyController
         }
 
         _InEnemy = false;
+        _IsTrackingWait = false;
+
         if (_isDeath == false)
         {
             anime = 3;
@@ -236,17 +241,24 @@ public class EnemyNormal : EnemyController
             case 3:　//----------------------最初のアニメーションに戻る-----------------------------------
                 EnemySprite.sprite = Anime.Death[(int)Spritetime[2]];
                 Spritetime[2] += Time.deltaTime * data.AnimeSpeed[0];
-
-                gekitui.gameObject.SetActive(true);
-                gekitui.transform.parent = null;
+                if (_isDeath == true)
+                {
+                    gekitui.gameObject.SetActive(true);
+                    gekitui.transform.parent = null;
+                }
 
                 if (Spritetime[2] >= MaxLeng[5])
                 {
-                    Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
-                    gameObject.SetActive(false);
-
-                    //Spritetime[2] = MaxLeng[5] - 1;
-                    //Spritetime[3] = 0; 
+                    if (_isDeath == true)
+                    {
+                        Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+                        gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        Spritetime[2] = MaxLeng[5] - 1;
+                        Spritetime[3] = 0;
+                    }
                 }
                 break;
 

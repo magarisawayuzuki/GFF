@@ -74,13 +74,13 @@ public class CameraMove : MonoBehaviour
                 if(camera.orthographicSize >= 18) { return; }
                 camera.orthographicSize += bossCameraSizeSpeed * 0.03f;
 
-                if(_flashAlpha == 0)
-                {
-                    Invoke("SceneClear", 2f);
-                }
+                //if(_flashAlpha == 0)
+                //{
+                //    Invoke("SceneClear", 2f);
+                //}
 
-                _flashAlpha += Time.deltaTime;
-                _flashImage.color = Color.white * _flashAlpha;
+                //_flashAlpha += Time.deltaTime;
+                //_flashImage.color = Color.white * _flashAlpha;
             }
 
             return;

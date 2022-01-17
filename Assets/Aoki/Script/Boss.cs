@@ -136,22 +136,24 @@ public class Boss : EnemyController
     // Update is called once per frame
     protected override void Update()
     {
-        base.Update();
+        if (!InGameToPauseUI_2._isStaticPause)
+        {
+            base.Update();
 
-        MapMove();
+            MapMove();
 
-        EnemyPos();
+            EnemyPos();
 
-        ResetTime();
+            ResetTime();
 
-        AnimeMotion();
+            AnimeMotion();
 
-        EnemyTracking();
+            EnemyTracking();
 
-        Hit();
+            Hit();
 
-        HPMove();
-
+            HPMove();
+        }
     }
 
     public override void CharaLifeCalculation(float damage, int knockBack, int weapon)
