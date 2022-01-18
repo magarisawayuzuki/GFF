@@ -1,8 +1,6 @@
-﻿using UnityEditor;
-using UnityEditor.SceneManagement;
+﻿using UnityEditor.SceneManagement;
 using System.Collections.Generic;
 using System.IO;
-using System;
 using UnityEngine;
 using System.Threading.Tasks;
 
@@ -26,13 +24,15 @@ public class CreateStageEditor : MonoBehaviour
     [SerializeField] private bool EnableGenerateStage = false;
 
     [Header("出力設定")]
-    [SerializeField] private bool ReverseArrayHorizontal = false;
+    [SerializeField] private bool LogReverseArrayVerticul = false;
+    [SerializeField] private bool CreateReverseArrayVerticul = false;
 
 
 
     [ContextMenu("Generate")]
     public async void GetPixel()
     {
+        
         //Map配列定義
         int[,] mapInfo = new int[texture.height, texture.width];
 
@@ -43,6 +43,7 @@ public class CreateStageEditor : MonoBehaviour
         string debug = "要素数(" + texture.height + "|" + texture.width + ")" + "\n";
         result = new List<List<int>>();
 
+        //for (int i = reverseI; i < texture.height; i++)
         for (int i = 0; i < texture.height; i++)
         {
             //行頭
@@ -58,7 +59,12 @@ public class CreateStageEditor : MonoBehaviour
                     debug += ", ";
                 }
 
-                Color color = texture.GetPixel(l, i);
+                int colorI = (texture.height - 1) - i;
+                if (LogReverseArrayVerticul)
+                {
+                    colorI = i;
+                }
+                Color color = texture.GetPixel(l, colorI);
                 if (colors.Contains(color))
                 {
                     int index = colors.IndexOf(color);
@@ -81,7 +87,7 @@ public class CreateStageEditor : MonoBehaviour
             result.Add(temp);
 
             //次の行へ
-            debug += "} \n";
+            debug += "}, \n";
             await Task.Delay(1);
         }
 
@@ -101,15 +107,21 @@ public class CreateStageEditor : MonoBehaviour
         //ステージを生成する
         if (EnableGenerateStage)
         {
-            //上下反転
-            if (ReverseArrayHorizontal)
+            //logで反転していた場合戻しておく
+            if (LogReverseArrayVerticul)
             {
-                GenerateObject(mapInfo);
+                mapInfo = mapInfo.ReverseArray();
+            }
+
+            //上下反転
+            if (CreateReverseArrayVerticul)
+            {
+                GenerateObject(mapInfo.ReverseArray());
             }
             //そのまま
             else
             {
-                GenerateObject(mapInfo.ReverseArray());
+                GenerateObject(mapInfo);
             }
         }
         Debug.Log("生成終了");

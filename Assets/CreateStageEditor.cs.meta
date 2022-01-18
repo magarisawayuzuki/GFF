@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5502d20cce2c8ad4bae1ead21bb32f87
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - texture: {fileID: 2800000, guid: ef8fc052c02e1aa4682fb912551cc56d, type: 3}
+  - instanceObject: {fileID: 9206096912025559597, guid: 4f3a366a360d63346926f694fa0c9524, type: 3}
+  - checkPointObject: {fileID: 8456135295157780285, guid: 4b02ac6e805ef2f4eb63e6dade6dd9e4, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
