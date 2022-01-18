@@ -69,7 +69,7 @@ public class EnemyRock : EnemyController
         {
             input._isJump = true;
             JumpTime += Time.deltaTime;
-            if (JumpTime >= 0.7)
+            if (JumpTime >= 0.5)
             {
                 JumpTime = 0;
                 input._isJump = false;
@@ -81,20 +81,17 @@ public class EnemyRock : EnemyController
 
     protected override void Update()
     {
-        if (!InGameToPauseUI_2._isStaticPause)
-        {
-            base.Update();
+        base.Update();
 
-            MapMove(); //二次元配列・座標管理
+        MapMove();　//二次元配列・座標管理
 
-            EnemyPos(); //座標更新・整数に変更
+        EnemyPos();　//座標更新・整数に変更
 
-            Bool();
+        Bool();
 
-            AnimeMotion(); //switch文
+        AnimeMotion(); //switch文
 
-            EnemyTracking(); //追跡処理
-        }
+        EnemyTracking(); //追跡処理
     }
 
     public override void CharaLifeCalculation(float damage, int knockBack, int weapon)
@@ -103,8 +100,11 @@ public class EnemyRock : EnemyController
         damageScaleSword = data.swordScale;
         damageScaleHammer = data.hammerScale;
 
-        _IsTakeHit = true;
-        anime = 6;
+        if (_IsAttack == false)
+        {
+            _IsTakeHit = true;
+            anime = 6;
+        }
         base.CharaLifeCalculation(damage, knockBack, weapon);
     }
 
@@ -225,7 +225,7 @@ public class EnemyRock : EnemyController
 
             case 2:  //-------------------------追跡アニメーション処理----------------------------------
                 _IsTracking = true;
-                _IsTakeHit = false;
+                _IsTakeHit = false;               
                 Spritetime[4] = 0;
 
                 EnemySprite.sprite = Anime.move[(int)Spritetime[1]];
@@ -259,6 +259,7 @@ public class EnemyRock : EnemyController
                 return;
 
             case 3:　//最初のアニメーションに戻る
+                _IsTracking = false;
                 EnemySprite.sprite = Anime.Death[(int)Spritetime[2]];
                 Spritetime[2] += Time.deltaTime * data.AnimeSpeed[0];
                 if (_isDeath == true)
@@ -272,6 +273,7 @@ public class EnemyRock : EnemyController
                     if (_isDeath == true)
                     {
                         Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+                        map.stageArray[EnemyPositionY, EnemyPositionX] = 0;
                         gameObject.SetActive(false);
                     }
                     else
@@ -289,21 +291,22 @@ public class EnemyRock : EnemyController
                 Spritetime[3] += Time.deltaTime * data.AnimeSpeed[2];
 
                 //待機状態中にplayerが範囲に入った場合追跡再開
-                if (EnemyPositionX + AttackRange + 5 >= map.PlayerPositionX && EnemyPositionX + AttackRange + 5 <= map.PlayerPositionX && num == 1
-                    && _IsWait == true && _isDeath == false)
+                if (_isDeath == false && _IsWait == true)
                 {
-                    _IsTracking = true;
-                    _IsLook = true;
-                    _IsWait = false;
-                    anime = 2;
-                }
-                if (EnemyPositionX - AttackRange - 3 >= map.PlayerPositionX && EnemyPositionX - AttackRange - 3 <= map.PlayerPositionX && num == -1
-                    && _IsWait == true && _isDeath == false)
-                {
-                    _IsTracking = true;
-                    _IsLook = true;
-                    _IsWait = false;
-                    anime = 2;
+                    if (EnemyPositionX >= map.PlayerPositionX && EnemyPositionX + AttackRange + 3 <= map.PlayerPositionX && EnemySprite.flipX == false)
+                    {
+                        _IsTracking = true;
+                        _IsLook = true;
+                        _IsWait = false;
+                        anime = 2;
+                    }
+                    if (EnemyPositionX > map.PlayerPositionX && EnemyPositionX - (AttackRange + 3) <= map.PlayerPositionX && EnemySprite.flipX == true)
+                    {
+                        _IsTracking = true;
+                        _IsLook = true;
+                        _IsWait = false;
+                        anime = 2;
+                    }
                 }
 
                 if (Spritetime[3] >= MaxLeng[2])
@@ -338,7 +341,7 @@ public class EnemyRock : EnemyController
                 _IsTracking = false;
                 EnemySprite.sprite = Anime.Attack[(int)Spritetime[4]];
                 Spritetime[4] += Time.deltaTime * data.AnimeSpeed[3];
-
+                _NowAttack = true;
                 //攻撃しているspriteの時
                 if (Spritetime[4] >= MaxLeng[3] - 3)
                 {
@@ -358,19 +361,17 @@ public class EnemyRock : EnemyController
                         playerController.CharaLifeCalculation(damage,0,0);
                         print("hit");
                     }
-                }
-                if (_IsTakeHit == true)
-                {
-                    anime = 6;
-                }
+                }               
                 if (Spritetime[4] >= MaxLeng[3])
                 {
                     Spritetime[4] = 0;
                     _IsAttack = false;
+                    _NowAttack = false;
                 }
                 break;
 
-            case 6: //----------------------------攻撃をくらった--------------------------------                              
+            case 6: //----------------------------攻撃をくらった--------------------------------
+                _IsTracking = false;
                 EnemySprite.sprite = Anime.TakeHit[(int)Spritetime[5]];
                 Spritetime[5] += Time.deltaTime * data.AnimeSpeed[4];
 
@@ -405,7 +406,7 @@ public class EnemyRock : EnemyController
                 }
             }
             //攻撃範囲外の場合追跡
-            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false && _IsTakeHit == false)
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false && _IsTakeHit == false && _NowAttack == false)
             {
                 _IsTracking = true;
                 anime = 2;
@@ -428,7 +429,7 @@ public class EnemyRock : EnemyController
                 }
             }
             //攻撃範囲外の場合追跡
-            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false && _IsTakeHit == false)
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false && _IsTakeHit == false && _NowAttack == false)
             {
                 _IsTracking = true;
                 anime = 2;
@@ -447,6 +448,16 @@ public class EnemyRock : EnemyController
             _IsLook = false;
             _IsTracking = false;
             transform.Translate(transform.right * Time.deltaTime * data.ReturnSpeed * num);
+
+            if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX && _Retrcking == true && _isDeath == false ||
+                EnemyPositionX >= map.PlayerPositionX && EnemyPositionX - (AttackRange + 3) <= map.PlayerPositionX && _Retrcking == false && _isDeath == false)
+            {
+                _IsTracking = true;
+                _IsLook = true;
+                _IsReturn = false;
+                anime = 2;
+            }
+
         }
 
         //---------------元の座標についたとき最初のspriteに戻る---------------------
