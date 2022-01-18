@@ -457,18 +457,20 @@ public class PlayerController : CharacterController
                 if (raycastHit.collider.tag == _normal)
                 {
                     raycastHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
-                    _isSoft
+                    _isSoft = true;
                     Debug.Log("ふつう当たった");
 
                 }
                 else if (raycastHit.collider.tag == _soft | raycastHit.collider.tag == "SoftS")
                 {
                     Debug.Log("やわらかい当たった");
+                    _isNormal = true;
                     raycastHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
                 else if (raycastHit.collider.tag == _hard | raycastHit.collider.tag == "HardS")
                 {
                     Debug.Log("硬い当たった");
+                    _isHard = true;
                     raycastHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
                 else if (raycastHit.collider.tag == "BossObj")
@@ -493,15 +495,17 @@ public class PlayerController : CharacterController
                                 if (_isSoft)
                                 {
                                     _memoryGauge += _GOODMEMORYPLUS;
+                                    _isSoft = false;
                                 }
                                 else if (_isNormal)
                                 {
                                     _memoryGauge += _NORMALMEMORYPLUS;
-
+                                    _isNormal = false;
                                 }
                                 else if (_isHard)
                                 {
                                     _memoryGauge += _BADMEMORYPLUS;
+                                    _isHard = false;
                                 }
 
                                 if (_memoryGauge > _MAXMEMORYGAUGE)
@@ -513,14 +517,17 @@ public class PlayerController : CharacterController
                                 if (_isHard)
                                 {
                                     _memoryGauge += _GOODMEMORYPLUS;
+                                    _isHard = false;
                                 }
                                 else if (_isNormal)
                                 {
                                     _memoryGauge += _NORMALMEMORYPLUS;
+                                    _isNormal = false;
                                 }
                                 else if (_isSoft)
                                 {
                                     _memoryGauge += _BADMEMORYPLUS;
+                                    _isSoft = false;
                                 }
 
                                 if (_memoryGauge > _MAXMEMORYGAUGE)
