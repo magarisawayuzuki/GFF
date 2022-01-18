@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 8025543845624440106}
   m_Layer: 0
   m_Name: Juri_SordEffectLv2
-  m_TagString: Untagged
+  m_TagString: WeaponEffect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8025543845624440106
 Transform:
   m_ObjectHideFlags: 0
@@ -23,9 +23,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8025543845624440107}
-  m_LocalRotation: {x: -0.22092356, y: 0.18344408, z: -0.02465352, w: 0.9575664}
+  m_LocalRotation: {x: -0.22092643, y: 0.18344717, z: -0.02465341, w: 0.9575651}
   m_LocalPosition: {x: 25.574654, y: 9.692229, z: 28.678003}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -2.1706426, y: 1.9844575, z: 1.2264056}
   m_Children:
   - {fileID: 8025543845693821236}
   - {fileID: 8103537785522889145}
@@ -58,13 +58,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8025543845693821237}
-  m_LocalRotation: {x: -0.20275272, y: -0.59927714, z: -0.29426008, w: -0.71635836}
+  m_LocalRotation: {x: -0.32501453, y: -0.5047208, z: -0.5271559, w: -0.6014392}
   m_LocalPosition: {x: 15.07534, y: 4.5855713, z: -4.908624}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.5}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 8025543845624440106}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -176.434, y: -101.531006, z: -138.249}
+  m_LocalEulerAnglesHint: {x: -171.884, y: -106.384, z: -103.60901}
 --- !u!198 &8025543845693821234
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -79,7 +79,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4929,13 +4929,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8103537783775722096}
-  m_LocalRotation: {x: -0.20275272, y: -0.59927714, z: -0.29426008, w: -0.71635836}
+  m_LocalRotation: {x: -0.32501453, y: -0.5047208, z: -0.5271559, w: -0.6014392}
   m_LocalPosition: {x: 15.07534, y: 4.5855713, z: -4.908624}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.5}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 8025543845624440106}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -176.434, y: -101.531006, z: -138.249}
+  m_LocalEulerAnglesHint: {x: -171.884, y: -106.384, z: -103.60901}
 --- !u!198 &8103537783775722099
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4950,7 +4950,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -9800,13 +9800,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8103537785522889144}
-  m_LocalRotation: {x: -0.20275272, y: -0.59927714, z: -0.29426008, w: -0.71635836}
+  m_LocalRotation: {x: -0.32501453, y: -0.5047208, z: -0.5271559, w: -0.6014392}
   m_LocalPosition: {x: 15.07534, y: 4.5855713, z: -4.908624}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.5}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 8025543845624440106}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -176.434, y: -101.531006, z: -138.249}
+  m_LocalEulerAnglesHint: {x: -171.884, y: -106.384, z: -103.60901}
 --- !u!198 &8103537785522889147
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -9821,7 +9821,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
