@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCheckPoint : MonoBehaviour
 {
-    private CheckPointSystem _checkPointSystem= default;
+    private CheckPointSystem _checkPointSystem = default;
 
     private GameObject player = default;
 

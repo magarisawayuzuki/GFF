@@ -270,6 +270,37 @@ public class PlayerController : CharacterController
                 input._isAttack = true;
                 _weapon = _ZERO;
                 _charaStatus = CharacterStatus.swordAttack;
+                switch (transform.localScale.x)
+                {
+                    case _ONE:
+                        if (_swordTime > _MIDDLEPOWERTIME)
+                        {
+                            swordEffects[5].SetActive(true);
+                        }
+                        else if (_swordTime > _NORMALPOWERTIME)
+                        {
+                            swordEffects[4].SetActive(true);
+                        }
+                        else
+                        {
+                            swordEffects[3].SetActive(true);
+                        }
+                        break;
+                    case -_ONE:
+                        if (_swordTime > _MIDDLEPOWERTIME)
+                        {
+                            swordEffects[2].SetActive(true);
+                        }
+                        else if (_swordTime > _NORMALPOWERTIME)
+                        {
+                            swordEffects[1].SetActive(true);
+                        }
+                        else
+                        {
+                            swordEffects[0].SetActive(true);
+                        }
+                        break;
+                }
             }
         }
         #endregion
@@ -293,6 +324,44 @@ public class PlayerController : CharacterController
                 input._isAttack = true;
                 _weapon = _ONE;
                 _charaStatus = CharacterStatus.hammerAttack;
+                switch (transform.localScale.x)
+                {
+                    case _ONE:
+                        // 槌協攻撃2段階目
+                        if (_hammerTime > _MIDDLEPOWERTIME)
+                        {
+                            hammerEffects[5].SetActive(true);
+                        }
+                        // 槌強攻撃1段階目
+                        else if (_hammerTime > _NORMALPOWERTIME)
+                        {
+                            hammerEffects[4].SetActive(true);
+                        }
+                        // 槌弱攻撃
+                        else
+                        {
+                            hammerEffects[3].SetActive(true);
+                        }
+                        break;
+                    case -_ONE:
+                        // 槌協攻撃2段階目
+                        if (_hammerTime > _MIDDLEPOWERTIME)
+                        {
+                            hammerEffects[2].SetActive(true);
+                        }
+                        // 槌強攻撃1段階目
+                        else if (_hammerTime > _NORMALPOWERTIME)
+                        {
+                            hammerEffects[1].SetActive(true);
+                        }
+                        // 槌弱攻撃
+                        else
+                        {
+                            hammerEffects[0].SetActive(true);
+                        }
+                        break;
+                }
+                
             }
         }
         #endregion
@@ -386,17 +455,20 @@ public class PlayerController : CharacterController
                 if (raycastHit.collider.tag == _normal)
                 {
                     raycastHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
+                    _isSoft = true;
                     Debug.Log("ふつう当たった");
 
                 }
                 else if (raycastHit.collider.tag == _soft | raycastHit.collider.tag == "SoftS")
                 {
                     Debug.Log("やわらかい当たった");
+                    _isNormal = true;
                     raycastHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
                 else if (raycastHit.collider.tag == _hard | raycastHit.collider.tag == "HardS")
                 {
                     Debug.Log("硬い当たった");
+                    _isHard = true;
                     raycastHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
                 else if (raycastHit.collider.tag == "BossObj")
@@ -421,15 +493,17 @@ public class PlayerController : CharacterController
                                 if (_isSoft)
                                 {
                                     _memoryGauge += _GOODMEMORYPLUS;
+                                    _isSoft = false;
                                 }
                                 else if (_isNormal)
                                 {
                                     _memoryGauge += _NORMALMEMORYPLUS;
-
+                                    _isNormal = false;
                                 }
                                 else if (_isHard)
                                 {
                                     _memoryGauge += _BADMEMORYPLUS;
+                                    _isHard = false;
                                 }
 
                                 if (_memoryGauge > _MAXMEMORYGAUGE)
@@ -441,14 +515,17 @@ public class PlayerController : CharacterController
                                 if (_isHard)
                                 {
                                     _memoryGauge += _GOODMEMORYPLUS;
+                                    _isHard = false;
                                 }
                                 else if (_isNormal)
                                 {
                                     _memoryGauge += _NORMALMEMORYPLUS;
+                                    _isNormal = false;
                                 }
                                 else if (_isSoft)
                                 {
                                     _memoryGauge += _BADMEMORYPLUS;
+                                    _isSoft = false;
                                 }
 
                                 if (_memoryGauge > _MAXMEMORYGAUGE)
@@ -641,11 +718,13 @@ public class PlayerController : CharacterController
         if (_isInputSwordAttack)
         {
             _isInputSwordAttack = false;
+            _swordTime = 0;
         }
         else
         {
             _isInputHammerAttack = false;
             _canHammerAttack = false;
+            _hammerTime = 0;
         }
         _isStartAttack = false;
 
