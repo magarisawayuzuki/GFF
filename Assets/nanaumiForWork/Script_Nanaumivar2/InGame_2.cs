@@ -8,6 +8,9 @@ public class InGame_2 : Chara_2
 {
     [SerializeField] private CharaParameter _playerPara = default;
 
+    private float _damagealpha = default;
+    private Color _damageColor = new Color(1, 0, 0, 0);
+
     #region 記憶ゲージ
     [SerializeField] private RectMask2D _memoryGaugeBar = default;
     private const float MAX_MEMORY = 100;
@@ -163,7 +166,9 @@ public class InGame_2 : Chara_2
             ChangeLife(_playerCon, true);
             _DamageTime += Time.deltaTime;
 
-            _damageImage.color = new Color(1, 0, 0, Mathf.Sin(_DamageTime * Mathf.PI * 2) * 0.15f);
+            _damagealpha = Mathf.Sin(_DamageTime * Mathf.PI * 2) * 0.15f;
+            _damageColor.a = _damagealpha;
+            _damageImage.color = _damageColor;
 
             if (_DamageTime >= 0.5f)
             {

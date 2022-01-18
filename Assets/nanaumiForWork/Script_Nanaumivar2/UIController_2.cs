@@ -135,8 +135,7 @@ public class UIController_2 : MonoBehaviour
     /// </summary>
     private void CursolTransparency()
     {
-        var a = _selectorImage.color.a;
-        a = Mathf.Sin(_selectorFlashCycle * Mathf.PI);
+        float a = Mathf.Sin(_selectorFlashCycle * Mathf.PI);
         _selectorFlashCycle += Time.deltaTime;
         _selectorColorTransparency = _selectorImage.color;
 

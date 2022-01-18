@@ -95,6 +95,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioMixerGroup[] mixer = default;
 
+    public List<Sprite> sprite = new List<Sprite> { };
+
     private void Awake()
     {
         bgm = new BGM();
@@ -113,6 +115,21 @@ public class AudioManager : MonoBehaviour
             ad[i].loop = false;
             ad[i].playOnAwake = false;
             ad[i].outputAudioMixerGroup = mixer[1];
+        }
+    }
+
+    private float _screenShotWaitTime = default;
+    private void Update()
+    {
+        if (bgm == BGM.InGameNormal)
+        {
+            _screenShotWaitTime += Time.deltaTime + Random.Range(0, Time.deltaTime * 5);
+
+            if (sprite.Count < 11 && _screenShotWaitTime > 30)
+            {
+                StartCoroutine(LoadScreenshot());
+                _screenShotWaitTime = 0;
+            }
         }
     }
 
@@ -261,5 +278,24 @@ public class AudioManager : MonoBehaviour
                 ad[3].PlayOneShot(uiclip[4]);
                 break;
         }
+    }
+
+    private IEnumerator LoadScreenshot()
+    {
+        Debug.Log("ScreenShot");
+
+        //Unityのレンダリングを待つ
+        yield return new WaitForEndOfFrame();
+
+        //画面サイズと同じテクスチャ変数を用意する
+        var texture = new Texture2D(Screen.width, Screen.height);
+        //画面のピクセルデータを用意したテクスチャ変数に書き写す
+        texture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+        //テクスチャの変更分を反映する
+        texture.Apply();
+        //扱いやすいようにTexture2D型からSprite型に変換する
+        sprite.Add(Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero));
+
+        //sprite[i] <--- この変数にスクショした画像データが入っている
     }
 }

@@ -22,9 +22,16 @@ public class ClearUI_2 : MonoBehaviour
 
     [SerializeField] private Image[] omoide = default;
 
+    private AudioManager audios = default;
+
     private void Awake()
     {
-        StartCoroutine(LoadScreenshot());
+        audios = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
+        omoide[0].sprite = audios.sprite[Random.Range(0, audios.sprite.Count)];
+        omoide[1].sprite = audios.sprite[Random.Range(0, audios.sprite.Count)];
+        omoide[2].sprite = audios.sprite[Random.Range(0, audios.sprite.Count)];
+        omoide[3].sprite = audios.sprite[Random.Range(0, audios.sprite.Count)];
 
         _inputs = new InputController();
         sceneMan = this.gameObject.AddComponent<UISceneManager_2>();
@@ -71,32 +78,13 @@ public class ClearUI_2 : MonoBehaviour
         }
     }
 
-
-    private IEnumerator LoadScreenshot()
-    {
-        //Unityのレンダリングを待つ
-        yield return new WaitForEndOfFrame();
-
-        //画面サイズと同じテクスチャ変数を用意する
-        var texture = new Texture2D(Screen.width, Screen.height);
-        //画面のピクセルデータを用意したテクスチャ変数に書き写す
-        texture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-        //テクスチャの変更分を反映する
-        texture.Apply();
-        //扱いやすいようにTexture2D型からSprite型に変換する
-        Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-
-        //sprite <--- この変数にスクショした画像データが入っている
-
-        omoide[0].sprite = sprite;
-        omoide[1].sprite = sprite;
-        omoide[2].sprite = sprite;
-        omoide[3].sprite = sprite;
-    }
-
     private void OnEnable()
     {
         _inputs.Enable();
+
+        // Audioの設定
+        audios.bgm = (AudioManager.BGM)2;
+        audios.AudioChanger("BGM");
     }
     private void OnDisable()
     {

@@ -27,13 +27,13 @@ public class Chara_2 : MonoBehaviour
     protected virtual void ChangeLife(CharacterController charaPara, bool isDamage)
     {
         afterLife = maxLife - charaPara.GetLife;
-        HPScroll[0].padding = vectorHP * afterLife * 2.68f;
+        HPScroll[0].padding = vectorHP * afterLife * 2.53f;
         if (!isDamage)
         {
             if (lerpTime <= 1f)
             {
                 lerpTime += Time.deltaTime * lifeChangeMagnitude * 2;
-                HPScroll[1].padding = Vector4.Lerp(vectorHP * beforeLife * 2.68f, vectorHP * afterLife * 2.68f, lerpTime);
+                HPScroll[1].padding = Vector4.Lerp(vectorHP * beforeLife * 2.53f, vectorHP * afterLife * 2.53f, lerpTime);
             }
             else
             {
