@@ -170,7 +170,7 @@ public class PlayerController : CharacterController
     {
         if (!InGameToPauseUI_2._isStaticPause)
         {
-
+            Debug.Log(_life);
             base.Update();
             /*
             print("今" + _charaStatus);
@@ -242,7 +242,7 @@ public class PlayerController : CharacterController
         */
 
         // 無双入力
-        if (IC.Player.Invincible.triggered && _memoryGauge == _MAXMEMORYGAUGE)
+        if (IC.Player.Invincible.triggered && _memoryGauge >= 95)
         {
             _isPeerless = true;
         }
@@ -270,37 +270,6 @@ public class PlayerController : CharacterController
                 input._isAttack = true;
                 _weapon = _ZERO;
                 _charaStatus = CharacterStatus.swordAttack;
-                switch (transform.localScale.x)
-                {
-                    case _ONE:
-                        if (_swordTime > _MIDDLEPOWERTIME)
-                        {
-                            swordEffects[5].SetActive(true);
-                        }
-                        else if (_swordTime > _NORMALPOWERTIME)
-                        {
-                            swordEffects[4].SetActive(true);
-                        }
-                        else
-                        {
-                            swordEffects[3].SetActive(true);
-                        }
-                        break;
-                    case -_ONE:
-                        if (_swordTime > _MIDDLEPOWERTIME)
-                        {
-                            swordEffects[2].SetActive(true);
-                        }
-                        else if (_swordTime > _NORMALPOWERTIME)
-                        {
-                            swordEffects[1].SetActive(true);
-                        }
-                        else
-                        {
-                            swordEffects[0].SetActive(true);
-                        }
-                        break;
-                }
             }
         }
         #endregion
@@ -324,44 +293,6 @@ public class PlayerController : CharacterController
                 input._isAttack = true;
                 _weapon = _ONE;
                 _charaStatus = CharacterStatus.hammerAttack;
-                switch (transform.localScale.x)
-                {
-                    case _ONE:
-                        // 槌協攻撃2段階目
-                        if (_hammerTime > _MIDDLEPOWERTIME)
-                        {
-                            hammerEffects[5].SetActive(true);
-                        }
-                        // 槌強攻撃1段階目
-                        else if (_hammerTime > _NORMALPOWERTIME)
-                        {
-                            hammerEffects[4].SetActive(true);
-                        }
-                        // 槌弱攻撃
-                        else
-                        {
-                            hammerEffects[3].SetActive(true);
-                        }
-                        break;
-                    case -_ONE:
-                        // 槌協攻撃2段階目
-                        if (_hammerTime > _MIDDLEPOWERTIME)
-                        {
-                            hammerEffects[2].SetActive(true);
-                        }
-                        // 槌強攻撃1段階目
-                        else if (_hammerTime > _NORMALPOWERTIME)
-                        {
-                            hammerEffects[1].SetActive(true);
-                        }
-                        // 槌弱攻撃
-                        else
-                        {
-                            hammerEffects[0].SetActive(true);
-                        }
-                        break;
-                }
-                
             }
         }
         #endregion
@@ -709,11 +640,10 @@ public class PlayerController : CharacterController
     //==========================================================
 
 
-    public void EndAttack(GameObject weapon)
+    public void EndAttack()
     {
         Debug.Log("a");
         input._isAttack = false;
-        weapon.SetActive(false);
         
         if (_isInputSwordAttack)
         {
@@ -729,6 +659,91 @@ public class PlayerController : CharacterController
         _isStartAttack = false;
 
     }
+
+
+    //==========================================================
+
+
+    public void EffectStart()
+    {
+        if (_charaStatus == CharacterStatus.swordAttack)
+        {
+
+            switch (transform.localScale.x)
+            {
+                case _ONE:
+                    if (_swordTime > _MIDDLEPOWERTIME)
+                    {
+                        swordEffects[5].SetActive(true);
+                    }
+                    else if (_swordTime > _NORMALPOWERTIME)
+                    {
+                        swordEffects[4].SetActive(true);
+                    }
+                    else
+                    {
+                        swordEffects[3].SetActive(true);
+                    }
+                    break;
+                case -_ONE:
+                    if (_swordTime > _MIDDLEPOWERTIME)
+                    {
+                        swordEffects[2].SetActive(true);
+                    }
+                    else if (_swordTime > _NORMALPOWERTIME)
+                    {
+                        swordEffects[1].SetActive(true);
+                    }
+                    else
+                    {
+                        swordEffects[0].SetActive(true);
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            switch (transform.localScale.x)
+            {
+                case _ONE:
+                    // 槌協攻撃2段階目
+                    if (_hammerTime > _MIDDLEPOWERTIME)
+                    {
+                        hammerEffects[5].SetActive(true);
+                    }
+                    // 槌強攻撃1段階目
+                    else if (_hammerTime > _NORMALPOWERTIME)
+                    {
+                        hammerEffects[4].SetActive(true);
+                    }
+                    // 槌弱攻撃
+                    else
+                    {
+                        hammerEffects[3].SetActive(true);
+                    }
+                    break;
+                case -_ONE:
+                    // 槌協攻撃2段階目
+                    if (_hammerTime > _MIDDLEPOWERTIME)
+                    {
+                        hammerEffects[2].SetActive(true);
+                    }
+                    // 槌強攻撃1段階目
+                    else if (_hammerTime > _NORMALPOWERTIME)
+                    {
+                        hammerEffects[1].SetActive(true);
+                    }
+                    // 槌弱攻撃
+                    else
+                    {
+                        hammerEffects[0].SetActive(true);
+                    }
+                    break;
+            }
+        }
+    }
+
+
     //==================InputSystem========================
 
     private void OnEnable()
