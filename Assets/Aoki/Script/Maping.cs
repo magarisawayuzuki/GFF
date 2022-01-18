@@ -183,6 +183,9 @@ public class Maping : UnityEngine.MonoBehaviour
 
     EnemyController EnemyScript;
 
+    // Bossの生成先オブジェクト
+    [SerializeField] private Transform bossParent = default;
+
     void Awake()
     {
         for (int i = 0; i < stageArray.GetLength(0); i++)
@@ -218,7 +221,7 @@ public class Maping : UnityEngine.MonoBehaviour
 
                 if (stageArray[i, j] == 9)
                 {
-                    Instantiate(Enemy[3], new Vector3(j, i + EnemyY[3], 0), Quaternion.identity);
+                    Instantiate(Enemy[3], new Vector3(j, i + EnemyY[3], 0), Quaternion.identity, bossParent);
                 }
 
                 if (stageArray[i, j] == 10)

@@ -89,7 +89,8 @@ public class Boss : EnemyController
     // Start is called before the first frame update
     void Start()
     {
-        audios = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        //audios = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        //Debug.Log("BossAudio:"+audios);
 
         //------------二次元配列のスクリプト取得------------------
         GameObject en = GameObject.FindGameObjectWithTag("Map");
@@ -254,6 +255,7 @@ public class Boss : EnemyController
             //--------------------------------------待機アニメーション処理-------------------------------------- 
             case EnemyAiState.IDLE:
                 // Audio再生
+                Debug.Log("待機Audio再生");
                 audios.bossSE = (AudioManager.BossSE)0;
                 audios.AudioChanger("Boss");
 
@@ -406,6 +408,7 @@ public class Boss : EnemyController
             //--------------------------------------弱攻撃-----------------------------------------
             case EnemyAiState.ATTACK:
                 // Audio再生
+                Debug.Log("弱攻撃Audio再生");
                 audios.bossSE = (AudioManager.BossSE)3;
                 audios.AudioChanger("Boss");
 
@@ -434,6 +437,7 @@ public class Boss : EnemyController
             //------------------------------------召喚処理----------------------------------
             case EnemyAiState.Summon:
                 // Audio再生
+                Debug.Log("召喚Audio再生");
                 audios.bossSE = (AudioManager.BossSE)1;
                 audios.AudioChanger("Boss");
 
@@ -472,9 +476,10 @@ public class Boss : EnemyController
 
             //-------------------------------------最初のアニメーションに戻る---------------------------------------
             case EnemyAiState.Back:
-                // Audio再生
-                audios.bossSE = (AudioManager.BossSE)6;
-                audios.AudioChanger("Boss");
+                //// Audio再生
+                //Debug.Log("志望Audio再生");
+                //audios.bossSE = (AudioManager.BossSE)6;
+                //audios.AudioChanger("Boss");
 
                 _IsLook = false;
                 _IsTracking = false;
@@ -486,7 +491,7 @@ public class Boss : EnemyController
 
                    if(charaData.life <= 0)
                    {
-                        Destroy(gameObject);
+                        //Destroy(gameObject);
                    }
                 }
                 break;
@@ -494,6 +499,7 @@ public class Boss : EnemyController
             //-------------------------------------ワープアニメーション処理-----------------------------------------
             case EnemyAiState.Warp:
                 // Audio再生
+                Debug.Log("ワープAudio再生");
                 audios.bossSE = (AudioManager.BossSE)5;
                 audios.AudioChanger("Boss");
 
@@ -587,6 +593,7 @@ public class Boss : EnemyController
                 if (Spritetime[5] >= MaxLeng[5] - 6 && Spritetime[5] <= MaxLeng[5] - 1 && _IsDefaultWarp == false)
                 {
                     // Audio再生
+                    Debug.Log("志望Audio再生");
                     audios.bossSE = (AudioManager.BossSE)6;
                     audios.AudioChanger("Boss");
 
