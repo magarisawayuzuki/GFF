@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DontAudioDestory : MonoBehaviour
 {
-    private DontAudioDestory instance;
+    private DontAudioDestory instance = default;
 
     private void Awake()
     {
@@ -15,6 +15,7 @@ public class DontAudioDestory : MonoBehaviour
         }
         else
         {
+            Debug.Log("AudioDestroy");
             Destroy(gameObject);
         }
     }

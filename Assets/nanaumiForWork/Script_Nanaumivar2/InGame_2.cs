@@ -6,9 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class InGame_2 : Chara_2
 {
-    //[SerializeField, Range(0, 2)] private int _testaaa = default;
     [SerializeField] private CharaParameter _playerPara = default;
-    //[SerializeField, Range(0, 100)] private int _testbbb = default;
 
     #region 記憶ゲージ
     [SerializeField] private RectMask2D _memoryGaugeBar = default;
@@ -34,11 +32,13 @@ public class InGame_2 : Chara_2
 
     [SerializeField, Tooltip("0sord/1hummer")] private GameObject[] _weaponImage = default;
 
-    private bool _isDamage = default;
+    public bool _isDamage = default;
     private float _DamageTime = default;
     private int _beforeLifeChild = default;
 
     private PlayerController _playerCon = default;
+
+    [SerializeField] private Image _damageImage = default;
 
     private void Awake()
     {
@@ -68,7 +68,7 @@ public class InGame_2 : Chara_2
     {
         PlayerHPUI();
 
-        if (_beforeMemory != _playerCon._MemoryGauge/*_testbbb*/ || _isMemoryChange)
+        if (_beforeMemory != _playerCon._MemoryGauge || _isMemoryChange)
         {
             PlayerMemoryUI();
             if (!_isMemoryChange)
@@ -78,7 +78,7 @@ public class InGame_2 : Chara_2
             }
         }
 
-        if (_beforeMemoryAchievement != 100 - memoAchi._nowMemoryToral/*_testbbb*/ && !_isMemoryAchievementChange)
+        if (_beforeMemoryAchievement != 100 - memoAchi._nowMemoryToral && !_isMemoryAchievementChange)
         {
             _isMemoryAchievementChange = true;
             _memoryAchievementChangeTime = 0;
@@ -99,7 +99,7 @@ public class InGame_2 : Chara_2
 
     private void WeaponChangeUI()
     {
-        switch (/*_testaaa*/_playerCon._WeaponMemoryCount)
+        switch (_playerCon._WeaponMemoryCount)
         {
             case 0:
                 _weaponImage[0].SetActive(false);
@@ -118,7 +118,7 @@ public class InGame_2 : Chara_2
 
     private void PlayerMemoryUI()
     {
-        _afterMemory = MAX_MEMORY - _playerCon._MemoryGauge/*_testbbb*/;
+        _afterMemory = MAX_MEMORY - _playerCon._MemoryGauge;
         if (_memoryChangeTime <= 1f)
         {
             _memoryChangeTime += Time.deltaTime * 2;
@@ -134,7 +134,7 @@ public class InGame_2 : Chara_2
     // メモリーアチーブメント イベントから取得
     private void PlayerMemoryAchievementUI()
     {
-        _afterMemoryAchievement = MAX_MEMORY_ACHIVEMENT - memoAchi._nowMemoryToral/*_testbbb*/;
+        _afterMemoryAchievement = MAX_MEMORY_ACHIVEMENT - memoAchi._nowMemoryToral;
         if (_memoryAchievementChangeTime <= 3f)
         {
             _memoryAchievementChangeTime += Time.deltaTime * 2;
@@ -163,6 +163,8 @@ public class InGame_2 : Chara_2
             ChangeLife(_playerCon, true);
             _DamageTime += Time.deltaTime;
 
+            _damageImage.color = new Color(1, 0, 0, Mathf.Sin(_DamageTime * Mathf.PI * 2) * 0.15f);
+
             if (_DamageTime >= 0.5f)
             {
                 _isDamage = false;
@@ -170,6 +172,7 @@ public class InGame_2 : Chara_2
         }
         else
         {
+            _damageImage.color = Color.clear;
             ChangeLife(_playerCon, false);
         }
     }

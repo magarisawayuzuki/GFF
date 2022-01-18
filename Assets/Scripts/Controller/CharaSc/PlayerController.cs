@@ -190,8 +190,6 @@ public class PlayerController : CharacterController
             MomoryGauge();
 
             Timer();
-
-            Debug.Log(_memoryGauge);
         }
         else
         {

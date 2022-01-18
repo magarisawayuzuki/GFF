@@ -112,8 +112,8 @@ public class TitleUI_2 : UIController_2
         _isFlip = false;
         _isLoaded = false;
 
-        audios.bgm = (AudioManager.BGM)0;
-        audios.AudioChanger("BGM");
+        //audios.bgm = (AudioManager.BGM)0;
+        //audios.AudioChanger("BGM");
         SceneStateUI_2.sceneState = SceneStateUI_2.SceneState.Title;
     }
 }
