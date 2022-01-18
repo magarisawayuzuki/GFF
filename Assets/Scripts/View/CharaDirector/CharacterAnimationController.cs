@@ -87,7 +87,13 @@ public class CharacterAnimationController : MonoBehaviour
 
     public void EndAttack()
     {
-        GameObject weapon = GameObject.FindWithTag("Weapon");
-        playerc.EndAttack(weapon);
+        GameObject effect = GameObject.FindWithTag("WeaponEffect");
+        effect.SetActive(false);
+        playerc.EndAttack();
+    }
+
+    public void WeaponEffect()
+    {
+        playerc.EffectStart();
     }
 }
