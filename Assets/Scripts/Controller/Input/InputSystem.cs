@@ -65,6 +65,14 @@ public class @InputSystem : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""SlowTap(duration=1)""
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""46500c50-36b2-42e0-9748-0a80ab6733a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""SlowTap(duration=1)""
                 }
             ],
             ""bindings"": [
@@ -254,6 +262,28 @@ public class @InputSystem : IInputActionCollection, IDisposable
                     ""action"": ""Invincible"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a78ea256-2c24-47d1-bae7-f8c9395c91a6"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e7b143da-47cd-4ceb-a7c2-09ace590ddc3"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -296,6 +326,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         m_Player_HammerAttack = m_Player.FindAction("HammerAttack", throwIfNotFound: true);
         m_Player_Test = m_Player.FindAction("Test", throwIfNotFound: true);
         m_Player_Invincible = m_Player.FindAction("Invincible", throwIfNotFound: true);
+        m_Player_Down = m_Player.FindAction("Down", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -351,6 +382,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_HammerAttack;
     private readonly InputAction m_Player_Test;
     private readonly InputAction m_Player_Invincible;
+    private readonly InputAction m_Player_Down;
     public struct PlayerActions
     {
         private @InputSystem m_Wrapper;
@@ -361,6 +393,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         public InputAction @HammerAttack => m_Wrapper.m_Player_HammerAttack;
         public InputAction @Test => m_Wrapper.m_Player_Test;
         public InputAction @Invincible => m_Wrapper.m_Player_Invincible;
+        public InputAction @Down => m_Wrapper.m_Player_Down;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -388,6 +421,9 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 @Invincible.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvincible;
                 @Invincible.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvincible;
                 @Invincible.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInvincible;
+                @Down.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDown;
+                @Down.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDown;
+                @Down.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDown;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -410,6 +446,9 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 @Invincible.started += instance.OnInvincible;
                 @Invincible.performed += instance.OnInvincible;
                 @Invincible.canceled += instance.OnInvincible;
+                @Down.started += instance.OnDown;
+                @Down.performed += instance.OnDown;
+                @Down.canceled += instance.OnDown;
             }
         }
     }
@@ -440,5 +479,6 @@ public class @InputSystem : IInputActionCollection, IDisposable
         void OnHammerAttack(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
         void OnInvincible(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
     }
 }

@@ -234,12 +234,10 @@ public class PlayerController : CharacterController
             input._isJump = true;
         }
 
-        /*
         if (IC.Player.Down.triggered)
         {
             input._isDown = true;
         }
-        */
 
         // 無双入力
         if (IC.Player.Invincible.triggered && _memoryGauge >= 95)

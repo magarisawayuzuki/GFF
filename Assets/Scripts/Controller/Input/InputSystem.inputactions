@@ -52,6 +52,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "SlowTap(duration=1)"
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "46500c50-36b2-42e0-9748-0a80ab6733a2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "SlowTap(duration=1)"
                 }
             ],
             "bindings": [
@@ -241,6 +249,28 @@
                     "action": "Invincible",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "a78ea256-2c24-47d1-bae7-f8c9395c91a6",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e7b143da-47cd-4ceb-a7c2-09ace590ddc3",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
