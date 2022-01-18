@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 public class CreateStageEditor : MonoBehaviour
 {
     [Header("変換元画像")]
-    [SerializeField] private Texture2D texture;
+    [SerializeField] private Texture2D texture = default;
 
     [Header("生成オブジェクト")]
     [SerializeField] private GameObject instanceObject = default;
     [SerializeField] private GameObject checkPointObject = default;
 
     [Header("識別色")]
-    [SerializeField] private List<Color> colors;
-    [SerializeField] private List<List<int>> result;
+    [SerializeField] private List<Color> colors = default;
+    [SerializeField] private List<List<int>> result = default;
 
     [Header("出力形式")]
     [SerializeField] private bool EnableExportTextFile = true;
@@ -142,13 +142,7 @@ public class CreateStageEditor : MonoBehaviour
 
         Quaternion QUATERNION = new Quaternion(0,0,0,0);
 
-        int yConsecutiveLength = 0;
-        int xConsecutiveLength = 0;
-
         int min_xConsecutiveLength = mapInfo.GetLength(1) - 1;
-
-        bool _isSpaceOneSide = false;
-        bool _isInstanced = false;
 
         //↑
         //→→

@@ -43,12 +43,12 @@ public class CameraMove : MonoBehaviour
     private Vector3 bossStartPos = default;
     private Vector3 bossEndPos = new Vector3(986, 52, -10);
     private float distance = default;
-    private Camera camera;
+    private new Camera camera;
     [SerializeField]
     private float bossCameraSizeSpeed = 0.1f;
     private float bossCameraMoveSpeed = 0.2f;
     [SerializeField]
-    private GameObject kabe;
+    private GameObject kabe = default;
 
     [SerializeField] private Image _flashImage = default;
     private float _flashAlpha = default;
@@ -169,7 +169,7 @@ public class CameraMove : MonoBehaviour
         {
             bossStartPos = playerChara.transform.position;
             _BossArea = true;
-            kabe.gameObject.active = true;
+            kabe.gameObject.SetActive(true);
         }
     }
 }
