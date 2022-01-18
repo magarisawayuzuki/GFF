@@ -9,7 +9,7 @@ public class EnemyPlant : EnemyController
 {    
     PlayerController playerController;
     private float damage = 5;
-    private float JumpTime;
+    private float JumpTime;    
     protected override void Awake()
     {
         base.Awake();
@@ -60,7 +60,7 @@ public class EnemyPlant : EnemyController
         {           
             input._isJump = true;
             JumpTime += Time.deltaTime;
-            if(JumpTime >= 0.7)
+            if(JumpTime >= 0.6)
             {
                 JumpTime = 0;
                 input._isJump = false;
@@ -73,20 +73,17 @@ public class EnemyPlant : EnemyController
 
     protected override void Update()
     {
-        if (!InGameToPauseUI_2._isStaticPause)
-        {
-            base.Update();
+        base.Update();
 
-            MapMove(); //二次元配列・座標管理
+        MapMove();　//二次元配列・座標管理
 
-            EnemyPos(); //座標更新・整数に変更
+        EnemyPos();　//座標更新・整数に変更
 
-            Bool();
+        Bool();
 
-            AnimeMotion(); //switch文
+        AnimeMotion(); //switch文
 
-            EnemyTracking(); //追跡処理
-        }
+        EnemyTracking(); //追跡処理
     }
 
     public override void CharaLifeCalculation(float damage, int knockBack, int weapon)
@@ -95,7 +92,11 @@ public class EnemyPlant : EnemyController
         damageScaleSword = data.swordScale;
         damageScaleHammer = data.hammerScale;
 
-        anime = 6;
+        if (_IsAttack == false)
+        {
+            _IsTakeHit = true;
+            anime = 6;
+        }
         base.CharaLifeCalculation(damage, knockBack, weapon);
     }
 
@@ -213,7 +214,9 @@ public class EnemyPlant : EnemyController
 
                 break;
 
-            case 2:  //-------------------------追跡アニメーション処理----------------------------------               
+            case 2:  //-------------------------追跡アニメーション処理----------------------------------                          
+                _IsTakeHit = false;
+                _IsTracking = true;
                 Spritetime[4] = 0;
 
                 EnemySprite.sprite = Anime.move[(int)Spritetime[1]];
@@ -235,10 +238,16 @@ public class EnemyPlant : EnemyController
                 {
                     num = 1;
                     EnemySprite.flipX = false; //反転処理 右
-                }               
+                }
+
+                if (_IsTakeHit == true)
+                {
+                    anime = 6;
+                }
                 return;
 
             case 3:　//最初のアニメーションに戻る
+                _IsTracking = false;
                 EnemySprite.sprite = Anime.Death[(int)Spritetime[2]];
                 Spritetime[2] += Time.deltaTime * data.AnimeSpeed[0];
                 if (_isDeath == true)
@@ -252,6 +261,7 @@ public class EnemyPlant : EnemyController
                     if (_isDeath == true)
                     {
                         Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+                        map.stageArray[EnemyPositionY, EnemyPositionX] = 0;
                         gameObject.SetActive(false);
                     }
                     else
@@ -269,23 +279,28 @@ public class EnemyPlant : EnemyController
                 Spritetime[3] += Time.deltaTime * data.AnimeSpeed[2];
 
                 //待機状態中にplayerが範囲に入った場合追跡再開
-                if (EnemyPositionX + AttackRange + 3 >= map.PlayerPositionX && EnemyPositionX + AttackRange + 3 <= map.PlayerPositionX && num == 1 && _IsWait == true
-                    && _isDeath == false)
+                if (_isDeath == false && _IsWait == true)
                 {
-                    _IsTracking = true;
-                    _IsLook = true;
-                    _IsWait = false;
-                    anime = 2;
-                }
-                if (EnemyPositionX - AttackRange - 3 >= map.PlayerPositionX && EnemyPositionX - AttackRange - 3 <= map.PlayerPositionX && num == -1 && _IsWait == true
-                    && _isDeath == false)
-                {
-                    _IsTracking = true;
-                    _IsLook = true;
-                    _IsWait = false;
-                    anime = 2;
+                    if (EnemyPositionX >= map.PlayerPositionX && EnemyPositionX + AttackRange + 3 <= map.PlayerPositionX && EnemySprite.flipX == false)
+                    {
+                        _IsTracking = true;
+                        _IsLook = true;
+                        _IsWait = false;
+                        anime = 2;
+                    }
+                    if (EnemyPositionX > map.PlayerPositionX && EnemyPositionX - (AttackRange + 3) <= map.PlayerPositionX && EnemySprite.flipX == true)
+                    {
+                        _IsTracking = true;
+                        _IsLook = true;
+                        _IsWait = false;
+                        anime = 2;
+                    }
                 }
 
+                if(_IsTakeHit == true)
+                {
+                    anime = 6;
+                }
                 if (Spritetime[3] >= MaxLeng[2])
                 {
                     Spritetime[3] = 0;
@@ -314,10 +329,11 @@ public class EnemyPlant : EnemyController
                 _IsTracking = false;
                 EnemySprite.sprite = Anime.Attack[(int)Spritetime[4]];
                 Spritetime[4] += Time.deltaTime * data.AnimeSpeed[3];
-
+                _NowAttack = true;
                 //攻撃しているspriteの時
                 if (Spritetime[4] >= MaxLeng[3] - 1)
                 {
+                
                     //向いている方向によって敵とプレイヤーの距離計算
                     if (_Retrcking == false)
                     {
@@ -335,15 +351,17 @@ public class EnemyPlant : EnemyController
                         print("hit");
                     }
                 }
-
+                
                 if (Spritetime[4] >= MaxLeng[3])
                 {
                     Spritetime[4] = 0;
                     _IsAttack = false;
+                    _NowAttack = false;
                 }
                 break;
 
-            case 6: //----------------------------攻撃をくらった--------------------------------                              
+            case 6: //----------------------------攻撃をくらった-------------------------------- 
+                _IsTracking = false;
                 EnemySprite.sprite = Anime.TakeHit[(int)Spritetime[5]];
                 Spritetime[5] += Time.deltaTime * data.AnimeSpeed[4];
 
@@ -351,7 +369,7 @@ public class EnemyPlant : EnemyController
                 {
                     print("Takehit");
                     Spritetime[5] = 0;
-
+                    _IsTakeHit = false;
                     anime = 2;
                 }
                 break;
@@ -368,17 +386,17 @@ public class EnemyPlant : EnemyController
             if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX && _IsLook == true 
                 && _isDeath == false)
             {
-                if (_IsAttack == true)
+                if (_IsAttack == true && _IsTakeHit == false)
                 {
                     anime = 5;
                 }
-                else　//攻撃待機
+                else if(_IsAttack == false && _IsTakeHit == false)　//攻撃待機
                 {
                     anime = 4;
                 }
             }
             //攻撃範囲外の場合追跡
-            else if (_InEnemy == true &&/* _IsTrackingWait == false &&*/ _IsLook == true && _isDeath == false)
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false && _IsTakeHit == false && _NowAttack == false)
             {
                 _IsTracking = true;
                 anime = 2;
@@ -391,17 +409,17 @@ public class EnemyPlant : EnemyController
             if (EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX && _IsLook == true
                 && _isDeath == false)
             {
-                if (_IsAttack == true)
+                if (_IsAttack == true && _IsTakeHit == false)
                 {
                     anime = 5;
                 }
-                else　//攻撃待機
-                {
+                else if (_IsAttack == false && _IsTakeHit == false)　//攻撃待機
+                {                
                     anime = 4;
                 }
             }
             //攻撃範囲外の場合追跡
-            else if (_InEnemy == true &&/* _IsTrackingWait == false &&*/ _IsLook == true && _isDeath == false)
+            else if (_InEnemy == true && _IsTrackingWait == false && _IsLook == true && _isDeath == false && _IsTakeHit == false && _NowAttack == false)
             {
                 _IsTracking = true;
                 anime = 2;
@@ -420,6 +438,15 @@ public class EnemyPlant : EnemyController
             _IsLook = false;
             _IsTracking = false;
             transform.Translate(transform.right * Time.deltaTime * data.ReturnSpeed * num);
+
+            if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX && _Retrcking == true && _isDeath == false ||
+                EnemyPositionX >= map.PlayerPositionX && EnemyPositionX -(AttackRange + 3)<= map.PlayerPositionX && _Retrcking == false && _isDeath == false)
+            {
+                _IsTracking = true;
+                _IsLook = true;
+                _IsReturn = false;
+                anime = 2;
+            }
         }
 
         //---------------元の座標についたとき最初のspriteに戻る---------------------
@@ -441,7 +468,7 @@ public class EnemyPlant : EnemyController
                 Spritetime[2] = 0;
                 anime = 4;
             }
-        }
+        }       
     }
 
     //--------------------------追跡処理-------------------------------

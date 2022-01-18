@@ -33,9 +33,7 @@ public class EnemyController : CharacterController
     [HideInInspector]
     public bool _Retrcking; //反転するか判定
     [HideInInspector]
-    public bool _IsJump;　//ジャンプするか判定
-    [HideInInspector]
-    public bool _IsAttack = true; //攻撃するか判定 
+    public bool _IsJump;　//ジャンプするか判定    
     [HideInInspector]
     public bool _IsReturn; //元の位置に戻っているか判定
     [HideInInspector]
@@ -55,10 +53,10 @@ public class EnemyController : CharacterController
     public bool _InEnemy;
     public bool _IsTrackingWait;
     public bool _IsTracking;
-    public bool _IsMove;
     public bool _IsLook = true;
+    protected bool _IsAttack = true; //攻撃するか判定
+    protected bool _NowAttack; //攻撃を中断しないように
     protected bool _IsTakeHit;
-    protected bool _IsClone;
     protected int EnemyPositionX = 0; //二次元配列の横
     protected int EnemyPositionY = 0; //二次元配列の縦
 
@@ -104,9 +102,7 @@ public class EnemyController : CharacterController
     {
         base.Death();
 
-        anime = 3;
-        //Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
-        //gameObject.SetActive(false);
+        anime = 3;     
     }
    
 }

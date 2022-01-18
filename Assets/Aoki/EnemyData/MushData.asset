@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bfc75f13349be34392f7c3b98eb4cc1, type: 3}
   m_Name: MushData
   m_EditorClassIdentifier: 
-  TrackingSpeed: 1000
+  TrackingSpeed: 1300
   ReturnSpeed: 2.5
   swordScale: 3
   hammerScale: 1

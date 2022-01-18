@@ -102,19 +102,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0010877922
-      value: 0.3733565
+      time: 0.01282943
+      value: 0.20571962
       inSlope: -50.532146
-      outSlope: 0.0054387944
+      outSlope: -0.31953365
       tangentMode: 65
       weightedMode: 3
       inWeight: 0
       outWeight: 1
     - serializedVersion: 3
-      time: 0.24646349
-      value: 0.37469104
-      inSlope: 0.0054387944
-      outSlope: -1.6402264
+      time: 0.26026505
+      value: 0.12665561
+      inSlope: -0.31953365
+      outSlope: -1.2519042
       tangentMode: 69
       weightedMode: 3
       inWeight: 0
@@ -139,7 +139,7 @@ MonoBehaviour:
     _isDown: 0
   old_charaStatus: 0
   ObjectScale: {x: 0.6, y: 0.55, z: 0}
-  _groundDistance: 2.5
+  _groundDistance: 0.8
   jumpSpeedScale: 1
   player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
   Anime: {fileID: 11400000, guid: 438e24d270197a44c9cbdc80d768e4cd, type: 2}
@@ -158,14 +158,12 @@ MonoBehaviour:
   anime: 0
   _Retrcking: 0
   _IsJump: 0
-  _IsAttack: 1
   _IsReturn: 0
   num: 1
   _IsWait: 0
   _InEnemy: 0
   _IsTrackingWait: 0
   _IsTracking: 0
-  _IsMove: 0
   _IsLook: 1
 --- !u!65 &-65569717251896654
 BoxCollider:
