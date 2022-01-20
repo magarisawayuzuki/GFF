@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : CharacterController
 {
+    private AudioManager audios;
+
     private InputSystem IC;
 
     private LayerMask movelayer = 1 << 8 | 1 << 9;
@@ -167,6 +169,7 @@ public class PlayerController : CharacterController
         IC = new InputSystem();
         checkPointSys = GameObject.FindWithTag(_eventSystem).GetComponent<CheckPointSystem>();
         memoryAchievementController = GameObject.FindWithTag(_eventSystem).GetComponent<MemoryAchievementController>();
+        audios = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     //=====================================================
@@ -176,7 +179,6 @@ public class PlayerController : CharacterController
     {
         if (!InGameToPauseUI_2._isStaticPause)
         {
-            Debug.Log(_life);
             base.Update();
             /*
             print("今" + _charaStatus);
@@ -190,10 +192,11 @@ public class PlayerController : CharacterController
                 old_charaStatus = _charaStatus;
             }
 
-
             MemoryGet();
 
             MomoryGauge();
+
+            PlayerAudio();
 
             Timer();
         }
@@ -685,6 +688,60 @@ public class PlayerController : CharacterController
             }
         }
         _isStartAttack = false;
+    }
+
+    private void PlayerAudio()
+    {
+        switch(_charaStatus)
+        {
+            case CharacterStatus.Idle:
+                audios.playerSE = (AudioManager.PlayerSE)0;
+                audios.AudioChanger("Player");
+                break;
+            case CharacterStatus.Move:
+                audios.playerSE = (AudioManager.PlayerSE)1;
+                audios.AudioChanger("Player");
+                break;
+            case CharacterStatus.Fall:
+                if (_isGround)
+                {
+                    audios.playerSE = (AudioManager.PlayerSE)3;
+                    audios.AudioChanger("Player");
+                }
+                break;
+            case CharacterStatus.swordAttack:
+                if (_attackLevel > 2)
+                {
+                    audios.playerSE = (AudioManager.PlayerSE)4;
+                    audios.AudioChanger("Player");
+                }
+                else
+                {
+                    audios.playerSE = (AudioManager.PlayerSE)4;
+                    audios.AudioChanger("Player");
+                }
+                break;
+            case CharacterStatus.hammerAttack:
+                if (_attackLevel > 2)
+                {
+                    audios.playerSE = (AudioManager.PlayerSE)6;
+                    audios.AudioChanger("Player");
+                }
+                else
+                {
+                    audios.playerSE = (AudioManager.PlayerSE)5;
+                    audios.AudioChanger("Player");
+                }
+                break;
+            case CharacterStatus.Damage:
+                audios.playerSE = (AudioManager.PlayerSE)7;
+                audios.AudioChanger("Player");
+                break;
+            case CharacterStatus.Death:
+                audios.playerSE = (AudioManager.PlayerSE)8;
+                audios.AudioChanger("Player");
+                break;
+        }
     }
 
 

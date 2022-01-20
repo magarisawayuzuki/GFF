@@ -20,7 +20,7 @@ MonoBehaviour:
     x: 1295
     y: -352
     width: 496
-    height: 2827
+    height: 2807
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -937,7 +937,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.5
+      m_SerializableObject: 0.1
     m_Space: 2147483647
   m_Property:
     name: A
@@ -1555,7 +1555,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 10.06
+      m_SerializableObject: 15.05
     m_Space: 2147483647
   m_Property:
     name: Intensity
@@ -1596,7 +1596,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 8.77
+      m_SerializableObject: 14.83
     m_Space: 2147483647
   m_Property:
     name: Drag
@@ -2302,7 +2302,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 2
+      m_SerializableObject: 0.5
     m_Space: 2147483647
   m_Property:
     name: Delay
@@ -2438,7 +2438,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.AnimationCurve, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"frames":[{"time":-0.5590305328369141,"value":0.9069814682006836,"inTangent":-1.018783688545227,"outTangent":-1.018783688545227,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":-0.31917572021484377,"value":0.778900146484375,"inTangent":13.764403343200684,"outTangent":13.764403343200684,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":-0.16900992393493653,"value":-0.29029661417007449,"inTangent":-0.3407779633998871,"outTangent":-0.3407779633998871,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":-0.06124114990234375,"value":1.1865806579589844,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.04554620385169983,"value":0.4143913984298706,"inTangent":23.47841453552246,"outTangent":23.47841453552246,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.10590106248855591,"value":-0.46416807174682619,"inTangent":-1.3003482818603516,"outTangent":-1.3003482818603516,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.2993656396865845,"value":0.9198694229125977,"inTangent":-2.6674656867980959,"outTangent":-2.6674656867980959,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.3806811571121216,"value":0.19817951321601869,"inTangent":-15.351920127868653,"outTangent":-15.351920127868653,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.6053858995437622,"value":1.0383803844451905,"inTangent":-0.40408387780189516,"outTangent":-0.40408387780189516,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.7976155281066895,"value":-0.017771806567907335,"inTangent":9.373461723327637,"outTangent":9.373461723327637,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
+      m_SerializableObject: '{"frames":[{"time":-0.27594393491744997,"value":2.6333718299865724,"inTangent":-1.018783688545227,"outTangent":-1.018783688545227,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":-0.036089152097702029,"value":2.5052905082702638,"inTangent":13.764403343200684,"outTangent":13.764403343200684,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.1140766441822052,"value":0.23530161380767823,"inTangent":0.3407779633998871,"outTangent":0.3407779633998871,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.15910863876342774,"value":1.3376327753067017,"inTangent":1.3003482818603516,"outTangent":1.3003482818603516,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.22184541821479798,"value":2.912971019744873,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.32863277196884158,"value":2.1407816410064699,"inTangent":23.47841453552246,"outTangent":23.47841453552246,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.5824521780014038,"value":2.6462597846984865,"inTangent":-2.6674656867980959,"outTangent":-2.6674656867980959,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.6637676954269409,"value":1.924569845199585,"inTangent":-15.351920127868653,"outTangent":-15.351920127868653,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.8884725570678711,"value":2.764770746231079,"inTangent":-0.40408387780189516,"outTangent":-0.40408387780189516,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":1.0807021856307984,"value":1.7086185216903687,"inTangent":9.373461723327637,"outTangent":9.373461723327637,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
     m_Space: 2147483647
   m_Property:
     name: Alpha
