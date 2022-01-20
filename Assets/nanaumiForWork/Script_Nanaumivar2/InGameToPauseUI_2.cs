@@ -13,6 +13,8 @@ public class InGameToPauseUI_2 : UIController_2
     protected override void Awake()
     {
         base.Awake();
+
+        audios.sprite.Clear();
     }
 
     private void Start()
