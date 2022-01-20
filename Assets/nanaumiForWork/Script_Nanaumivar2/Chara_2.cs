@@ -1,48 +1,84 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Chara_2 : MonoBehaviour
 {
-    private float maxLife = default;
-    private float beforeLife = default;
-    private float afterLife = default;
+    /// <summary>
+    /// 最大Life
+    /// </summary>
+    private float _maxLife = default;
+    /// <summary>
+    /// ダメージ受ける前のLife保持
+    /// </summary>
+    private float _beforeLife = default;
+    /// <summary>
+    /// ダメージ受けた後のLife保持
+    /// </summary>
+    private float _afterLife = default;
 
-    [SerializeField] protected RectMask2D[] HPScroll = default;
+    /// <summary>
+    /// HPbarのダメージ分とダメージ差分を減らす2本のゲージ
+    /// </summary>
+    [SerializeField] protected RectMask2D[] _HPScroll = default;
 
-    //[SerializeField, Range(0, 100)] protected int life = default;
+    /// <summary>
+    /// Lifeの減少するLerpの速度
+    /// </summary>
+    private const float _LIFECHANGEMAGNITUDE = 2f;
+    /// <summary>
+    /// Lerp時間
+    /// </summary>
+    private float _lerpTime = default;
+    /// <summary>
+    /// Lerp倍率
+    /// </summary>
+    private const float _LERPMAGNITUDE = 2.53f;
 
-    private float lifeChangeMagnitude = 2f;
-    private float lerpTime = default;
+    /// <summary>
+    /// HPのMaskPadding用のVector4
+    /// </summary>
+    protected Vector4 _vectorHP = new Vector4(0, 0, 1, 0);
 
-    protected Vector4 vectorHP = new Vector4(0, 0, 1, 0);
-
+    /// <summary>
+    /// キャラの初期パラメータを設定する処理
+    /// </summary>
+    /// <param name="charaPara">CharacterControllerを設定</param>
     protected void SetChara(CharacterController charaPara)
     {
-        beforeLife = 0;
-        maxLife = charaPara.GetLife;
+        _beforeLife = 0;
+        _maxLife = charaPara.GetLife;
     }
 
+    /// <summary>
+    /// ダメージ時のLifeBarの変更
+    /// </summary>
+    /// <param name="charaPara">CharacterControllerの設定</param>
+    /// <param name="isDamage">ダメージを受けているか</param>
     protected virtual void ChangeLife(CharacterController charaPara, bool isDamage)
     {
-        afterLife = maxLife - charaPara.GetLife;
-        HPScroll[0].padding = vectorHP * afterLife * 2.53f;
+        // afterLifeの更新
+        _afterLife = _maxLife - charaPara.GetLife;
+        // すぐ減らす方のHPBarを減らす
+        _HPScroll[0].padding = _vectorHP * _afterLife * _LERPMAGNITUDE;
+
+        // ダメージを受けてないときにダメージ差分をゆっくり減らす
         if (!isDamage)
         {
-            if (lerpTime <= 1f)
+            if (_lerpTime <= 1f)
             {
-                lerpTime += Time.deltaTime * lifeChangeMagnitude * 2;
-                HPScroll[1].padding = Vector4.Lerp(vectorHP * beforeLife * 2.53f, vectorHP * afterLife * 2.53f, lerpTime);
+                _lerpTime += Time.deltaTime * _LIFECHANGEMAGNITUDE * 2;
+                _HPScroll[1].padding = Vector4.Lerp(_vectorHP * _beforeLife * _LERPMAGNITUDE, _vectorHP * _afterLife * _LERPMAGNITUDE, _lerpTime);
             }
             else
             {
-                beforeLife = afterLife;
+                // beforeLifeの更新
+                _beforeLife = _afterLife;
             }
         }
         else if(isDamage)
         {
-            lerpTime = 0;
+            // Lerpを動かなくする
+            _lerpTime = 0;
         }
     }
 }

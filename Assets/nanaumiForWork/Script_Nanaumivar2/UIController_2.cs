@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using System;
 
 [AttributeUsage(AttributeTargets.Method)]
 public class CalledFromSendMessageAttribute : Attribute { }
@@ -73,11 +70,11 @@ public class UIController_2 : MonoBehaviour
     /// </summary>
     protected float _imageFlipTime = default;
     /// <summary>
-    /// めくっている
+    /// めくっていない
     /// </summary>
-    protected bool _isFlip = default;
+    protected bool _isNotFlip = default;
     /// <summary>
-    /// ロードの完了
+    /// ロード中
     /// </summary>
     protected bool _isLoaded = default;
     #endregion
@@ -98,7 +95,7 @@ public class UIController_2 : MonoBehaviour
     protected void InputManager()
     {
         // シーン遷移(ページめくる)が終わったら
-        if (_isFlip)
+        if (_isNotFlip)
         {
             // 入力がないとき
             if (!_isInput[0] && !_isInput[1])
@@ -115,7 +112,7 @@ public class UIController_2 : MonoBehaviour
             }
         }
         // シーン遷移最中だったら
-        else if (!_isFlip)
+        else if (!_isNotFlip)
         {
             // materialのFloat(_Flip)を変更して本をめくらせる
             bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") - Time.deltaTime * 4);
@@ -125,7 +122,7 @@ public class UIController_2 : MonoBehaviour
             if (!(_imageFlipTime < 0.6f && _imageFlipTime > -0.6f) && !_isLoaded)
             {
                 // 本をめくる処理の終了
-                _isFlip = true;
+                _isNotFlip = true;
             }
         }
     }
