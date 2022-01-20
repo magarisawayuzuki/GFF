@@ -91,6 +91,7 @@ public class CharacterController : MonoBehaviour
     #region const
     protected const int _ZERO = 0;
     protected const int _ONE = 1;
+    protected const int _TWO = 2;
 
     private const int layerMix = 1 << 8 | 1 << 11;
     private const int layerGround = 1 << 8;

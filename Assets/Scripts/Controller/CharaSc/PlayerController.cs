@@ -37,6 +37,8 @@ public class PlayerController : CharacterController
     public int _WeaponMemoryCount { get { return _weaponMemoryCount; } }
     // 記憶の個数
     protected int _memoryCount = 0;
+    // 攻撃のレベル
+    private int _attackLevel = default;
 
     #endregion
 
@@ -134,6 +136,9 @@ public class PlayerController : CharacterController
     // ×
     private const int _BADMEMORYPLUS = 1;
 
+    // 攻撃方向でこの数を足す
+    private const int _ATTACK_TRANSFORM = 3;
+
     // 時間で減少
     private const float _TIMEMEMORYDOWN = 0.5f;
 
@@ -144,6 +149,7 @@ public class PlayerController : CharacterController
     [SerializeField]
     // 強攻撃1段階目
     private const float _NORMALPOWERTIME = 1.5f;
+
     #endregion
 
     #region デバック用
@@ -342,16 +348,19 @@ public class PlayerController : CharacterController
                             if (_swordTime > _MIDDLEPOWERTIME)
                             {
                                 _attackPower = charaData.basicPower * _swordHeavyAttack * _memoryGaugeAttackPoint;
+                                _attackLevel = _TWO;
                                 Debug.Log("剣強攻撃");
                             }
                             else if (_swordTime > _NORMALPOWERTIME)
                             {
                                 _attackPower = charaData.basicPower * _swordMiddleAttack * _memoryGaugeAttackPoint;
+                                _attackLevel = _ONE;
                                 Debug.Log("剣中攻撃");
                             }
                             else
                             {
                                 _attackPower = charaData.basicPower * _memoryGaugeAttackPoint;
+                                _attackLevel = _ZERO;
                                 Debug.Log("剣弱攻撃");
                             }
                             break;
@@ -360,18 +369,21 @@ public class PlayerController : CharacterController
                             if (_hammerTime > _MIDDLEPOWERTIME)
                             {
                                 _attackPower = charaData.basicPower * _hammerHeavyAttack * _memoryGaugeAttackPoint;
+                                _attackLevel = _TWO;
                                 Debug.Log("槌強攻撃");
                             }
                             // 槌強攻撃1段階目
                             else if (_hammerTime > _NORMALPOWERTIME)
                             {
                                 _attackPower = charaData.basicPower * _hammerMiddleAttack * _memoryGaugeAttackPoint;
+                                _attackLevel = _ONE;
                                 Debug.Log("槌中攻撃");
                             }
                             // 槌弱攻撃
                             else
                             {
                                 _attackPower = charaData.basicPower * _hammerLightAttack * _memoryGaugeAttackPoint;
+                                _attackLevel = _ZERO;
                                 Debug.Log("槌弱攻撃");
                             }
                             break;
@@ -647,15 +659,32 @@ public class PlayerController : CharacterController
         {
             _isInputSwordAttack = false;
             _swordTime = 0;
+            switch (transform.localScale.x)
+            {
+                case _ONE:
+                    swordEffects[_attackLevel + _ATTACK_TRANSFORM].SetActive(false);
+                    break;
+                case -_ONE:
+                    swordEffects[_attackLevel].SetActive(false);
+                    break;
+            }
         }
         else
         {
             _isInputHammerAttack = false;
             _canHammerAttack = false;
             _hammerTime = 0;
+            switch (transform.localScale.x)
+            {
+                case _ONE:
+                    hammerEffects[_attackLevel + _ATTACK_TRANSFORM].SetActive(false);
+                    break;
+                case -_ONE:
+                    hammerEffects[_attackLevel].SetActive(false);
+                    break;
+            }
         }
         _isStartAttack = false;
-
     }
 
 
@@ -670,32 +699,10 @@ public class PlayerController : CharacterController
             switch (transform.localScale.x)
             {
                 case _ONE:
-                    if (_swordTime > _MIDDLEPOWERTIME)
-                    {
-                        swordEffects[5].SetActive(true);
-                    }
-                    else if (_swordTime > _NORMALPOWERTIME)
-                    {
-                        swordEffects[4].SetActive(true);
-                    }
-                    else
-                    {
-                        swordEffects[3].SetActive(true);
-                    }
+                        swordEffects[_attackLevel + _ATTACK_TRANSFORM].SetActive(true);
                     break;
                 case -_ONE:
-                    if (_swordTime > _MIDDLEPOWERTIME)
-                    {
-                        swordEffects[2].SetActive(true);
-                    }
-                    else if (_swordTime > _NORMALPOWERTIME)
-                    {
-                        swordEffects[1].SetActive(true);
-                    }
-                    else
-                    {
-                        swordEffects[0].SetActive(true);
-                    }
+                        swordEffects[_attackLevel].SetActive(true);
                     break;
             }
         }
@@ -704,38 +711,10 @@ public class PlayerController : CharacterController
             switch (transform.localScale.x)
             {
                 case _ONE:
-                    // 槌協攻撃2段階目
-                    if (_hammerTime > _MIDDLEPOWERTIME)
-                    {
-                        hammerEffects[5].SetActive(true);
-                    }
-                    // 槌強攻撃1段階目
-                    else if (_hammerTime > _NORMALPOWERTIME)
-                    {
-                        hammerEffects[4].SetActive(true);
-                    }
-                    // 槌弱攻撃
-                    else
-                    {
-                        hammerEffects[3].SetActive(true);
-                    }
+                    hammerEffects[_attackLevel + _ATTACK_TRANSFORM].SetActive(true);
                     break;
                 case -_ONE:
-                    // 槌協攻撃2段階目
-                    if (_hammerTime > _MIDDLEPOWERTIME)
-                    {
-                        hammerEffects[2].SetActive(true);
-                    }
-                    // 槌強攻撃1段階目
-                    else if (_hammerTime > _NORMALPOWERTIME)
-                    {
-                        hammerEffects[1].SetActive(true);
-                    }
-                    // 槌弱攻撃
-                    else
-                    {
-                        hammerEffects[0].SetActive(true);
-                    }
+                    hammerEffects[_attackLevel].SetActive(true);
                     break;
             }
         }
