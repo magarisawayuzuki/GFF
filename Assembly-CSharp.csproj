@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
     <Compile Include="Assets\Scripts\View\CameraMove.cs" />
     <Compile Include="Assets\Scripts\Controller\GimmickSc\DeathPoint.cs" />
+    <Compile Include="Assets\Magarisawa\ImportCSV.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\UIController_2.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyNormal.cs" />
@@ -124,7 +125,6 @@
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\Chara_2.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\EventController.cs" />
     <Compile Include="Assets\Scripts\View\StageDirector\StageAudioController.cs" />
-    <Compile Include="Assets\Magarisawa\ImportCSV.cs" />
     <None Include="Assets\Aoki\Aseets\Bringer Of Death\License.txt" />
     <None Include="Assets\nanaumiForWork\Script_Nanaumi\NextPage.shader" />
     <None Include="Assets\Resources\MapCSVFile\MapData.txt" />
