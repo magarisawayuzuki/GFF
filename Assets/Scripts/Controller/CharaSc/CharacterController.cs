@@ -32,6 +32,8 @@ public class CharacterController : MonoBehaviour
     public CharacterStatus characterStatus { get { return _charaStatus; } }
     public CharacterStatus old_charaStatus = default;
 
+    protected RaycastHit grounddistance;
+
     #region Vector3
     // キャラの移動
     protected Vector3 CharacterMove = new Vector3();
@@ -86,6 +88,9 @@ public class CharacterController : MonoBehaviour
     protected bool _canNotRight = default;
     // 左に移動できるか
     protected bool _canNotLeft = default;
+
+    // 落下死判定
+    protected bool _isFallDeath = false;
     #endregion
 
     #region const
@@ -299,6 +304,9 @@ public class CharacterController : MonoBehaviour
                 return;
             }
 
+            // Playerで使用
+            grounddistance = hit;
+
             _isGround = true;
             _isFall = false;
             acceleration = _ZERO;
@@ -455,14 +463,20 @@ public class CharacterController : MonoBehaviour
     public virtual void CharaLifeCalculation(float damage, int knockBack, int weapon)
     {
         _isDamage = true;
-        _charaStatus = CharacterStatus.Damage;
-
-        _life -= (int)Mathf.Floor(damage);
-        Debug.Log((int)Mathf.Floor(damage));
-
-        if (_life <= 0)
+        if (!input._isAttack)
         {
-            Death();
+            _charaStatus = CharacterStatus.Damage;
+        }
+
+        if (!_isDeath)
+        {
+            _life -= (int)Mathf.Floor(damage);
+
+            if (_life <= 0)
+            {
+                Death();
+            }
+
         }
     }
     //=====================================================================

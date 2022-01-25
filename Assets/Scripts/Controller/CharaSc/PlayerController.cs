@@ -42,6 +42,9 @@ public class PlayerController : CharacterController
     // 攻撃のレベル
     private int _attackLevel = default;
 
+    // ダメージ時のSE
+    private int _damageSoundCount = 0;
+
     #endregion
 
     #region float
@@ -115,6 +118,11 @@ public class PlayerController : CharacterController
     // 攻撃開始
     private bool _isStartAttack = false;
 
+    // 槌の攻撃SEに使用
+    public bool _isHammerAttack_Sound = false;
+    // DeathのSE再生で使用
+    public bool _isDeath_Sound = false;
+
     #endregion
 
     #region string
@@ -179,6 +187,7 @@ public class PlayerController : CharacterController
     {
         if (!InGameToPauseUI_2._isStaticPause)
         {
+            Debug.Log(characterStatus);
             base.Update();
             /*
             print("今" + _charaStatus);
@@ -256,6 +265,7 @@ public class PlayerController : CharacterController
 
         if (transform.position.y <= _ZERO)
         {
+            _isFallDeath = true;
             Death();
         }
         
@@ -500,10 +510,27 @@ public class PlayerController : CharacterController
     //プレイヤーが死んだときの処理
     public override void Death()
     {
-        base.Death();
-        checkPointSys.Respawn();
+        if (_isFallDeath)
+        {
+            _isFallDeath = false;
+            checkPointSys.Respawn();
+        }
+        else
+        {
+            base.Death();
+        }
+    }
+
+
+
+    //==========================================================
+
+
+    public void ResetLife()
+    {
         _life = charaData.life;
         _isDeath = false;
+        _isDeath_Sound = false;
         memoryAchievementController._nowMemoryToral = _ZERO;
     }
 
@@ -612,6 +639,7 @@ public class PlayerController : CharacterController
         {
             _isInvincible = false;
             _isDamage = false;
+            _damageSoundCount = _ZERO;
 
             _invincibleTime = 1;
         }
@@ -694,53 +722,53 @@ public class PlayerController : CharacterController
     {
         switch(_charaStatus)
         {
-            case CharacterStatus.Idle:
-                audios.playerSE = (AudioManager.PlayerSE)0;
-                audios.AudioChanger("Player");
-                break;
             case CharacterStatus.Move:
                 audios.playerSE = (AudioManager.PlayerSE)1;
                 audios.AudioChanger("Player");
-                break;
-            case CharacterStatus.Fall:
-                if (_isGround)
-                {
-                    audios.playerSE = (AudioManager.PlayerSE)3;
-                    audios.AudioChanger("Player");
-                }
                 break;
             case CharacterStatus.swordAttack:
                 if (_attackLevel > 2)
                 {
                     audios.playerSE = (AudioManager.PlayerSE)4;
                     audios.AudioChanger("Player");
+
                 }
                 else
                 {
-                    audios.playerSE = (AudioManager.PlayerSE)4;
+                    audios.playerSE = (AudioManager.PlayerSE)3;
                     audios.AudioChanger("Player");
                 }
                 break;
             case CharacterStatus.hammerAttack:
-                if (_attackLevel > 2)
+                if (_isHammerAttack_Sound)
                 {
-                    audios.playerSE = (AudioManager.PlayerSE)6;
-                    audios.AudioChanger("Player");
-                }
-                else
-                {
-                    audios.playerSE = (AudioManager.PlayerSE)5;
-                    audios.AudioChanger("Player");
+                    if (_attackLevel > 2)
+                    {
+                        audios.playerSE = (AudioManager.PlayerSE)6;
+                        audios.AudioChanger("Player");
+                    }
+                    else
+                    {
+                        audios.playerSE = (AudioManager.PlayerSE)5;
+                        audios.AudioChanger("Player");
+                    }
                 }
                 break;
-            case CharacterStatus.Damage:
-                audios.playerSE = (AudioManager.PlayerSE)7;
-                audios.AudioChanger("Player");
-                break;
+            
             case CharacterStatus.Death:
-                audios.playerSE = (AudioManager.PlayerSE)8;
-                audios.AudioChanger("Player");
+                if (!_isDeath_Sound)
+                {
+                    audios.playerSE = (AudioManager.PlayerSE)8;
+                    audios.AudioChanger("Player");
+                    _isDeath_Sound = true;
+                }
                 break;
+        }
+        if (_isDamage && _damageSoundCount == _ZERO)
+        {
+            audios.playerSE = (AudioManager.PlayerSE)7;
+            audios.AudioChanger("Player");
+            _damageSoundCount++;
         }
     }
 
@@ -750,9 +778,9 @@ public class PlayerController : CharacterController
 
     public void EffectStart()
     {
+        // Playerの向きによってエフェクトを変える
         if (_charaStatus == CharacterStatus.swordAttack)
         {
-
             switch (transform.localScale.x)
             {
                 case _ONE:
