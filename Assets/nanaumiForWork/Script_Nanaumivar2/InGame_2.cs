@@ -18,8 +18,8 @@ public class InGame_2 : Chara_2
     private Color _damageColor = new Color(1, 0, 0, 0);
 
     #region 記憶ゲージ
-    [SerializeField] private RectMask2D _memoryGaugeBarMask = default;
-    [SerializeField] private Image _memoryGaugeBar = default;
+    [SerializeField,Tooltip("0無双 1通常")] private RectMask2D[] _memoryGaugeBarMask = default;
+    [SerializeField] private Image[] _memoryGaugeBar = default;
     /// <summary>
     /// 記憶ゲージの最大値
     /// </summary>
@@ -35,7 +35,11 @@ public class InGame_2 : Chara_2
     /// <summary>
     /// 記憶ゲージのLerp倍率
     /// </summary>
-    private const float _MEMORY_LERPMAGNITUDE = 2.4f;
+    private const float _MEMORY_LERPMAGNITUDE = 2.21f;
+    /// <summary>
+    /// 記憶ゲージのLerp倍率 無双のとき
+    /// </summary>
+    private const float _MEMORY_LERPMAGNITUDE_MUSOU = 6f;
     /// <summary>
     /// 記憶ゲージを変更している
     /// </summary>
@@ -102,7 +106,7 @@ public class InGame_2 : Chara_2
     private void Awake()
     {
         // 記憶達成度の取得(静的)
-        _memoryAchinementObj = this.transform.GetChild(3).gameObject;
+        _memoryAchinementObj = this.transform.GetChild(4).gameObject;
         // 記憶達成度のMask取得
         _memoryGaugeAchievementBar = _memoryAchinementObj.GetComponentInChildren<RectMask2D>();
         // 記憶達成度のText取得
@@ -111,7 +115,8 @@ public class InGame_2 : Chara_2
         memoAchi = GameObject.FindWithTag("EventSystem").GetComponent<MemoryAchievementController>();
 
         // 記憶達成度を50％に設定
-        _memoryGaugeBarMask.padding = _vectorHP * 50 * _MEMORYACHIEVEMENT_LERPMAGNITUDE;
+        _memoryGaugeBarMask[0].padding = _vectorHP * 5 * _MEMORY_LERPMAGNITUDE_MUSOU;
+        _memoryGaugeBarMask[1].padding = _vectorHP * 45 * _MEMORY_LERPMAGNITUDE;
     }
 
     private void Start()
@@ -127,7 +132,7 @@ public class InGame_2 : Chara_2
         _beforeLifeChild = (int)_playerCon.GetLife;
 
         // 記憶ゲージと記憶達成度の、減少時に変更する前の値を設定
-        _beforeMemory = _playerCon._MemoryGauge;
+        _beforeMemory = _playerCon._MemoryGauge - 5;
         _beforeMemoryAchievement = MAX_MEMORY_ACHIVEMENT;
     }
 
@@ -192,30 +197,55 @@ public class InGame_2 : Chara_2
         }
     }
 
+    private bool _isMusou = default;
     /// <summary>
     /// 記憶ゲージの変更処理
     /// </summary>
     private void PlayerMemoryUI()
     {
         // _afterMemoryの更新
-        _afterMemory = _MAX_MEMORY - _playerCon._MemoryGauge;
+        if (_isMusou)
+        {
+            _afterMemory = _MAX_MEMORY - _playerCon._MemoryGauge;
+        }
+        else
+        {
+            _afterMemory = _MAX_MEMORY - _playerCon._MemoryGauge - 5;
+        }
+
+        // _afterMemoryの更新
+        if (_playerCon._MemoryGauge >= 95 && !_isMusou)
+        {
+            _afterMemory = _MAX_MEMORY - _playerCon._MemoryGauge;
+            _beforeMemory = 5;
+            _isMusou = true;
+        }
+        else if (_playerCon._MemoryGauge < 95 && _isMusou)
+        {
+            _afterMemory = _MAX_MEMORY - _playerCon._MemoryGauge - 5;
+            _beforeMemory = 0;
+            _isMusou = false;
+        }
 
         // Lerp処理
         if (_memoryChangeTime <= 1f)
         {
             _memoryChangeTime += Time.deltaTime * 2;
-            if (_afterMemory <= 5)
+            // 記憶ゲージが95％以上のとき(無双できるとき)
+            if (_isMusou)
             {
-                /////////////////////////////////////////////
-            _memoryGaugeBarMask.padding = Vector4.Lerp(_vectorHP * _beforeMemory * _MEMORY_LERPMAGNITUDE, _vectorHP * _afterMemory * _MEMORY_LERPMAGNITUDE, _memoryChangeTime);
-                _memoryGaugeBar.color = Color.red;
+                _memoryGaugeBarMask[0].padding = Vector4.Lerp(_vectorHP * _beforeMemory * _MEMORY_LERPMAGNITUDE_MUSOU, _vectorHP * _afterMemory * _MEMORY_LERPMAGNITUDE_MUSOU, _memoryChangeTime);
+                _memoryGaugeBarMask[1].padding = _vectorHP * 0 * _MEMORY_LERPMAGNITUDE;
+                _memoryGaugeBar[0].color = Color.red;
+                _memoryGaugeBar[1].color = Color.red;
             }
             else
             {
-            _memoryGaugeBarMask.padding = Vector4.Lerp(_vectorHP * _beforeMemory * _MEMORY_LERPMAGNITUDE, _vectorHP * _afterMemory * _MEMORY_LERPMAGNITUDE, _memoryChangeTime);
-                _memoryGaugeBar.color = Color.white;
+                _memoryGaugeBarMask[0].padding = _vectorHP * 5 * _MEMORY_LERPMAGNITUDE_MUSOU;
+                _memoryGaugeBar[0].color = Color.white;
+                _memoryGaugeBarMask[1].padding = Vector4.Lerp(_vectorHP * _beforeMemory * _MEMORY_LERPMAGNITUDE, _vectorHP * _afterMemory * _MEMORY_LERPMAGNITUDE, _memoryChangeTime);
+                _memoryGaugeBar[1].color = Color.white;
             }
-            ///////////////////////////////////////////
         }
         else
         {
