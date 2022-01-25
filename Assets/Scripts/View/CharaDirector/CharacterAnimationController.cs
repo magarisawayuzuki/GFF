@@ -16,6 +16,8 @@ public class CharacterAnimationController : MonoBehaviour
         Damage,
     }
 
+    private CheckPointSystem checkPointSys;
+
     private Animation anima;
 
     private List<AnimationClip> animas = new List<AnimationClip>();
@@ -26,6 +28,7 @@ public class CharacterAnimationController : MonoBehaviour
 
     private void Start()
     {
+        checkPointSys = GameObject.FindWithTag("EventSystem").GetComponent<CheckPointSystem>();
 
         anima = this.gameObject.GetComponent<Animation>();
 
@@ -93,5 +96,18 @@ public class CharacterAnimationController : MonoBehaviour
     public void WeaponEffect()
     {
         playerc.EffectStart();
+    }
+
+    public void PlayerDeath()
+    {
+        checkPointSys.Respawn();
+    }
+    public void HammerSEStart()
+    {
+        playerc._isHammerAttack_Sound = true;
+    }
+    public void HammerSEFin()
+    {
+        playerc._isHammerAttack_Sound = true;
     }
 }
