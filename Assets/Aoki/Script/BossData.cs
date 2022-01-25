@@ -14,5 +14,6 @@ public class BossData : ScriptableObject
     public Sprite[] Warp;
     public Sprite[] WarpAttack;
     public Sprite[] Spell;
+    public Sprite[] TakeHit;
 
 }

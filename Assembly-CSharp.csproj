@@ -65,7 +65,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\CautionPanel_2.cs" />
-    <Compile Include="Assets\Aoki\Script\SlideHp.cs" />
     <Compile Include="Assets\Aoki\Script\EnemyData.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
     <Compile Include="Assets\Scripts\View\CameraMove.cs" />

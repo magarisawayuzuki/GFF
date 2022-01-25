@@ -88,11 +88,11 @@ MonoBehaviour:
     _isDown: 0
   old_charaStatus: 0
   ObjectScale: {x: 3, y: 3, z: 0.2}
-  _groundDistance: 1.9
+  _groundDistance: 1.2
   jumpSpeedScale: 1
   player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
   Anime: {fileID: 0}
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 86fc38416a036b84fbf46d825a4fa9d1, type: 2}
   kakera: {fileID: 0}
   gekitui: {fileID: 0}
   AttackRange: 5
@@ -120,7 +120,6 @@ MonoBehaviour:
   _IsLook: 1
   BossSprite: {fileID: 5209403665502590627}
   mono: {fileID: 11400000, guid: 1e8d535f9566b13448a73de8157bae88, type: 2}
-  HP: 0
   AnimeSpeed: 5
   TrackingSpeed: 800
   AttackEffect:
@@ -137,6 +136,7 @@ MonoBehaviour:
   - {x: 269, y: 35}
   - {x: 274, y: 35}
   - {x: 269, y: 35}
+  WarpPos: {x: 1014, y: 59}
   HpState: 0
   aiState: 10
 --- !u!212 &4503539027462731859
