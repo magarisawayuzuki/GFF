@@ -111,20 +111,18 @@ MonoBehaviour:
   anime: 0
   _Retrcking: 0
   _IsJump: 0
-  _IsAttack: 1
   _IsReturn: 0
   num: 1
   _IsWait: 0
   _InEnemy: 0
   _IsTrackingWait: 0
   _IsTracking: 0
-  _IsMove: 0
   _IsLook: 1
   BossSprite: {fileID: 5209403665502590627}
   mono: {fileID: 11400000, guid: 1e8d535f9566b13448a73de8157bae88, type: 2}
   HP: 0
   AnimeSpeed: 5
-  TrackingSpeed: 500
+  TrackingSpeed: 800
   AttackEffect:
   - {fileID: 6979431124915740080, guid: 39a4b23f53b38134e89dc27919650889, type: 3}
   - {fileID: 4958960580899864360, guid: 7c517ff82f90f5e45b09524bfb82af74, type: 3}

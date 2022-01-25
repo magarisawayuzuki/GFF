@@ -258,6 +258,7 @@ public class EnemyNormal : EnemyController
                     if (_isDeath == true)
                     {
                         Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+                        Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
                         map.stageArray[EnemyPositionY, EnemyPositionX] = 0;
                         gameObject.SetActive(false);
                     }
@@ -380,8 +381,8 @@ public class EnemyNormal : EnemyController
         if (num == 1) //右向き
         {
             //2つ右がプレイヤーだった場合攻撃
-            if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX && _IsLook == true
-                && _isDeath == false)
+            if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX 
+                && EnemyPositionY == map.PlayerPositionY &&_IsLook == true && _isDeath == false)
             {
                 if (_IsAttack == true && _IsTakeHit == false)
                 {
@@ -403,8 +404,8 @@ public class EnemyNormal : EnemyController
         if (num == -1) //左向き
         {
             //2つ左がプレイヤーだった場合攻撃
-            if (EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX && _IsLook == true
-                && _isDeath == false)
+            if (EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX 
+                && EnemyPositionY == map.PlayerPositionY && _IsLook == true && _isDeath == false)
             {
                 if (_IsAttack == true && _IsTakeHit == false)
                 {
