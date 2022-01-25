@@ -178,6 +178,7 @@ public class PlayerController : CharacterController
         checkPointSys = GameObject.FindWithTag(_eventSystem).GetComponent<CheckPointSystem>();
         memoryAchievementController = GameObject.FindWithTag(_eventSystem).GetComponent<MemoryAchievementController>();
         audios = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        memoryAchievementController._nowMemoryToral = _ZERO;
     }
 
     //=====================================================
