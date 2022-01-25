@@ -79,11 +79,17 @@ public class AudioManager : MonoBehaviour
         Transition
     }
 
+    // Enumの生成
     public BGM bgm = default;
     public PlayerSE playerSE = default;
     public BossSE bossSE = default;
     public UISE uiSE = default;
+
+    /// <summary>
+    /// AudioSourceの箱
+    /// </summary>
     private AudioSource[] ad = { default, default, default, default };
+
     [SerializeField, Tooltip("BGM 0タイトル 1通常時 2ゲームクリア 3ゲームオーバー")]
     private AudioClip[] bgmclip = default;
     [SerializeField, Tooltip("PlayerSE 0待機 1歩く 2ジャンプ 3剣弱攻撃 4剣強攻撃 5槌弱攻撃 6槌強攻撃 7ダメージ")]
@@ -97,6 +103,8 @@ public class AudioManager : MonoBehaviour
 
     public List<Sprite> sprite = new List<Sprite> { };
 
+    private float _screenShotWaitTime = default;
+
     private void Awake()
     {
         bgm = new BGM();
@@ -104,11 +112,13 @@ public class AudioManager : MonoBehaviour
         bossSE = new BossSE();
         uiSE = new UISE();
 
+        // BGM
         ad[0] = gameObject.AddComponent<AudioSource>();
         ad[0].loop = true;
         ad[0].playOnAwake = false;
         ad[0].outputAudioMixerGroup = mixer[0];
 
+        // SE
         for (int i = 1; i < ad.Length; i++)
         {
             ad[i] = gameObject.AddComponent<AudioSource>();
@@ -117,15 +127,14 @@ public class AudioManager : MonoBehaviour
             ad[i].outputAudioMixerGroup = mixer[1];
         }
     }
-
-    private float _screenShotWaitTime = default;
     private void Update()
     {
+        // ScreenShot撮る
         if (bgm == BGM.InGameNormal)
         {
             _screenShotWaitTime += Time.deltaTime + Random.Range(0, Time.deltaTime * 5);
 
-            if (sprite.Count < 11 && _screenShotWaitTime > 30)
+            if (sprite.Count < 31 && _screenShotWaitTime > 30)
             {
                 StartCoroutine(LoadScreenshot());
                 _screenShotWaitTime = 0;
@@ -133,6 +142,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Audio判断
+    /// </summary>
+    /// <param name="nowState">呼び出し先を文字列指定</param>
     public void AudioChanger(string nowState)
     {
         switch (nowState)
@@ -160,6 +173,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// BGM再生
+    /// </summary>
     private void AudioChangedBGM()
     {
         switch (bgm)
@@ -195,6 +211,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// PlayerSE再生
+    /// </summary>
     private void AudioChangedPlayerSE()
     {
 
@@ -230,6 +249,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// BossSE再生
+    /// </summary>
     private void AudioChangedBossSE()
     {
         switch (bossSE)
@@ -258,6 +280,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// UISE再生
+    /// </summary>
     private void AudioChangedUISE()
     {
         switch (uiSE)
@@ -280,6 +305,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// スクショ撮ってSpriteに直す
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator LoadScreenshot()
     {
         Debug.Log("ScreenShot");

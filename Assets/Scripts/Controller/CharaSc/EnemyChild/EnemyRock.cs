@@ -273,6 +273,7 @@ public class EnemyRock : EnemyController
                     if (_isDeath == true)
                     {
                         Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+                        Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
                         map.stageArray[EnemyPositionY, EnemyPositionX] = 0;
                         gameObject.SetActive(false);
                     }
@@ -343,7 +344,7 @@ public class EnemyRock : EnemyController
                 Spritetime[4] += Time.deltaTime * data.AnimeSpeed[3];
                 _NowAttack = true;
                 //攻撃しているspriteの時
-                if (Spritetime[4] >= MaxLeng[3] - 3)
+                if (Spritetime[4] >= MaxLeng[3] - 2)
                 {
                     //向いている方向によって敵とプレイヤーの距離計算
                     if (_Retrcking == false)
@@ -355,7 +356,7 @@ public class EnemyRock : EnemyController
                     {
                         GetAttackRange = map.PlayerPositionX - EnemyPositionX;
                     }
-                    //計算した距離が-2から0だった時攻撃を当てた
+                    //計算した距離が-4から0だった時攻撃を当てた
                     if (GetAttackRange >= -AttackRange && GetAttackRange <= 0)
                     {
                         playerController.CharaLifeCalculation(damage,0,0);
@@ -393,8 +394,8 @@ public class EnemyRock : EnemyController
         if (num == 1) //右向き
         {
             //2つ右がプレイヤーだった場合攻撃
-            if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX && _IsLook == true
-                && _isDeath == false)
+            if (EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX 
+                && EnemyPositionY == map.PlayerPositionY && _IsLook == true && _isDeath == false)
             {
                 if (_IsAttack == true && _IsTakeHit == false)
                 {
@@ -416,8 +417,8 @@ public class EnemyRock : EnemyController
         if (num == -1) //左向き
         {
             //2つ左がプレイヤーだった場合攻撃
-            if (EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX && _IsLook == true
-                && _isDeath == false)
+            if (EnemyPositionX - AttackRange >= map.PlayerPositionX && EnemyPositionX - AttackRange <= map.PlayerPositionX 
+                && EnemyPositionY == map.PlayerPositionY && _IsLook == true && _isDeath == false)
             {
                 if (_IsAttack == true && _IsTakeHit == false)
                 {

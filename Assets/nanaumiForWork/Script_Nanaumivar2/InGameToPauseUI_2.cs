@@ -5,15 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class InGameToPauseUI_2 : UIController_2
 {
-    // ポーズ中か
+    /// <summary>
+    /// ポーズ中か
+    /// </summary>
     public static bool _isStaticPause = default;
-    // ポーズシーンか
+    /// <summary>
+    /// ポーズシーンでポーズが押されたか
+    /// </summary>
     public static bool _isPause = default;
 
     protected override void Awake()
     {
         base.Awake();
 
+        // ScreenShotの初期化
         audios.sprite.Clear();
     }
 
@@ -26,8 +31,9 @@ public class InGameToPauseUI_2 : UIController_2
 
     private void Update()
     {
-        if (_isFlip)
+        if (_isNotFlip)
         {
+            // Pauseが押されたとき
             if (_inputs.UI.Pause.triggered && !_isPause)
             {
                 _isStaticPause = true;
@@ -39,19 +45,24 @@ public class InGameToPauseUI_2 : UIController_2
                 ToPause();
             }
         }
-        else if (!_isFlip)
+        // 本をめくる処理
+        else if (!_isNotFlip)
         {
             bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") - Time.deltaTime * 4);
             _imageFlipTime += Time.deltaTime;
             if (!(_imageFlipTime < 0.5f && _imageFlipTime > -0.5f) && !_isLoaded)
             {
-                _isFlip = true;
+                _isNotFlip = true;
             }
         }
     }
 
+    /// <summary>
+    /// Pauseシーンへの遷移
+    /// </summary>
     private void ToPause()
     {
+        // シーンが存在していないとき、ロードする
         if (!ContainsScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause)))
         {
             if (!_isLoaded)
@@ -59,6 +70,7 @@ public class InGameToPauseUI_2 : UIController_2
                 _isLoaded = true;
                 bookimage.material.SetFloat("_Flip", -1f);
 
+                // Audio
                 audios.uiSE = (AudioManager.UISE)3;
                 audios.AudioChanger("UI");
 
@@ -66,8 +78,10 @@ public class InGameToPauseUI_2 : UIController_2
             }
         }
 
+        // ロードが始まったら
         if (_isLoaded)
         {
+            // 本をめくる
             if (_imageFlipTime >= 0)
             {
                 bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") + Time.deltaTime * 4);
@@ -76,12 +90,17 @@ public class InGameToPauseUI_2 : UIController_2
             else
             {
                 _isInput[1] = false;
-                _isFlip = false;
+                _isNotFlip = false;
                 _isLoaded = false;
             }
         }
     }
 
+    /// <summary>
+    /// シーンがゲーム上に存在しているか
+    /// </summary>
+    /// <param name="sceneName">確認するシーンIndex</param>
+    /// <returns>true:存在している</returns>
     private bool ContainsScene(int sceneName)
     {
         for (int i = 0; i < SceneManager.sceneCount; i++)
@@ -97,11 +116,14 @@ public class InGameToPauseUI_2 : UIController_2
     protected override void OnEnable()
     {
         base.OnEnable();
-        _isFlip = false;
+        _isNotFlip = false;
         _isLoaded = false;
 
+        // Audio
         audios.bgm = (AudioManager.BGM)1;
         audios.AudioChanger("BGM");
+
+        // SceneStateをInGameに設定
         SceneStateUI_2.sceneState = SceneStateUI_2.SceneState.InGame;
     }
 }

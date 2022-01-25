@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PauseUI_2 : UIController_2
 {
+    // 警告パネルの設定
     [SerializeField] private GameObject cautionPanel = default;
     [SerializeField] private CautionPanel_2 caucau = default;
 
@@ -13,6 +14,7 @@ public class PauseUI_2 : UIController_2
     {
         _nowSelectNumber = 1;
 
+        // カーソルの初期化
         _selector.anchoredPosition = _selectPoint[_nowSelectNumber - 1].anchoredPosition;
         _selector.sizeDelta = _selectPoint[_nowSelectNumber - 1].sizeDelta * _selectorSizeDeltaMagnitude;
     }
@@ -27,6 +29,9 @@ public class PauseUI_2 : UIController_2
         }
     }
 
+    /// <summary>
+    /// 決定されたときの処理
+    /// </summary>
     private void PauseSelector()
     {
         switch (_nowSelectNumber)
@@ -38,6 +43,7 @@ public class PauseUI_2 : UIController_2
                     _isLoaded = true;
                     bookimage.material.SetFloat("_Flip", -1f);
 
+                    // Audio
                     audios.uiSE = (AudioManager.UISE)2;
                     audios.AudioChanger("UI");
 
@@ -46,6 +52,7 @@ public class PauseUI_2 : UIController_2
                     SceneManager.UnloadSceneAsync(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
                 }
 
+                // 本をめくる
                 if (_imageFlipTime >= 0)
                 {
                     bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") + Time.deltaTime);
@@ -58,9 +65,11 @@ public class PauseUI_2 : UIController_2
                 break;
             // Back to Title to CautionPanel
             case 2:
+                // Audio
                 audios.uiSE = (AudioManager.UISE)1;
                 audios.AudioChanger("UI");
 
+                // 警告パネルの有効化
                 cautionPanel.SetActive(true);
                 caucau.enabled = true;
                 _isInput[1] = false;
@@ -73,6 +82,7 @@ public class PauseUI_2 : UIController_2
                     _isLoaded = true;
                     bookimage.material.SetFloat("_Flip", -1f);
 
+                    // Audio
                     audios.uiSE = (AudioManager.UISE)4;
                     audios.AudioChanger("UI");
 
@@ -80,6 +90,7 @@ public class PauseUI_2 : UIController_2
                     sceneMan.LoadScene(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Option), true, SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.Pause));
                 }
 
+                // 本をめくる
                 if (_imageFlipTime >= 0)
                 {
                     bookimage.material.SetFloat("_Flip", bookimage.material.GetFloat("_Flip") + Time.deltaTime * 4);
@@ -96,9 +107,11 @@ public class PauseUI_2 : UIController_2
     protected override void OnEnable()
     {
         base.OnEnable();
-        _isFlip = false;
+        _isNotFlip = false;
         _isLoaded = false;
         _imageFlipTime = 0;
+
+        // SceneStateをPauseに設定
         SceneStateUI_2.sceneState = SceneStateUI_2.SceneState.Pause;
     }
 }

@@ -13,7 +13,7 @@ public class CautionPanel_2 : UIController_2
     {
         cautionText.text = cautionSetence;
 
-        _isFlip = true;
+        _isNotFlip = true;
         bookimage.material.SetFloat("_Flip", -1f);
     }
 
