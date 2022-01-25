@@ -108,6 +108,6 @@ public class CharacterAnimationController : MonoBehaviour
     }
     public void HammerSEFin()
     {
-        playerc._isHammerAttack_Sound = true;
+        playerc._isHammerAttack_Sound = false;
     }
 }

@@ -166,7 +166,6 @@ public class CharacterController : MonoBehaviour
     {
         if (!InGameToPauseUI_2._isStaticPause)
         {
-
             input = InputMethod();
 
             // 移動
@@ -238,7 +237,7 @@ public class CharacterController : MonoBehaviour
             input._x = _ZERO;
         }
 
-        // 攻撃状態じゃなければ
+        // 攻撃状態じゃなければ移動可
         if (!input._isAttack)
         {
             if (_isPeerless)
