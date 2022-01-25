@@ -36,6 +36,7 @@ public class Boss : EnemyController
     private bool _IsThirdAttack;  //次の攻撃に移るか判定
     private bool _IsRetrcking;    //反転の判定
     private bool _IsDefaultWarp;  //元の位置に戻るワープ判定
+    private bool _EndMagic;
 
     [System.NonSerialized]
     public bool _IsSpell;　　　　 //魔法を撃ったか判定
@@ -235,7 +236,7 @@ public class Boss : EnemyController
                 print("Hp50%以下");
                 AttackPattern = 3; //攻撃パターンを切り替え
 
-                _IsAttack = false;
+               
                 if (!_IsSwitch2)　//一度だけ切り替え
                 {
                     _IsDefaultWarp = true; //元の位置に戻るbool
@@ -261,7 +262,7 @@ public class Boss : EnemyController
         }
     }
 
-    //--------------------------switch文-------------------------------
+    //-------------------------------switch文-------------------------------
     private void AnimeMotion()
     {       
         switch (aiState)
@@ -269,8 +270,10 @@ public class Boss : EnemyController
             
             case EnemyAiState.Resporn:
                 #region リスポーン
+                //レイヤーを攻撃をくらわないように変更
                 gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
+                _IsReset = false;
                 _NowAttack = false;
                 _IsTracking = false;
 
@@ -296,6 +299,7 @@ public class Boss : EnemyController
                 _NowAttack = false;
                 _IsReset = false;
 
+                //ワープ中は攻撃をくらわないように
                 if (_IsWarp == true)
                 {
                     gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
@@ -334,8 +338,17 @@ public class Boss : EnemyController
                     //攻撃パターンが2かつ召喚した敵が死んだ時
                     if (AttackPattern == 2 && _IsSummon == false)　
                     {
-                        _IsSecondAttack = true;　
+                        _IsSecondAttack = true;
+                        _IsAttack = true;
                         aiState = EnemyAiState.Tracking;　
+                    }
+
+                    if (AttackPattern == 3 && SpellCount >= 4)
+                    {
+                        _IsAttackWait = false;
+                        _IsDefaultWarp = false;
+                        _IsAttack = true;
+                        aiState = EnemyAiState.Tracking;
                     }
 
                     //攻撃パターンが4かつ召喚中ではなく三回目の攻撃ではない時
@@ -369,11 +382,12 @@ public class Boss : EnemyController
                 }
 
                 //-----------------------------魔法を撃った回数が4回以上の時------------------------------
-                if (SpellCount >= 4 && AttackPattern == 3)　
+                if (SpellCount >= 4 && _EndMagic == true && AttackPattern == 3)　
                 {
-                    _IsAttackWait = false;
-                    _IsAttack = true;
-                    aiState = EnemyAiState.Tracking;　
+                    _IsReset = true;
+                    _EndMagic = false;
+                    Warp(); //元の位置に戻るワープ
+                    aiState = EnemyAiState.Resporn;　//ステージに戻ってくる
                 }
 
                 //-----------------------------強攻撃をした回数が4回の時----------------------------
@@ -413,13 +427,13 @@ public class Boss : EnemyController
                     Spritetime[2] = 0;
                 }                
 
-                if (_IsAttack == false)　
+                if (_NowAttack == false)　
                 {
                     if (_IsRetrcking == true)　//右を向いてる時
                     {                      
                         BossSprite.flipX = false; //反転処理 　
                     }
-                    else if (_IsRetrcking == false) //左を向いてる時
+                    else  //左を向いてる時
                     {                       
                         BossSprite.flipX = true; //反転処理                       
                     }
@@ -468,6 +482,7 @@ public class Boss : EnemyController
                 _IsDefaultWarp = false;　
                 _IsReset = false;
                 _IsLook = true;
+
                 BossSprite.sprite = mono.Spell[(int)Spritetime[6]];
                 Spritetime[6] += Time.deltaTime * AnimeSpeed;
 
@@ -533,8 +548,10 @@ public class Boss : EnemyController
 
                 _IsReset = false;
                 gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
                 if (_IsRetrcking == true && _IsDefaultWarp == false)　//右を向いている
                 {
+                    //ワープ先が壁の場合ワープ先を変更
                     if (map.stageArray[EnemyPositionY, WarpPosX] == 4)
                     {
                         WarpPosX = map.PlayerPositionX - 6;
@@ -545,7 +562,8 @@ public class Boss : EnemyController
                     }
                 }
                 if (_IsRetrcking == false)　//左を向いている
-                {                  
+                {
+                    //ワープ先が壁の場合ワープ先を変更
                     if (map.stageArray[EnemyPositionY, WarpPosX] == 4)
                     {
                         WarpPosX = map.PlayerPositionX + 6;
@@ -560,19 +578,24 @@ public class Boss : EnemyController
                 BossSprite.sprite = mono.Warp[(int)Spritetime[4]];
                 Spritetime[4] += Time.deltaTime * AnimeSpeed;
 
-
-                if (_IsDefaultWarp == true && Spritetime[4] >= MaxLeng[4])
-                {                    
-                    Spritetime[5] = 0;
-                    this.transform.position = new Vector2(WarpPos.x, WarpPos.y);
-                    aiState = EnemyAiState.WarpAttack;
-                }
-
-                if (_IsDefaultWarp == false && Spritetime[4] >= MaxLeng[4])
+                if (Spritetime[4] >= MaxLeng[4])
                 {
-                    Spritetime[5] = 0;
-                    AttackCount[2] += 1;
-                    aiState = EnemyAiState.WarpAttack;
+                    if (_IsDefaultWarp == true)
+                    {
+                        Spritetime[5] = 0;
+                        //所定の位置にワープ
+                        this.transform.position = new Vector2(WarpPos.x, WarpPos.y);
+                        aiState = EnemyAiState.WarpAttack;
+                    }
+
+                    else
+                    {
+                        Spritetime[5] = 0;
+                        //ワープ攻撃のカウント
+                        AttackCount[2] += 1;
+
+                        aiState = EnemyAiState.WarpAttack;
+                    }
                 }
                 break;
             #endregion
@@ -580,11 +603,12 @@ public class Boss : EnemyController
             case EnemyAiState.WarpAttack:
                 #region ワープ攻撃
                 Spritetime[4] = 0;
-
-                _NowAttack = true;
+                
                 _IsTracking = false;
+                //レイヤーを元に戻す
                 gameObject.layer = LayerMask.NameToLayer("Enemy");
 
+                //ワープ攻撃の場合
                 if (_IsDefaultWarp == false)
                 {
                     this.transform.position = new Vector2(WarpPosX, transform.position.y);
@@ -594,7 +618,7 @@ public class Boss : EnemyController
                 {                  
                     BossSprite.flipX = false; //反転処理 　左                  
                 }
-                else if (_IsRetrcking == false)
+                else 
                 {                  
                     BossSprite.flipX = true; //反転処理 右                   
                 }
@@ -602,32 +626,36 @@ public class Boss : EnemyController
                 BossSprite.sprite = mono.WarpAttack[(int)Spritetime[5]];
                 Spritetime[5] += Time.deltaTime * AnimeSpeed;
 
-                if (_IsDefaultWarp == true && Spritetime[5] >= MaxLeng[5] - 10 && AttackPattern == 2 ||
-                    _IsDefaultWarp == true && Spritetime[5] >= MaxLeng[5] - 10 && AttackPattern == 4 && _IsThirdAttack == false)
+                //ワープ攻撃する前に判定
+                if (_IsDefaultWarp == true && Spritetime[5] >= MaxLeng[5] - 10)
                 {
-                    _IsReset = true;
-                    _IsNext = false;
-                    _IsSpell = false;
-                    SpellCount = 0;
-                    aiState = EnemyAiState.Summon;
+                    //召喚処理に遷移
+                    if (AttackPattern == 2 || AttackPattern == 4 && _IsThirdAttack == false)
+                    {
+                        _IsReset = true;
+                        _IsNext = false;
+                        _IsSpell = false;
+                        SpellCount = 0;
+                        aiState = EnemyAiState.Summon;
+                    }
+                    //魔法攻撃に遷移
+                    if (AttackPattern == 3 || AttackPattern == 4 && _IsThirdAttack == true)
+                    {
+                        _IsReset = true;
+                        _IsSpell = false;
+                        _IsSummonSpell = false;
+                        SpellCount = 0;
+                        aiState = EnemyAiState.StrongSpell;
+                    }
                 }
 
-                if (_IsDefaultWarp == true && Spritetime[5] >= MaxLeng[5] - 10 && AttackPattern == 3 ||
-                    _IsDefaultWarp == true && Spritetime[5] >= MaxLeng[5] - 10 && AttackPattern == 4 && _IsThirdAttack == true)
-                {
-                    _IsReset = true;
-                    _IsSpell = false;
-                    _IsSummonSpell = false;
-                    SpellCount = 0;
-                    aiState = EnemyAiState.StrongSpell;
-                }
-
-                if (Spritetime[5] >= MaxLeng[5] - 6 && Spritetime[5] <= MaxLeng[5] - 1 && _IsDefaultWarp == false)
+                //ワープ攻撃している際中のアニメーション
+                if (Spritetime[5] >= MaxLeng[5] - 6 && Spritetime[5] <= MaxLeng[5] -3 && _IsDefaultWarp == false)
                 {
                     // Audio再生
                     audios.bossSE = (AudioManager.BossSE)6;
                     audios.AudioChanger("Boss");
-
+                    _NowAttack = true;
                     _IsStrongHit = true;
                 }
 
@@ -641,6 +669,7 @@ public class Boss : EnemyController
            
             case EnemyAiState.StrongSpell:
                 #region 魔法攻撃
+
                 _NowAttack = true;
                 _IsAttackWait = true;
                 _IsLook = true;
@@ -666,12 +695,17 @@ public class Boss : EnemyController
                     Instantiate(AttackEffect[SpellCount], new Vector2(SpellPos[SpellCount].x, SpellPos[SpellCount].y), Quaternion.identity); // 固定座標に魔法                  
                     _IsNext = false;
                 }
+
+                //魔法攻撃が回数以上になった時
                 if(SpellCount >= 4)
                 {
                     _IsReset = true;
 
                     _IsNext = false;
 
+                    _EndMagic = true;　//魔法を終了
+
+                    //アタックパターンが４の時に次の攻撃に
                     if (_IsThirdAttack == true)
                     {                                                                      
                         _IsThirdAttack = false;
@@ -713,6 +747,7 @@ public class Boss : EnemyController
                 BossSprite.sprite = mono.StrongAttack[(int)Spritetime[8]];
                 Spritetime[8] += Time.deltaTime * AnimeSpeed;
 
+                //強攻撃している際中のアニメーション
                 if (Spritetime[8] >= MaxLeng[7] - 6 && Spritetime[8] <= MaxLeng[7] - 3)
                 {
                     _IsStrongHit = true;
@@ -721,6 +756,7 @@ public class Boss : EnemyController
                 if (Spritetime[8] >= MaxLeng[7])                  
                 {
                     _IsReset = true;
+                    //強攻撃のカウント
                     AttackCount[1] += 1;
                     _IsStrongHit = false;
                     _IsAttack = false;
@@ -734,11 +770,15 @@ public class Boss : EnemyController
                     aiState = EnemyAiState.Warp;
                 }
                 break;
-
+            #endregion
             case EnemyAiState.TakeHit:
+                #region 攻撃をくらった
+
+                //攻撃をくらっている際は追跡しない
                 _IsTracking = false;
+
                 BossSprite.sprite = mono.TakeHit[(int)Spritetime[9]];
-                Spritetime[9] += Time.deltaTime * AnimeSpeed;
+                Spritetime[9] += Time.deltaTime * 3;
 
                 if (Spritetime[9] >= MaxLeng[9] && _isDeath == false)
                 {
@@ -752,12 +792,14 @@ public class Boss : EnemyController
         }
     }
 
+    //-------------------------------ワープ処理-----------------------------
     private void Warp()
     {
         _IsReset = false;
         _IsWarp = true;
-
+        //レイヤーを攻撃をくらわないように変更
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        //ワープ先を最初の位置に変更
         WarpPosX = DefaultPosXInt;
         this.transform.position = new Vector2(WarpPosX, DefaultPos.y);
 
@@ -770,32 +812,9 @@ public class Boss : EnemyController
         }
     }
 
-    //--------------------------ヒット判定-----------------------------
+    //-------------------------------ヒット判定-----------------------------
     private void Hit()
-    {
-        //--------------------ワープ攻撃をしている最中のアニメーション-------------
-        if (Spritetime[5] >= MaxLeng[3] - 6 && Spritetime[5] <= MaxLeng[3] - 3)
-        {
-            if (_IsRetrcking == false)
-            {
-                //プレイヤーとボスとの距離を計算
-                GetAttackRange = EnemyPositionX - map.PlayerPositionX;
-            }
-
-            if (_IsRetrcking == true)
-            {
-                //プレイヤーとボスとの距離を計算
-                GetAttackRange = map.PlayerPositionX - EnemyPositionX;
-            }
-
-            if (GetAttackRange >= -AttackRange && GetAttackRange <= 0)
-            {
-                damage = 12;
-                chara.CharaLifeCalculation(damage, 0, 0);
-                print("hitWarp");
-            }
-        }
-
+    {        
         //--------------------弱.強攻撃をしている最中のアニメーション-------------
         if (_IsHit == true || _IsStrongHit == true)
         {
@@ -839,6 +858,7 @@ public class Boss : EnemyController
         }
     }
 
+    //--------------------------spriteのリセット処理------------------------
     private void ResetTime()
     {
         if (_IsReset == true)
@@ -850,7 +870,7 @@ public class Boss : EnemyController
         }
     }
 
-    //------------------二次元配列の位置更新-------------------------
+    //------------------------二次元配列の位置更新--------------------------
     private void EnemyPos()
     {
         pos = transform.position;
@@ -859,7 +879,7 @@ public class Boss : EnemyController
 
     }
 
-    //-------------------2次元配列管理　・　攻撃判定-----------------------------
+    //-----------------------2次元配列管理・攻撃判定------------------------
     private void MapMove()
     {        
         if (_IsRetrcking == false && EnemyPositionX + AttackRange >= map.PlayerPositionX && EnemyPositionX + AttackRange <= map.PlayerPositionX) //右向き
@@ -876,7 +896,7 @@ public class Boss : EnemyController
             }
             
             //3つ右がプレイヤーだった場合攻撃
-            if (AttackPattern == 3 && AttackCount[1] <= 3 &&  _IsAttackWait == false && _IsDefaultWarp == false &&_IsAttack == true)
+            if (AttackPattern == 3 && AttackCount[1] <= 3 && _IsAttackWait == false && _IsDefaultWarp == false &&_IsAttack == true)
             {
                 aiState = EnemyAiState.StorongAttack;
             }
@@ -912,7 +932,7 @@ public class Boss : EnemyController
         }
     }
    
-    //-------------------------追跡処理--------------------------------
+    //-------------------------------追跡処理--------------------------------
     private void EnemyTracking()
     {
         if (_IsLook == true)
