@@ -50,8 +50,10 @@ public class CameraMove : MonoBehaviour
     [SerializeField]
     private GameObject kabe = default;
 
-    [SerializeField] private Image _flashImage = default;
-    private float _flashAlpha = default;
+    //[SerializeField] private Image _flashImage = default;
+    //private float _flashAlpha = default;
+    [SerializeField]
+    private GameObject _BossHPBar = default;
 
     private void Start()
     {
@@ -60,8 +62,9 @@ public class CameraMove : MonoBehaviour
         distance = Vector3.Distance(bossStartPos, bossEndPos);
         defaultCameraPos_z = this.gameObject.transform.position.z;
 
-        _flashAlpha = 0;
-        _flashImage.color = Color.white * _flashAlpha;
+        //_flashAlpha = 0;
+        //_flashImage.color = Color.white * _flashAlpha;
+        _BossHPBar.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -170,6 +173,7 @@ public class CameraMove : MonoBehaviour
             bossStartPos = playerChara.transform.position;
             _BossArea = true;
             kabe.gameObject.SetActive(true);
+            _BossHPBar.SetActive(true);
         }
     }
 }
