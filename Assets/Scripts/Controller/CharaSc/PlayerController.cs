@@ -178,6 +178,7 @@ public class PlayerController : CharacterController
         checkPointSys = GameObject.FindWithTag(_eventSystem).GetComponent<CheckPointSystem>();
         memoryAchievementController = GameObject.FindWithTag(_eventSystem).GetComponent<MemoryAchievementController>();
         audios = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        memoryAchievementController._nowMemoryToral = _ZERO;
     }
 
     //=====================================================
@@ -187,7 +188,6 @@ public class PlayerController : CharacterController
     {
         if (!InGameToPauseUI_2._isStaticPause)
         {
-            Debug.Log(characterStatus);
             base.Update();
             /*
             print("今" + _charaStatus);
@@ -342,7 +342,6 @@ public class PlayerController : CharacterController
             _isStartAttack = true;
             #region 敵の状態判定
             attackHit = Physics.BoxCastAll(transform.position, _attackScale, _attackDirection, Quaternion.identity, _ONE, LayerMask.GetMask("Enemy"));
-            Debug.Log(attackHit.Length);
             #endregion
 
             foreach (RaycastHit raycastHit in attackHit)
@@ -362,19 +361,16 @@ public class PlayerController : CharacterController
                             {
                                 _attackPower = charaData.basicPower * _swordHeavyAttack * _memoryGaugeAttackPoint;
                                 _attackLevel = _TWO;
-                                Debug.Log("剣強攻撃");
                             }
                             else if (_swordTime > _NORMALPOWERTIME)
                             {
                                 _attackPower = charaData.basicPower * _swordMiddleAttack * _memoryGaugeAttackPoint;
                                 _attackLevel = _ONE;
-                                Debug.Log("剣中攻撃");
                             }
                             else
                             {
                                 _attackPower = charaData.basicPower * _memoryGaugeAttackPoint;
                                 _attackLevel = _ZERO;
-                                Debug.Log("剣弱攻撃");
                             }
                             break;
                         case CharacterStatus.hammerAttack:
@@ -383,21 +379,18 @@ public class PlayerController : CharacterController
                             {
                                 _attackPower = charaData.basicPower * _hammerHeavyAttack * _memoryGaugeAttackPoint;
                                 _attackLevel = _TWO;
-                                Debug.Log("槌強攻撃");
                             }
                             // 槌強攻撃1段階目
                             else if (_hammerTime > _NORMALPOWERTIME)
                             {
                                 _attackPower = charaData.basicPower * _hammerMiddleAttack * _memoryGaugeAttackPoint;
                                 _attackLevel = _ONE;
-                                Debug.Log("槌中攻撃");
                             }
                             // 槌弱攻撃
                             else
                             {
                                 _attackPower = charaData.basicPower * _hammerLightAttack * _memoryGaugeAttackPoint;
                                 _attackLevel = _ZERO;
-                                Debug.Log("槌弱攻撃");
                             }
                             break;
                     }
@@ -410,18 +403,15 @@ public class PlayerController : CharacterController
                 {
                     raycastHit.collider.GetComponent<EnemyNormal>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                     _isSoft = true;
-                    Debug.Log("ふつう当たった");
 
                 }
                 else if (raycastHit.collider.tag == _soft | raycastHit.collider.tag == "SoftS")
                 {
-                    Debug.Log("やわらかい当たった");
                     _isNormal = true;
                     raycastHit.collider.GetComponent<EnemyPlant>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
                 else if (raycastHit.collider.tag == _hard | raycastHit.collider.tag == "HardS")
                 {
-                    Debug.Log("硬い当たった");
                     _isHard = true;
                     raycastHit.collider.GetComponent<EnemyRock>().CharaLifeCalculation(_attackPower, _knockBack, _weapon);
                 }
@@ -683,9 +673,6 @@ public class PlayerController : CharacterController
 
     public void EndAttack()
     {
-        Debug.Log("a");
-        input._isAttack = false;
-        
         if (_isInputSwordAttack)
         {
             _isInputSwordAttack = false;
@@ -716,6 +703,7 @@ public class PlayerController : CharacterController
             }
         }
         _isStartAttack = false;
+        input._isAttack = false;
     }
 
     private void PlayerAudio()
@@ -778,6 +766,7 @@ public class PlayerController : CharacterController
 
     public void EffectStart()
     {
+        Debug.Log("abo");
         // Playerの向きによってエフェクトを変える
         if (_charaStatus == CharacterStatus.swordAttack)
         {
