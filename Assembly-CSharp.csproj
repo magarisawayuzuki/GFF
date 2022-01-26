@@ -100,6 +100,7 @@
     <Compile Include="Assets\Scripts\Controller\EventSc\SceneController.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryFragment.cs" />
     <Compile Include="Assets\Aoki\Script\Enemy.cs" />
+    <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\BossHPUIManager.cs" />
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumi\InputController.cs" />
     <Compile Include="Assets\Scripts\Tool\CreateStageEditor.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\PlayerController.cs" />
@@ -124,7 +125,7 @@
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\Chara_2.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\EventController.cs" />
     <Compile Include="Assets\Scripts\View\StageDirector\StageAudioController.cs" />
-    <Compile Include="Assets\BossHPUIManager.cs" />
+    <Compile Include="Assets\yamada\Script\CloudMove.cs" />
     <None Include="Assets\Aoki\Aseets\Bringer Of Death\License.txt" />
     <None Include="Assets\nanaumiForWork\Script_Nanaumi\NextPage.shader" />
     <None Include="Assets\Resources\MapCSVFile\MapData.txt" />
