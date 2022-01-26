@@ -21,6 +21,9 @@ TagManager:
   - VerticulArea
   - BossArea
   - Weapon
+  - WeaponEffect
+  - Selector
+  - Audio
   layers:
   - Default
   - TransparentFX
