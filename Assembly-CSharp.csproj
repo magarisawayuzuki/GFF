@@ -66,6 +66,7 @@
      <Compile Include="Assets\Scripts\Controller\EventSc\MemoryAchievementController.cs" />
      <Compile Include="Assets\Aoki\Script\BossData.cs" />
      <Compile Include="Assets\Scripts\Controller\Input\InputSystem.cs" />
+     <Compile Include="Assets\Takeda\PlayerController.cs" />
      <Compile Include="Assets\Scripts\View\CharaDirector\CharacterAudioController.cs" />
      <Compile Include="Assets\Scripts\Controller\CharaSc\CharacterController.cs" />
      <Compile Include="Assets\Aoki\Script\BossSpell.cs" />
@@ -100,6 +101,7 @@
      <Compile Include="Assets\Scripts\View\StageDirector\StageAudioController.cs" />
      <None Include="Assets\Aoki\Aseets\Bringer Of Death\License.txt" />
      <None Include="Assets\ParticleShadersVol1\Shaders\EM_Particles_Unlit.shader" />
+     <None Include="Assets\Juri\Free Asset - 2D Handcrafted Art\Shader\NormalMappedTileAnimated.shader" />
      <None Include="Assets\Aoki\Aseets\Bringer Of Death\Contact.txt" />
  <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
  <HintPath>C:/Users/juriy/OneDrive/ドキュメント/デスクトップ/GFFlocal/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>

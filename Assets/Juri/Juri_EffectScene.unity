@@ -1702,6 +1702,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'Juri_Kakutoku '
       objectReference: {fileID: 0}
+    - target: {fileID: 7376591946450448902, guid: be00455aedced23478821f508fc5d0cd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7376591946450448953, guid: be00455aedced23478821f508fc5d0cd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.458412
@@ -1836,9 +1840,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Juri_Kyuushuu
       objectReference: {fileID: 0}
+    - target: {fileID: 2666730939125172546, guid: ddd8d42fbcb00834e832a09f8f2c6686, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2666730939125172547, guid: ddd8d42fbcb00834e832a09f8f2c6686, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666730939125172547, guid: ddd8d42fbcb00834e832a09f8f2c6686, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2666730939125172557, guid: ddd8d42fbcb00834e832a09f8f2c6686, type: 3}
       propertyPath: m_LocalPosition.x
