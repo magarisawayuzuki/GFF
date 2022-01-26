@@ -41,12 +41,12 @@ public class CameraMove : MonoBehaviour
     private float defaultCameraPos_z = default;
 
     private Vector3 bossStartPos = default;
-    private Vector3 bossEndPos = new Vector3(986, 52, -10);
+    private Vector3 bossEndPos =default;
     private float distance = default;
     private new Camera camera;
     [SerializeField]
     private float bossCameraSizeSpeed = 0.1f;
-    private float bossCameraMoveSpeed = 0.2f;
+    private float bossCameraMoveSpeed = 0.7f;
     [SerializeField]
     private GameObject kabe = default;
 
@@ -57,6 +57,7 @@ public class CameraMove : MonoBehaviour
 
     private void Start()
     {
+        bossEndPos = GameObject.FindGameObjectWithTag("BossArea").transform.position;
         camera = this.GetComponent<Camera>();
         playerChara = GameObject.FindGameObjectWithTag("Player");
         distance = Vector3.Distance(bossStartPos, bossEndPos);
@@ -71,11 +72,11 @@ public class CameraMove : MonoBehaviour
     {
         if (_BossArea )
         {
-            if (this.transform.position != bossEndPos || camera.orthographicSize != 18)
+            if (this.transform.position != bossEndPos || camera.orthographicSize != 12)
             {
                 this.gameObject.transform.position = Vector3.MoveTowards(this.transform.position,bossEndPos,bossCameraMoveSpeed);
-                if(camera.orthographicSize >= 18) { return; }
-                camera.orthographicSize += bossCameraSizeSpeed * 0.03f;
+                if(camera.orthographicSize >= 12) { return; }
+                camera.orthographicSize += bossCameraSizeSpeed * 0.02f;
 
                 //if (_flashAlpha == 0)
                 //{
