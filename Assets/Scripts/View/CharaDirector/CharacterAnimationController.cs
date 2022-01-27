@@ -88,7 +88,7 @@ public class CharacterAnimationController : MonoBehaviour
         }
     }
 
-    public void EndAttack()
+    public void AttackFin()
     {
         playerc.EndAttack();
     }
