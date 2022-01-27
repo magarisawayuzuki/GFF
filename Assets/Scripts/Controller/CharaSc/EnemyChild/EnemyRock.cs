@@ -260,6 +260,8 @@ public class EnemyRock : EnemyController
 
             case 3:　//最初のアニメーションに戻る
                 _IsTracking = false;
+                _IsAttack = true;
+           
                 EnemySprite.sprite = Anime.Death[(int)Spritetime[2]];
                 Spritetime[2] += Time.deltaTime * data.AnimeSpeed[0];
                 if (_isDeath == true)

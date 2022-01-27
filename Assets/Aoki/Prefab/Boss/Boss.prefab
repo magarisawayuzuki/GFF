@@ -88,14 +88,14 @@ MonoBehaviour:
     _isDown: 0
   old_charaStatus: 0
   ObjectScale: {x: 3, y: 3, z: 0.2}
-  _groundDistance: 1.2
+  _groundDistance: 1.3
   jumpSpeedScale: 1
   player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
   Anime: {fileID: 0}
   data: {fileID: 11400000, guid: 86fc38416a036b84fbf46d825a4fa9d1, type: 2}
   kakera: {fileID: 0}
   gekitui: {fileID: 0}
-  AttackRange: 5
+  AttackRange: 4
   MaxLeng: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
   Spritetime:
   - 0
@@ -132,11 +132,11 @@ MonoBehaviour:
   - {fileID: 406119615553340818, guid: a422ba267812082479be6013be7892f6, type: 3}
   AttackCount: 000000000000000000000000
   SpellPos:
-  - {x: 269, y: 35}
-  - {x: 269, y: 35}
-  - {x: 274, y: 35}
-  - {x: 269, y: 35}
-  WarpPos: {x: 1014, y: 59}
+  - {x: 326, y: 39.7}
+  - {x: 326, y: 39.7}
+  - {x: 341, y: 39.7}
+  - {x: 326, y: 39.7}
+  WarpPos: {x: 1066, y: 61}
   HpState: 0
   aiState: 10
 --- !u!212 &4503539027462731859
@@ -201,8 +201,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 5.4, z: 0.2}
-  m_Center: {x: -0.48, y: -1.8, z: 0}
+  m_Size: {x: 5.16, y: 5.4, z: 0.2}
+  m_Center: {x: -0.39, y: -1.8, z: 0}
 --- !u!1001 &2544549161149165900
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -220,7 +220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7717912961577527277, guid: 8513e8130105a5547ae1d7577f00fb98, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.66
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7717912961577527277, guid: 8513e8130105a5547ae1d7577f00fb98, type: 3}
       propertyPath: m_LocalPosition.y

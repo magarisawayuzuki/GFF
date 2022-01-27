@@ -728,12 +728,14 @@ public class PlayerController : CharacterController
                 {
                     audios.playerSE = (AudioManager.PlayerSE)4;
                     audios.AudioChanger("Player");
+                    Debug.Log("ken kyou");
 
                 }
                 else
                 {
                     audios.playerSE = (AudioManager.PlayerSE)3;
                     audios.AudioChanger("Player");
+                    Debug.Log("ken jaku");
                 }
                 break;
             case CharacterStatus.hammerAttack:
