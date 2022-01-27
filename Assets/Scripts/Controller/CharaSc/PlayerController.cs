@@ -186,8 +186,8 @@ public class PlayerController : CharacterController
 
     protected override void Start()
     {
-        base.Start();
         audios = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        base.Start();
     }
 
     //=====================================================
@@ -280,7 +280,7 @@ public class PlayerController : CharacterController
         
         // 左クリックで剣攻撃
         #region 剣攻撃入力時間加算
-        if (IC.Player.SwordAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started && !input._isAttack)
+        if (IC.Player.SwordAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started && !input._isAttack && !_isDamage)
         {
             _swordTime += Time.deltaTime;
 
@@ -303,7 +303,7 @@ public class PlayerController : CharacterController
 
         // 右クリックで槌攻撃
         #region 槌攻撃入力時間加算
-        if (IC.Player.HammerAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started && _canHammerAttack && !input._isAttack)
+        if (IC.Player.HammerAttack.phase == UnityEngine.InputSystem.InputActionPhase.Started && _canHammerAttack && !input._isAttack && !_isDamage)
         {
             _hammerTime += Time.deltaTime;
 
@@ -775,7 +775,6 @@ public class PlayerController : CharacterController
 
     public void EffectStart()
     {
-        Debug.Log("abo");
         // Playerの向きによってエフェクトを変える
         if (_charaStatus == CharacterStatus.swordAttack)
         {
