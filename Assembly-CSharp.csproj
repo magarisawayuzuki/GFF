@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\CautionPanel_2.cs" />
+    <Compile Include="Assets\yamada\Script\CloudMove.cs" />
     <Compile Include="Assets\Aoki\Script\EnemyData.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\EnemyChild\EnemyRock.cs" />
     <Compile Include="Assets\Scripts\View\CameraMove.cs" />
@@ -125,7 +126,7 @@
     <Compile Include="Assets\nanaumiForWork\Script_Nanaumivar2\Chara_2.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\EventController.cs" />
     <Compile Include="Assets\Scripts\View\StageDirector\StageAudioController.cs" />
-    <Compile Include="Assets\yamada\Script\CloudMove.cs" />
+    <Compile Include="Assets\AudioCheck.cs" />
     <None Include="Assets\Aoki\Aseets\Bringer Of Death\License.txt" />
     <None Include="Assets\nanaumiForWork\Script_Nanaumi\NextPage.shader" />
     <None Include="Assets\Resources\MapCSVFile\MapData.txt" />
