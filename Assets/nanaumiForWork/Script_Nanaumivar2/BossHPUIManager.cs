@@ -12,7 +12,10 @@ public class BossHPUIManager : Chara_2
 
     private void Start()
     {
+        // PlayerControllerの取得 HPBarの設定
         _bossCon = GameObject.FindGameObjectWithTag("BossObj").GetComponent<Boss>();
+        SetChara(_bossCon);
+        _beforeLifeChild = (int)_bossCon.GetLife;
     }
 
     private void Update()
@@ -49,5 +52,10 @@ public class BossHPUIManager : Chara_2
         {
             ChangeLife(_bossCon, false);
         }
+    }
+
+    private void OnEnable()
+    {
+        _bossCon = GameObject.FindGameObjectWithTag("BossObj").GetComponent<Boss>();
     }
 }
