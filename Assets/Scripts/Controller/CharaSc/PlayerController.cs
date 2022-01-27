@@ -261,7 +261,7 @@ public class PlayerController : CharacterController
             input._isJump = true;
         }
 
-        if (IC.Player.Down.triggered)
+        if (IC.Player.Down.triggered && _isGround)
         {
             input._isDown = true;
         }

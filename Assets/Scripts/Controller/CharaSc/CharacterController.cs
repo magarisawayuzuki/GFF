@@ -308,6 +308,7 @@ public class CharacterController : MonoBehaviour
 
             _isGround = true;
             _isFall = false;
+            input._isDown = false;
             acceleration = _ZERO;
             fallTimeCount = _ZERO;
             //this.transform.position = new Vector3(transform.position.x, hit.point.y + 0.5f, transform.position.z);
@@ -317,7 +318,6 @@ public class CharacterController : MonoBehaviour
             {
                 _nowJump = false;
                 jumpTimeCount = _ZERO;
-                input._isDown = false;
             }
         }
         else

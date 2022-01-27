@@ -55,11 +55,11 @@
                 },
                 {
                     "name": "Down",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "46500c50-36b2-42e0-9748-0a80ab6733a2",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": "SlowTap(duration=1)"
+                    "interactions": ""
                 }
             ],
             "bindings": [

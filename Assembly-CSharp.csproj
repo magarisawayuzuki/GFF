@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\Controller\GimmickSc\CheckPointSystem.cs" />
     <Compile Include="Assets\Scripts\Controller\EventSc\MemoryAchievementController.cs" />
     <Compile Include="Assets\Aoki\Script\BossData.cs" />
+    <Compile Include="Assets\AudioCheck.cs" />
     <Compile Include="Assets\Scripts\Controller\Input\InputSystem.cs" />
     <Compile Include="Assets\Scripts\View\CharaDirector\CharacterAudioController.cs" />
     <Compile Include="Assets\Scripts\Controller\CharaSc\CharacterController.cs" />
