@@ -50,8 +50,8 @@ public class CameraMove : MonoBehaviour
     [SerializeField]
     private GameObject kabe = default;
 
-    //[SerializeField] private Image _flashImage = default;
-    //private float _flashAlpha = default;
+    [SerializeField] private Image _flashImage = default;
+    private float _flashAlpha = default;
     [SerializeField]
     private GameObject _BossHPBar = default;
 
@@ -63,8 +63,10 @@ public class CameraMove : MonoBehaviour
         distance = Vector3.Distance(bossStartPos, bossEndPos);
         defaultCameraPos_z = this.gameObject.transform.position.z;
 
-        //_flashAlpha = 0;
-        //_flashImage.color = Color.white * _flashAlpha;
+        kabe.SetActive(false);
+
+        _flashAlpha = 0;
+        _flashImage.color = Color.white * _flashAlpha;
         _BossHPBar.SetActive(false);
     }
 

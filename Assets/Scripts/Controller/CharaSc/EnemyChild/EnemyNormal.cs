@@ -204,7 +204,7 @@ public class EnemyNormal : EnemyController
             case 1:　//----------------------リスポーンアニメーション処理--------------------------------
                 EnemySprite.sprite = Anime.Resporn[(int)Spritetime[0]];
                 Spritetime[0] += Time.deltaTime * data.AnimeSpeed[0];
-
+               
                 if (Spritetime[0] >= MaxLeng[0])
                 {
                     _IsTracking = true;
@@ -245,6 +245,8 @@ public class EnemyNormal : EnemyController
 
             case 3:　//----------------------最初のアニメーションに戻る-----------------------------------
                 _IsTracking = false;
+                _IsAttack = true;
+
                 EnemySprite.sprite = Anime.Death[(int)Spritetime[2]];
                 Spritetime[2] += Time.deltaTime * data.AnimeSpeed[0];
                 if (_isDeath == true)

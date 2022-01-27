@@ -516,9 +516,6 @@ public class Boss : EnemyController
            
             case EnemyAiState.Back:
                 #region 最初のアニメーションに戻る
-                // Audio再生
-                audios.bossSE = (AudioManager.BossSE)6;
-                audios.AudioChanger("Boss");
 
                 _IsLook = false;
                 _IsTracking = false;
@@ -527,11 +524,17 @@ public class Boss : EnemyController
 
                 if (Spritetime[3] >= MaxLeng[8])
                 {
-                    Spritetime[3] = MaxLeng[8] - 1;
-
                     if (_isDeath == true)
                     {
-                        Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);                                             
+                        Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+                        gameObject.SetActive(false);
+                        // Audio再生
+                        audios.bossSE = (AudioManager.BossSE)6;
+                        audios.AudioChanger("Boss");
+                    }
+                    else
+                    {
+                        Spritetime[3] = MaxLeng[8] - 1;
                     }
                 }
                 break;
@@ -554,11 +557,11 @@ public class Boss : EnemyController
                     //ワープ先が壁の場合ワープ先を変更
                     if (map.stageArray[EnemyPositionY, WarpPosX] == 4)
                     {
-                        WarpPosX = map.PlayerPositionX - 6;
+                        WarpPosX = map.PlayerPositionX + 6;
                     }
                     else
                     {
-                        WarpPosX = map.PlayerPositionX + 6;
+                        WarpPosX = map.PlayerPositionX - 6;
                     }
                 }
                 if (_IsRetrcking == false)　//左を向いている
@@ -566,11 +569,11 @@ public class Boss : EnemyController
                     //ワープ先が壁の場合ワープ先を変更
                     if (map.stageArray[EnemyPositionY, WarpPosX] == 4)
                     {
-                        WarpPosX = map.PlayerPositionX + 6;
+                        WarpPosX = map.PlayerPositionX - 6;
                     }
                     else
                     {
-                        WarpPosX = map.PlayerPositionX - 6;
+                        WarpPosX = map.PlayerPositionX + 6;
                     }
                 }
 
@@ -752,6 +755,10 @@ public class Boss : EnemyController
                 {
                     _IsStrongHit = true;
                 }
+                else
+                {
+                    _IsStrongHit = false;
+                }
 
                 if (Spritetime[8] >= MaxLeng[7])                  
                 {
@@ -832,14 +839,14 @@ public class Boss : EnemyController
                 _IsHit = false;                
             }
 
-            if (GetAttackRange >= -AttackRange && GetAttackRange <= 0 && _IsStrongHit == false)
+            if (GetAttackRange >= -AttackRange && GetAttackRange <= 0 && _IsStrongHit == false )
             {
                 damage = 8;
                 chara.CharaLifeCalculation(damage, 0, 0);
                 print("hit");
             }
 
-            if (GetAttackRange >= -(AttackRange + 1)&& GetAttackRange <= 0 && _IsStrongHit == true)
+            if (GetAttackRange >= -(AttackRange + 1)&& GetAttackRange <= 0 && _IsStrongHit == true && _IsHit == false)
             {
                 damage = 10;
                 chara.CharaLifeCalculation(damage, 0, 0);
