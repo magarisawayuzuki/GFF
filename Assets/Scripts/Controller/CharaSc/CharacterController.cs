@@ -151,7 +151,7 @@ public class CharacterController : MonoBehaviour
         _life = charaData.life;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         charaAnimCtrl = this.GetComponentInChildren<CharacterAnimationController>();
     }
