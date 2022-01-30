@@ -61,7 +61,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     protected float _groundDistance = 1.3f;
 
-    protected float _life = 0;
+    [SerializeField]protected float _life = 0;
 
     public float GetLife{ get { return _life; }}
 
@@ -73,7 +73,7 @@ public class CharacterController : MonoBehaviour
     // 落下状態
     protected bool _isFall = false;
     // 死亡判定
-    protected bool _isDeath = false;
+    [SerializeField]protected bool _isDeath = false;
     // 着地判定
     protected bool _isGround = false;
     // 記憶を持っているか

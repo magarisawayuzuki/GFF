@@ -86,6 +86,10 @@ public class UIController_2 : MonoBehaviour
 
         _inputs = new InputController();
         sceneMan = gameObject.AddComponent<UISceneManager_2>();
+    }
+
+    protected virtual void Start()
+    {
         audios = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 

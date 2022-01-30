@@ -14,19 +14,19 @@ public class InGameToPauseUI_2 : UIController_2
     /// </summary>
     public static bool _isPause = default;
 
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
+        base.Start();
 
         // ScreenShotの初期化
         audios.sprite.Clear();
-    }
-
-    private void Start()
-    {
         bookimage.material.SetFloat("_Flip", 1f);
         _isStaticPause = false;
         _isPause = false;
+
+        // Audio
+        audios.bgm = (AudioManager.BGM)1;
+        audios.AudioChanger("BGM");
     }
 
     private void Update()
@@ -118,10 +118,6 @@ public class InGameToPauseUI_2 : UIController_2
         base.OnEnable();
         _isNotFlip = false;
         _isLoaded = false;
-
-        // Audio
-        audios.bgm = (AudioManager.BGM)1;
-        audios.AudioChanger("BGM");
 
         // SceneStateをInGameに設定
         SceneStateUI_2.sceneState = SceneStateUI_2.SceneState.InGame;

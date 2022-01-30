@@ -11,6 +11,7 @@ public class CautionPanel_2 : UIController_2
 
     private void Start()
     {
+        base.Start();
         cautionText.text = cautionSetence;
 
         _isNotFlip = true;

@@ -89,11 +89,12 @@ MonoBehaviour:
   old_charaStatus: 0
   ObjectScale: {x: 3, y: 3, z: 0.2}
   _groundDistance: 1.3
+  _life: 0
   jumpSpeedScale: 1
   player: {fileID: 677229189713997750, guid: 362f3a42dd949004db64db85156d9e23, type: 3}
   Anime: {fileID: 0}
   data: {fileID: 11400000, guid: 86fc38416a036b84fbf46d825a4fa9d1, type: 2}
-  kakera: {fileID: 0}
+  kakera: {fileID: 4974386505697102817, guid: d1b6d003ea682f040b28538fb84a51ac, type: 3}
   gekitui: {fileID: 0}
   AttackRange: 4
   MaxLeng: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -139,6 +140,7 @@ MonoBehaviour:
   WarpPos: {x: 1066, y: 61}
   HpState: 0
   aiState: 10
+  _flashImage: {fileID: 0}
 --- !u!212 &4503539027462731859
 SpriteRenderer:
   m_ObjectHideFlags: 0

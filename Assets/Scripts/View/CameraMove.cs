@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 /*　～～使用方法～～
 Rigidbody(Is KinematicをTrueに)とColliderが付いたCameraにアタッチして使う
@@ -50,8 +49,6 @@ public class CameraMove : MonoBehaviour
     [SerializeField]
     private GameObject kabe = default;
 
-    [SerializeField] private Image _flashImage = default;
-    private float _flashAlpha = default;
     [SerializeField]
     private GameObject _BossHPBar = default;
 
@@ -64,9 +61,6 @@ public class CameraMove : MonoBehaviour
         defaultCameraPos_z = this.gameObject.transform.position.z;
 
         kabe.SetActive(false);
-
-        _flashAlpha = 0;
-        _flashImage.color = Color.white * _flashAlpha;
         _BossHPBar.SetActive(false);
     }
 
@@ -79,24 +73,11 @@ public class CameraMove : MonoBehaviour
                 this.gameObject.transform.position = Vector3.MoveTowards(this.transform.position,bossEndPos,bossCameraMoveSpeed);
                 if(camera.orthographicSize >= 12) { return; }
                 camera.orthographicSize += bossCameraSizeSpeed * 0.02f;
-
-                //if (_flashAlpha == 0)
-                //{
-                //    Invoke("SceneClear", 2f);
-                //}
-
-                //_flashAlpha += Time.deltaTime;
-                //_flashImage.color = Color.white * _flashAlpha;
             }
 
             return;
         }
         CheckDistance();
-    }
-
-    private void SceneClear()
-    {
-        SceneManager.LoadSceneAsync(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.GameClear));
     }
 
     /// <summary>

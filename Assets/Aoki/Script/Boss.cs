@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Boss : EnemyController
 {           
@@ -89,6 +90,20 @@ public class Boss : EnemyController
     }
 
     private AudioManager audios = default;
+    private Image _flashImage = default;
+    private float _flashAlpha = default;
+
+    private GameObject _BossHPBar = default;
+
+    private void Awake()
+    {
+        base.Awake();
+        _flashImage = GameObject.FindGameObjectWithTag("FlashImage").GetComponent<Image>();
+        _flashAlpha = 0;
+        _flashImage.color = Color.white * _flashAlpha;
+
+        _BossHPBar = GameObject.FindGameObjectWithTag("BossBar");
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -159,6 +174,24 @@ public class Boss : EnemyController
         HPMove();
 
         print(_life);
+
+        if (_isDeath == true)
+        {
+            _BossHPBar.SetActive(false);
+            Debug.LogWarning("AAA");
+            Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+            // Audio再生
+            audios.bossSE = (AudioManager.BossSE)6;
+            audios.AudioChanger("Boss");
+
+            if (_flashAlpha == 0)
+            {
+                Invoke("SceneClear", 2f);
+            }
+
+            _flashAlpha += Time.deltaTime;
+            _flashImage.color = Color.white * _flashAlpha;
+        }
     }
 
     public override void CharaLifeCalculation(float damage, int knockBack, int weapon)
@@ -260,6 +293,12 @@ public class Boss : EnemyController
                 break;
 #endregion
         }
+    }
+
+    public override void Death()
+    {
+        base.Death();
+        Debug.LogWarning(_isDeath);
     }
 
     //-------------------------------switch文-------------------------------
@@ -521,16 +560,25 @@ public class Boss : EnemyController
                 _IsTracking = false;
                 BossSprite.sprite = mono.Return[(int)Spritetime[3]];
                 Spritetime[3] += Time.deltaTime * AnimeSpeed;
-
+                Debug.LogWarning(Spritetime[3]);
                 if (Spritetime[3] >= MaxLeng[8])
                 {
                     if (_isDeath == true)
                     {
+                Debug.LogWarning("AAA");
                         Instantiate(kakera, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
                         gameObject.SetActive(false);
                         // Audio再生
                         audios.bossSE = (AudioManager.BossSE)6;
                         audios.AudioChanger("Boss");
+
+                        if (_flashAlpha == 0)
+                        {
+                            Invoke("SceneClear", 2f);
+                        }
+
+                        _flashAlpha += Time.deltaTime;
+                        _flashImage.color = Color.white * _flashAlpha;
                     }
                     else
                     {
@@ -797,6 +845,11 @@ public class Boss : EnemyController
                 break;
                 #endregion
         }
+    }
+
+    private void SceneClear()
+    {
+        SceneManager.LoadSceneAsync(SceneStateUI_2.SceneName(SceneStateUI_2.SceneState.GameClear));
     }
 
     //-------------------------------ワープ処理-----------------------------

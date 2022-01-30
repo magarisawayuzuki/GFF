@@ -12,6 +12,7 @@ public class PauseUI_2 : UIController_2
 
     private void Start()
     {
+        base.Start();
         _nowSelectNumber = 1;
 
         // カーソルの初期化

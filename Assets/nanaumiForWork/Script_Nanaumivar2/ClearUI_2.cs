@@ -47,10 +47,7 @@ public class ClearUI_2 : MonoBehaviour
 
     private void Awake()
     {
-        // Audioの取得
-        audios = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-
-        // ScreenShotをランダムで取得、設定
+        //ScreenShotをランダムで取得、設定
         omoide[0].sprite = audios.sprite[Random.Range(0, audios.sprite.Count)];
         omoide[1].sprite = audios.sprite[Random.Range(0, audios.sprite.Count)];
         omoide[2].sprite = audios.sprite[Random.Range(0, audios.sprite.Count)];
@@ -63,8 +60,15 @@ public class ClearUI_2 : MonoBehaviour
 
     private void Start()
     {
+        // Audioの取得
+        audios = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
         // 記憶達成度をTextに設定
         textAchi.text = memoAchi._nowMemoryToral.ToString() + " %";
+
+        // Audio
+        audios.bgm = (AudioManager.BGM)2;
+        audios.AudioChanger("BGM");
     }
 
     private void Update()
@@ -109,10 +113,6 @@ public class ClearUI_2 : MonoBehaviour
     private void OnEnable()
     {
         _inputs.Enable();
-
-        // Audio
-        audios.bgm = (AudioManager.BGM)2;
-        audios.AudioChanger("BGM");
     }
     private void OnDisable()
     {

@@ -14,6 +14,7 @@ public class OptionUI_2 : UIController_2
 
     private void Start()
     {
+        base.Start();
         _isVolumeChange = false;
 
         _selector.anchoredPosition = _selectPoint[_nowSelectNumber - 1].anchoredPosition;

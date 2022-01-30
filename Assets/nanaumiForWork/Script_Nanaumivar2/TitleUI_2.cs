@@ -8,6 +8,7 @@ public class TitleUI_2 : UIController_2
 
     private void Start()
     {
+        base.Start();
         // Audioの設定
         audios.bgm = (AudioManager.BGM)0;
         audios.AudioChanger("BGM");
